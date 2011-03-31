@@ -1,0 +1,23 @@
+Maven
+
+  This project has JARs deployed to a custom repository for easy inclusion.
+  
+  Add the following dependency:
+  
+-------------------------------------------------
+<dependency>
+  <groupId>com.jakewharton</groupId>
+  <artifactId>trakt-java</artifactId>
+  <version>1.0.0</version>
+</dependency>
+-------------------------------------------------
+  
+  In the <<<repositories>>> section add the following:
+  
+-------------------------------------------------
+<repository>
+  <id>com.jakewharton.repository</id>
+  <name>Jake Wharton's Personal Repository</name>
+  <url>http://repository.jakewharton.com/</url>
+</repository>
+-------------------------------------------------
