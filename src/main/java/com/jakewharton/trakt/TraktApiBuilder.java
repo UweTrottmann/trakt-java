@@ -1,11 +1,8 @@
 package com.jakewharton.trakt;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
@@ -46,9 +43,6 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	/** HTTP request method to use. */
 	private final HttpMethod method;
 	
-	/** Parameters to send in body of request. */
-	private final Map<String, String> postParameters;
-	
 	
 	/**
 	 * Initialize a new builder for an HTTP GET call.
@@ -77,7 +71,8 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		
 		this.token = token;
 		this.method = method;
-		this.postParameters = new HashMap<String, String>();
+		
+		this.field(FIELD_API_KEY, this.service.getApiKey());
 	}
 
 	
@@ -105,7 +100,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 			case Get:
 				return this.service.get(url);
 			case Post:
-				return this.service.post(url, this.postParameters);
+				return this.service.post(url, null); //TODO: THIS w/JSON!
 			default:
 				throw new IllegalArgumentException("Unknown HttpMethod type " + this.method.toString());
 		}
@@ -117,7 +112,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param apiKey API key string.
 	 * @return Current instance for builder pattern.
 	 */
-	public ApiBuilder api(String apiKey) {
+	/*package*/ ApiBuilder api(String apiKey) {
 		return this.field(FIELD_API_KEY, apiKey);
 	}
 	
@@ -165,26 +160,6 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		}
     	return this.parameter(name, builder.toString());
     }
-	
-	/**
-	 * Add a URL parameter value.
-	 * 
-	 * @param name Name.
-	 * @param valueSet Set of values.
-	 * @return Current instance for builder pattern.
-	 */
-	protected <K extends TraktEnumeration> ApiBuilder parameter(String name, Set<K> valueSet) {
-    	StringBuilder builder = new StringBuilder();
-    	Iterator<K> iterator = valueSet.iterator();
-    	while (iterator.hasNext()) {
-    		builder.append(ApiBuilder.encodeUrl(iterator.next().toString()));
-    		if (iterator.hasNext()) {
-    			builder.append(SEPERATOR);
-    		}
-		}
-    	
-    	return this.parameter(name, builder.toString());
-	}
     
     /**
      * Add a URL field value.
@@ -200,68 +175,4 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 			return this.field(name, value.toString());
 		}
 	}
-    
-    /**
-     * Add a request body parameter value.
-     * 
-     * @param name Name.
-     * @param value Value.
-     * @return Current instance for builder pattern.
-     */
-	protected TraktApiBuilder<T> postParameter(String name, String value) {
-		this.postParameters.put(name, value);
-		return this;
-	}
-    
-    /**
-     * Add a request body parameter value.
-     * 
-     * @param name Name.
-     * @param value Value.
-     * @return Current instance for builder pattern.
-     */
-	protected TraktApiBuilder<T> postParameter(String name, boolean value) {
-		return this.postParameter(name, Boolean.toString(value));
-	}
-    
-    /**
-     * Add a request body parameter value.
-     * 
-     * @param name Name.
-     * @param value Value.
-     * @return Current instance for builder pattern.
-     */
-	protected TraktApiBuilder<T> postParameter(String name, int value) {
-		return this.postParameter(name, Integer.toString(value));
-	}
-    
-    /**
-     * Add a request body parameter value.
-     * 
-     * @param name Name.
-     * @param valueList List of value.
-     * @return Current instance for builder pattern.
-     */
-	protected <K extends Object> TraktApiBuilder<T> postParameter(String name, List<K> valueList) {
-    	StringBuilder builder = new StringBuilder();
-    	Iterator<K> iterator = valueList.iterator();
-    	while (iterator.hasNext()) {
-    		builder.append(encodeUrl(iterator.next().toString()));
-    		if (iterator.hasNext()) {
-    			builder.append(SEPERATOR);
-    		}
-		}
-    	return this.postParameter(name, builder.toString());
-    }
-    
-    /**
-     * Add a request body parameter value.
-     * 
-     * @param name Name.
-     * @param value Value.
-     * @return Current instance for builder pattern.
-     */
-	protected <K extends TraktEnumeration> TraktApiBuilder<T> postParameter(String name, K value) {
-    	return this.postParameter(name, value.toString());
-    }
 }

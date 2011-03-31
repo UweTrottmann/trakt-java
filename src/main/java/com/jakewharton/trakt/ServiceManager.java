@@ -1,5 +1,7 @@
 package com.jakewharton.trakt;
 
+import com.jakewharton.trakt.services.UserService;
+
 /**
  * Class to manage service creation with default settings.
  * 
@@ -7,11 +9,11 @@ package com.jakewharton.trakt;
  */
 public class ServiceManager {
 	/** API key. */
-	private String appKeyValue;
+	private String apiKeyValue;
 	/** User email. */
-	private String email;
+	private String username;
 	/** User password. */
-	private String password;
+	private String password_sha;
 	/** Connection timeout (in milliseconds). */
 	private Integer connectionTimeout;
 	/** Read timeout (in milliseconds). */
@@ -25,13 +27,13 @@ public class ServiceManager {
 	/**
 	 * Set default authentication credentials.
 	 * 
-	 * @param email User email.
-	 * @param password User password.
+	 * @param username Username.
+	 * @param password_sha SHA1 of user password.
 	 * @return Current instance for builder pattern.
 	 */
-	public ServiceManager setAuthentication(String email, String password) {
-		this.email = email;
-		this.password = password;
+	public ServiceManager setAuthentication(String username, String password_sha) {
+		this.username = username;
+		this.password_sha = password_sha;
 		return this;
 	}
 	
@@ -41,8 +43,8 @@ public class ServiceManager {
 	 * @param value API key value.
 	 * @return Current instance for builder pattern.
 	 */
-	public ServiceManager setAppKey(String value) {
-		this.appKeyValue = value;
+	public ServiceManager setApiKey(String value) {
+		this.apiKeyValue = value;
 		return this;
 	}
 	
@@ -74,11 +76,11 @@ public class ServiceManager {
 	 * @param service Service to set up.
 	 */
 	private void setupService(TraktApiService service) {
-		if (this.appKeyValue != null) {
-			service.setAppKey(this.appKeyValue);
+		if (this.apiKeyValue != null) {
+			service.setApiKey(this.apiKeyValue);
 		}
-		if ((this.email != null) && (this.password != null)) {
-			service.setAuthentication(this.email, this.password);
+		if ((this.username != null) && (this.password_sha != null)) {
+			service.setAuthentication(this.username, this.password_sha);
 		}
 		if (this.connectionTimeout != null) {
 			service.setConnectTimeout(this.connectionTimeout);
@@ -88,5 +90,14 @@ public class ServiceManager {
 		}
 	}
 	
+	public UserService userService() {
+		UserService service = ServiceManager.createUserService();
+		this.setupService(service);
+		return service;
+	}
 	
+	
+	public static final UserService createUserService() {
+		return new UserService();
+	}
 }

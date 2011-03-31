@@ -26,6 +26,29 @@ as such.
 Usage
 =====
 
+Quick example:
+
+    ServiceManager manager = new ServiceManager();
+    manager.setAuthentication("username", "sha1_of_password");
+    manager.setApiKey("api_key");
+    
+    List<Watched> watchedList = manager.userService().watched("some_username").fire();
+    for (Watched watched : watchedList) {
+    	System.out.println("Type: " + watched.getType());
+    	System.out.println("Date: " + watched.getWatched());
+    	
+    	switch (watched.getType()) {
+    		case Movie:
+    			System.out.println("Title: " + watched.getMovie().getTitle());
+    			break;
+    		case TvShow:
+    			System.out.println("Title: " + watched.getShow().getTitle());
+    			System.out.println("Episode: " + watched.getEpisode().getTitle());
+    			break;
+    	}
+    	System.out.println();
+    }
+
 Real examples and tests to come soon.
 
 

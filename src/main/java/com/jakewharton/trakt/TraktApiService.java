@@ -2,19 +2,21 @@ package com.jakewharton.trakt;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
-import java.util.Map;
-import com.google.gson.FieldNamingStrategy;
+import java.util.Date;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
-import com.google.gson.annotations.Since;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
+import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.util.Base64;
 
 /**
@@ -37,36 +39,28 @@ public abstract class TraktApiService extends ApiService {
 	/** HTTP authorization type. */
 	private static final String HEADER_AUTHORIZATION_TYPE = "Basic";
 	
-	/** HTTP header name for the Pingdom API KEY */
-	private static final String HEADER_APP_KEY = "App-Key";
-	
 	/** Character set used for encoding and decoding transmitted values. */
 	private static final Charset UTF_8_CHAR_SET = Charset.forName(ApiService.CONTENT_ENCODING);
 	
-	/** REST HTTP method name used when modifying values. */
-	private static final String HTTP_METHOD_PUT = "PUT";
+	/** HTTP post method name. */
+	private static final String HTTP_METHOD_POST = "POST";
 	
 	
 	/** JSON parser for reading the content stream. */
     private final JsonParser parser;
-
-    /**
-     * Optional API version level to limit the deserialization to only class
-     * fields annotated with a {@link Since} annotation equal to or less than
-     * this value.
-     */
-    private Double apiVersion;
+    
+    /** API key. */
+    private String apiKey;
 	
     
     /**
-     * Create a new Pingdom service with our proper default values.
+     * Create a new Trakt service with our proper default values.
      */
 	public TraktApiService() {
 		this.parser = new JsonParser();
 		
 		this.setConnectTimeout(DEFAULT_TIMEOUT_CONNECT);
 		this.setReadTimeout(DEFAULT_TIMEOUT_READ);
-		this.acceptGzip();
 	}
 	
 	
@@ -76,7 +70,7 @@ public abstract class TraktApiService extends ApiService {
 	 * @param url URL to request.
 	 * @return JSON object.
 	 */
-	public JsonObject get(String url) {
+	public JsonElement get(String url) {
 		return this.unmarshall(this.executeGet(url));
 	}
 	
@@ -84,71 +78,49 @@ public abstract class TraktApiService extends ApiService {
 	 * Execute request using HTTP POST.
 	 * 
 	 * @param url URL to request.
-	 * @param parameters Parameters to place in the request body.
+	 * @param postBody JSON object to use as the POST body.
 	 * @return JSON object.
 	 */
-	public JsonObject post(String url, Map<String, String> parameters) {
-		return this.unmarshall(this.executePost(url, parameters));
-	}
-	
-	/**
-	 * Execute request using HTTP DELETE.
-	 * 
-	 * @param url URL to request.
-	 * @return JSON object.
-	 */
-	public JsonObject delete(String url) {
-		return this.unmarshall(this.executeDelete(url));
-	}
-	
-	/**
-	 * Execute request using HTTP PUT.
-	 * 
-	 * @param url URL to request.
-	 * @param parameters Parameters to place in request body.
-	 * @return JSON object.
-	 */
-	public JsonObject put(String url, Map<String, String> parameters) {
-		String content = ApiService.getParametersString(parameters);
-		return this.unmarshall(this.executeMethod(url, content, null, HTTP_METHOD_PUT, HttpURLConnection.HTTP_OK));
+	public JsonElement post(String url, JsonObject postBody) {
+		return this.unmarshall(this.executeMethod(url, postBody.getAsString(), null, HTTP_METHOD_POST, HttpURLConnection.HTTP_OK));
 	}
 	
 	/**
 	 * Set email and password to use for HTTP basic authentication.
 	 * 
-	 * @param email Email.
-	 * @param password Password.
+	 * @param username Username.
+	 * @param password_sha Password SHA1.
 	 */
-	public void setAuthentication(String email, String password) {
-		if ((email == null) || (email.length() == 0)) {
-			throw new IllegalArgumentException("Email must not be empty.");
+	public void setAuthentication(String username, String password_sha) {
+		if ((username == null) || (username.length() == 0)) {
+			throw new IllegalArgumentException("Username must not be empty.");
 		}
-		if ((password == null) || (password.length() == 0)) {
-			throw new IllegalArgumentException("Password must not be empty.");
+		if ((password_sha == null) || (password_sha.length() == 0)) {
+			throw new IllegalArgumentException("Password SHA must not be empty.");
 		}
 		
-		String source = email + ":" + password;
+		String source = username + ":" + password_sha;
 		String authentication = HEADER_AUTHORIZATION_TYPE + " " + Base64.encodeBytes(source.getBytes());
 		
 		this.addRequestHeader(HEADER_AUTHORIZATION, authentication);
 	}
 	
 	/**
-	 * Set API key to use for client authentication by Pingdom.
+	 * Set API key to use for client authentication by Trakt.
 	 * 
-	 * @param value API key.
+	 * @param value of API key.
 	 */
-	public void setAppKey(String value) {
-		this.addRequestHeader(HEADER_APP_KEY, value);
+	public void setApiKey(String value) {
+		this.apiKey = value;
 	}
 	
 	/**
-	 * Set the API version.
+	 * Get the API key.
 	 * 
-	 * @param apiVersion API version.
+	 * @return value of API key.
 	 */
-	public void setApiVersion(double apiVersion) {
-		this.apiVersion = apiVersion;
+	/*package*/ String getApiKey() {
+		return this.apiKey;
 	}
 
 	/**
@@ -161,12 +133,7 @@ public abstract class TraktApiService extends ApiService {
 	 */
 	@SuppressWarnings("unchecked")
 	protected <T> T unmarshall(TypeToken<T> typeToken, JsonElement response) {
-		GsonBuilder gsonBuilder = TraktApiService.getGsonBuilder();
-		if (this.apiVersion != null) {
-			gsonBuilder.setVersion(this.apiVersion);
-		}
-		
-		return (T)gsonBuilder.create().fromJson(response, typeToken.getType());
+		return (T)TraktApiService.getGsonBuilder().create().fromJson(response, typeToken.getType());
 	}
 	
 	/**
@@ -175,11 +142,13 @@ public abstract class TraktApiService extends ApiService {
 	 * @param jsonContent JSON content input stream.
 	 * @return Parsed JSON object.
 	 */
-	protected JsonObject unmarshall(InputStream jsonContent) {
+	protected JsonElement unmarshall(InputStream jsonContent) {
         try {
         	JsonElement element = this.parser.parse(new InputStreamReader(jsonContent, UTF_8_CHAR_SET));
         	if (element.isJsonObject()) {
         		return element.getAsJsonObject();
+        	} else if (element.isJsonArray()) {
+        		return element.getAsJsonArray();
         	} else {
         		throw new ApiException("Unknown content found in response." + element);
         	}
@@ -192,29 +161,30 @@ public abstract class TraktApiService extends ApiService {
 
 	/**
 	 * Create a {@link GsonBuilder} and register all of the custom types needed
-	 * in order to properly deserialize complex Pingdom-specific type.
+	 * in order to properly deserialize complex Trakt-specific type.
 	 * 
 	 * @return Assembled GSON builder instance.
 	 */
 	static GsonBuilder getGsonBuilder() {
 		GsonBuilder builder = new GsonBuilder();
-		builder.setFieldNamingStrategy(new PingdomFieldNamingStrategy());
 		
 		//class types
+		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+			@Override
+			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				//TODO: localize from GMT-8
+				return new Date(json.getAsLong() * TraktApiBuilder.MILLISECONDS_IN_SECOND); //S to MS
+			}
+		});
 		
 		//enum types
+		builder.registerTypeAdapter(MediaType.class, new JsonDeserializer<MediaType>() {
+			@Override
+			public MediaType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				return MediaType.fromValue(json.getAsString());
+			}
+		});
 		
 		return builder;
-	}
-	
-	/**
-	 * Custom GSON field naming strategy which simply converts the field to all
-	 * lowercase letters.
-	 */
-	private static final class PingdomFieldNamingStrategy implements FieldNamingStrategy {
-		@Override
-		public String translateName(Field field) {
-			return field.getName().toLowerCase();
-		}
 	}
 }
