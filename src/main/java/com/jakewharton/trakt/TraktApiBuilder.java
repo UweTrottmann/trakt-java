@@ -1,5 +1,6 @@
 package com.jakewharton.trakt;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +18,13 @@ import com.jakewharton.apibuilder.ApiBuilder;
 public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	/** API key field name. */
 	protected static final String FIELD_API_KEY = "apikey";
+
+	protected static final String FIELD_USERNAME = "username";
+	protected static final String FIELD_DATE = "date";
+	protected static final String FIELD_DAYS = "days";
+	
+	/** Format for encoding a {@link java.util.Date} in a URL. */
+	private static final SimpleDateFormat URL_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 	
 	/** Trakt API URL base. */
 	private static final String BASE_URL = "http://api.trakt.tv";
@@ -85,6 +93,14 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		return this.service.unmarshall(this.token, this.execute());
 	}
 	
+	public String asUrl() {
+		String url = this.buildUrl();
+		while (url.endsWith("/")) {
+			url = url.substring(0, url.length() - 2);
+		}
+		return url;
+	}
+	
 	/**
 	 * <p>Execute the remote API method and return the JSON object result.<p>
 	 * 
@@ -95,7 +111,10 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @return JSON object instance.
 	 */
 	protected JsonElement execute() {
-		final String url = this.buildUrl();
+		String url = this.buildUrl();
+		while (url.endsWith("/")) {
+			url = url.substring(0, url.length() - 2);
+		}
 		switch (this.method) {
 			case Get:
 				return this.service.get(url);
@@ -160,6 +179,17 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		}
     	return this.parameter(name, builder.toString());
     }
+	
+	/**
+	 * Add a URL field value.
+	 * 
+	 * @param name Name.
+	 * @param date Value.
+	 * @return Current instance for builder pattern.
+	 */
+	protected ApiBuilder field(String name, Date date) {
+		return this.field(name, URL_DATE_FORMAT.format(date));
+	}
     
     /**
      * Add a URL field value.

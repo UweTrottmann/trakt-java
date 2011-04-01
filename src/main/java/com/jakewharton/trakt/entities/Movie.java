@@ -10,20 +10,32 @@ public final class Movie implements TraktEntity {
 	private String url;
 	private String imdbId;
 	private String tmdbId;
+	private Integer plays;
+	private Boolean inCollection;
+	private Images images;
 	
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 	public Integer getYear() {
-		return year;
+		return this.year;
 	}
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 	public String getImdbId() {
-		return imdbId;
+		return this.imdbId;
 	}
 	public String getTmdbId() {
-		return tmdbId;
+		return this.tmdbId;
+	}
+	public Integer getPlays() {
+		return this.plays;
+	}
+	public Boolean getInCollection() {
+		return this.inCollection;
+	}
+	public Images getImages() {
+		return this.images;
 	}
 }

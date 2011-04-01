@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -44,6 +46,9 @@ public abstract class TraktApiService extends ApiService {
 	
 	/** HTTP post method name. */
 	private static final String HTTP_METHOD_POST = "POST";
+	
+	/** Format for decoding JSON dates in string format. */
+	private static final SimpleDateFormat JSON_STRING_DATE = new SimpleDateFormat("yyy-MM-dd");
 	
 	
 	/** JSON parser for reading the content stream. */
@@ -173,7 +178,15 @@ public abstract class TraktApiService extends ApiService {
 			@Override
 			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 				//TODO: localize from GMT-8
-				return new Date(json.getAsLong() * TraktApiBuilder.MILLISECONDS_IN_SECOND); //S to MS
+				try {
+					return new Date(json.getAsLong() * TraktApiBuilder.MILLISECONDS_IN_SECOND); //S to MS
+				} catch (NumberFormatException outer) {
+					try {
+						return JSON_STRING_DATE.parse(json.getAsString());
+					} catch (ParseException inner) {
+						throw outer;
+					}
+				}
 			}
 		});
 		

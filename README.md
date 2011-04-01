@@ -32,8 +32,10 @@ Quick example:
     manager.setAuthentication("username", "sha1_of_password");
     manager.setApiKey("api_key");
     
-    List<Watched> watchedList = manager.userService().watched("some_username").fire();
-    for (Watched watched : watchedList) {
+    //Recently watched
+    List<MediaEntity> watchedList =
+    	manager.userService().watched("justin").fire();
+    for (MediaEntity watched : watchedList) {
     	System.out.println("Type: " + watched.getType());
     	System.out.println("Date: " + watched.getWatched());
     	
@@ -43,8 +45,27 @@ Quick example:
     			break;
     		case TvShow:
     			System.out.println("Title: " + watched.getShow().getTitle());
-    			System.out.println("Episode: " + watched.getEpisode().getTitle());
+    			System.out.println("Ep.#: " + watched.getEpisode().getTitle());
     			break;
+    	}
+    	System.out.println();
+    }
+    
+    //Upcoming show episodes
+    Date today = new Date();
+    List<CalendarDate> calendarShows =
+    	manager.userService().calendarShows("justin").from(today, 3).fire();
+    for (CalendarDate calendarDate : calendarShows) {
+    	System.out.println(calendarDate.getDate());
+    	System.out.println("-------------------------");
+    	for (CalendarTvShowEpisode episode : calendarDate.getEpisodes()) {
+    		System.out.print(episode.getShow().getTitle());
+    		System.out.print(" - ");
+    		System.out.print(episode.getEpisode().getSeason());
+    		System.out.print("x");
+    		System.out.print(episode.getEpisode().getNumber());
+    		System.out.print(" - ");
+    		System.out.println(episode.getEpisode().getTitle());
     	}
     	System.out.println();
     }

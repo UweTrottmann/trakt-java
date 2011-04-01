@@ -9,22 +9,30 @@ public final class TvShowEpisode implements TraktEntity {
 	private Integer season;
 	private Integer number;
 	private String title;
+	private String overview;
 	private String url;
 	private Date firstAired;
+	private Date inserted;
 	
 	public Integer getSeason() {
-		return season;
+		return this.season;
 	}
 	public Integer getNumber() {
-		return number;
+		return this.number;
 	}
 	public String getTitle() {
-		return title;
+		return this.title;
+	}
+	public String getOverview() {
+		return this.overview;
 	}
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 	public Date getFirstAired() {
-		return firstAired;
+		return this.firstAired;
+	}
+	public Date getInserted() {
+		return this.inserted;
 	}
 }
