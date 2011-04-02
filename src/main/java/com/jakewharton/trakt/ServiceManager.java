@@ -1,6 +1,7 @@
 package com.jakewharton.trakt;
 
 import com.jakewharton.trakt.services.CalendarService;
+import com.jakewharton.trakt.services.TrendingService;
 import com.jakewharton.trakt.services.UserService;
 
 /**
@@ -97,6 +98,12 @@ public class ServiceManager {
 		return service;
 	}
 	
+	public TrendingService trendingService() {
+		TrendingService service = ServiceManager.createTrendingService();
+		this.setupService(service);
+		return service;
+	}
+	
 	public UserService userService() {
 		UserService service = ServiceManager.createUserService();
 		this.setupService(service);
@@ -105,6 +112,10 @@ public class ServiceManager {
 	
 	public static final CalendarService createCalendarService() {
 		return new CalendarService();
+	}
+	
+	public static final TrendingService createTrendingService() {
+		return new TrendingService();
 	}
 	
 	public static final UserService createUserService() {
