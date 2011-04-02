@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 
@@ -119,7 +120,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 			case Get:
 				return this.service.get(url);
 			case Post:
-				return this.service.post(url, null); //TODO: THIS w/JSON!
+				return this.service.post(url, new JsonObject()); //TODO: THIS w/JSON!
 			default:
 				throw new IllegalArgumentException("Unknown HttpMethod type " + this.method.toString());
 		}

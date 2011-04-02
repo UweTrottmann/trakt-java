@@ -87,7 +87,7 @@ public abstract class TraktApiService extends ApiService {
 	 * @return JSON object.
 	 */
 	public JsonElement post(String url, JsonObject postBody) {
-		return this.unmarshall(this.executeMethod(url, postBody.getAsString(), null, HTTP_METHOD_POST, HttpURLConnection.HTTP_OK));
+		return this.unmarshall(this.executeMethod(url, postBody.toString(), null, HTTP_METHOD_POST, HttpURLConnection.HTTP_OK));
 	}
 	
 	/**
