@@ -1,5 +1,6 @@
 package com.jakewharton.trakt;
 
+import com.jakewharton.trakt.services.CalendarService;
 import com.jakewharton.trakt.services.UserService;
 
 /**
@@ -90,12 +91,21 @@ public class ServiceManager {
 		}
 	}
 	
+	public CalendarService calendarService() {
+		CalendarService service = ServiceManager.createCalendarService();
+		this.setupService(service);
+		return service;
+	}
+	
 	public UserService userService() {
 		UserService service = ServiceManager.createUserService();
 		this.setupService(service);
 		return service;
 	}
 	
+	public static final CalendarService createCalendarService() {
+		return new CalendarService();
+	}
 	
 	public static final UserService createUserService() {
 		return new UserService();
