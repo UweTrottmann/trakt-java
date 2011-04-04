@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 
@@ -52,6 +51,9 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	/** HTTP request method to use. */
 	private final HttpMethod method;
 	
+	/** String representation of JSON POST body. */
+	private String postBody;
+	
 	
 	/**
 	 * Initialize a new builder for an HTTP GET call.
@@ -80,6 +82,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		
 		this.token = token;
 		this.method = method;
+		this.postBody = "";
 		
 		this.field(FIELD_API_KEY, this.service.getApiKey());
 	}
@@ -92,14 +95,6 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 */
 	public final T fire() {
 		return this.service.unmarshall(this.token, this.execute());
-	}
-	
-	public String asUrl() {
-		String url = this.buildUrl();
-		while (url.endsWith("/")) {
-			url = url.substring(0, url.length() - 2);
-		}
-		return url;
 	}
 	
 	/**
@@ -116,11 +111,12 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		while (url.endsWith("/")) {
 			url = url.substring(0, url.length() - 2);
 		}
+		
 		switch (this.method) {
 			case Get:
 				return this.service.get(url);
 			case Post:
-				return this.service.post(url, new JsonObject()); //TODO: THIS w/JSON!
+				return this.service.post(url, this.postBody);
 			default:
 				throw new IllegalArgumentException("Unknown HttpMethod type " + this.method.toString());
 		}
@@ -205,5 +201,19 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		} else {
 			return this.field(name, value.toString());
 		}
+	}
+	
+	
+	/**
+	 * Serialize object to JSON string and set as POST body.
+	 * 
+	 * @param bodyEntity Object to serialize.
+	 * @return Current instance for builder pattern.
+	 */
+	protected TraktApiBuilder<T> postBody(Object bodyEntity) {
+		assert this.method == HttpMethod.Post;
+		
+		this.postBody = TraktApiService.getGsonBuilder().create().toJson(bodyEntity);
+		return this;
 	}
 }

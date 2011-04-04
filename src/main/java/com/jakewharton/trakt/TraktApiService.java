@@ -12,13 +12,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
 import com.jakewharton.trakt.enumerations.MediaType;
+import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.util.Base64;
 
 /**
@@ -83,11 +86,11 @@ public abstract class TraktApiService extends ApiService {
 	 * Execute request using HTTP POST.
 	 * 
 	 * @param url URL to request.
-	 * @param postBody JSON object to use as the POST body.
+	 * @param postBody String to use as the POST body.
 	 * @return JSON object.
 	 */
-	public JsonElement post(String url, JsonObject postBody) {
-		return this.unmarshall(this.executeMethod(url, postBody.toString(), null, HTTP_METHOD_POST, HttpURLConnection.HTTP_OK));
+	public JsonElement post(String url, String postBody) {
+		return this.unmarshall(this.executeMethod(url, postBody, null, HTTP_METHOD_POST, HttpURLConnection.HTTP_OK));
 	}
 	
 	/**
@@ -195,6 +198,18 @@ public abstract class TraktApiService extends ApiService {
 			@Override
 			public MediaType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 				return MediaType.fromValue(json.getAsString());
+			}
+		});
+		builder.registerTypeAdapter(Rating.class, new JsonDeserializer<Rating>() {
+			@Override
+			public Rating deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				return Rating.fromValue(json.getAsString());
+			}
+		});
+		builder.registerTypeAdapter(Rating.class, new JsonSerializer<Rating>() {
+			@Override
+			public JsonElement serialize(Rating src, Type typeOfSrc, JsonSerializationContext context) {
+				return new JsonPrimitive(src.toString());
 			}
 		});
 		
