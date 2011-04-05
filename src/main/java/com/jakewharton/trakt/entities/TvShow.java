@@ -47,7 +47,7 @@ public final class TvShow extends MediaBase implements TraktEntity {
 	public String getTvdbId() {
 		return this.tvdbId;
 	}
-	public String getTvrageId() {
+	public String getTvRageId() {
 		return this.tvrageId;
 	}
 	public List<TvShowEpisode> getEpisodes() {
