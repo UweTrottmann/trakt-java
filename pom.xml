@@ -203,7 +203,7 @@
 		</repository>
 		<repository>
 			<id>repository.jakewharton.com</id>
-			<url>http://repository.jakewharton.com/</url>
+			<url>http://r.jakewharton.com/maven/release/</url>
 		</repository>
 	</repositories>
 </project>

@@ -18,6 +18,6 @@ Maven
 <repository>
   <id>com.jakewharton.repository</id>
   <name>Jake Wharton's Personal Repository</name>
-  <url>http://repository.jakewharton.com/</url>
+  <url>http://r.jakewharton.com/maven/release/</url>
 </repository>
 -------------------------------------------------
