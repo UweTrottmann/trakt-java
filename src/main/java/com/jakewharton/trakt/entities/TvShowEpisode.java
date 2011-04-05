@@ -13,6 +13,7 @@ public final class TvShowEpisode implements TraktEntity {
 	private String url;
 	private Date firstAired;
 	private Date inserted;
+	private Integer plays;
 	
 	public Integer getSeason() {
 		return this.season;
@@ -34,5 +35,8 @@ public final class TvShowEpisode implements TraktEntity {
 	}
 	public Date getInserted() {
 		return this.inserted;
+	}
+	public Integer getPlays() {
+		return this.plays;
 	}
 }

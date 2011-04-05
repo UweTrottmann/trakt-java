@@ -1,5 +1,6 @@
 package com.jakewharton.trakt.entities;
 
+import java.util.List;
 import com.jakewharton.trakt.TraktEntity;
 
 public final class Movie implements TraktEntity {
@@ -13,6 +14,9 @@ public final class Movie implements TraktEntity {
 	private Integer plays;
 	private Boolean inCollection;
 	private Images images;
+	private List<UserProfile> topWatchers;
+	private Ratings ratings;
+	private Stats stats;
 	
 	public String getTitle() {
 		return this.title;
@@ -37,5 +41,14 @@ public final class Movie implements TraktEntity {
 	}
 	public Images getImages() {
 		return this.images;
+	}
+	public List<UserProfile> getTopWatchers() {
+		return this.topWatchers;
+	}
+	public Ratings getRatings() {
+		return this.ratings;
+	}
+	public Stats getStats() {
+		return this.stats;
 	}
 }

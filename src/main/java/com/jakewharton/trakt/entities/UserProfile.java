@@ -114,6 +114,8 @@ public final class UserProfile implements TraktEntity {
 	private Stats stats;
 	private MediaEntity watching;
 	private List<MediaEntity> watched;
+	private Integer plays;
+	private TvShowEpisode episode;
 	
 	public String getUsername() {
 		return this.username;
@@ -153,5 +155,11 @@ public final class UserProfile implements TraktEntity {
 	}
 	public List<MediaEntity> getWatched() {
 		return this.watched;
+	}
+	public Integer getPlays() {
+		return this.plays;
+	}
+	public TvShowEpisode getEpisode() {
+		return this.episode;
 	}
 }

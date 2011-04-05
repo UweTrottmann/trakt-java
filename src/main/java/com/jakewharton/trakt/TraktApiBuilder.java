@@ -22,6 +22,10 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected static final String FIELD_USERNAME = "username";
 	protected static final String FIELD_DATE = "date";
 	protected static final String FIELD_DAYS = "days";
+	protected static final String FIELD_QUERY = "query";
+	protected static final String FIELD_SEASON = "season";
+	protected static final String FIELD_EPISODE = "episode";
+	protected static final String FIELD_EXTENDED = "extended";
 	
 	/** Format for encoding a {@link java.util.Date} in a URL. */
 	private static final SimpleDateFormat URL_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");

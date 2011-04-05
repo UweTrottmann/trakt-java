@@ -23,6 +23,10 @@ public final class TvShow implements TraktEntity {
 	private String tvrageId;
 	private Images images;
 	private List<TvShowEpisode> episodes;
+	private List<UserProfile> topWatchers;
+	private List<TvShowEpisode> topEpisodes;
+	private Ratings ratings;
+	private Stats stats;
 	
 	public String getTitle() {
 		return this.title;
@@ -71,5 +75,17 @@ public final class TvShow implements TraktEntity {
 	}
 	public List<TvShowEpisode> getEpisodes() {
 		return this.episodes;
+	}
+	public List<UserProfile> getTopWatchers() {
+		return this.topWatchers;
+	}
+	public List<TvShowEpisode> getTopEpisodes() {
+		return this.topEpisodes;
+	}
+	public Ratings getRatings() {
+		return this.ratings;
+	}
+	public Stats getStats() {
+		return this.stats;
 	}
 }
