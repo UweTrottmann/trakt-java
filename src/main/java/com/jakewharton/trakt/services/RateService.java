@@ -4,7 +4,7 @@ import java.io.Serializable;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
-import com.jakewharton.trakt.entities.RatingSummary;
+import com.jakewharton.trakt.entities.RatingResponse;
 import com.jakewharton.trakt.enumerations.Rating;
 
 public class RateService extends TraktApiService {
@@ -50,7 +50,7 @@ public class RateService extends TraktApiService {
 			);
 	}
 	
-	public static final class EpisodeBuilder extends TraktApiBuilder<RatingSummary> {
+	public static final class EpisodeBuilder extends TraktApiBuilder<RatingResponse> {
 		private static final String URI = "/rate/episode/{" + FIELD_API_KEY + "}";
 
 		static final class Parameters implements Serializable {
@@ -90,7 +90,7 @@ public class RateService extends TraktApiService {
 		}
 		
 		private EpisodeBuilder(RateService service, Parameters parameters) {
-			super(service, new TypeToken<RatingSummary>() {}, URI, HttpMethod.Post);
+			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
 			this.postBody(parameters);
 		}
 	}
@@ -129,7 +129,7 @@ public class RateService extends TraktApiService {
 		);
 	}
 	
-	private static final class MovieBuilder extends TraktApiBuilder<RatingSummary> {
+	private static final class MovieBuilder extends TraktApiBuilder<RatingResponse> {
 		private static final String URI = "/rate/movie/{" + FIELD_API_KEY + "}";
 		
 		static final class Parameters implements Serializable {
@@ -159,7 +159,7 @@ public class RateService extends TraktApiService {
 		}
 		
 		private MovieBuilder(RateService service, Parameters parameters) {
-			super(service, new TypeToken<RatingSummary>() {}, URI, HttpMethod.Post);
+			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
 			this.postBody(parameters);
 		}
 	}
@@ -198,7 +198,7 @@ public class RateService extends TraktApiService {
 		);
 	}
 	
-	private static final class ShowBuilder extends TraktApiBuilder<RatingSummary> {
+	private static final class ShowBuilder extends TraktApiBuilder<RatingResponse> {
 		private static final String URI = "/rate/show/{" + FIELD_API_KEY + "}";
 		
 		static final class Parameters implements Serializable {
@@ -228,7 +228,7 @@ public class RateService extends TraktApiService {
 		}
 		
 		private ShowBuilder(RateService service, Parameters parameters) {
-			super(service, new TypeToken<RatingSummary>() {}, URI, HttpMethod.Post);
+			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
 			this.postBody(parameters);
 		}
 	}
