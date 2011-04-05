@@ -25,6 +25,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class CalendarShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
+		private static final int DEFAULT_DAYS = 7;
 		private static final String URI = "/user/calendar/shows.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}/{" + FIELD_DATE + "}/{" + FIELD_DAYS + "}";
 		
 		private CalendarShowsBuilder(UserService service, String username) {
@@ -34,15 +35,36 @@ public final class UserService extends TraktApiService {
 		}
 		
 		/**
-		 * Change the date range for the list.
+		 * Start date for the calendar.
 		 * 
-		 * @param date Start date for the calendar.
-		 * @param days Number of days to display starting from the date.
+		 * @param date Value.
 		 * @return Builder instance.
 		 */
-		public CalendarShowsBuilder from(Date date, int days) {
+		public CalendarShowsBuilder date(Date date) {
 			this.field(FIELD_DATE, date);
+			
+			if (!this.hasField(FIELD_DAYS)) {
+				//Set default.
+				this.field(FIELD_DAYS, DEFAULT_DAYS);
+			}
+			
+			return this;
+		}
+		
+		/**
+		 * Number of days to display starting from the date.
+		 * 
+		 * @param days Value.
+		 * @return Builder instance.
+		 */
+		public CalendarShowsBuilder days(int days) {
 			this.field(FIELD_DAYS, days);
+			
+			if (!this.hasField(FIELD_DATE)) {
+				//Set default.
+				this.field(FIELD_DATE, new Date());
+			}
+			
 			return this;
 		}
 	}

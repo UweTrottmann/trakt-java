@@ -52,9 +52,9 @@ Quick example:
     }
     
     //Upcoming show episodes
-    Date today = new Date();
+    Date apocolypse = new Date(2012, 12, 21);
     List<CalendarDate> calendarShows =
-    	manager.userService().calendarShows("justin").from(today, 3).fire();
+    	manager.userService().calendarShows("justin").date(apocolypse).days(3).fire();
     for (CalendarDate calendarDate : calendarShows) {
     	System.out.println(calendarDate.getDate());
     	System.out.println("-------------------------");
