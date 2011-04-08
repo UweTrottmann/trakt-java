@@ -125,7 +125,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * Mark current builder as Trakt developer method. This will automatically
 	 * add the debug fields to the post body.
 	 */
-	protected void markAsDeveloperMethod() {
+	protected final void markAsDeveloperMethod() {
 		this.postParameter(POST_PLUGIN_VERSION, service.getPluginVersion());
 		this.postParameter(POST_MEDIA_CENTER_VERSION, service.getMediaCenterVersion());
 		this.postParameter(POST_MEDIA_CENTER_DATE, service.getMediaCenterDate());
@@ -140,7 +140,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * 
 	 * @return JSON object instance.
 	 */
-	protected JsonElement execute() {
+	protected final JsonElement execute() {
 		String url = this.buildUrl();
 		while (url.endsWith("/")) {
 			url = url.substring(0, url.length() - 2);
@@ -162,7 +162,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param apiKey API key string.
 	 * @return Current instance for builder pattern.
 	 */
-	/*package*/ ApiBuilder api(String apiKey) {
+	/*package*/ final ApiBuilder api(String apiKey) {
 		return this.field(FIELD_API_KEY, apiKey);
 	}
 	
@@ -173,7 +173,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param value Value.
 	 * @return Current instance for builder pattern.
 	 */
-	protected ApiBuilder parameter(String name, Date value) {
+	protected final ApiBuilder parameter(String name, Date value) {
 		return this.parameter(name, Long.toString(value.getTime() / MILLISECONDS_IN_SECOND));
 	}
 	
@@ -184,7 +184,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param value Value.
 	 * @return Current instance for builder pattern.
 	 */
-	protected <K extends TraktEnumeration> ApiBuilder parameter(String name, K value) {
+	protected final <K extends TraktEnumeration> ApiBuilder parameter(String name, K value) {
 		if ((value == null) || (value.toString() == null) || (value.toString().length() == 0)) {
 			return this.parameter(name, "");
 		} else {
@@ -199,7 +199,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param valueList List of values.
 	 * @return Current instance for builder pattern.
 	 */
-	protected <K extends Object> ApiBuilder parameter(String name, List<K> valueList) {
+	protected final <K extends Object> ApiBuilder parameter(String name, List<K> valueList) {
     	StringBuilder builder = new StringBuilder();
     	Iterator<K> iterator = valueList.iterator();
     	while (iterator.hasNext()) {
@@ -218,7 +218,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param date Value.
 	 * @return Current instance for builder pattern.
 	 */
-	protected ApiBuilder field(String name, Date date) {
+	protected final ApiBuilder field(String name, Date date) {
 		return this.field(name, URL_DATE_FORMAT.format(date));
 	}
     
@@ -229,7 +229,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
      * @param value Value.
      * @return Current instance for builder pattern.
      */
-	protected <K extends TraktEnumeration> ApiBuilder field(String name, K value) {
+	protected final <K extends TraktEnumeration> ApiBuilder field(String name, K value) {
 		if ((value == null) || (value.toString() == null) || (value.toString().length() == 0)) {
 			return this.field(name);
 		} else {
@@ -237,20 +237,20 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		}
 	}
 	
-	protected boolean hasPostParameter(String name) {
+	protected final boolean hasPostParameter(String name) {
 		return this.postBody.has(name);
 	}
 	
-	protected TraktApiBuilder<T> postParameter(String name, String value) {
+	protected final TraktApiBuilder<T> postParameter(String name, String value) {
 		this.postBody.addProperty(name, value);
 		return this;
 	}
 	
-	protected TraktApiBuilder<T> postParameter(String name, int value) {
+	protected final TraktApiBuilder<T> postParameter(String name, int value) {
 		return this.postParameter(name, Integer.toString(value));
 	}
 	
-	protected <K extends TraktEnumeration> TraktApiBuilder<T> postParameter(String name, K value) {
+	protected final <K extends TraktEnumeration> TraktApiBuilder<T> postParameter(String name, K value) {
 		if ((value != null) && (value.toString() != null) && (value.toString().length() > 0)) {
 			return this.postParameter(name, value.toString());
 		}
