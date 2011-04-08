@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
+import com.jakewharton.apibuilder.ApiException;
 
 /**
  * Trakt-specific API builder extension which provides helper methods for
@@ -26,6 +28,10 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected static final String FIELD_SEASON = "season";
 	protected static final String FIELD_EPISODE = "episode";
 	protected static final String FIELD_EXTENDED = "extended";
+	
+	private static final String POST_PLUGIN_VERSION = "plugin_version";
+	private static final String POST_MEDIA_CENTER_VERSION = "media_center_version";
+	private static final String POST_MEDIA_CENTER_DATE = "media_center_date";
 	
 	/** Format for encoding a {@link java.util.Date} in a URL. */
 	private static final SimpleDateFormat URL_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
@@ -56,7 +62,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	private final HttpMethod method;
 	
 	/** String representation of JSON POST body. */
-	private String postBody;
+	private JsonObject postBody;
 	
 	
 	/**
@@ -86,7 +92,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		
 		this.token = token;
 		this.method = method;
-		this.postBody = "";
+		this.postBody = new JsonObject();
 		
 		this.field(FIELD_API_KEY, this.service.getApiKey());
 	}
@@ -96,9 +102,33 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * Execute remote API method and unmarshall the result to its native type.
 	 * 
 	 * @return Instance of result type.
+	 * @throws ApiException if validation fails.
 	 */
 	public final T fire() {
+		try {
+			this.performValidation();
+		} catch (Exception e) {
+			throw new ApiException(e);
+		}
+		
 		return this.service.unmarshall(this.token, this.execute());
+	}
+	
+	/**
+	 * Perform any required validation before firing off the request.
+	 */
+	protected void performValidation() {
+		//Override me!
+	}
+	
+	/**
+	 * Mark current builder as Trakt developer method. This will automatically
+	 * add the debug fields to the post body.
+	 */
+	protected void markAsDeveloperMethod() {
+		this.postParameter(POST_PLUGIN_VERSION, service.getPluginVersion());
+		this.postParameter(POST_MEDIA_CENTER_VERSION, service.getMediaCenterVersion());
+		this.postParameter(POST_MEDIA_CENTER_DATE, service.getMediaCenterDate());
 	}
 	
 	/**
@@ -120,7 +150,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 			case Get:
 				return this.service.get(url);
 			case Post:
-				return this.service.post(url, this.postBody);
+				return this.service.post(url, this.postBody.toString());
 			default:
 				throw new IllegalArgumentException("Unknown HttpMethod type " + this.method.toString());
 		}
@@ -207,17 +237,23 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		}
 	}
 	
+	protected boolean hasPostParameter(String name) {
+		return this.postBody.has(name);
+	}
 	
-	/**
-	 * Serialize object to JSON string and set as POST body.
-	 * 
-	 * @param bodyEntity Object to serialize.
-	 * @return Current instance for builder pattern.
-	 */
-	protected TraktApiBuilder<T> postBody(Object bodyEntity) {
-		assert this.method == HttpMethod.Post;
-		
-		this.postBody = TraktApiService.getGsonBuilder().create().toJson(bodyEntity);
+	protected TraktApiBuilder<T> postParameter(String name, String value) {
+		this.postBody.addProperty(name, value);
+		return this;
+	}
+	
+	protected TraktApiBuilder<T> postParameter(String name, int value) {
+		return this.postParameter(name, Integer.toString(value));
+	}
+	
+	protected <K extends TraktEnumeration> TraktApiBuilder<T> postParameter(String name, K value) {
+		if ((value != null) && (value.toString() != null) && (value.toString().length() > 0)) {
+			return this.postParameter(name, value.toString());
+		}
 		return this;
 	}
 }

@@ -53,12 +53,30 @@ public abstract class TraktApiService extends ApiService {
 	/** Format for decoding JSON dates in string format. */
 	private static final SimpleDateFormat JSON_STRING_DATE = new SimpleDateFormat("yyy-MM-dd");
 	
+	/** Default plugin version debug string. */
+	private static final String DEFAULT_PLUGIN_VERSION = "trakt-java library";
+	
+	/** Default media center version debug string. */
+	private static final String DEFAULT_MEDIA_CENTER_VERSION = "trakt-java library";
+	
+	/** Default media center build date debug string. */
+	private static final String DEFAULT_MEDIA_CENTER_DATE = "trakt-java library";
+	
 	
 	/** JSON parser for reading the content stream. */
     private final JsonParser parser;
     
     /** API key. */
     private String apiKey;
+    
+    /** Plugin version debug string. */
+    private String pluginVersion;
+    
+    /** Media center version debug string. */
+    private String mediaCenterVersion;
+    
+    /** Media center build date debug string. */
+    private String mediaCenterDate;
 	
     
     /**
@@ -67,8 +85,14 @@ public abstract class TraktApiService extends ApiService {
 	public TraktApiService() {
 		this.parser = new JsonParser();
 		
+		//Setup timeout defaults
 		this.setConnectTimeout(DEFAULT_TIMEOUT_CONNECT);
 		this.setReadTimeout(DEFAULT_TIMEOUT_READ);
+		
+		//Setup debug string defaults
+		this.setPluginVersion(DEFAULT_PLUGIN_VERSION);
+		this.setMediaCenterVersion(DEFAULT_MEDIA_CENTER_VERSION);
+		this.setMediaCenterDate(DEFAULT_MEDIA_CENTER_DATE);
 	}
 	
 	
@@ -114,21 +138,75 @@ public abstract class TraktApiService extends ApiService {
 	}
 	
 	/**
+	 * Get the API key.
+	 * 
+	 * @return Value
+	 */
+	/*package*/ String getApiKey() {
+		return this.apiKey;
+	}
+	
+	/**
 	 * Set API key to use for client authentication by Trakt.
 	 * 
-	 * @param value of API key.
+	 * @param Value.
 	 */
 	public void setApiKey(String value) {
 		this.apiKey = value;
 	}
-	
+
 	/**
-	 * Get the API key.
+	 * Get the plugin version debug string.
 	 * 
-	 * @return value of API key.
+	 * @return Value.
 	 */
-	/*package*/ String getApiKey() {
-		return this.apiKey;
+	/*package*/ String getPluginVersion() {
+		return pluginVersion;
+	}
+
+	/**
+	 * Set the plugin version debug string.
+	 * 
+	 * @param pluginVersion Value.
+	 */
+	public void setPluginVersion(String pluginVersion) {
+		this.pluginVersion = pluginVersion;
+	}
+
+	/**
+	 * Get the media center version debug string.
+	 * 
+	 * @return Value.
+	 */
+	/*package*/ String getMediaCenterVersion() {
+		return mediaCenterVersion;
+	}
+
+	/**
+	 * Set the media center version debug string.
+	 * 
+	 * @param mediaCenterVersion Value.
+	 */
+	public void setMediaCenterVersion(String mediaCenterVersion) {
+		this.mediaCenterVersion = mediaCenterVersion;
+	}
+
+	/**
+	 * Get the media center build date debug string.
+	 * 
+	 * @return Value.
+	 */
+	/*package*/ String getMediaCenterDate() {
+		return mediaCenterDate;
+	}
+
+	/**
+	 * Set the media center build date debug string.
+	 * 
+	 * @param mediaCenterDate Value.
+	 */
+	public void setMediaCenterDate(String mediaCenterDate) {
+		this.mediaCenterDate = mediaCenterDate;
 	}
 
 	/**

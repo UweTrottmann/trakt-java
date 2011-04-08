@@ -24,6 +24,12 @@ public class ServiceManager {
 	private Integer connectionTimeout;
 	/** Read timeout (in milliseconds). */
 	private Integer readTimeout;
+	/** Plugin version debug string. */
+	private String pluginVersion;
+	/** Media center version debug string. */
+	private String mediaCenterVersion;
+	/** Media center build date debug string. */
+	private String mediaCenterDate;
 	
 	
 	/** Create a new manager instance. */
@@ -77,6 +83,23 @@ public class ServiceManager {
 	}
 	
 	/**
+	 * Set default debug information when using a developer method.
+	 * 
+	 * @param pluginVersion Internal version of your plugin. Make sure to
+	 * increment this for each plugin update.
+	 * @param mediaCenterVersion Version number of the media center, be as
+	 * specific as you can including nightly build number, etc.
+	 * @param mediaCenterDate Build date of the media center.
+	 * @return Current instance for builder pattern.
+	 */
+	public ServiceManager setDebugInfo(String pluginVersion, String mediaCenterVersion, String mediaCenterDate) {
+		this.pluginVersion = pluginVersion;
+		this.mediaCenterVersion = mediaCenterVersion;
+		this.mediaCenterDate = mediaCenterDate;
+		return this;
+	}
+	
+	/**
 	 * Set up a new service with the defaults.
 	 * 
 	 * @param service Service to set up.
@@ -93,6 +116,15 @@ public class ServiceManager {
 		}
 		if (this.readTimeout != null) {
 			service.setReadTimeout(this.readTimeout);
+		}
+		if (this.pluginVersion != null) {
+			service.setPluginVersion(this.pluginVersion);
+		}
+		if (this.mediaCenterVersion != null) {
+			service.setMediaCenterVersion(this.mediaCenterVersion);
+		}
+		if (this.mediaCenterDate != null) {
+			service.setMediaCenterDate(this.mediaCenterDate);
 		}
 	}
 	

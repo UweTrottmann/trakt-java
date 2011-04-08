@@ -1,6 +1,5 @@
 package com.jakewharton.trakt.services;
 
-import java.io.Serializable;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
@@ -13,19 +12,10 @@ public class RateService extends TraktApiService {
 	 * send out social updates to Facebook, Twitter, and Tumblr.
 	 * 
 	 * @param tvdbId TVDB ID for the show.
-	 * @param season Show season. Send 0 if watching a special.
-	 * @param episode Show episode.
-	 * @param rating User rating.
 	 * @return Builder instance.
 	 */
-	public EpisodeBuilder episode(int tvdbId, int season, int episode, Rating rating) {
-		return new EpisodeBuilder(this,
-			new EpisodeBuilder.Parameters()
-					.setTvdbId(tvdbId)
-					.setSeason(season)
-					.setEpisode(episode)
-					.setRating(rating)
-		);
+	public EpisodeBuilder episode(int tvdbId) {
+		return new EpisodeBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -34,64 +24,64 @@ public class RateService extends TraktApiService {
 	 * 
 	 * @param title Show title.
 	 * @param year Show year.
-	 * @param season Show season. Send 0 if watching a special.
-	 * @param episode Show episode.
-	 * @param rating User rating.
 	 * @return Builder instance.
 	 */
-	public EpisodeBuilder episode(String title, int year, int season, int episode, Rating rating) {
-		return new EpisodeBuilder(this,
-				new EpisodeBuilder.Parameters()
-						.setTitle(title)
-						.setYear(year)
-						.setSeason(season)
-						.setEpisode(episode)
-						.setRating(rating)
-			);
+	public EpisodeBuilder episode(String title, int year) {
+		return new EpisodeBuilder(this).title(title).year(year);
 	}
 	
 	public static final class EpisodeBuilder extends TraktApiBuilder<RatingResponse> {
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_SEASON = "season";
+		private static final String POST_EPISODE = "episode";
+		private static final String POST_RATING = "rating";
+		
 		private static final String URI = "/rate/episode/{" + FIELD_API_KEY + "}";
-
-		static final class Parameters implements Serializable {
-			private static final long serialVersionUID = -2457836489210716934L;
-			
-			@SuppressWarnings("unused") private Integer tvdbId;
-			@SuppressWarnings("unused") private String title;
-			@SuppressWarnings("unused") private Integer year;
-			@SuppressWarnings("unused") private Integer season;
-			@SuppressWarnings("unused") private Integer episode;
-			@SuppressWarnings("unused") private Rating rating;
-			
-			public Parameters setTvdbId(Integer tvdbId) {
-				this.tvdbId = tvdbId;
-				return this;
-			}
-			public Parameters setTitle(String title) {
-				this.title = title;
-				return this;
-			}
-			public Parameters setYear(Integer year) {
-				this.year = year;
-				return this;
-			}
-			public Parameters setSeason(Integer season) {
-				this.season = season;
-				return this;
-			}
-			public Parameters setEpisode(Integer episode) {
-				this.episode = episode;
-				return this;
-			}
-			public Parameters setRating(Rating rating) {
-				this.rating = rating;
-				return this;
-			}
+		
+		private EpisodeBuilder(RateService service) {
+			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
 		}
 		
-		private EpisodeBuilder(RateService service, Parameters parameters) {
-			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
-			this.postBody(parameters);
+		public EpisodeBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
+			return this;
+		}
+		
+		public EpisodeBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+		
+		public EpisodeBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+		
+		public EpisodeBuilder season(int season) {
+			this.postParameter(POST_SEASON, season);
+			return this;
+		}
+		
+		public EpisodeBuilder episode(int episode) {
+			this.postParameter(POST_EPISODE, episode);
+			return this;
+		}
+		
+		public EpisodeBuilder rating(Rating rating) {
+			this.postParameter(POST_RATING, rating);
+			return this;
+		}
+
+		@Override
+		protected void performValidation() {
+			assert this.hasPostParameter(POST_TVDB_ID)
+				|| (this.hasPostParameter(POST_TITLE) && this.hasPostParameter(POST_YEAR))
+				: "Either TVDB ID or both title and year is required.";
+			assert this.hasPostParameter(POST_SEASON) : "Season is required.";
+			assert this.hasPostParameter(POST_EPISODE) : "Episode is required.";
+			assert this.hasPostParameter(POST_RATING) : "Rating is required.";
 		}
 	}
 	
@@ -100,15 +90,10 @@ public class RateService extends TraktApiService {
 	 * send out social updates to Facebook, Twitter, and Tumblr.
 	 * 
 	 * @param imdbId IMDB ID for the movie.
-	 * @param rating User rating.
 	 * @return Builder instance.
 	 */
-	public MovieBuilder movie(String imdbId, Rating rating) {
-		return new MovieBuilder(this,
-				new MovieBuilder.Parameters()
-						.setImdbId(imdbId)
-						.setRating(rating)
-		);
+	public MovieBuilder movie(String imdbId) {
+		return new MovieBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -117,50 +102,50 @@ public class RateService extends TraktApiService {
 	 * 
 	 * @param title Movie title.
 	 * @param year Movie year.
-	 * @param rating User rating.
 	 * @return Builder instance.
 	 */
-	public MovieBuilder movie(String title, int year, Rating rating) {
-		return new MovieBuilder(this,
-				new MovieBuilder.Parameters()
-						.setTitle(title)
-						.setYear(year)
-						.setRating(rating)
-		);
+	public MovieBuilder movie(String title, int year) {
+		return new MovieBuilder(this).title(title).year(year);
 	}
 	
-	private static final class MovieBuilder extends TraktApiBuilder<RatingResponse> {
+	public static final class MovieBuilder extends TraktApiBuilder<RatingResponse> {
+		private static final String POST_IMDB_ID = "imdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_RATING = "rating";
+		
 		private static final String URI = "/rate/movie/{" + FIELD_API_KEY + "}";
 		
-		static final class Parameters implements Serializable {
-			private static final long serialVersionUID = 5939126164691001368L;
-			
-			@SuppressWarnings("unused") private String imdbId;
-			@SuppressWarnings("unused") private String title;
-			@SuppressWarnings("unused") private Integer year;
-			@SuppressWarnings("unused") private Rating rating;
-			
-			public Parameters setImdbId(String imdbId) {
-				this.imdbId = imdbId;
-				return this;
-			}
-			public Parameters setTitle(String title) {
-				this.title = title;
-				return this;
-			}
-			public Parameters setYear(Integer year) {
-				this.year = year;
-				return this;
-			}
-			public Parameters setRating(Rating rating) {
-				this.rating = rating;
-				return this;
-			}
+		private MovieBuilder(RateService service) {
+			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
 		}
 		
-		private MovieBuilder(RateService service, Parameters parameters) {
-			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
-			this.postBody(parameters);
+		public MovieBuilder imdbId(String imdbId) {
+			this.postParameter(POST_IMDB_ID, imdbId);
+			return this;
+		}
+		
+		public MovieBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+		
+		public MovieBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+		
+		public MovieBuilder rating(Rating rating) {
+			this.postParameter(POST_RATING, rating);
+			return this;
+		}
+
+		@Override
+		protected void performValidation() {
+			assert this.hasPostParameter(POST_IMDB_ID)
+				|| (this.hasPostParameter(POST_TITLE) && this.hasPostParameter(POST_YEAR))
+				: "Either IMDB ID or both title and year is required.";
+			assert this.hasPostParameter(POST_RATING) : "Rating is required.";
 		}
 	}
 	
@@ -169,15 +154,10 @@ public class RateService extends TraktApiService {
 	 * send out social updates to Facebook, Twitter, and Tumblr.
 	 * 
 	 * @param tvdbId TVDB ID for the show.
-	 * @param rating User rating.
 	 * @return Builder instance.
 	 */
-	public ShowBuilder show(int tvdbId, Rating rating) {
-		return new ShowBuilder(this,
-				new ShowBuilder.Parameters()
-						.setTvdbId(tvdbId)
-						.setRating(rating)
-		);
+	public ShowBuilder show(int tvdbId) {
+		return new ShowBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -186,50 +166,50 @@ public class RateService extends TraktApiService {
 	 * 
 	 * @param title Show title.
 	 * @param year Show year.
-	 * @param rating User rating.
 	 * @return Builder instance.
 	 */
-	public ShowBuilder show(String title, int year, Rating rating) {
-		return new ShowBuilder(this,
-				new ShowBuilder.Parameters()
-						.setTitle(title)
-						.setYear(year)
-						.setRating(rating)
-		);
+	public ShowBuilder show(String title, int year) {
+		return new ShowBuilder(this).title(title).year(year);
 	}
 	
-	private static final class ShowBuilder extends TraktApiBuilder<RatingResponse> {
+	public static final class ShowBuilder extends TraktApiBuilder<RatingResponse> {
+		private static final String POST_TVDB_ID = "imdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_RATING = "rating";
+		
 		private static final String URI = "/rate/show/{" + FIELD_API_KEY + "}";
 		
-		static final class Parameters implements Serializable {
-			private static final long serialVersionUID = 5841662891981241955L;
-			
-			@SuppressWarnings("unused") private Integer tvdbId;
-			@SuppressWarnings("unused") private String title;
-			@SuppressWarnings("unused") private Integer year;
-			@SuppressWarnings("unused") private Rating rating;
-			
-			public Parameters setTvdbId(Integer tvdbId) {
-				this.tvdbId = tvdbId;
-				return this;
-			}
-			public Parameters setTitle(String title) {
-				this.title = title;
-				return this;
-			}
-			public Parameters setYear(Integer year) {
-				this.year = year;
-				return this;
-			}
-			public Parameters setRating(Rating rating) {
-				this.rating = rating;
-				return this;
-			}
+		private ShowBuilder(RateService service) {
+			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
 		}
 		
-		private ShowBuilder(RateService service, Parameters parameters) {
-			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
-			this.postBody(parameters);
+		public ShowBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
+			return this;
+		}
+		
+		public ShowBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+		
+		public ShowBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+		
+		public ShowBuilder rating(Rating rating) {
+			this.postParameter(POST_RATING, rating);
+			return this;
+		}
+
+		@Override
+		protected void performValidation() {
+			assert this.hasPostParameter(POST_TVDB_ID)
+				|| (this.hasPostParameter(POST_TITLE) && this.hasPostParameter(POST_YEAR))
+				: "Either TVDB ID or both title and year is required.";
+			assert this.hasPostParameter(POST_RATING) : "Rating is required.";
 		}
 	}
 }
