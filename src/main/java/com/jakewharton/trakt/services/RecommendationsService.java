@@ -19,7 +19,7 @@ public class RecommendationsService extends TraktApiService {
 	}
 	
 	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/recommendations/movies/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/recommendations/movies/" + FIELD_API_KEY;
 		
 		private MoviesBuilder(RecommendationsService service) {
 			super(service, new TypeToken<List<Movie>>() {}, URI, HttpMethod.Post);
@@ -37,7 +37,7 @@ public class RecommendationsService extends TraktApiService {
 	}
 	
 	public static final class ShowsBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/recommendations/shows/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/recommendations/shows/" + FIELD_API_KEY;
 		
 		private ShowsBuilder(RecommendationsService service) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI, HttpMethod.Post);

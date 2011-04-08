@@ -23,7 +23,7 @@ public class ShowService extends TraktApiService {
 	}
 	
 	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
-		private static final String URI = "/show/cancelwatching/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/show/cancelwatching/" + FIELD_API_KEY;
 		
 		private CancelWatchingBuilder(ShowService service) {
 			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
@@ -43,7 +43,7 @@ public class ShowService extends TraktApiService {
 	}
 	
 	public static final class WatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
-		private static final String URI = "/show/watchingnow.json/{" + FIELD_API_KEY + "}/{" + FIELD_QUERY + "}/{" + FIELD_SEASON + "}/{" + FIELD_EPISODE + "}";
+		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_QUERY + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
 		
 		private WatchingNowBuilder(ShowService service, String query) {
 			super(service, new TypeToken<List<UserProfile>>() {}, URI);
@@ -80,7 +80,7 @@ public class ShowService extends TraktApiService {
 	}
 	
 	public static final class SeasonBuilder extends TraktApiBuilder<List<TvShowEpisode>> {
-		private static final String URI = "/show/season.json/{" + FIELD_API_KEY + "}/{" + FIELD_QUERY + "}/{" + FIELD_SEASON + "}";
+		private static final String URI = "/show/season.json/" + FIELD_API_KEY + "/" + FIELD_QUERY + "/" + FIELD_SEASON;
 		
 		private SeasonBuilder(ShowService service, String query, int season) {
 			super(service, new TypeToken<List<TvShowEpisode>>() {}, URI);
@@ -103,7 +103,7 @@ public class ShowService extends TraktApiService {
 	}
 	
 	public static final class SeasonsBuilder extends TraktApiBuilder<List<TvShowSeason>> {
-		private static final String URI = "/show/seasons.json/{" + FIELD_API_KEY + "}/{" + FIELD_QUERY + "}";
+		private static final String URI = "/show/seasons.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
 		private SeasonsBuilder(ShowService service, String query) {
 			super(service, new TypeToken<List<TvShowSeason>>() {}, URI);
@@ -128,7 +128,7 @@ public class ShowService extends TraktApiService {
 	public static final class SummaryBuilder extends TraktApiBuilder<TvShow> {
 		private static final String EXTENDED = "extended";
 		
-		private static final String URI = "/show/summary.json/{" + FIELD_API_KEY + "}/{" + FIELD_EXTENDED + "}";
+		private static final String URI = "/show/summary.json/" + FIELD_API_KEY + "/" + FIELD_EXTENDED;
 		
 		private SummaryBuilder(ShowService service, String query) {
 			super(service, new TypeToken<TvShow>() {}, URI);

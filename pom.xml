@@ -70,7 +70,7 @@
 
 	<properties>
 		<java.version>1.6</java.version>
-		<apibuilder.version>1.0.0</apibuilder.version>
+		<apibuilder.version>1.1.0</apibuilder.version>
 		<gson.version>1.6</gson.version>
 		<junit.version>4.8.2</junit.version>
 

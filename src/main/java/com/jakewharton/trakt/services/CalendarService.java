@@ -21,7 +21,7 @@ public class CalendarService extends TraktApiService {
 	
 	public static final class PremieresBuilder extends TraktApiBuilder<List<CalendarDate>> {
 		private static final int DEFAULT_DAYS = 7;
-		private static final String URI = "/calendar/premieres.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}/{" + FIELD_DATE + "}/{" + FIELD_DAYS + "}";
+		private static final String URI = "/calendar/premieres.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;
 		
 		private PremieresBuilder(CalendarService service, String username) {
 			super(service, new TypeToken<List<CalendarDate>>() {}, URI);
@@ -77,7 +77,7 @@ public class CalendarService extends TraktApiService {
 	
 	public static final class ShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
 		private static final int DEFAULT_DAYS = 7;
-		private static final String URI = "/calendar/shows.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}/{" + FIELD_DATE + "}/{" + FIELD_DAYS + "}";
+		private static final String URI = "/calendar/shows.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;
 		
 		private ShowsBuilder(CalendarService service, String username) {
 			super(service, new TypeToken<List<CalendarDate>>() {}, URI);

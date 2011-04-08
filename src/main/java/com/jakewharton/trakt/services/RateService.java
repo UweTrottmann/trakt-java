@@ -38,7 +38,7 @@ public class RateService extends TraktApiService {
 		private static final String POST_EPISODE = "episode";
 		private static final String POST_RATING = "rating";
 		
-		private static final String URI = "/rate/episode/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/rate/episode/" + FIELD_API_KEY;
 		
 		private EpisodeBuilder(RateService service) {
 			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
@@ -114,7 +114,7 @@ public class RateService extends TraktApiService {
 		private static final String POST_YEAR = "year";
 		private static final String POST_RATING = "rating";
 		
-		private static final String URI = "/rate/movie/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/rate/movie/" + FIELD_API_KEY;
 		
 		private MovieBuilder(RateService service) {
 			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);
@@ -178,7 +178,7 @@ public class RateService extends TraktApiService {
 		private static final String POST_YEAR = "year";
 		private static final String POST_RATING = "rating";
 		
-		private static final String URI = "/rate/show/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/rate/show/" + FIELD_API_KEY;
 		
 		private ShowBuilder(RateService service) {
 			super(service, new TypeToken<RatingResponse>() {}, URI, HttpMethod.Post);

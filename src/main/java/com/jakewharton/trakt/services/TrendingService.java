@@ -18,7 +18,7 @@ public class TrendingService extends TraktApiService {
 	}
 	
 	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/movies/trending.json/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/movies/trending.json/" + FIELD_API_KEY;
 		
 		private MoviesBuilder(TrendingService service) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
@@ -35,7 +35,7 @@ public class TrendingService extends TraktApiService {
 	}
 	
 	public static final class TvShowsBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/shows/trending.json/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/shows/trending.json/" + FIELD_API_KEY;
 		
 		private TvShowsBuilder(TrendingService service) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);

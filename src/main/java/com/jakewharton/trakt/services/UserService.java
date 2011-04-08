@@ -26,7 +26,7 @@ public final class UserService extends TraktApiService {
 	
 	public static final class CalendarShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
 		private static final int DEFAULT_DAYS = 7;
-		private static final String URI = "/user/calendar/shows.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}/{" + FIELD_DATE + "}/{" + FIELD_DAYS + "}";
+		private static final String URI = "/user/calendar/shows.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;
 		
 		private CalendarShowsBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<CalendarDate>>() {}, URI);
@@ -83,7 +83,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class WatchingBuilder extends TraktApiBuilder<MediaEntity> {
-		private static final String URI = "/user/watching.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watching.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchingBuilder(UserService service, String username) {
 			super(service, new TypeToken<MediaEntity>() {}, URI);
@@ -106,7 +106,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class WatchedBuilder extends TraktApiBuilder<List<MediaEntity>> {
-		private static final String URI = "/user/watched.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watched.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchedBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<MediaEntity>>() {}, URI);
@@ -128,7 +128,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class WatchedEpisodesBuilder extends TraktApiBuilder<List<MediaEntity>> {
-		private static final String URI = "/user/watched/episodes.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watched/episodes.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchedEpisodesBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<MediaEntity>>() {}, URI);
@@ -152,7 +152,7 @@ public final class UserService extends TraktApiService {
 	public static final class WatchedMoviesBuilder extends TraktApiBuilder<List<MediaEntity>> {
 		private static final String FIELD_USERNAME = "username";
 		
-		private static final String URI = "/user/watched/movies.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watched/movies.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchedMoviesBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<MediaEntity>>() {}, URI);
@@ -175,7 +175,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class WatchlistEpisodesBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/watchlist/episodes.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watchlist/episodes.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchlistEpisodesBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
@@ -198,7 +198,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class WatchlistMoviesBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/user/watchlist/movies.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watchlist/movies.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchlistMoviesBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
@@ -221,7 +221,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class WatchlistShowsBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/watchlist/shows.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/watchlist/shows.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchlistShowsBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
@@ -243,7 +243,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class ProfileBuilder extends TraktApiBuilder<UserProfile> {
-		private static final String URI = "/user/profile.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/profile.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private ProfileBuilder(UserService service, String username) {
 			super(service, new TypeToken<UserProfile>() {}, URI);
@@ -268,7 +268,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class FriendsBuilder extends TraktApiBuilder<List<UserProfile>> {
-		private static final String URI = "/user/friends.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/friends.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private FriendsBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<UserProfile>>() {}, URI);
@@ -291,7 +291,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryMoviesAllBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/user/library/movies/all.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/movies/all.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryMoviesAllBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
@@ -314,7 +314,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryMoviesCollectionBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/user/library/movies/collection.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/movies/collection.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryMoviesCollectionBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
@@ -336,7 +336,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryMoviesHatedBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/user/library/movies/hated.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/movies/hated.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryMoviesHatedBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
@@ -358,7 +358,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryMoviesLovedBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/user/library/movies/loved.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/movies/loved.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryMoviesLovedBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
@@ -381,7 +381,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryShowsAllBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/library/shows/all.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/shows/all.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryShowsAllBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
@@ -404,7 +404,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryShowsCollectionBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/library/shows/collection.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/shows/collection.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryShowsCollectionBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
@@ -426,7 +426,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryShowsHatedBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/library/shows/hated.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/shows/hated.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryShowsHatedBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
@@ -448,7 +448,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryShowsLovedBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/library/shows/loved.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/shows/loved.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryShowsLovedBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
@@ -471,7 +471,7 @@ public final class UserService extends TraktApiService {
 	}
 	
 	public static final class LibraryShowsWatchedBuilder extends TraktApiBuilder<List<TvShow>> {
-		private static final String URI = "/user/library/shows/watched.json/{" + FIELD_API_KEY + "}/{" + FIELD_USERNAME + "}";
+		private static final String URI = "/user/library/shows/watched.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private LibraryShowsWatchedBuilder(UserService service, String username) {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);

@@ -21,7 +21,7 @@ public class MovieService extends TraktApiService {
 	}
 	
 	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
-		private static final String URI = "/movie/cancelwatching/{" + FIELD_API_KEY + "}";
+		private static final String URI = "/movie/cancelwatching/" + FIELD_API_KEY;
 		
 		private CancelWatchingBuilder(MovieService service) {
 			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
@@ -41,7 +41,7 @@ public class MovieService extends TraktApiService {
 	}
 	
 	public static final class SummaryBuilder extends TraktApiBuilder<Movie> {
-		private static final String URI = "/movie/summary.json/{" + FIELD_API_KEY + "}/{" + FIELD_QUERY + "}";
+		private static final String URI = "/movie/summary.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
 		private SummaryBuilder(MovieService service, String query) {
 			super(service, new TypeToken<Movie>() {}, URI);
@@ -63,7 +63,7 @@ public class MovieService extends TraktApiService {
 	}
 	
 	public static final class WatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
-		private static final String URI = "/movie/watchingnow.json/{" + FIELD_API_KEY + "}/{" + FIELD_QUERY + "}";
+		private static final String URI = "/movie/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
 		private WatchingNowBuilder(MovieService service, String query) {
 			super(service, new TypeToken<List<UserProfile>>() {}, URI);

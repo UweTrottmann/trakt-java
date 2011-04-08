@@ -19,15 +19,15 @@ import com.jakewharton.apibuilder.ApiException;
  */
 public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	/** API key field name. */
-	protected static final String FIELD_API_KEY = "apikey";
+	protected static final String FIELD_API_KEY = API_URL_DELIMITER_START + "apikey" + API_URL_DELIMITER_END;
 
-	protected static final String FIELD_USERNAME = "username";
-	protected static final String FIELD_DATE = "date";
-	protected static final String FIELD_DAYS = "days";
-	protected static final String FIELD_QUERY = "query";
-	protected static final String FIELD_SEASON = "season";
-	protected static final String FIELD_EPISODE = "episode";
-	protected static final String FIELD_EXTENDED = "extended";
+	protected static final String FIELD_USERNAME = API_URL_DELIMITER_START + "username" + API_URL_DELIMITER_END;
+	protected static final String FIELD_DATE = API_URL_DELIMITER_START + "date" + API_URL_DELIMITER_END;
+	protected static final String FIELD_DAYS = API_URL_DELIMITER_START + "days" + API_URL_DELIMITER_END;
+	protected static final String FIELD_QUERY = API_URL_DELIMITER_START + "query" + API_URL_DELIMITER_END;
+	protected static final String FIELD_SEASON = API_URL_DELIMITER_START + "season" + API_URL_DELIMITER_END;
+	protected static final String FIELD_EPISODE = API_URL_DELIMITER_START + "episode" + API_URL_DELIMITER_END;
+	protected static final String FIELD_EXTENDED = API_URL_DELIMITER_START + "extended" + API_URL_DELIMITER_END;
 	
 	private static final String POST_PLUGIN_VERSION = "plugin_version";
 	private static final String POST_MEDIA_CENTER_VERSION = "media_center_version";
