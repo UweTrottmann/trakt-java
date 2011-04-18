@@ -51,6 +51,16 @@
 			<id>github-project-site</id>
 			<name>GitHub Project Pages</name>
 			<url>gitsite:git@github.com/JakeWharton/trakt-java.git</url>
+			<!--
+			YOU MUST PUT THE FOLLOWING IN ~/.m2/settings.xml
+			
+			<servers>
+				<server>
+					<id>github-project-site</id>
+					<username>git</username>
+				</server>
+			</servers>
+			-->
 		</site>
 	</distributionManagement>
 
@@ -116,16 +126,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>2.2</version>
-				<!--
-				YOU MUST PUT THE FOLLOWING IN ~/.m2/settings.xml
-				
-				<servers>
-					<server>
-						<id>github-project-site</id>
-						<username>git</username>
-					</server>
-				</servers>
-				-->
 			</plugin>
 		</plugins>
 	
