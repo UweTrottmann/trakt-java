@@ -105,13 +105,25 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @throws ApiException if validation fails.
 	 */
 	public final T fire() {
+		this.preFireCallback();
+		
 		try {
 			this.performValidation();
 		} catch (Exception e) {
 			throw new ApiException(e);
 		}
 		
-		return this.service.unmarshall(this.token, this.execute());
+		T result = this.service.unmarshall(this.token, this.execute());
+		this.postFireCallback(result);
+		
+		return result;
+	}
+	
+	/**
+	 * Perform any required actions before validating the request.
+	 */
+	protected void preFireCallback() {
+		//Override me!
 	}
 	
 	/**
@@ -122,10 +134,19 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	}
 	
 	/**
+	 * Perform any required actions before returning the request result.
+	 * 
+	 * @param result Request result.
+	 */
+	protected void postFireCallback(T result) {
+		//Override me!
+	}
+	
+	/**
 	 * Mark current builder as Trakt developer method. This will automatically
 	 * add the debug fields to the post body.
 	 */
-	protected final void markAsDeveloperMethod() {
+	protected final void includeDebugStrings() {
 		this.postParameter(POST_PLUGIN_VERSION, service.getPluginVersion());
 		this.postParameter(POST_MEDIA_CENTER_VERSION, service.getMediaCenterVersion());
 		this.postParameter(POST_MEDIA_CENTER_DATE, service.getMediaCenterDate());
@@ -174,7 +195,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @return Current instance for builder pattern.
 	 */
 	protected final ApiBuilder parameter(String name, Date value) {
-		return this.parameter(name, Long.toString(value.getTime() / MILLISECONDS_IN_SECOND));
+		return this.parameter(name, Long.toString(TraktApiBuilder.dateToUnixTimestamp(value)));
 	}
 	
 	/**
@@ -255,5 +276,20 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 			return this.postParameter(name, value.toString());
 		}
 		return this;
+	}
+	
+	protected final TraktApiBuilder<T> postParameter(String name, JsonElement value) {
+		this.postBody.add(name, value);
+		return this;
+	}
+	
+	/**
+	 * Convert a {@link Date} to its Unix timestamp equivalent.
+	 * 
+	 * @param date Date value.
+	 * @return Unix timestamp value.
+	 */
+	protected static final long dateToUnixTimestamp(Date date) {
+		return date.getTime() / MILLISECONDS_IN_SECOND;
 	}
 }
