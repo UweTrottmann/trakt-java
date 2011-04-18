@@ -7,11 +7,15 @@ public final class Images implements TraktEntity {
 	
 	private String poster;
 	private String fanart;
+	private String headshot;
 	
 	public String getPoster() {
 		return this.poster;
 	}
 	public String getFanart() {
 		return this.fanart;
+	}
+	public String getHeadshot() {
+		return this.headshot;
 	}
 }
