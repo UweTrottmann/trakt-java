@@ -26,6 +26,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected static final String FIELD_DAYS = API_URL_DELIMITER_START + "days" + API_URL_DELIMITER_END;
 	protected static final String FIELD_QUERY = API_URL_DELIMITER_START + "query" + API_URL_DELIMITER_END;
 	protected static final String FIELD_SEASON = API_URL_DELIMITER_START + "season" + API_URL_DELIMITER_END;
+	protected static final String FIELD_TITLE = API_URL_DELIMITER_START + "title" + API_URL_DELIMITER_END;
 	protected static final String FIELD_EPISODE = API_URL_DELIMITER_START + "episode" + API_URL_DELIMITER_END;
 	protected static final String FIELD_EXTENDED = API_URL_DELIMITER_START + "extended" + API_URL_DELIMITER_END;
 	

@@ -11,6 +11,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.services.MovieService.WatchingNowBuilder;
 
 public class ShowService extends TraktApiService {
 	/**
@@ -613,37 +614,58 @@ public class ShowService extends TraktApiService {
 	}
 	
 	/**
-	 * Returns a array of all users watching a show.
+	 * Returns a array of all users watching an episode.
 	 * 
-	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * @param title Either the slug (i.e. the-walking-dead) or TVDB ID. You can
 	 * get a show's slug by browsing the website and looking at the URL when on
 	 * a show summary page.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
 	 * @return Builder instance.
 	 */
-	public WatchingNowBuilder watchingNow(String query) {
-		return new WatchingNowBuilder(this, query);
+	public EpisodeWatchingNowBuilder episodeWatchingNow(String title, int season, int episode) {
+		return new EpisodeWatchingNowBuilder(this).title(title).season(season).episode(episode);
 	}
 	
-	public static final class WatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
-		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_QUERY + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
+	public static final class EpisodeWatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
+		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
 		
-		private WatchingNowBuilder(ShowService service, String query) {
+		private EpisodeWatchingNowBuilder(ShowService service) {
 			super(service, new TypeToken<List<UserProfile>>() {}, URI);
-			
-			this.field(FIELD_QUERY, query);
 		}
 		
 		/**
-		 * Return only users for a specific episode.
+		 * Either the slug (i.e. the-walking-dead) or TVDB ID. You can get a
+		 * show's slug by browsing the website and looking at the URL when on a
+		 * show summary page.
 		 * 
-		 * @param season The season number. Use 0 if you want the specials.
-		 * @param episode The episode number.
+		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public WatchingNowBuilder episode(int season, int episode) {
+		public EpisodeWatchingNowBuilder title(String title) {
+			this.field(FIELD_TITLE, title);
+			return this;
+		}
+		
+		/**
+		 * The season number. Use 0 if you want the specials.
+		 * 
+		 * @param season Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeWatchingNowBuilder season(int season) {
 			this.field(FIELD_SEASON, season);
+			return this;
+		}
+		
+		/**
+		 * The episode number.
+		 * 
+		 * @param episode Value
+		 * @return Builder instance.
+		 */
+		public EpisodeWatchingNowBuilder episode(int episode) {
 			this.field(FIELD_EPISODE, episode);
-			
 			return this;
 		}
 	}
@@ -843,6 +865,39 @@ public class ShowService extends TraktApiService {
 		 */
 		public SummaryBuilder extended() {
 			this.field(FIELD_EXTENDED, EXTENDED);
+			return this;
+		}
+	}
+
+	/**
+	 * Returns a array of all users watching a show.
+	 * 
+	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @return Builder instance.
+	 */
+	public WatchingNowBuilder watchingNow(String query) {
+		return new WatchingNowBuilder(this).query(query);
+	}
+	
+	public static final class WatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
+		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
+		
+		private WatchingNowBuilder(ShowService service) {
+			super(service, new TypeToken<List<UserProfile>>() {}, URI);
+		}
+		
+		/**
+		 * Either the slug (i.e. the-walking-dead) or TVDB ID. You can get a
+		 * show's slug by browsing the website and looking at the URL when on
+		 * a show summary page.
+		 * 
+		 * @param query Value.
+		 * @return Builder instance.
+		 */
+		public WatchingNowBuilder query(String query) {
+			this.field(FIELD_QUERY, query);
 			return this;
 		}
 	}
