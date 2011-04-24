@@ -792,7 +792,21 @@ public class ShowService extends TraktApiService {
 	 * 
 	 * <p><em>Warning</em>: This method requires a developer API key.</p>
 	 * 
-	 * @param tmdbId TVDB ID for the show. 
+	 * @param imdbId IMDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public ScrobbleBuilder scrobble(String imdbId) {
+		return new ScrobbleBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has finished watching a show. This commits
+	 * the show to the users profile. You should use show/watching prior to
+	 * calling this method.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param tvdbId TVDB ID for the show. 
 	 * @return Builder instance.
 	 */
 	public ScrobbleBuilder scrobble(int tvdbId) {
@@ -815,6 +829,7 @@ public class ShowService extends TraktApiService {
 	}
 	
 	public static final class ScrobbleBuilder extends TraktApiBuilder<Response> {
+		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
@@ -828,6 +843,17 @@ public class ShowService extends TraktApiService {
 		private ScrobbleBuilder(ShowService service) {
 			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
 			this.includeDebugStrings();
+		}
+		
+		/**
+		 * IMDB ID for the show.
+		 * 
+		 * @param imdbId Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder imdbId(String imdbId) {
+			this.postParameter(POST_IMDB_ID, imdbId);
+			return this;
 		}
 		
 		/**
@@ -1003,6 +1029,323 @@ public class ShowService extends TraktApiService {
 			return this;
 		}
 	}
+	
+	/**
+	 * Remove an entire show (including all episodes) from your library collection.
+	 * 
+	 * @param imdbId IMDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary(String imdbId) {
+		return new UnlibraryBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Remove an entire show (including all episodes) from your library collection.
+	 * 
+	 * @param tvdbId TVDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary(int tvdbId) {
+		return new UnlibraryBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Remove an entire show (including all episodes) from your library collection.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary(String title, int year) {
+		return new UnlibraryBuilder(this).title(title).year(year);
+	}
+	
+	public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {
+		private static final String POST_IMDB_ID = "imdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		
+		private static final String URI = "/show/unlibrary/" + FIELD_API_KEY;
+		
+		private UnlibraryBuilder(ShowService service) {
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
+		}
+		
+		/**
+		 * IMDB ID for the show.
+		 * 
+		 * @param imdbId Value.
+		 * @return Builder instance.
+		 */
+		public UnlibraryBuilder imdbId(String imdbId) {
+			this.postParameter(POST_IMDB_ID, imdbId);
+			return this;
+		}
+		
+		/**
+		 * TVDB ID for the show.
+		 * 
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public UnlibraryBuilder tvdbId(int tmdbId) {
+			this.postParameter(POST_TVDB_ID, tmdbId);
+			return this;
+		}
+		
+		/**
+		 * Movie title.
+		 * 
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public UnlibraryBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+		
+		/**
+		 * Movie year.
+		 * 
+		 * @param year Value.
+		 * @return Builder instance.
+		 */
+		public UnlibraryBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+	}
+	
+	/**
+	 * Remove one or more shows from your watchlist.
+	 * 
+	 * @return Builder instance.
+	 */
+	public UnwatchlistBuilder unwatchlist() {
+		return new UnwatchlistBuilder(this);
+	}
+	
+	public static final class UnwatchlistBuilder extends TraktApiBuilder<Void> {
+		private static final String POST_IMDB_ID = "imdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_SHOWS = "shows";
+		
+		private static final String URI = "/show/unwatchlist/" + FIELD_API_KEY;
+		
+		private JsonArray showList;
+		
+		private UnwatchlistBuilder(ShowService service) {
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
+			
+			this.showList = new JsonArray();
+		}
+		
+		/**
+		 * Add a show to be removed.
+		 * 
+		 * @param imdbId IMDB ID for the show.
+		 * @return Builder instance.
+		 */
+		public UnwatchlistBuilder imdbId(String imdbId) {
+			JsonObject show = new JsonObject();
+			show.addProperty(POST_IMDB_ID, imdbId);
+			this.showList.add(show);
+			return this;
+		}
+		
+		/**
+		 * Add a show to be removed.
+		 * 
+		 * @param tvdbId TVDB ID for the show.
+		 * @return Builder instance.
+		 */
+		public UnwatchlistBuilder tvdbId(int tvdbId) {
+			JsonObject show = new JsonObject();
+			show.addProperty(POST_TVDB_ID, tvdbId);
+			this.showList.add(show);
+			return this;
+		}
+		
+		/**
+		 * Add a show to be removed.
+		 * 
+		 * @param title Title for the show.
+		 * @param year Year of the show.
+		 * @return Builder instance.
+		 */
+		public UnwatchlistBuilder title(String title, int year) {
+			JsonObject show = new JsonObject();
+			show.addProperty(POST_TITLE, title);
+			show.addProperty(POST_YEAR, year);
+			this.showList.add(show);
+			return this;
+		}
+
+		@Override
+		protected void preFireCallback() {
+			this.postParameter(POST_SHOWS, this.showList);
+		}
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has started watching a show.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param imdbId IMDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(String imdbId) {
+		return new WatchingBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has started watching a show.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param tvdbId TVDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(int tvdbId) {
+		return new WatchingBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has started watching a show.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(String title, int year) {
+		return new WatchingBuilder(this).title(title).year(year);
+	}
+	
+	public static final class WatchingBuilder extends TraktApiBuilder<Response> {
+		private static final String POST_IMDB_ID = "imdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_SEASON = "season";
+		private static final String POST_EPISODE = "episode";
+		private static final String POST_DURATION = "duration";
+		private static final String POST_PROGRESS = "progress";
+		
+		private static final String URI = "/show/watching/" + FIELD_API_KEY;
+		
+		private WatchingBuilder(ShowService service) {
+			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+			this.includeDebugStrings();
+		}
+		
+		/**
+		 * IMDB ID for the show.
+		 * 
+		 * @param imdbId Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder imdbId(String imdbId) {
+			this.postParameter(POST_IMDB_ID, imdbId);
+			return this;
+		}
+		
+		/**
+		 * TVDB ID for the show.
+		 * 
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder tvdbId(int tmdbId) {
+			this.postParameter(POST_TVDB_ID, tmdbId);
+			return this;
+		}
+		
+		/**
+		 * Movie title.
+		 * 
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+		
+		/**
+		 * Movie year.
+		 * 
+		 * @param year Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+		
+		/**
+		 * Show season. Send 0 if watching a special.
+		 * 
+		 * @param season Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder season(int season) {
+			this.postParameter(POST_SEASON, season);
+			return this;
+		}
+		
+		/**
+		 * Show episode. 
+		 * 
+		 * @param episode Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder episode(int episode) {
+			this.postParameter(POST_EPISODE, episode);
+			return this;
+		}
+		
+		/**
+		 * Duration (in minutes).
+		 * 
+		 * @param duration Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder duration(int duration) {
+			this.postParameter(POST_DURATION, duration);
+			return this;
+		}
+		
+		/**
+		 * Percent progress (0-100). It is recommended to call the watching API
+		 * every 15 minutes, then call the scrobble API near the end of the
+		 * movie to lock it in.
+		 * 
+		 * @param progress Value.
+		 * @return Builder instance.
+		 */
+		public WatchingBuilder progress(int progress) {
+			this.postParameter(POST_PROGRESS, progress);
+			return this;
+		}
+
+		@Override
+		protected void performValidation() {
+			assert this.hasPostParameter(POST_TVDB_ID)
+			|| (this.hasPostParameter(POST_TITLE) && this.hasPostParameter(POST_YEAR))
+			: "Either IMDB ID, TMDB ID, or both title and year is required.";
+			assert this.hasPostParameter(POST_SEASON) : "Season is required.";
+			assert this.hasPostParameter(POST_EPISODE) : "Episode is required.";
+			assert this.hasPostParameter(POST_DURATION) : "Duration is required.";
+			assert this.hasPostParameter(POST_PROGRESS) : "Progress is required.";
+		}
+	}
 
 	/**
 	 * Returns a array of all users watching a show.
@@ -1034,6 +1377,79 @@ public class ShowService extends TraktApiService {
 		public WatchingNowBuilder query(String query) {
 			this.field(FIELD_QUERY, query);
 			return this;
+		}
+	}
+	
+	/**
+	 * Add one or more shows to your watchlist.
+	 * 
+	 * @return Builder instance.
+	 */
+	public WatchlistBuilder watchlist() {
+		return new WatchlistBuilder(this);
+	}
+	
+	public static final class WatchlistBuilder extends TraktApiBuilder<Void> {
+		private static final String POST_IMDB_ID = "imdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_SHOWS = "shows";
+		
+		private static final String URI = "/show/watchlist/" + FIELD_API_KEY;
+		
+		private JsonArray showList;
+		
+		private WatchlistBuilder(ShowService service) {
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
+			
+			this.showList = new JsonArray();
+		}
+		
+		/**
+		 * Add a show to be added.
+		 * 
+		 * @param imdbId IMDB ID for the show.
+		 * @return Builder instance.
+		 */
+		public WatchlistBuilder imdbId(String imdbId) {
+			JsonObject show = new JsonObject();
+			show.addProperty(POST_IMDB_ID, imdbId);
+			this.showList.add(show);
+			return this;
+		}
+		
+		/**
+		 * Add a show to be added.
+		 * 
+		 * @param tvdbId TVDB ID for the show.
+		 * @return Builder instance.
+		 */
+		public WatchlistBuilder tvdbId(int tvdbId) {
+			JsonObject show = new JsonObject();
+			show.addProperty(POST_TVDB_ID, tvdbId);
+			this.showList.add(show);
+			return this;
+		}
+		
+		/**
+		 * Add a show to be added.
+		 * 
+		 * @param title Title for the show.
+		 * @param year Year of the show.
+		 * @return Builder instance.
+		 */
+		public WatchlistBuilder title(String title, int year) {
+			JsonObject show = new JsonObject();
+			show.addProperty(POST_TITLE, title);
+			show.addProperty(POST_YEAR, year);
+			this.showList.add(show);
+			return this;
+		}
+
+		@Override
+		protected void preFireCallback() {
+			this.postParameter(POST_SHOWS, this.showList);
 		}
 	}
 }
