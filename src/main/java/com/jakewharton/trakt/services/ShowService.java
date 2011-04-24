@@ -786,6 +786,142 @@ public class ShowService extends TraktApiService {
 	}
 	
 	/**
+	 * <p>Notify Trakt that a user has finished watching a show. This commits
+	 * the show to the users profile. You should use show/watching prior to
+	 * calling this method.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param tmdbId TVDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public ScrobbleBuilder scrobble(int tvdbId) {
+		return new ScrobbleBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has finished watching a show. This commits
+	 * the show to the users profile. You should use show/watching prior to
+	 * calling this method.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public ScrobbleBuilder scrobble(String title, int year) {
+		return new ScrobbleBuilder(this).title(title).year(year);
+	}
+	
+	public static final class ScrobbleBuilder extends TraktApiBuilder<Response> {
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+		private static final String POST_SEASON = "season";
+		private static final String POST_EPISODE = "episode";
+		private static final String POST_DURATION = "duration";
+		private static final String POST_PROGRESS = "progress";
+		
+		private static final String URI = "/show/scrobble/" + FIELD_API_KEY;
+		
+		private ScrobbleBuilder(ShowService service) {
+			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+			this.includeDebugStrings();
+		}
+		
+		/**
+		 * TVDB ID for the show.
+		 * 
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder tvdbId(int tmdbId) {
+			this.postParameter(POST_TVDB_ID, tmdbId);
+			return this;
+		}
+		
+		/**
+		 * Movie title.
+		 * 
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+		
+		/**
+		 * Movie year.
+		 * 
+		 * @param year Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+		
+		/**
+		 * Show season. Send 0 if watching a special.
+		 * 
+		 * @param season Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder season(int season) {
+			this.postParameter(POST_SEASON, season);
+			return this;
+		}
+		
+		/**
+		 * Show episode. 
+		 * 
+		 * @param episode Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder episode(int episode) {
+			this.postParameter(POST_EPISODE, episode);
+			return this;
+		}
+		
+		/**
+		 * Duration (in minutes).
+		 * 
+		 * @param duration Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder duration(int duration) {
+			this.postParameter(POST_DURATION, duration);
+			return this;
+		}
+		
+		/**
+		 * Percent progress (0-100). It is recommended to call the watching API
+		 * every 15 minutes, then call the scrobble API near the end of the
+		 * movie to lock it in.
+		 * 
+		 * @param progress Value.
+		 * @return Builder instance.
+		 */
+		public ScrobbleBuilder progress(int progress) {
+			this.postParameter(POST_PROGRESS, progress);
+			return this;
+		}
+
+		@Override
+		protected void performValidation() {
+			assert this.hasPostParameter(POST_TVDB_ID)
+			|| (this.hasPostParameter(POST_TITLE) && this.hasPostParameter(POST_YEAR))
+			: "Either IMDB ID, TMDB ID, or both title and year is required.";
+			assert this.hasPostParameter(POST_SEASON) : "Season is required.";
+			assert this.hasPostParameter(POST_EPISODE) : "Episode is required.";
+			assert this.hasPostParameter(POST_DURATION) : "Duration is required.";
+			assert this.hasPostParameter(POST_PROGRESS) : "Progress is required.";
+		}
+	}
+	
+	/**
 	 * Returns detailed episode info for a specific season of a show.
 	 * 
 	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can

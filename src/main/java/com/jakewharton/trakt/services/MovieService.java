@@ -85,7 +85,7 @@ public class MovieService extends TraktApiService {
 		private static final String URI = "/movie/scrobble/" + FIELD_API_KEY;
 		
 		private ScrobbleBuilder(MovieService service) {
-			super(service, new TypeToken<Response>() {}, URI);
+			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
 			this.includeDebugStrings();
 		}
 		
