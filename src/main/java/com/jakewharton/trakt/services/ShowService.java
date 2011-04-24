@@ -11,7 +11,6 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.services.MovieService.WatchingNowBuilder;
 
 public class ShowService extends TraktApiService {
 	/**
@@ -46,11 +45,11 @@ public class ShowService extends TraktApiService {
 	/**
 	 * Add unwatched episodes to your library.
 	 * 
-	 * @param tmdbId Show TMDB ID.
+	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public LibraryBuilder library(int tmdbId) {
-		return new LibraryBuilder(this).tmdbId(tmdbId);
+	public LibraryBuilder library(int tvdbId) {
+		return new LibraryBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -66,7 +65,7 @@ public class ShowService extends TraktApiService {
 	
 	public static final class LibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
-		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
 		private static final String POST_EPISODES = "episodes";
@@ -95,13 +94,13 @@ public class ShowService extends TraktApiService {
 		}
 		
 		/**
-		 * Show TMDB ID.
+		 * Show TVDB ID.
 		 * 
-		 * @param tmdbId Value.
+		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public LibraryBuilder tmdbId(int tmdbId) {
-			this.postParameter(POST_TMDB_ID, tmdbId);
+		public LibraryBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
 		
@@ -162,11 +161,11 @@ public class ShowService extends TraktApiService {
 	/**
 	 * Add episodes watched outside of trakt to your library.
 	 * 
-	 * @param tmdbId Show TMDB ID.
+	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public SeenBuilder seen(int tmdbId) {
-		return new SeenBuilder(this).tmdbId(tmdbId);
+	public SeenBuilder seen(int tvdbId) {
+		return new SeenBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -182,7 +181,7 @@ public class ShowService extends TraktApiService {
 	
 	public static final class SeenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
-		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
 		private static final String POST_EPISODES = "episodes";
@@ -211,13 +210,13 @@ public class ShowService extends TraktApiService {
 		}
 		
 		/**
-		 * Show TMDB ID.
+		 * Show TVDB ID.
 		 * 
-		 * @param tmdbId Value.
+		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public SeenBuilder tmdbId(int tmdbId) {
-			this.postParameter(POST_TMDB_ID, tmdbId);
+		public SeenBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
 		
@@ -278,11 +277,11 @@ public class ShowService extends TraktApiService {
 	/**
 	 * Remove episodes from your library collection.
 	 * 
-	 * @param tmdbId Show TMDB ID.
+	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public UnlibraryBuilder unlibrary(int tmdbId) {
-		return new UnlibraryBuilder(this).tmdbId(tmdbId);
+	public UnlibraryBuilder unlibrary(int tvdbId) {
+		return new UnlibraryBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -298,7 +297,7 @@ public class ShowService extends TraktApiService {
 	
 	public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
-		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
 		private static final String POST_EPISODES = "episodes";
@@ -327,13 +326,13 @@ public class ShowService extends TraktApiService {
 		}
 		
 		/**
-		 * Show TMDB ID.
+		 * Show TVDB ID.
 		 * 
-		 * @param tmdbId Value.
+		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnlibraryBuilder tmdbId(int tmdbId) {
-			this.postParameter(POST_TMDB_ID, tmdbId);
+		public UnlibraryBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
 		
@@ -394,11 +393,11 @@ public class ShowService extends TraktApiService {
 	/**
 	 * Remove episodes watched outside of trakt from your library.
 	 * 
-	 * @param tmdbId Show TMDB ID.
+	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public UnseenBuilder unseen(int tmdbId) {
-		return new UnseenBuilder(this).tmdbId(tmdbId);
+	public UnseenBuilder unseen(int tvdbId) {
+		return new UnseenBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -414,7 +413,7 @@ public class ShowService extends TraktApiService {
 	
 	public static final class UnseenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
-		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
 		private static final String POST_EPISODES = "episodes";
@@ -443,13 +442,13 @@ public class ShowService extends TraktApiService {
 		}
 		
 		/**
-		 * Show TMDB ID.
+		 * Show TVDB ID.
 		 * 
-		 * @param tmdbId Value.
+		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnseenBuilder tmdbId(int tmdbId) {
-			this.postParameter(POST_TMDB_ID, tmdbId);
+		public UnseenBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
 		
@@ -510,11 +509,11 @@ public class ShowService extends TraktApiService {
 	/**
 	 * Remove one or more episodes for a specific show from your watchlist.
 	 * 
-	 * @param tmdbId Show TMDB ID.
+	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public UnwatchlistBuilder unwatchlist(int tmdbId) {
-		return new UnwatchlistBuilder(this).tmdbId(tmdbId);
+	public UnwatchlistBuilder unwatchlist(int tvdbId) {
+		return new UnwatchlistBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -530,7 +529,7 @@ public class ShowService extends TraktApiService {
 	
 	public static final class UnwatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
-		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
 		private static final String POST_EPISODES = "episodes";
@@ -559,13 +558,13 @@ public class ShowService extends TraktApiService {
 		}
 		
 		/**
-		 * Show TMDB ID.
+		 * Show TVDB ID.
 		 * 
-		 * @param tmdbId Value.
+		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnwatchlistBuilder tmdbId(int tmdbId) {
-			this.postParameter(POST_TMDB_ID, tmdbId);
+		public UnwatchlistBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
 		
@@ -683,11 +682,11 @@ public class ShowService extends TraktApiService {
 	/**
 	 * Add one or more episodes for a specific show to your watchlist.
 	 * 
-	 * @param tmdbId Show TMDB ID.
+	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public WatchlistBuilder watchlist(int tmdbId) {
-		return new WatchlistBuilder(this).tmdbId(tmdbId);
+	public WatchlistBuilder watchlist(int tvdbId) {
+		return new WatchlistBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -703,7 +702,7 @@ public class ShowService extends TraktApiService {
 	
 	public static final class WatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
-		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
 		private static final String POST_YEAR = "year";
 		private static final String POST_EPISODES = "episodes";
@@ -732,13 +731,13 @@ public class ShowService extends TraktApiService {
 		}
 		
 		/**
-		 * Show TMDB ID.
+		 * Show TVDB ID.
 		 * 
-		 * @param tmdbId Value.
+		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public WatchlistBuilder tmdbId(int tmdbId) {
-			this.postParameter(POST_TMDB_ID, tmdbId);
+		public WatchlistBuilder tvdbId(int tvdbId) {
+			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
 		
