@@ -38,8 +38,8 @@ public class ShowService extends TraktApiService {
 	 * @param imdbId Show IMDB ID.
 	 * @return Builder instance.
 	 */
-	public LibraryBuilder library(String imdbId) {
-		return new LibraryBuilder(this).imdbId(imdbId);
+	public EpisodeLibraryBuilder episodeLibrary(String imdbId) {
+		return new EpisodeLibraryBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -48,8 +48,8 @@ public class ShowService extends TraktApiService {
 	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public LibraryBuilder library(int tvdbId) {
-		return new LibraryBuilder(this).tvdbId(tvdbId);
+	public EpisodeLibraryBuilder episodeLibrary(int tvdbId) {
+		return new EpisodeLibraryBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -59,11 +59,11 @@ public class ShowService extends TraktApiService {
 	 * @param year Show year.
 	 * @return Builder instance.
 	 */
-	public LibraryBuilder library(String title, int year) {
-		return new LibraryBuilder(this).title(title).year(year);
+	public EpisodeLibraryBuilder episodeLibrary(String title, int year) {
+		return new EpisodeLibraryBuilder(this).title(title).year(year);
 	}
 	
-	public static final class LibraryBuilder extends TraktApiBuilder<Void> {
+	public static final class EpisodeLibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -76,7 +76,7 @@ public class ShowService extends TraktApiService {
 		
 		private JsonArray episodeList;
 		
-		private LibraryBuilder(ShowService service) {
+		private EpisodeLibraryBuilder(ShowService service) {
 			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.episodeList = new JsonArray();
@@ -88,7 +88,7 @@ public class ShowService extends TraktApiService {
 		 * @param imdbId Value.
 		 * @return Builder instance.
 		 */
-		public LibraryBuilder imdbId(String imdbId) {
+		public EpisodeLibraryBuilder imdbId(String imdbId) {
 			this.postParameter(POST_IMDB_ID, imdbId);
 			return this;
 		}
@@ -99,7 +99,7 @@ public class ShowService extends TraktApiService {
 		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public LibraryBuilder tvdbId(int tvdbId) {
+		public EpisodeLibraryBuilder tvdbId(int tvdbId) {
 			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
@@ -110,7 +110,7 @@ public class ShowService extends TraktApiService {
 		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public LibraryBuilder title(String title) {
+		public EpisodeLibraryBuilder title(String title) {
 			this.postParameter(POST_TITLE, title);
 			return this;
 		}
@@ -121,7 +121,7 @@ public class ShowService extends TraktApiService {
 		 * @param year Value.
 		 * @return Builder instance.
 		 */
-		public LibraryBuilder year(int year) {
+		public EpisodeLibraryBuilder year(int year) {
 			this.postParameter(POST_YEAR, year);
 			return this;
 		}
@@ -133,7 +133,7 @@ public class ShowService extends TraktApiService {
 		 * @param episode Episode's number.
 		 * @return Builder instance.
 		 */
-		public LibraryBuilder episode(int season, int episode) {
+		public EpisodeLibraryBuilder episode(int season, int episode) {
 			JsonObject ep = new JsonObject();
 			ep.addProperty(POST_SEASON, season);
 			ep.addProperty(POST_EPISODE, episode);
@@ -154,8 +154,8 @@ public class ShowService extends TraktApiService {
 	 * @param imdbId Show IMDB ID.
 	 * @return Builder instance.
 	 */
-	public SeenBuilder seen(String imdbId) {
-		return new SeenBuilder(this).imdbId(imdbId);
+	public EpisodeSeenBuilder episodeSeen(String imdbId) {
+		return new EpisodeSeenBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -164,8 +164,8 @@ public class ShowService extends TraktApiService {
 	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public SeenBuilder seen(int tvdbId) {
-		return new SeenBuilder(this).tvdbId(tvdbId);
+	public EpisodeSeenBuilder episodeSeen(int tvdbId) {
+		return new EpisodeSeenBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -175,11 +175,11 @@ public class ShowService extends TraktApiService {
 	 * @param year Show year.
 	 * @return Builder instance.
 	 */
-	public SeenBuilder seen(String title, int year) {
-		return new SeenBuilder(this).title(title).year(year);
+	public EpisodeSeenBuilder episodeSeen(String title, int year) {
+		return new EpisodeSeenBuilder(this).title(title).year(year);
 	}
 	
-	public static final class SeenBuilder extends TraktApiBuilder<Void> {
+	public static final class EpisodeSeenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -192,7 +192,7 @@ public class ShowService extends TraktApiService {
 		
 		private JsonArray episodeList;
 		
-		private SeenBuilder(ShowService service) {
+		private EpisodeSeenBuilder(ShowService service) {
 			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.episodeList = new JsonArray();
@@ -204,7 +204,7 @@ public class ShowService extends TraktApiService {
 		 * @param imdbId Value.
 		 * @return Builder instance.
 		 */
-		public SeenBuilder imdbId(String imdbId) {
+		public EpisodeSeenBuilder imdbId(String imdbId) {
 			this.postParameter(POST_IMDB_ID, imdbId);
 			return this;
 		}
@@ -215,7 +215,7 @@ public class ShowService extends TraktApiService {
 		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public SeenBuilder tvdbId(int tvdbId) {
+		public EpisodeSeenBuilder tvdbId(int tvdbId) {
 			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
@@ -226,7 +226,7 @@ public class ShowService extends TraktApiService {
 		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public SeenBuilder title(String title) {
+		public EpisodeSeenBuilder title(String title) {
 			this.postParameter(POST_TITLE, title);
 			return this;
 		}
@@ -237,7 +237,7 @@ public class ShowService extends TraktApiService {
 		 * @param year Value.
 		 * @return Builder instance.
 		 */
-		public SeenBuilder year(int year) {
+		public EpisodeSeenBuilder year(int year) {
 			this.postParameter(POST_YEAR, year);
 			return this;
 		}
@@ -249,7 +249,7 @@ public class ShowService extends TraktApiService {
 		 * @param episode Episode's number.
 		 * @return Builder instance.
 		 */
-		public SeenBuilder episode(int season, int episode) {
+		public EpisodeSeenBuilder episode(int season, int episode) {
 			JsonObject ep = new JsonObject();
 			ep.addProperty(POST_SEASON, season);
 			ep.addProperty(POST_EPISODE, episode);
@@ -270,8 +270,8 @@ public class ShowService extends TraktApiService {
 	 * @param imdbId Show IMDB ID.
 	 * @return Builder instance.
 	 */
-	public UnlibraryBuilder unlibrary(String imdbId) {
-		return new UnlibraryBuilder(this).imdbId(imdbId);
+	public EpisodeUnlibraryBuilder episodeUnlibrary(String imdbId) {
+		return new EpisodeUnlibraryBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -280,8 +280,8 @@ public class ShowService extends TraktApiService {
 	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public UnlibraryBuilder unlibrary(int tvdbId) {
-		return new UnlibraryBuilder(this).tvdbId(tvdbId);
+	public EpisodeUnlibraryBuilder episodeUnlibrary(int tvdbId) {
+		return new EpisodeUnlibraryBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -291,11 +291,11 @@ public class ShowService extends TraktApiService {
 	 * @param year Show year.
 	 * @return Builder instance.
 	 */
-	public UnlibraryBuilder unlibrary(String title, int year) {
-		return new UnlibraryBuilder(this).title(title).year(year);
+	public EpisodeUnlibraryBuilder episodeUnlibrary(String title, int year) {
+		return new EpisodeUnlibraryBuilder(this).title(title).year(year);
 	}
 	
-	public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {
+	public static final class EpisodeUnlibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -308,7 +308,7 @@ public class ShowService extends TraktApiService {
 		
 		private JsonArray episodeList;
 		
-		private UnlibraryBuilder(ShowService service) {
+		private EpisodeUnlibraryBuilder(ShowService service) {
 			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.episodeList = new JsonArray();
@@ -320,7 +320,7 @@ public class ShowService extends TraktApiService {
 		 * @param imdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnlibraryBuilder imdbId(String imdbId) {
+		public EpisodeUnlibraryBuilder imdbId(String imdbId) {
 			this.postParameter(POST_IMDB_ID, imdbId);
 			return this;
 		}
@@ -331,7 +331,7 @@ public class ShowService extends TraktApiService {
 		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnlibraryBuilder tvdbId(int tvdbId) {
+		public EpisodeUnlibraryBuilder tvdbId(int tvdbId) {
 			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
@@ -342,7 +342,7 @@ public class ShowService extends TraktApiService {
 		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public UnlibraryBuilder title(String title) {
+		public EpisodeUnlibraryBuilder title(String title) {
 			this.postParameter(POST_TITLE, title);
 			return this;
 		}
@@ -353,7 +353,7 @@ public class ShowService extends TraktApiService {
 		 * @param year Value.
 		 * @return Builder instance.
 		 */
-		public UnlibraryBuilder year(int year) {
+		public EpisodeUnlibraryBuilder year(int year) {
 			this.postParameter(POST_YEAR, year);
 			return this;
 		}
@@ -365,7 +365,7 @@ public class ShowService extends TraktApiService {
 		 * @param episode Episode's number.
 		 * @return Builder instance.
 		 */
-		public UnlibraryBuilder episode(int season, int episode) {
+		public EpisodeUnlibraryBuilder episode(int season, int episode) {
 			JsonObject ep = new JsonObject();
 			ep.addProperty(POST_SEASON, season);
 			ep.addProperty(POST_EPISODE, episode);
@@ -386,8 +386,8 @@ public class ShowService extends TraktApiService {
 	 * @param imdbId Show IMDB ID.
 	 * @return Builder instance.
 	 */
-	public UnseenBuilder unseen(String imdbId) {
-		return new UnseenBuilder(this).imdbId(imdbId);
+	public EpisodeUnseenBuilder episodeUnseen(String imdbId) {
+		return new EpisodeUnseenBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -396,8 +396,8 @@ public class ShowService extends TraktApiService {
 	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public UnseenBuilder unseen(int tvdbId) {
-		return new UnseenBuilder(this).tvdbId(tvdbId);
+	public EpisodeUnseenBuilder episodeUnseen(int tvdbId) {
+		return new EpisodeUnseenBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -407,11 +407,11 @@ public class ShowService extends TraktApiService {
 	 * @param year Show year.
 	 * @return Builder instance.
 	 */
-	public UnseenBuilder unseen(String title, int year) {
-		return new UnseenBuilder(this).title(title).year(year);
+	public EpisodeUnseenBuilder episodeUnseen(String title, int year) {
+		return new EpisodeUnseenBuilder(this).title(title).year(year);
 	}
 	
-	public static final class UnseenBuilder extends TraktApiBuilder<Void> {
+	public static final class EpisodeUnseenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -424,7 +424,7 @@ public class ShowService extends TraktApiService {
 		
 		private JsonArray episodeList;
 		
-		private UnseenBuilder(ShowService service) {
+		private EpisodeUnseenBuilder(ShowService service) {
 			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.episodeList = new JsonArray();
@@ -436,7 +436,7 @@ public class ShowService extends TraktApiService {
 		 * @param imdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnseenBuilder imdbId(String imdbId) {
+		public EpisodeUnseenBuilder imdbId(String imdbId) {
 			this.postParameter(POST_IMDB_ID, imdbId);
 			return this;
 		}
@@ -447,7 +447,7 @@ public class ShowService extends TraktApiService {
 		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnseenBuilder tvdbId(int tvdbId) {
+		public EpisodeUnseenBuilder tvdbId(int tvdbId) {
 			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
@@ -458,7 +458,7 @@ public class ShowService extends TraktApiService {
 		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public UnseenBuilder title(String title) {
+		public EpisodeUnseenBuilder title(String title) {
 			this.postParameter(POST_TITLE, title);
 			return this;
 		}
@@ -469,7 +469,7 @@ public class ShowService extends TraktApiService {
 		 * @param year Value.
 		 * @return Builder instance.
 		 */
-		public UnseenBuilder year(int year) {
+		public EpisodeUnseenBuilder year(int year) {
 			this.postParameter(POST_YEAR, year);
 			return this;
 		}
@@ -481,7 +481,7 @@ public class ShowService extends TraktApiService {
 		 * @param episode Episode's number.
 		 * @return Builder instance.
 		 */
-		public UnseenBuilder episode(int season, int episode) {
+		public EpisodeUnseenBuilder episode(int season, int episode) {
 			JsonObject ep = new JsonObject();
 			ep.addProperty(POST_SEASON, season);
 			ep.addProperty(POST_EPISODE, episode);
@@ -502,8 +502,8 @@ public class ShowService extends TraktApiService {
 	 * @param imdbId Show IMDB ID.
 	 * @return Builder instance.
 	 */
-	public UnwatchlistBuilder unwatchlist(String imdbId) {
-		return new UnwatchlistBuilder(this).imdbId(imdbId);
+	public EpisodeUnwatchlistBuilder episodeUnwatchlist(String imdbId) {
+		return new EpisodeUnwatchlistBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -512,8 +512,8 @@ public class ShowService extends TraktApiService {
 	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public UnwatchlistBuilder unwatchlist(int tvdbId) {
-		return new UnwatchlistBuilder(this).tvdbId(tvdbId);
+	public EpisodeUnwatchlistBuilder episodeUnwatchlist(int tvdbId) {
+		return new EpisodeUnwatchlistBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -523,11 +523,11 @@ public class ShowService extends TraktApiService {
 	 * @param year Show year.
 	 * @return Builder instance.
 	 */
-	public UnwatchlistBuilder unwatchlist(String title, int year) {
-		return new UnwatchlistBuilder(this).title(title).year(year);
+	public EpisodeUnwatchlistBuilder episodeUnwatchlist(String title, int year) {
+		return new EpisodeUnwatchlistBuilder(this).title(title).year(year);
 	}
 	
-	public static final class UnwatchlistBuilder extends TraktApiBuilder<Void> {
+	public static final class EpisodeUnwatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -540,7 +540,7 @@ public class ShowService extends TraktApiService {
 		
 		private JsonArray episodeList;
 		
-		private UnwatchlistBuilder(ShowService service) {
+		private EpisodeUnwatchlistBuilder(ShowService service) {
 			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.episodeList = new JsonArray();
@@ -552,7 +552,7 @@ public class ShowService extends TraktApiService {
 		 * @param imdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnwatchlistBuilder imdbId(String imdbId) {
+		public EpisodeUnwatchlistBuilder imdbId(String imdbId) {
 			this.postParameter(POST_IMDB_ID, imdbId);
 			return this;
 		}
@@ -563,7 +563,7 @@ public class ShowService extends TraktApiService {
 		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public UnwatchlistBuilder tvdbId(int tvdbId) {
+		public EpisodeUnwatchlistBuilder tvdbId(int tvdbId) {
 			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
@@ -574,7 +574,7 @@ public class ShowService extends TraktApiService {
 		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public UnwatchlistBuilder title(String title) {
+		public EpisodeUnwatchlistBuilder title(String title) {
 			this.postParameter(POST_TITLE, title);
 			return this;
 		}
@@ -585,7 +585,7 @@ public class ShowService extends TraktApiService {
 		 * @param year Value.
 		 * @return Builder instance.
 		 */
-		public UnwatchlistBuilder year(int year) {
+		public EpisodeUnwatchlistBuilder year(int year) {
 			this.postParameter(POST_YEAR, year);
 			return this;
 		}
@@ -597,7 +597,7 @@ public class ShowService extends TraktApiService {
 		 * @param episode Episode's number.
 		 * @return Builder instance.
 		 */
-		public UnwatchlistBuilder episode(int season, int episode) {
+		public EpisodeUnwatchlistBuilder episode(int season, int episode) {
 			JsonObject ep = new JsonObject();
 			ep.addProperty(POST_SEASON, season);
 			ep.addProperty(POST_EPISODE, episode);
@@ -675,8 +675,8 @@ public class ShowService extends TraktApiService {
 	 * @param imdbId Show IMDB ID.
 	 * @return Builder instance.
 	 */
-	public WatchlistBuilder watchlist(String imdbId) {
-		return new WatchlistBuilder(this).imdbId(imdbId);
+	public EpisodeWatchlistBuilder episodeWatchlist(String imdbId) {
+		return new EpisodeWatchlistBuilder(this).imdbId(imdbId);
 	}
 	
 	/**
@@ -685,8 +685,8 @@ public class ShowService extends TraktApiService {
 	 * @param tvdbId Show TVDB ID.
 	 * @return Builder instance.
 	 */
-	public WatchlistBuilder watchlist(int tvdbId) {
-		return new WatchlistBuilder(this).tvdbId(tvdbId);
+	public EpisodeWatchlistBuilder episodeWatchlist(int tvdbId) {
+		return new EpisodeWatchlistBuilder(this).tvdbId(tvdbId);
 	}
 	
 	/**
@@ -696,11 +696,11 @@ public class ShowService extends TraktApiService {
 	 * @param year Show year.
 	 * @return Builder instance.
 	 */
-	public WatchlistBuilder watchlist(String title, int year) {
-		return new WatchlistBuilder(this).title(title).year(year);
+	public EpisodeWatchlistBuilder episodeWatchlist(String title, int year) {
+		return new EpisodeWatchlistBuilder(this).title(title).year(year);
 	}
 	
-	public static final class WatchlistBuilder extends TraktApiBuilder<Void> {
+	public static final class EpisodeWatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -713,7 +713,7 @@ public class ShowService extends TraktApiService {
 		
 		private JsonArray episodeList;
 		
-		private WatchlistBuilder(ShowService service) {
+		private EpisodeWatchlistBuilder(ShowService service) {
 			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.episodeList = new JsonArray();
@@ -725,7 +725,7 @@ public class ShowService extends TraktApiService {
 		 * @param imdbId Value.
 		 * @return Builder instance.
 		 */
-		public WatchlistBuilder imdbId(String imdbId) {
+		public EpisodeWatchlistBuilder imdbId(String imdbId) {
 			this.postParameter(POST_IMDB_ID, imdbId);
 			return this;
 		}
@@ -736,7 +736,7 @@ public class ShowService extends TraktApiService {
 		 * @param tvdbId Value.
 		 * @return Builder instance.
 		 */
-		public WatchlistBuilder tvdbId(int tvdbId) {
+		public EpisodeWatchlistBuilder tvdbId(int tvdbId) {
 			this.postParameter(POST_TVDB_ID, tvdbId);
 			return this;
 		}
@@ -747,7 +747,7 @@ public class ShowService extends TraktApiService {
 		 * @param title Value.
 		 * @return Builder instance.
 		 */
-		public WatchlistBuilder title(String title) {
+		public EpisodeWatchlistBuilder title(String title) {
 			this.postParameter(POST_TITLE, title);
 			return this;
 		}
@@ -758,7 +758,7 @@ public class ShowService extends TraktApiService {
 		 * @param year Value.
 		 * @return Builder instance.
 		 */
-		public WatchlistBuilder year(int year) {
+		public EpisodeWatchlistBuilder year(int year) {
 			this.postParameter(POST_YEAR, year);
 			return this;
 		}
@@ -770,7 +770,7 @@ public class ShowService extends TraktApiService {
 		 * @param episode Episode's number.
 		 * @return Builder instance.
 		 */
-		public WatchlistBuilder episode(int season, int episode) {
+		public EpisodeWatchlistBuilder episode(int season, int episode) {
 			JsonObject ep = new JsonObject();
 			ep.addProperty(POST_SEASON, season);
 			ep.addProperty(POST_EPISODE, episode);
