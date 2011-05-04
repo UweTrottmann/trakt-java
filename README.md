@@ -22,6 +22,10 @@ of the execution. All returned objects are immutable and should be handled
 as such.
 
 
+**WARNING**: The Trakt API has **NO** versioning support so be sure to
+extensively test all API calls!
+
+
 
 Usage
 =====
