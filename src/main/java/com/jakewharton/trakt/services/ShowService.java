@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Shout;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
@@ -1450,6 +1451,132 @@ public class ShowService extends TraktApiService {
 		@Override
 		protected void preFireCallback() {
 			this.postParameter(POST_SHOWS, this.showList);
+		}
+	}
+
+	/**
+	 * Returns all shouts for a show. Most recent shouts returned first.
+	 * 
+	 * @param title Show title.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(String title) {
+		return new ShoutsBuilder(this).title(title);
+	}
+	
+	/**
+	 * Returns all shouts for a show. Most recent shouts returned first.
+	 * 
+	 * @param tvdbId TVDB ID.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(int tvdbId) {
+		return new ShoutsBuilder(this).title(tvdbId);
+	}
+	
+	public static final class ShoutsBuilder extends TraktApiBuilder<List<Shout>> {
+		private static final String URI = "/show/shouts.json/" + FIELD_API_KEY + "/" + FIELD_TITLE;
+		
+		private ShoutsBuilder(ShowService service) {
+			super(service, new TypeToken<List<Shout>>() {}, URI);
+		}
+		
+		/**
+		 * Set show title.
+		 * 
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public ShoutsBuilder title(String title) {
+			this.field(FIELD_TITLE, title);
+			return this;
+		}
+		
+		/**
+		 * Set show TVDB ID
+		 * 
+		 * @param tvdbId Value.
+		 * @return Builder instance.
+		 */
+		public ShoutsBuilder title(int tvdbId) {
+			this.field(FIELD_TITLE, tvdbId);
+			return this;
+		}
+	}
+
+	/**
+	 * Returns all shouts for an episode. Most recent shouts returned first.
+	 * 
+	 * @param title Show title.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeShoutsBuilder episodeShouts(String title, int season, int episode) {
+		return new EpisodeShoutsBuilder(this).title(title).season(season).episode(episode);
+	}
+
+	/**
+	 * Returns all shouts for an episode. Most recent shouts returned first.
+	 * 
+	 * @param tvdbId TMDB ID.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeShoutsBuilder episodeShouts(int tvdbId, int season, int episode) {
+		return new EpisodeShoutsBuilder(this).title(tvdbId).season(season).episode(episode);
+	}
+	
+	public static final class EpisodeShoutsBuilder extends TraktApiBuilder<List<Shout>> {
+		private static final String URI = "/show/episode/shouts.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
+		
+		private EpisodeShoutsBuilder(ShowService service) {
+			super(service, new TypeToken<List<Shout>>() {}, URI);
+		}
+		
+		/**
+		 * Set show title or IMDB ID.
+		 * 
+		 * @param titleOrImdbId Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeShoutsBuilder title(String titleOrImdbId) {
+			this.field(FIELD_TITLE, titleOrImdbId);
+			return this;
+		}
+		
+		/**
+		 * Set show TMDB ID.
+		 * 
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeShoutsBuilder title(int tmdbId) {
+			this.field(FIELD_TITLE, tmdbId);
+			return this;
+		}
+		
+		/**
+		 * Set episode season.
+		 * 
+		 * @param season Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeShoutsBuilder season(int season) {
+			this.field(FIELD_SEASON, season);
+			return this;
+		}
+		
+		/**
+		 * Set episode number.
+		 * 
+		 * @param episode Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeShoutsBuilder episode(int episode) {
+			this.field(FIELD_EPISODE, episode);
+			return this;
 		}
 	}
 }

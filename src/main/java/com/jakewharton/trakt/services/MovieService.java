@@ -9,6 +9,7 @@ import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Shout;
 import com.jakewharton.trakt.entities.UserProfile;
 
 public class MovieService extends TraktApiService {
@@ -813,6 +814,56 @@ public class MovieService extends TraktApiService {
 		protected void preFireCallback() {
 			//Add the assembled movie list to the JSON post body.
 			this.postParameter(POST_MOVIES, this.movieList);
+		}
+	}
+
+	/**
+	 * Returns all shouts for a movie. Most recent shouts returned first.
+	 * 
+	 * @param titleOrImdbId Movie title or IMDB ID.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(String titleOrImdbId) {
+		return new ShoutsBuilder(this).title(titleOrImdbId);
+	}
+	
+	/**
+	 * Returns all shouts for a movie. Most recent shouts returned first.
+	 * 
+	 * @param tmdbId TMDB ID.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(int tmdbId) {
+		return new ShoutsBuilder(this).title(tmdbId);
+	}
+	
+	public static final class ShoutsBuilder extends TraktApiBuilder<List<Shout>> {
+		private static final String URI = "/movie/shouts.json/" + FIELD_API_KEY + "/" + FIELD_TITLE;
+		
+		private ShoutsBuilder(MovieService service) {
+			super(service, new TypeToken<List<Shout>>() {}, URI);
+		}
+		
+		/**
+		 * Set show title or IMDB ID.
+		 * 
+		 * @param titleOrImdbId Value.
+		 * @return Builder instance.
+		 */
+		public ShoutsBuilder title(String titleOrImdbId) {
+			this.field(FIELD_TITLE, titleOrImdbId);
+			return this;
+		}
+		
+		/**
+		 * Set show TMDB ID.
+		 * 
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public ShoutsBuilder title(int tmdbId) {
+			this.field(FIELD_TITLE, tmdbId);
+			return this;
 		}
 	}
 }
