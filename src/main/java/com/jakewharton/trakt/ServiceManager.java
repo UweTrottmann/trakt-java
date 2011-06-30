@@ -2,6 +2,7 @@ package com.jakewharton.trakt;
 
 import com.jakewharton.trakt.services.AccountService;
 import com.jakewharton.trakt.services.CalendarService;
+import com.jakewharton.trakt.services.FriendsService;
 import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.RecommendationsService;
@@ -141,6 +142,12 @@ public class ServiceManager {
 		return service;
 	}
 	
+	public FriendsService friendsService() {
+		FriendsService service = ServiceManager.createFriendsService();
+		this.setupService(service);
+		return service;
+	}
+	
 	public MovieService movieService() {
 		MovieService service = ServiceManager.createMovieService();
 		this.setupService(service);
@@ -183,6 +190,10 @@ public class ServiceManager {
 	
 	public static final CalendarService createCalendarService() {
 		return new CalendarService();
+	}
+	
+	public static final FriendsService createFriendsService() {
+		return new FriendsService();
 	}
 	
 	public static final MovieService createMovieService() {
