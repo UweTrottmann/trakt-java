@@ -25,14 +25,6 @@ public class ShowService extends TraktApiService {
 		return new CancelWatchingBuilder(this);
 	}
 	
-	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
-		private static final String URI = "/show/cancelwatching/" + FIELD_API_KEY;
-		
-		private CancelWatchingBuilder(ShowService service) {
-			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-		}
-	}
-	
 	/**
 	 * Add unwatched episodes to your library.
 	 * 
@@ -64,6 +56,406 @@ public class ShowService extends TraktApiService {
 		return new EpisodeLibraryBuilder(this).title(title).year(year);
 	}
 	
+	/**
+	 * Add episodes watched outside of trakt to your library.
+	 * 
+	 * @param imdbId Show IMDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeSeenBuilder episodeSeen(String imdbId) {
+		return new EpisodeSeenBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Add episodes watched outside of trakt to your library.
+	 * 
+	 * @param tvdbId Show TVDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeSeenBuilder episodeSeen(int tvdbId) {
+		return new EpisodeSeenBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Add episodes watched outside of trakt to your library.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public EpisodeSeenBuilder episodeSeen(String title, int year) {
+		return new EpisodeSeenBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Remove episodes from your library collection.
+	 * 
+	 * @param imdbId Show IMDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnlibraryBuilder episodeUnlibrary(String imdbId) {
+		return new EpisodeUnlibraryBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Remove episodes from your library collection.
+	 * 
+	 * @param tvdbId Show TVDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnlibraryBuilder episodeUnlibrary(int tvdbId) {
+		return new EpisodeUnlibraryBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Remove episodes from your library collection.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnlibraryBuilder episodeUnlibrary(String title, int year) {
+		return new EpisodeUnlibraryBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Remove episodes watched outside of trakt from your library.
+	 * 
+	 * @param imdbId Show IMDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnseenBuilder episodeUnseen(String imdbId) {
+		return new EpisodeUnseenBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Remove episodes watched outside of trakt from your library.
+	 * 
+	 * @param tvdbId Show TVDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnseenBuilder episodeUnseen(int tvdbId) {
+		return new EpisodeUnseenBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Remove episodes watched outside of trakt from your library.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnseenBuilder episodeUnseen(String title, int year) {
+		return new EpisodeUnseenBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Remove one or more episodes for a specific show from your watchlist.
+	 * 
+	 * @param imdbId Show IMDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnwatchlistBuilder episodeUnwatchlist(String imdbId) {
+		return new EpisodeUnwatchlistBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Remove one or more episodes for a specific show from your watchlist.
+	 * 
+	 * @param tvdbId Show TVDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnwatchlistBuilder episodeUnwatchlist(int tvdbId) {
+		return new EpisodeUnwatchlistBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Remove one or more episodes for a specific show from your watchlist.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public EpisodeUnwatchlistBuilder episodeUnwatchlist(String title, int year) {
+		return new EpisodeUnwatchlistBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Returns a array of all users watching an episode.
+	 * 
+	 * @param title Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeWatchingNowBuilder episodeWatchingNow(String title, int season, int episode) {
+		return new EpisodeWatchingNowBuilder(this).title(title).season(season).episode(episode);
+	}
+	
+	/**
+	 * Add one or more episodes for a specific show to your watchlist.
+	 * 
+	 * @param imdbId Show IMDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeWatchlistBuilder episodeWatchlist(String imdbId) {
+		return new EpisodeWatchlistBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Add one or more episodes for a specific show to your watchlist.
+	 * 
+	 * @param tvdbId Show TVDB ID.
+	 * @return Builder instance.
+	 */
+	public EpisodeWatchlistBuilder episodeWatchlist(int tvdbId) {
+		return new EpisodeWatchlistBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Add one or more episodes for a specific show to your watchlist.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public EpisodeWatchlistBuilder episodeWatchlist(String title, int year) {
+		return new EpisodeWatchlistBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has finished watching a show. This commits
+	 * the show to the users profile. You should use show/watching prior to
+	 * calling this method.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param imdbId IMDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public ScrobbleBuilder scrobble(String imdbId) {
+		return new ScrobbleBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has finished watching a show. This commits
+	 * the show to the users profile. You should use show/watching prior to
+	 * calling this method.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param tvdbId TVDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public ScrobbleBuilder scrobble(int tvdbId) {
+		return new ScrobbleBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has finished watching a show. This commits
+	 * the show to the users profile. You should use show/watching prior to
+	 * calling this method.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public ScrobbleBuilder scrobble(String title, int year) {
+		return new ScrobbleBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Returns detailed episode info for a specific season of a show.
+	 * 
+	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @return Builder instance.
+	 */
+	public SeasonBuilder season(String query, int season) {
+		return new SeasonBuilder(this, query, season);
+	}
+	
+	/**
+	 * Returns basic season info for a show.
+	 * 
+	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @return Builder instance.
+	 */
+	public SeasonsBuilder seasons(String query) {
+		return new SeasonsBuilder(this, query);
+	}
+	
+	/**
+	 * Returns information for a TV show including ratings, top watchers, and
+	 * most watched episodes.
+	 * 
+	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @return Builder instance.
+	 */
+	public SummaryBuilder summary(String query) {
+		return new SummaryBuilder(this, query);
+	}
+	
+	/**
+	 * Remove an entire show (including all episodes) from your library collection.
+	 * 
+	 * @param imdbId IMDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary(String imdbId) {
+		return new UnlibraryBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Remove an entire show (including all episodes) from your library collection.
+	 * 
+	 * @param tvdbId TVDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary(int tvdbId) {
+		return new UnlibraryBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Remove an entire show (including all episodes) from your library collection.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary(String title, int year) {
+		return new UnlibraryBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Remove one or more shows from your watchlist.
+	 * 
+	 * @return Builder instance.
+	 */
+	public UnwatchlistBuilder unwatchlist() {
+		return new UnwatchlistBuilder(this);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has started watching a show.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param imdbId IMDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(String imdbId) {
+		return new WatchingBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has started watching a show.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param tvdbId TVDB ID for the show. 
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(int tvdbId) {
+		return new WatchingBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * <p>Notify Trakt that a user has started watching a show.</p>
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(String title, int year) {
+		return new WatchingBuilder(this).title(title).year(year);
+	}
+
+	/**
+	 * Returns a array of all users watching a show.
+	 * 
+	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @return Builder instance.
+	 */
+	public WatchingNowBuilder watchingNow(String query) {
+		return new WatchingNowBuilder(this).query(query);
+	}
+	
+	/**
+	 * Add one or more shows to your watchlist.
+	 * 
+	 * @return Builder instance.
+	 */
+	public WatchlistBuilder watchlist() {
+		return new WatchlistBuilder(this);
+	}
+
+	/**
+	 * Returns all shouts for a show. Most recent shouts returned first.
+	 * 
+	 * @param title Show title.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(String title) {
+		return new ShoutsBuilder(this).title(title);
+	}
+	
+	/**
+	 * Returns all shouts for a show. Most recent shouts returned first.
+	 * 
+	 * @param tvdbId TVDB ID.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(int tvdbId) {
+		return new ShoutsBuilder(this).title(tvdbId);
+	}
+
+	/**
+	 * Returns all shouts for an episode. Most recent shouts returned first.
+	 * 
+	 * @param title Show title.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeShoutsBuilder episodeShouts(String title, int season, int episode) {
+		return new EpisodeShoutsBuilder(this).title(title).season(season).episode(episode);
+	}
+
+	/**
+	 * Returns all shouts for an episode. Most recent shouts returned first.
+	 * 
+	 * @param tvdbId TMDB ID.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeShoutsBuilder episodeShouts(int tvdbId, int season, int episode) {
+		return new EpisodeShoutsBuilder(this).title(tvdbId).season(season).episode(episode);
+	}
+	
+	
+	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
+		private static final String URI = "/show/cancelwatching/" + FIELD_API_KEY;
+		
+		private CancelWatchingBuilder(ShowService service) {
+			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+		}
+	}
 	public static final class EpisodeLibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -148,38 +540,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
-	
-	/**
-	 * Add episodes watched outside of trakt to your library.
-	 * 
-	 * @param imdbId Show IMDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeSeenBuilder episodeSeen(String imdbId) {
-		return new EpisodeSeenBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Add episodes watched outside of trakt to your library.
-	 * 
-	 * @param tvdbId Show TVDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeSeenBuilder episodeSeen(int tvdbId) {
-		return new EpisodeSeenBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Add episodes watched outside of trakt to your library.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public EpisodeSeenBuilder episodeSeen(String title, int year) {
-		return new EpisodeSeenBuilder(this).title(title).year(year);
-	}
-	
 	public static final class EpisodeSeenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -264,38 +624,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
-	
-	/**
-	 * Remove episodes from your library collection.
-	 * 
-	 * @param imdbId Show IMDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnlibraryBuilder episodeUnlibrary(String imdbId) {
-		return new EpisodeUnlibraryBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Remove episodes from your library collection.
-	 * 
-	 * @param tvdbId Show TVDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnlibraryBuilder episodeUnlibrary(int tvdbId) {
-		return new EpisodeUnlibraryBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Remove episodes from your library collection.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnlibraryBuilder episodeUnlibrary(String title, int year) {
-		return new EpisodeUnlibraryBuilder(this).title(title).year(year);
-	}
-	
 	public static final class EpisodeUnlibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -380,38 +708,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
-	
-	/**
-	 * Remove episodes watched outside of trakt from your library.
-	 * 
-	 * @param imdbId Show IMDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnseenBuilder episodeUnseen(String imdbId) {
-		return new EpisodeUnseenBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Remove episodes watched outside of trakt from your library.
-	 * 
-	 * @param tvdbId Show TVDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnseenBuilder episodeUnseen(int tvdbId) {
-		return new EpisodeUnseenBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Remove episodes watched outside of trakt from your library.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnseenBuilder episodeUnseen(String title, int year) {
-		return new EpisodeUnseenBuilder(this).title(title).year(year);
-	}
-	
 	public static final class EpisodeUnseenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -496,38 +792,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
-	
-	/**
-	 * Remove one or more episodes for a specific show from your watchlist.
-	 * 
-	 * @param imdbId Show IMDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnwatchlistBuilder episodeUnwatchlist(String imdbId) {
-		return new EpisodeUnwatchlistBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Remove one or more episodes for a specific show from your watchlist.
-	 * 
-	 * @param tvdbId Show TVDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnwatchlistBuilder episodeUnwatchlist(int tvdbId) {
-		return new EpisodeUnwatchlistBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Remove one or more episodes for a specific show from your watchlist.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public EpisodeUnwatchlistBuilder episodeUnwatchlist(String title, int year) {
-		return new EpisodeUnwatchlistBuilder(this).title(title).year(year);
-	}
-	
 	public static final class EpisodeUnwatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -612,21 +876,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
-	
-	/**
-	 * Returns a array of all users watching an episode.
-	 * 
-	 * @param title Either the slug (i.e. the-walking-dead) or TVDB ID. You can
-	 * get a show's slug by browsing the website and looking at the URL when on
-	 * a show summary page.
-	 * @param season The season number. Use 0 if you want the specials.
-	 * @param episode The episode number.
-	 * @return Builder instance.
-	 */
-	public EpisodeWatchingNowBuilder episodeWatchingNow(String title, int season, int episode) {
-		return new EpisodeWatchingNowBuilder(this).title(title).season(season).episode(episode);
-	}
-	
 	public static final class EpisodeWatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
 		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
 		
@@ -669,38 +918,6 @@ public class ShowService extends TraktApiService {
 			return this;
 		}
 	}
-	
-	/**
-	 * Add one or more episodes for a specific show to your watchlist.
-	 * 
-	 * @param imdbId Show IMDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeWatchlistBuilder episodeWatchlist(String imdbId) {
-		return new EpisodeWatchlistBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Add one or more episodes for a specific show to your watchlist.
-	 * 
-	 * @param tvdbId Show TVDB ID.
-	 * @return Builder instance.
-	 */
-	public EpisodeWatchlistBuilder episodeWatchlist(int tvdbId) {
-		return new EpisodeWatchlistBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Add one or more episodes for a specific show to your watchlist.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public EpisodeWatchlistBuilder episodeWatchlist(String title, int year) {
-		return new EpisodeWatchlistBuilder(this).title(title).year(year);
-	}
-	
 	public static final class EpisodeWatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -785,50 +1002,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
-	
-	/**
-	 * <p>Notify Trakt that a user has finished watching a show. This commits
-	 * the show to the users profile. You should use show/watching prior to
-	 * calling this method.</p>
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param imdbId IMDB ID for the show. 
-	 * @return Builder instance.
-	 */
-	public ScrobbleBuilder scrobble(String imdbId) {
-		return new ScrobbleBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * <p>Notify Trakt that a user has finished watching a show. This commits
-	 * the show to the users profile. You should use show/watching prior to
-	 * calling this method.</p>
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param tvdbId TVDB ID for the show. 
-	 * @return Builder instance.
-	 */
-	public ScrobbleBuilder scrobble(int tvdbId) {
-		return new ScrobbleBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * <p>Notify Trakt that a user has finished watching a show. This commits
-	 * the show to the users profile. You should use show/watching prior to
-	 * calling this method.</p>
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public ScrobbleBuilder scrobble(String title, int year) {
-		return new ScrobbleBuilder(this).title(title).year(year);
-	}
-	
 	public static final class ScrobbleBuilder extends TraktApiBuilder<Response> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -947,20 +1120,6 @@ public class ShowService extends TraktApiService {
 			assert this.hasPostParameter(POST_PROGRESS) : "Progress is required.";
 		}
 	}
-	
-	/**
-	 * Returns detailed episode info for a specific season of a show.
-	 * 
-	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
-	 * get a show's slug by browsing the website and looking at the URL when on
-	 * a show summary page.
-	 * @param season The season number. Use 0 if you want the specials.
-	 * @return Builder instance.
-	 */
-	public SeasonBuilder season(String query, int season) {
-		return new SeasonBuilder(this, query, season);
-	}
-	
 	public static final class SeasonBuilder extends TraktApiBuilder<List<TvShowEpisode>> {
 		private static final String URI = "/show/season.json/" + FIELD_API_KEY + "/" + FIELD_QUERY + "/" + FIELD_SEASON;
 		
@@ -971,19 +1130,6 @@ public class ShowService extends TraktApiService {
 			this.field(FIELD_SEASON, season);
 		}
 	}
-	
-	/**
-	 * Returns basic season info for a show.
-	 * 
-	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
-	 * get a show's slug by browsing the website and looking at the URL when on
-	 * a show summary page.
-	 * @return Builder instance.
-	 */
-	public SeasonsBuilder seasons(String query) {
-		return new SeasonsBuilder(this, query);
-	}
-	
 	public static final class SeasonsBuilder extends TraktApiBuilder<List<TvShowSeason>> {
 		private static final String URI = "/show/seasons.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
@@ -993,20 +1139,6 @@ public class ShowService extends TraktApiService {
 			this.field(FIELD_QUERY, query);
 		}
 	}
-	
-	/**
-	 * Returns information for a TV show including ratings, top watchers, and
-	 * most watched episodes.
-	 * 
-	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
-	 * get a show's slug by browsing the website and looking at the URL when on
-	 * a show summary page.
-	 * @return Builder instance.
-	 */
-	public SummaryBuilder summary(String query) {
-		return new SummaryBuilder(this, query);
-	}
-	
 	public static final class SummaryBuilder extends TraktApiBuilder<TvShow> {
 		private static final String EXTENDED = "extended";
 		
@@ -1030,38 +1162,6 @@ public class ShowService extends TraktApiService {
 			return this;
 		}
 	}
-	
-	/**
-	 * Remove an entire show (including all episodes) from your library collection.
-	 * 
-	 * @param imdbId IMDB ID for the show. 
-	 * @return Builder instance.
-	 */
-	public UnlibraryBuilder unlibrary(String imdbId) {
-		return new UnlibraryBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Remove an entire show (including all episodes) from your library collection.
-	 * 
-	 * @param tvdbId TVDB ID for the show. 
-	 * @return Builder instance.
-	 */
-	public UnlibraryBuilder unlibrary(int tvdbId) {
-		return new UnlibraryBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Remove an entire show (including all episodes) from your library collection.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public UnlibraryBuilder unlibrary(String title, int year) {
-		return new UnlibraryBuilder(this).title(title).year(year);
-	}
-	
 	public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -1118,16 +1218,6 @@ public class ShowService extends TraktApiService {
 			return this;
 		}
 	}
-	
-	/**
-	 * Remove one or more shows from your watchlist.
-	 * 
-	 * @return Builder instance.
-	 */
-	public UnwatchlistBuilder unwatchlist() {
-		return new UnwatchlistBuilder(this);
-	}
-	
 	public static final class UnwatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -1191,44 +1281,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_SHOWS, this.showList);
 		}
 	}
-	
-	/**
-	 * <p>Notify Trakt that a user has started watching a show.</p>
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param imdbId IMDB ID for the show. 
-	 * @return Builder instance.
-	 */
-	public WatchingBuilder watching(String imdbId) {
-		return new WatchingBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * <p>Notify Trakt that a user has started watching a show.</p>
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param tvdbId TVDB ID for the show. 
-	 * @return Builder instance.
-	 */
-	public WatchingBuilder watching(int tvdbId) {
-		return new WatchingBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * <p>Notify Trakt that a user has started watching a show.</p>
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public WatchingBuilder watching(String title, int year) {
-		return new WatchingBuilder(this).title(title).year(year);
-	}
-	
 	public static final class WatchingBuilder extends TraktApiBuilder<Response> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -1347,19 +1399,6 @@ public class ShowService extends TraktApiService {
 			assert this.hasPostParameter(POST_PROGRESS) : "Progress is required.";
 		}
 	}
-
-	/**
-	 * Returns a array of all users watching a show.
-	 * 
-	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
-	 * get a show's slug by browsing the website and looking at the URL when on
-	 * a show summary page.
-	 * @return Builder instance.
-	 */
-	public WatchingNowBuilder watchingNow(String query) {
-		return new WatchingNowBuilder(this).query(query);
-	}
-	
 	public static final class WatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
 		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
@@ -1380,16 +1419,6 @@ public class ShowService extends TraktApiService {
 			return this;
 		}
 	}
-	
-	/**
-	 * Add one or more shows to your watchlist.
-	 * 
-	 * @return Builder instance.
-	 */
-	public WatchlistBuilder watchlist() {
-		return new WatchlistBuilder(this);
-	}
-	
 	public static final class WatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -1453,27 +1482,6 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_SHOWS, this.showList);
 		}
 	}
-
-	/**
-	 * Returns all shouts for a show. Most recent shouts returned first.
-	 * 
-	 * @param title Show title.
-	 * @return Builder instance.
-	 */
-	public ShoutsBuilder shouts(String title) {
-		return new ShoutsBuilder(this).title(title);
-	}
-	
-	/**
-	 * Returns all shouts for a show. Most recent shouts returned first.
-	 * 
-	 * @param tvdbId TVDB ID.
-	 * @return Builder instance.
-	 */
-	public ShoutsBuilder shouts(int tvdbId) {
-		return new ShoutsBuilder(this).title(tvdbId);
-	}
-	
 	public static final class ShoutsBuilder extends TraktApiBuilder<List<Shout>> {
 		private static final String URI = "/show/shouts.json/" + FIELD_API_KEY + "/" + FIELD_TITLE;
 		
@@ -1503,31 +1511,6 @@ public class ShowService extends TraktApiService {
 			return this;
 		}
 	}
-
-	/**
-	 * Returns all shouts for an episode. Most recent shouts returned first.
-	 * 
-	 * @param title Show title.
-	 * @param season The season number. Use 0 if you want the specials.
-	 * @param episode The episode number.
-	 * @return Builder instance.
-	 */
-	public EpisodeShoutsBuilder episodeShouts(String title, int season, int episode) {
-		return new EpisodeShoutsBuilder(this).title(title).season(season).episode(episode);
-	}
-
-	/**
-	 * Returns all shouts for an episode. Most recent shouts returned first.
-	 * 
-	 * @param tvdbId TMDB ID.
-	 * @param season The season number. Use 0 if you want the specials.
-	 * @param episode The episode number.
-	 * @return Builder instance.
-	 */
-	public EpisodeShoutsBuilder episodeShouts(int tvdbId, int season, int episode) {
-		return new EpisodeShoutsBuilder(this).title(tvdbId).season(season).episode(episode);
-	}
-	
 	public static final class EpisodeShoutsBuilder extends TraktApiBuilder<List<Shout>> {
 		private static final String URI = "/show/episode/shouts.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
 		

@@ -19,6 +19,18 @@ public class CalendarService extends TraktApiService {
 		return new PremieresBuilder(this, username);
 	}
 	
+	/**
+	 * Returns all shows premiering during the time period specified.
+	 * 
+	 * @param username You can get a username by browsing the website and
+	 * looking at the URL when on a profile page.
+	 * @return Builder instance.
+	 */
+	public ShowsBuilder shows(String username) {
+		return new ShowsBuilder(this, username);
+	}
+	
+	
 	public static final class PremieresBuilder extends TraktApiBuilder<List<CalendarDate>> {
 		private static final int DEFAULT_DAYS = 7;
 		private static final String URI = "/calendar/premieres.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;
@@ -63,18 +75,6 @@ public class CalendarService extends TraktApiService {
 			return this;
 		}
 	}
-	
-	/**
-	 * Returns all shows premiering during the time period specified.
-	 * 
-	 * @param username You can get a username by browsing the website and
-	 * looking at the URL when on a profile page.
-	 * @return Builder instance.
-	 */
-	public ShowsBuilder shows(String username) {
-		return new ShowsBuilder(this, username);
-	}
-	
 	public static final class ShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
 		private static final int DEFAULT_DAYS = 7;
 		private static final String URI = "/calendar/shows.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;

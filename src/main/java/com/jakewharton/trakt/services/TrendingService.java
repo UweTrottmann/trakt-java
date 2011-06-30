@@ -17,14 +17,6 @@ public class TrendingService extends TraktApiService {
 		return new MoviesBuilder(this);
 	}
 	
-	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/movies/trending.json/" + FIELD_API_KEY;
-		
-		private MoviesBuilder(TrendingService service) {
-			super(service, new TypeToken<List<Movie>>() {}, URI);
-		}
-	}
-	
 	/**
 	 * Returns all shows being watched right now.
 	 * 
@@ -34,6 +26,14 @@ public class TrendingService extends TraktApiService {
 		return new TvShowsBuilder(this);
 	}
 	
+	
+	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
+		private static final String URI = "/movies/trending.json/" + FIELD_API_KEY;
+		
+		private MoviesBuilder(TrendingService service) {
+			super(service, new TypeToken<List<Movie>>() {}, URI);
+		}
+	}
 	public static final class TvShowsBuilder extends TraktApiBuilder<List<TvShow>> {
 		private static final String URI = "/shows/trending.json/" + FIELD_API_KEY;
 		

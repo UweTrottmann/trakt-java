@@ -30,6 +30,53 @@ public class RateService extends TraktApiService {
 		return new EpisodeBuilder(this).title(title).year(year);
 	}
 	
+	/**
+	 * Rate a movie on Trakt. Depending on the user settings, this will also
+	 * send out social updates to Facebook, Twitter, and Tumblr.
+	 * 
+	 * @param imdbId IMDB ID for the movie.
+	 * @return Builder instance.
+	 */
+	public MovieBuilder movie(String imdbId) {
+		return new MovieBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Rate a movie on Trakt. Depending on the user settings, this will also
+	 * send out social updates to Facebook, Twitter, and Tumblr.
+	 * 
+	 * @param title Movie title.
+	 * @param year Movie year.
+	 * @return Builder instance.
+	 */
+	public MovieBuilder movie(String title, int year) {
+		return new MovieBuilder(this).title(title).year(year);
+	}
+	
+	/**
+	 * Rate a show on Trakt. Depending on the user settings, this will also
+	 * send out social updates to Facebook, Twitter, and Tumblr.
+	 * 
+	 * @param tvdbId TVDB ID for the show.
+	 * @return Builder instance.
+	 */
+	public ShowBuilder show(int tvdbId) {
+		return new ShowBuilder(this).tvdbId(tvdbId);
+	}
+	
+	/**
+	 * Rate a show on Trakt. Depending on the user settings, this will also
+	 * send out social updates to Facebook, Twitter, and Tumblr.
+	 * 
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public ShowBuilder show(String title, int year) {
+		return new ShowBuilder(this).title(title).year(year);
+	}
+	
+	
 	public static final class EpisodeBuilder extends TraktApiBuilder<RatingResponse> {
 		private static final String POST_TVDB_ID = "tvdb_id";
 		private static final String POST_TITLE = "title";
@@ -84,30 +131,6 @@ public class RateService extends TraktApiService {
 			assert this.hasPostParameter(POST_RATING) : "Rating is required.";
 		}
 	}
-	
-	/**
-	 * Rate a movie on Trakt. Depending on the user settings, this will also
-	 * send out social updates to Facebook, Twitter, and Tumblr.
-	 * 
-	 * @param imdbId IMDB ID for the movie.
-	 * @return Builder instance.
-	 */
-	public MovieBuilder movie(String imdbId) {
-		return new MovieBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Rate a movie on Trakt. Depending on the user settings, this will also
-	 * send out social updates to Facebook, Twitter, and Tumblr.
-	 * 
-	 * @param title Movie title.
-	 * @param year Movie year.
-	 * @return Builder instance.
-	 */
-	public MovieBuilder movie(String title, int year) {
-		return new MovieBuilder(this).title(title).year(year);
-	}
-	
 	public static final class MovieBuilder extends TraktApiBuilder<RatingResponse> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TITLE = "title";
@@ -148,30 +171,6 @@ public class RateService extends TraktApiService {
 			assert this.hasPostParameter(POST_RATING) : "Rating is required.";
 		}
 	}
-	
-	/**
-	 * Rate a show on Trakt. Depending on the user settings, this will also
-	 * send out social updates to Facebook, Twitter, and Tumblr.
-	 * 
-	 * @param tvdbId TVDB ID for the show.
-	 * @return Builder instance.
-	 */
-	public ShowBuilder show(int tvdbId) {
-		return new ShowBuilder(this).tvdbId(tvdbId);
-	}
-	
-	/**
-	 * Rate a show on Trakt. Depending on the user settings, this will also
-	 * send out social updates to Facebook, Twitter, and Tumblr.
-	 * 
-	 * @param title Show title.
-	 * @param year Show year.
-	 * @return Builder instance.
-	 */
-	public ShowBuilder show(String title, int year) {
-		return new ShowBuilder(this).title(title).year(year);
-	}
-	
 	public static final class ShowBuilder extends TraktApiBuilder<RatingResponse> {
 		private static final String POST_TVDB_ID = "imdb_id";
 		private static final String POST_TITLE = "title";

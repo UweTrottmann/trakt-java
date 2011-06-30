@@ -18,14 +18,6 @@ public class RecommendationsService extends TraktApiService {
 		return new MoviesBuilder(this);
 	}
 	
-	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
-		private static final String URI = "/recommendations/movies/" + FIELD_API_KEY;
-		
-		private MoviesBuilder(RecommendationsService service) {
-			super(service, new TypeToken<List<Movie>>() {}, URI, HttpMethod.Post);
-		}
-	}
-	
 	/**
 	 * Get a list of show recommendations created from your watching history
 	 * and your friends. Results returned with the top recommendation first.
@@ -36,6 +28,14 @@ public class RecommendationsService extends TraktApiService {
 		return new ShowsBuilder(this);
 	}
 	
+	
+	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
+		private static final String URI = "/recommendations/movies/" + FIELD_API_KEY;
+		
+		private MoviesBuilder(RecommendationsService service) {
+			super(service, new TypeToken<List<Movie>>() {}, URI, HttpMethod.Post);
+		}
+	}
 	public static final class ShowsBuilder extends TraktApiBuilder<List<TvShow>> {
 		private static final String URI = "/recommendations/shows/" + FIELD_API_KEY;
 		

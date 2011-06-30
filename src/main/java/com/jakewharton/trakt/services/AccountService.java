@@ -19,6 +19,19 @@ public class AccountService extends TraktApiService {
 		return (new CreateBuilder(this)).username(username).password(password).email(email);
 	}
 	
+	/**
+	 * Test trakt credentials. This is useful for your configuration screen and
+	 * is a simple way to test someone's trakt account.
+	 * 
+	 * @param username Username.
+	 * @param password SHA1 hash of password.
+	 * @return Builder instance.
+	 */
+	public TestBuilder test(String username, String password) {
+		return (new TestBuilder(this)).username(username).password(password);
+	}
+	
+	
 	public static final class CreateBuilder extends TraktApiBuilder<Response> {
 		private static final String POST_USERNAME = "username";
 		private static final String POST_PASSWORD = "password";
@@ -63,20 +76,6 @@ public class AccountService extends TraktApiService {
 			return this;
 		}
 	}
-	
-	
-	/**
-	 * Test trakt credentials. This is useful for your configuration screen and
-	 * is a simple way to test someone's trakt account.
-	 * 
-	 * @param username Username.
-	 * @param password SHA1 hash of password.
-	 * @return Builder instance.
-	 */
-	public TestBuilder test(String username, String password) {
-		return (new TestBuilder(this)).username(username).password(password);
-	}
-	
 	public static final class TestBuilder extends TraktApiBuilder<Response> {
 		private static final String POST_USERNAME = "username";
 		private static final String POST_PASSWORD = "password";

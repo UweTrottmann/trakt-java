@@ -24,14 +24,6 @@ public class MovieService extends TraktApiService {
 		return new CancelWatchingBuilder(this);
 	}
 	
-	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
-		private static final String URI = "/movie/cancelwatching/" + FIELD_API_KEY;
-		
-		private CancelWatchingBuilder(MovieService service) {
-			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-		}
-	}
-	
 	/**
 	 * <p>Notify Trakt that a user has finsihed watching a movie. This commits
 	 * the movie to the users profile. You should use movie/watching prior to
@@ -74,7 +66,148 @@ public class MovieService extends TraktApiService {
 	public ScrobbleBuilder scrobble(String title, int year) {
 		return new ScrobbleBuilder(this).title(title).year(year);
 	}
+
+	/**
+	 * Add movies watched outside of Trakt to your library.
+	 * 
+	 * @return Builder instance.
+	 */
+	public SeenBuilder seen() {
+		return new SeenBuilder(this);
+	}
+
+	/**
+	 * Add unwatched movies to your library.
+	 * 
+	 * @return Builder instance.
+	 */
+	public LibraryBuilder library() {
+		return new LibraryBuilder(this);
+	}
+
+	/**
+	 * Returns information for a movie including ratings and top watchers.
+	 * 
+	 * @param query Either the slug (i.e. the-social-network-2010), IMDB ID, or
+	 * TMDB ID. You can get a movie's slug by browsing the website and looking
+	 * at the URL when on a movie summary page.
+	 * @return Builder instance.
+	 */
+	public SummaryBuilder summary(String query) {
+		return new SummaryBuilder(this, query);
+	}
+
+	/**
+	 * Remove movies from your library collection.
+	 * 
+	 * @return Builder instance.
+	 */
+	public UnlibraryBuilder unlibrary() {
+		return new UnlibraryBuilder(this);
+	}
+
+	/**
+	 * Remove movies watched outside of Trakt from your library.
+	 * 
+	 * @return Builder instance.
+	 */
+	public UnseenBuilder unseen() {
+		return new UnseenBuilder(this);
+	}
 	
+	/**
+	 * Remove one or more movies from your watchlist.
+	 * 
+	 * @return Builder instance.
+	 */
+	public UnwatchlistBuilder unwatchlist() {
+		return new UnwatchlistBuilder(this);
+	}
+
+	/**
+	 * Notify trakt that a user has started watching a movie.
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param imdbId IMDB ID for the movie.
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(String imdbId) {
+		return new WatchingBuilder(this).imdbId(imdbId);
+	}
+	
+	/**
+	 * Notify trakt that a user has started watching a movie.
+	 * 
+	 * <p><em>Warning</em>: This method requires a developer API key.</p>
+	 * 
+	 * @param tmdbId TMDB (themoviedb.org) ID for the movie. 
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(int tmdbId) {
+		return new WatchingBuilder(this).tmdbId(tmdbId);
+	}
+	
+	/**
+	 * Notify trakt that a user has started watching a movie.
+	 * 
+	 * @param title Movie title.
+	 * @param year Movie year.
+	 * @return Builder instance.
+	 */
+	public WatchingBuilder watching(String title, int year) {
+		return new WatchingBuilder(this).title(title).year(year);
+	}
+
+	/**
+	 * Returns a array of all users watching a movie.
+	 * 
+	 * @param query Either the slug (i.e. the-social-network-2010), IMDB ID, or
+	 * TMDB ID. You can get a movie's slug by browsing the website and looking
+	 * at the URL when on a movie summary page.
+	 * @return Builder instance.
+	 */
+	public WatchingNowBuilder watchingNow(String query) {
+		return new WatchingNowBuilder(this, query);
+	}
+	
+	/**
+	 * Add one or more movies to your watchlist.
+	 * 
+	 * @return Builder instance.
+	 */
+	public WatchlistBuilder watchlist() {
+		return new WatchlistBuilder(this);
+	}
+
+	/**
+	 * Returns all shouts for a movie. Most recent shouts returned first.
+	 * 
+	 * @param titleOrImdbId Movie title or IMDB ID.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(String titleOrImdbId) {
+		return new ShoutsBuilder(this).title(titleOrImdbId);
+	}
+	
+	/**
+	 * Returns all shouts for a movie. Most recent shouts returned first.
+	 * 
+	 * @param tmdbId TMDB ID.
+	 * @return Builder instance.
+	 */
+	public ShoutsBuilder shouts(int tmdbId) {
+		return new ShoutsBuilder(this).title(tmdbId);
+	}
+	
+	
+	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
+		private static final String URI = "/movie/cancelwatching/" + FIELD_API_KEY;
+		
+		private CancelWatchingBuilder(MovieService service) {
+			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+		}
+	}
 	public static final class ScrobbleBuilder extends TraktApiBuilder<Response> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -168,16 +301,6 @@ public class MovieService extends TraktApiService {
 			assert this.hasPostParameter(POST_PROGRESS) : "Progress is required.";
 		}
 	}
-	
-	/**
-	 * Add movies watched outside of Trakt to your library.
-	 * 
-	 * @return Builder instance.
-	 */
-	public SeenBuilder seen() {
-		return new SeenBuilder(this);
-	}
-	
 	public static final class SeenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -258,17 +381,7 @@ public class MovieService extends TraktApiService {
 			//Add the assembled movie list to the JSON post body.
 			this.postParameter(POST_MOVIES, this.movieList);
 		}
-	}
-	
-	/**
-	 * Add unwatched movies to your library.
-	 * 
-	 * @return Builder instance.
-	 */
-	public LibraryBuilder library() {
-		return new LibraryBuilder(this);
-	}
-	
+	}	
 	public static final class LibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -336,19 +449,6 @@ public class MovieService extends TraktApiService {
 			this.postParameter(POST_MOVIES, this.movieList);
 		}
 	}
-	
-	/**
-	 * Returns information for a movie including ratings and top watchers.
-	 * 
-	 * @param query Either the slug (i.e. the-social-network-2010), IMDB ID, or
-	 * TMDB ID. You can get a movie's slug by browsing the website and looking
-	 * at the URL when on a movie summary page.
-	 * @return Builder instance.
-	 */
-	public SummaryBuilder summary(String query) {
-		return new SummaryBuilder(this, query);
-	}
-	
 	public static final class SummaryBuilder extends TraktApiBuilder<Movie> {
 		private static final String URI = "/movie/summary.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
@@ -358,16 +458,6 @@ public class MovieService extends TraktApiService {
 			this.field(FIELD_QUERY, query);
 		}
 	}
-	
-	/**
-	 * Remove movies from your library collection.
-	 * 
-	 * @return Builder instance.
-	 */
-	public UnlibraryBuilder unlibrary() {
-		return new UnlibraryBuilder(this);
-	}
-	
 	public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -435,16 +525,6 @@ public class MovieService extends TraktApiService {
 			this.postParameter(POST_MOVIES, this.movieList);
 		}
 	}
-
-	/**
-	 * Remove movies watched outside of Trakt from your library.
-	 * 
-	 * @return Builder instance.
-	 */
-	public UnseenBuilder unseen() {
-		return new UnseenBuilder(this);
-	}
-	
 	public static final class UnseenBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -512,16 +592,6 @@ public class MovieService extends TraktApiService {
 			this.postParameter(POST_MOVIES, this.movieList);
 		}
 	}
-
-	/**
-	 * Remove one or more movies from your watchlist.
-	 * 
-	 * @return Builder instance.
-	 */
-	public UnwatchlistBuilder unwatchlist() {
-		return new UnwatchlistBuilder(this);
-	}
-	
 	public static final class UnwatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -589,42 +659,6 @@ public class MovieService extends TraktApiService {
 			this.postParameter(POST_MOVIES, this.movieList);
 		}
 	}
-	
-	/**
-	 * Notify trakt that a user has started watching a movie.
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param imdbId IMDB ID for the movie.
-	 * @return Builder instance.
-	 */
-	public WatchingBuilder watching(String imdbId) {
-		return new WatchingBuilder(this).imdbId(imdbId);
-	}
-	
-	/**
-	 * Notify trakt that a user has started watching a movie.
-	 * 
-	 * <p><em>Warning</em>: This method requires a developer API key.</p>
-	 * 
-	 * @param tmdbId TMDB (themoviedb.org) ID for the movie. 
-	 * @return Builder instance.
-	 */
-	public WatchingBuilder watching(int tmdbId) {
-		return new WatchingBuilder(this).tmdbId(tmdbId);
-	}
-	
-	/**
-	 * Notify trakt that a user has started watching a movie.
-	 * 
-	 * @param title Movie title.
-	 * @param year Movie year.
-	 * @return Builder instance.
-	 */
-	public WatchingBuilder watching(String title, int year) {
-		return new WatchingBuilder(this).title(title).year(year);
-	}
-	
 	public static final class WatchingBuilder extends TraktApiBuilder<Response> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -717,19 +751,6 @@ public class MovieService extends TraktApiService {
 			assert this.hasPostParameter(POST_PROGRESS) : "Progress is required.";
 		}
 	}
-	
-	/**
-	 * Returns a array of all users watching a movie.
-	 * 
-	 * @param query Either the slug (i.e. the-social-network-2010), IMDB ID, or
-	 * TMDB ID. You can get a movie's slug by browsing the website and looking
-	 * at the URL when on a movie summary page.
-	 * @return Builder instance.
-	 */
-	public WatchingNowBuilder watchingNow(String query) {
-		return new WatchingNowBuilder(this, query);
-	}
-	
 	public static final class WatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
 		private static final String URI = "/movie/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 		
@@ -739,16 +760,6 @@ public class MovieService extends TraktApiService {
 			this.field(FIELD_QUERY, query);
 		}
 	}
-
-	/**
-	 * Add one or more movies to your watchlist.
-	 * 
-	 * @return Builder instance.
-	 */
-	public WatchlistBuilder watchlist() {
-		return new WatchlistBuilder(this);
-	}
-	
 	public static final class WatchlistBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TMDB_ID = "tmdb_id";
@@ -816,27 +827,6 @@ public class MovieService extends TraktApiService {
 			this.postParameter(POST_MOVIES, this.movieList);
 		}
 	}
-
-	/**
-	 * Returns all shouts for a movie. Most recent shouts returned first.
-	 * 
-	 * @param titleOrImdbId Movie title or IMDB ID.
-	 * @return Builder instance.
-	 */
-	public ShoutsBuilder shouts(String titleOrImdbId) {
-		return new ShoutsBuilder(this).title(titleOrImdbId);
-	}
-	
-	/**
-	 * Returns all shouts for a movie. Most recent shouts returned first.
-	 * 
-	 * @param tmdbId TMDB ID.
-	 * @return Builder instance.
-	 */
-	public ShoutsBuilder shouts(int tmdbId) {
-		return new ShoutsBuilder(this).title(tmdbId);
-	}
-	
 	public static final class ShoutsBuilder extends TraktApiBuilder<List<Shout>> {
 		private static final String URI = "/movie/shouts.json/" + FIELD_API_KEY + "/" + FIELD_TITLE;
 		
