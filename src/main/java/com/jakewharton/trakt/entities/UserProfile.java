@@ -1,6 +1,6 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
@@ -109,7 +109,7 @@ public final class UserProfile implements TraktEntity {
 	private Integer age;
 	private String location;
 	private String about;
-	private Date joined;
+	private Calendar joined;
 	private String avatar;
 	private String url;
 	private Stats stats;
@@ -117,7 +117,7 @@ public final class UserProfile implements TraktEntity {
 	private List<MediaEntity> watched;
 	private Integer plays;
 	private TvShowEpisode episode;
-	private Date approved;
+	private Calendar approved;
 	
 	public String getUsername() {
 		return this.username;
@@ -140,7 +140,7 @@ public final class UserProfile implements TraktEntity {
 	public String getAbout() {
 		return this.about;
 	}
-	public Date getJoined() {
+	public Calendar getJoined() {
 		return this.joined;
 	}
 	public String getAvatar() {
@@ -164,7 +164,7 @@ public final class UserProfile implements TraktEntity {
 	public TvShowEpisode getEpisode() {
 		return this.episode;
 	}
-	public Date getApproved() {
+	public Calendar getApproved() {
 		return this.approved;
 	}
 }

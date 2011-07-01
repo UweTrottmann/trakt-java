@@ -8,11 +8,11 @@ import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -24,6 +24,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
+import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.enumerations.Rating;
@@ -38,10 +39,10 @@ import com.jakewharton.trakt.util.Base64;
  */
 public abstract class TraktApiService extends ApiService {
 	/** Default connection timeout (in milliseconds). */
-	private static final int DEFAULT_TIMEOUT_CONNECT = 60 * 1000;
+	private static final int DEFAULT_TIMEOUT_CONNECT = 60 * (int)TraktApiBuilder.MILLISECONDS_IN_SECOND;
 	
 	/** Default read timeout (in milliseconds). */
-	private static final int DEFAULT_TIMEOUT_READ = 60 * 1000;
+	private static final int DEFAULT_TIMEOUT_READ = 60 * (int)TraktApiBuilder.MILLISECONDS_IN_SECOND;
 	
 	/** HTTP header name for authorization. */
 	private static final String HEADER_AUTHORIZATION = "Authorization";
@@ -66,6 +67,9 @@ public abstract class TraktApiService extends ApiService {
 	
 	/** Default media center build date debug string. */
 	private static final String DEFAULT_MEDIA_CENTER_DATE = "trakt-java library";
+	
+	/** Time zone for Trakt dates. */
+	private static final TimeZone TRAKT_TIME_ZONE = TimeZone.getTimeZone("GMT-8:00");
 	
 	
 	/** JSON parser for reading the content stream. */
@@ -263,16 +267,26 @@ public abstract class TraktApiService extends ApiService {
 		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
 			@Override
 			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-				//TODO: localize from GMT-8
 				try {
-					return new Date(json.getAsLong() * TraktApiBuilder.MILLISECONDS_IN_SECOND); //S to MS
+					long value = json.getAsLong();
+					Calendar date = Calendar.getInstance(TRAKT_TIME_ZONE);
+					date.setTimeInMillis(value * TraktApiBuilder.MILLISECONDS_IN_SECOND);
+					return date.getTime();
 				} catch (NumberFormatException outer) {
 					try {
 						return JSON_STRING_DATE.parse(json.getAsString());
 					} catch (ParseException inner) {
-						throw outer;
+						throw new JsonParseException(outer);
 					}
 				}
+			}
+		});
+		builder.registerTypeAdapter(Calendar.class, new JsonDeserializer<Calendar>() {
+			@Override
+			public Calendar deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				Calendar value = Calendar.getInstance(TRAKT_TIME_ZONE);
+				value.setTimeInMillis(json.getAsLong() * TraktApiBuilder.MILLISECONDS_IN_SECOND);
+				return value;
 			}
 		});
 		builder.registerTypeAdapter(TvShowSeason.Episodes.class, new JsonDeserializer<TvShowSeason.Episodes>() {
@@ -280,15 +294,20 @@ public abstract class TraktApiService extends ApiService {
 			public TvShowSeason.Episodes deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 				TvShowSeason.Episodes episodes = new TvShowSeason.Episodes();
 				try {
-					if (json instanceof JsonArray) {
-						Field fieldList = TvShowSeason.Episodes.class.getDeclaredField("list");
-						fieldList.setAccessible(true);
-						List<Integer> list = new ArrayList<Integer>();
-						for (JsonElement element : json.getAsJsonArray()) {
-							list.add(element.getAsInt());
+					if (json.isJsonArray()) {
+						if (json.getAsJsonArray().get(0).isJsonPrimitive()) {
+							//Episode number list
+							Field fieldNumbers = TvShowSeason.Episodes.class.getDeclaredField("numbers");
+							fieldNumbers.setAccessible(true);
+							fieldNumbers.set(episodes, context.deserialize(json, (new TypeToken<List<Integer>>() {}).getType()));
+						} else {
+							//Episode object list
+							Field fieldList = TvShowSeason.Episodes.class.getDeclaredField("episodes");
+							fieldList.setAccessible(true);
+							fieldList.set(episodes, context.deserialize(json, (new TypeToken<List<TvShowEpisode>>() {}).getType()));
 						}
-						fieldList.set(episodes, list);
 					} else {
+						//Episode count
 						Field fieldCount = TvShowSeason.Episodes.class.getDeclaredField("count");
 						fieldCount.setAccessible(true);
 						fieldCount.setInt(episodes, json.getAsInt());

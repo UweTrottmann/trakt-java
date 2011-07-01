@@ -297,13 +297,13 @@ public class ShowService extends TraktApiService {
 	 * Returns information for a TV show including ratings, top watchers, and
 	 * most watched episodes.
 	 * 
-	 * @param query Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * @param title Either the slug (i.e. the-walking-dead) or TVDB ID. You can
 	 * get a show's slug by browsing the website and looking at the URL when on
 	 * a show summary page.
 	 * @return Builder instance.
 	 */
-	public SummaryBuilder summary(String query) {
-		return new SummaryBuilder(this, query);
+	public SummaryBuilder summary(String title) {
+		return (new SummaryBuilder(this)).title(title);
 	}
 	
 	/**
@@ -1142,12 +1142,23 @@ public class ShowService extends TraktApiService {
 	public static final class SummaryBuilder extends TraktApiBuilder<TvShow> {
 		private static final String EXTENDED = "extended";
 		
-		private static final String URI = "/show/summary.json/" + FIELD_API_KEY + "/" + FIELD_EXTENDED;
+		private static final String URI = "/show/summary.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_EXTENDED;
 		
-		private SummaryBuilder(ShowService service, String query) {
+		private SummaryBuilder(ShowService service) {
 			super(service, new TypeToken<TvShow>() {}, URI);
-			
-			this.field(FIELD_QUERY, query);
+		}
+		
+		/**
+		 * Either the slug (i.e. the-walking-dead) or TVDB ID. You can get a
+		 * show's slug by browsing the website and looking at the URL when on a
+		 * show summary page.
+		 * 
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public SummaryBuilder title(String title) {
+			this.field(FIELD_TITLE, title);
+			return this;
 		}
 		
 		/**

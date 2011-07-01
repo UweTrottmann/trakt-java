@@ -79,6 +79,7 @@
 		<apibuilder.version>1.1.0</apibuilder.version>
 		<gson.version>1.6</gson.version>
 		<junit.version>4.8.2</junit.version>
+		<commons-lang.version>2.6</commons-lang.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -100,6 +101,12 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons-lang.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

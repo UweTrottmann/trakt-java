@@ -75,7 +75,7 @@ public class UserServiceTest extends BaseTestCase {
 		
 		TvShowSeason.Episodes seasonEpisodes = season.getEpisodes();
 		assertNotNull("Show episodes was null.", seasonEpisodes);
-		assertNotNull("Show episodes list was null.", seasonEpisodes.getList());
-		assertFalse("Show episodes list was empty.", seasonEpisodes.getList().isEmpty());
+		assertNotNull("Show episodes list was null.", seasonEpisodes.getNumbers());
+		assertFalse("Show episodes list was empty.", seasonEpisodes.getNumbers().isEmpty());
 	}
 }

@@ -10,13 +10,17 @@ public class TvShowSeason implements TraktEntity {
 		private static final long serialVersionUID = -8143500365188820979L;
 		
 		private Integer count;
-		private List<Integer> list;
+		private List<Integer> numbers;
+		private List<TvShowEpisode> episodes;
 		
 		public Integer getCount() {
 			return this.count;
 		}
-		public List<Integer> getList() {
-			return this.list;
+		public List<Integer> getNumbers() {
+			return this.numbers;
+		}
+		public List<TvShowEpisode> getEpisodes() {
+			return this.episodes;
 		}
 	}
 

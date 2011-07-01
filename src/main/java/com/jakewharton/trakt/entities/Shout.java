@@ -1,16 +1,16 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Date;
+import java.util.Calendar;
 import com.jakewharton.trakt.TraktEntity;
 
 public class Shout implements TraktEntity {
 	private static final long serialVersionUID = 4324069488018464744L;
 
-	private Date inserted;
+	private Calendar inserted;
 	private String shout;
 	private UserProfile user;
 	
-	public Date getInserted() {
+	public Calendar getInserted() {
 		return this.inserted;
 	}
 	public String getShout() {
