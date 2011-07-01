@@ -1,6 +1,7 @@
 package com.jakewharton.trakt.entities;
 
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
 public abstract class MediaBase implements TraktEntity {
@@ -24,10 +25,10 @@ public abstract class MediaBase implements TraktEntity {
 	private Integer year;
 	private String url;
 	private Images images;
-	private List<UserProfile> topWatchers;
+	@SerializedName("top_watchers") private List<UserProfile> topWatchers;
 	private Ratings ratings;
 	private Stats stats;
-	private String imdbId;
+	@SerializedName("imdb_id") private String imdbId;
 
 	public String getTitle() {
 		return this.title;

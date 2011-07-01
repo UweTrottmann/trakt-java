@@ -1,6 +1,7 @@
 package com.jakewharton.trakt.entities;
 
 import java.util.Date;
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
 public final class TvShowEpisode implements TraktEntity {
@@ -11,7 +12,7 @@ public final class TvShowEpisode implements TraktEntity {
 	private String title;
 	private String overview;
 	private String url;
-	private Date firstAired;
+	@SerializedName("first_aired") private Date firstAired;
 	private Date inserted;
 	private Integer plays;
 	

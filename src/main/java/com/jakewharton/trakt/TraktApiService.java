@@ -2,13 +2,17 @@ package com.jakewharton.trakt;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -20,6 +24,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
+import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.util.Base64;
@@ -268,6 +273,36 @@ public abstract class TraktApiService extends ApiService {
 						throw outer;
 					}
 				}
+			}
+		});
+		builder.registerTypeAdapter(TvShowSeason.Episodes.class, new JsonDeserializer<TvShowSeason.Episodes>() {
+			@Override
+			public TvShowSeason.Episodes deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				TvShowSeason.Episodes episodes = new TvShowSeason.Episodes();
+				try {
+					if (json instanceof JsonArray) {
+						Field fieldList = TvShowSeason.Episodes.class.getDeclaredField("list");
+						fieldList.setAccessible(true);
+						List<Integer> list = new ArrayList<Integer>();
+						for (JsonElement element : json.getAsJsonArray()) {
+							list.add(element.getAsInt());
+						}
+						fieldList.set(episodes, list);
+					} else {
+						Field fieldCount = TvShowSeason.Episodes.class.getDeclaredField("count");
+						fieldCount.setAccessible(true);
+						fieldCount.setInt(episodes, json.getAsInt());
+					}
+				} catch (SecurityException e) {
+					throw new JsonParseException(e);
+				} catch (NoSuchFieldException e) {
+					throw new JsonParseException(e);
+				} catch (IllegalArgumentException e) {
+					throw new JsonParseException(e);
+				} catch (IllegalAccessException e) {
+					throw new JsonParseException(e);
+				}
+				return episodes;
 			}
 		});
 		

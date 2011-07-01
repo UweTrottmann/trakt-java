@@ -2,6 +2,7 @@ package com.jakewharton.trakt.entities;
 
 import java.util.Date;
 import java.util.List;
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
 public final class UserProfile implements TraktEntity {
@@ -23,10 +24,10 @@ public final class UserProfile implements TraktEntity {
 			private static final long serialVersionUID = 7210925664642958187L;
 			
 			private Integer watched;
-			private Integer watchedUnique;
-			private Integer watchedTrakt;
-			private Integer watchedTraktUnique;
-			private Integer watchedElsewhere;
+			@SerializedName("watched_unique") private Integer watchedUnique;
+			@SerializedName("watched_trakt") private Integer watchedTrakt;
+			@SerializedName("watched_trakt_unique") private Integer watchedTraktUnique;
+			@SerializedName("watched_elsewhere") private Integer watchedElsewhere;
 			private Integer unwatched;
 			
 			public Integer getWatched() {
@@ -52,10 +53,10 @@ public final class UserProfile implements TraktEntity {
 			private static final long serialVersionUID = 5061541628681754141L;
 			
 			private Integer watched;
-			private Integer watchedUnique;
-			private Integer watchedTrakt;
-			private Integer watchedTraktUnique;
-			private Integer watchedElsewhere;
+			@SerializedName("watched_unique") private Integer watchedUnique;
+			@SerializedName("watched_trakt") private Integer watchedTrakt;
+			@SerializedName("watched_trakt_unique") private Integer watchedTraktUnique;
+			@SerializedName("watched_elsewhere") private Integer watchedElsewhere;
 			private Integer library;
 			private Integer unwatched;
 			
@@ -103,7 +104,7 @@ public final class UserProfile implements TraktEntity {
 
 	private String username;
 	private Boolean _protected;
-	private String fullName;
+	@SerializedName("full_name") private String fullName;
 	private String gender; //TODO: enum
 	private Integer age;
 	private String location;

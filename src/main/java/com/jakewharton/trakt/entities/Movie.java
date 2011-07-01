@@ -1,13 +1,14 @@
 package com.jakewharton.trakt.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
 public final class Movie extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = -1543214252495012419L;
 
-	private String tmdbId;
+	@SerializedName("tmdb_id") private String tmdbId;
 	private Integer plays;
-	private Boolean inCollection;
+	@SerializedName("in_collection") private Boolean inCollection;
 	
 	public String getTmdbId() {
 		return this.tmdbId;

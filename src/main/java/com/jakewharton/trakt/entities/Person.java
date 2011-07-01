@@ -1,6 +1,7 @@
 package com.jakewharton.trakt.entities;
 
 import java.util.Date;
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
 public final class Person implements TraktEntity {
@@ -11,7 +12,7 @@ public final class Person implements TraktEntity {
 	private String biography;
 	private Date birthday;
 	private String birthplace;
-	private Integer tmdbId;
+	@SerializedName("tmdb_id") private Integer tmdbId;
 	private Images images;
 	
 	public String getName() {
