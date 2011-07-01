@@ -164,7 +164,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected final JsonElement execute() {
 		String url = this.buildUrl();
 		while (url.endsWith("/")) {
-			url = url.substring(0, url.length() - 2);
+			url = url.substring(0, url.length() - 1);
 		}
 		
 		switch (this.method) {
