@@ -1,5 +1,6 @@
 package com.jakewharton.trakt.entities;
 
+import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
@@ -9,6 +10,12 @@ public final class Movie extends MediaBase implements TraktEntity {
 	@SerializedName("tmdb_id") private String tmdbId;
 	private Integer plays;
 	@SerializedName("in_collection") private Boolean inCollection;
+	private Date released;
+	private String trailer;
+	private Integer runtime;
+	private String tagline;
+	private String overview;
+	private String certification; //TODO make enum
 	
 	public String getTmdbId() {
 		return this.tmdbId;
@@ -18,5 +25,23 @@ public final class Movie extends MediaBase implements TraktEntity {
 	}
 	public Boolean getInCollection() {
 		return this.inCollection;
+	}
+	public Date getReleased() {
+		return this.released;
+	}
+	public String getTrailer() {
+		return this.trailer;
+	}
+	public Integer getRuntime() {
+		return this.runtime;
+	}
+	public String getTagline() {
+		return this.tagline;
+	}
+	public String getOverview() {
+		return this.overview;
+	}
+	public String getCertification() {
+		return this.certification;
 	}
 }

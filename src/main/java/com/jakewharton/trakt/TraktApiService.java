@@ -264,6 +264,16 @@ public abstract class TraktApiService extends ApiService {
 		GsonBuilder builder = new GsonBuilder();
 		
 		//class types
+		builder.registerTypeAdapter(Integer.class, new JsonDeserializer<Integer>() {
+			@Override
+			public Integer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				try {
+					return new Integer(json.getAsInt());
+				} catch (NumberFormatException e) {
+					return null;
+				}
+			}
+		});
 		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
 			@Override
 			public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
