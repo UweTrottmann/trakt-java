@@ -84,6 +84,9 @@ Documentation
  * Repository is hosted on [github.com/JakeWharton/trakt-java/][3].
  * Native API is documented on [trakt.tv/api-docs][1].
 
+Questions, comments, and suggestions should be posted on the [Google Group][5]
+for Jake Wharton's projects.
+
 
 
 Developed By
@@ -125,3 +128,4 @@ License
  [2]: http://jakewharton.github.com/trakt-java/
  [3]: https://github.com/JakeWharton/trakt-java/
  [4]: https://github.com/nabeelmukhtar/github-java-sdk
+ [5]: https://groups.google.com/forum/#!forum/jakewharton-projects
