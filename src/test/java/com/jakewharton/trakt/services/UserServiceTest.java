@@ -31,16 +31,14 @@ public class UserServiceTest extends BaseTestCase {
 		TvShowEpisode showEpisode = dateEpisode.getEpisode();
 		assertNotNull("Show episode was null.", showEpisode);
 		assertNotNull("Show season was null.", showEpisode.getSeason());
-		assertEquals("Show season does not match.", showEpisode.getSeason().intValue(), 1);
+		assertEquals("Show season does not match.", 1, showEpisode.getSeason().intValue());
 		assertNotNull("Show number was null.", showEpisode.getNumber());
-		assertEquals("Show number does not match.", showEpisode.getNumber().intValue(), 1);
-		assertNotNull("Show title was null.", showEpisode.getTitle());
-		assertEquals("Show title does not match.", showEpisode.getTitle(), "Pilot (1)");
+		assertEquals("Show number does not match.", 1, showEpisode.getNumber().intValue());
+		assertEquals("Show title does not match.", "Pilot (1)", showEpisode.getTitle());
 		
 		TvShow show = dateEpisode.getShow();
 		assertNotNull("Show was null.", show);
-		assertNotNull("Show title was null.", show.getTitle());
-		assertEquals("Show title does not match.", show.getTitle(), "Lost");
+		assertEquals("Show title does not match.", "Lost", show.getTitle());
 	}
 	
 	public void test_libraryShowsWatched() {
@@ -50,17 +48,13 @@ public class UserServiceTest extends BaseTestCase {
 		
 		TvShow show = shows.get(0);
 		assertNotNull("First result was null.", show);
-		assertNotNull("Show title was null.", show.getTitle());
-		assertEquals("Show title does not match.", show.getTitle(), "South Park");
+		assertEquals("Show title does not match.", "South Park", show.getTitle());
 		assertNotNull("Show year was null.", show.getYear());
 		assertEquals("Show year does not match.", show.getYear().intValue(), 1997);
 		assertNotNull("Show URL was null.", show.getUrl());
-		assertNotNull("Show IMDB ID was null.", show.getImdbId());
-		assertEquals("Show IMDB ID does not match.", show.getImdbId(), "tt0121955");
-		assertNotNull("Show TVDB ID was null.", show.getTvdbId());
-		assertEquals("Show TVDB ID does not match.", show.getTvdbId(), "75897");
-		assertNotNull("Show TV Rage ID was null.", show.getTvRageId());
-		assertEquals("Show TV Rage ID does not match.", show.getTvRageId(), "5266");
+		assertEquals("Show IMDB ID does not match.", "tt0121955", show.getImdbId());
+		assertEquals("Show TVDB ID does not match.", "75897", show.getTvdbId());
+		assertEquals("Show TV Rage ID does not match.", "5266", show.getTvRageId());
 		assertNotNull("Show images was null.", show.getImages());
 		assertNotNull("Show poster image was null.", show.getImages().getPoster());
 		assertNotNull("Show fanart image was null.", show.getImages().getFanart());
