@@ -149,7 +149,7 @@ public abstract class TraktApiService extends ApiService {
 	/**
 	 * Set API key to use for client authentication by Trakt.
 	 * 
-	 * @param Value.
+	 * @param value Value.
 	 */
 	public void setApiKey(String value) {
 		this.apiKey = value;

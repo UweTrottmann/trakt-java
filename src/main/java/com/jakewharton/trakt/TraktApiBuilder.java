@@ -72,7 +72,6 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param service Service to bind to.
 	 * @param token Return type token.
 	 * @param methodUri URI method format string.
-	 * @param fieldsUri URI field format string.
 	 */
 	public TraktApiBuilder(TraktApiService service, TypeToken<T> token, String methodUri) {
 		this(service, token, methodUri, HttpMethod.Get);
