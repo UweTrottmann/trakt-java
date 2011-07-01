@@ -9,6 +9,13 @@ import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.entities.MediaBase.Stats;
 
 public class MovieServiceTest extends BaseTestCase {
+	public void test_trending() {
+		List<Movie> trending = getManager().movieService().trending().fire();
+		assertNotNull("Result was null.", trending);
+		assertFalse("Trending list was empty.", trending.isEmpty());
+		assertNotNull("Trending item was null.", trending.get(0));
+	}
+	
 	public void test_summary() {
 		Movie movie = getManager().movieService().summary("tt1285016").fire();
 		assertNotNull("Result was null.", movie);

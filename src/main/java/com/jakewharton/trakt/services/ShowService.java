@@ -307,6 +307,15 @@ public class ShowService extends TraktApiService {
 	}
 	
 	/**
+	 * Returns all shows being watched right now.
+	 * 
+	 * @return Builder instance.
+	 */
+	public TrendingBuilder trending() {
+		return new TrendingBuilder(this);
+	}
+	
+	/**
 	 * Remove an entire show (including all episodes) from your library collection.
 	 * 
 	 * @param imdbId IMDB ID for the show. 
@@ -1171,6 +1180,13 @@ public class ShowService extends TraktApiService {
 		public SummaryBuilder extended() {
 			this.field(FIELD_EXTENDED, EXTENDED);
 			return this;
+		}
+	}
+	public static final class TrendingBuilder extends TraktApiBuilder<List<TvShow>> {
+		private static final String URI = "/shows/trending.json/" + FIELD_API_KEY;
+		
+		private TrendingBuilder(ShowService service) {
+			super(service, new TypeToken<List<TvShow>>() {}, URI);
 		}
 	}
 	public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {

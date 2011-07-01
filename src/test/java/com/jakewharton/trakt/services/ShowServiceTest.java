@@ -1,11 +1,19 @@
 package com.jakewharton.trakt.services;
 
 import java.util.Date;
+import java.util.List;
 import org.apache.commons.lang.time.DateUtils;
 import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.TvShow;
 
 public class ShowServiceTest extends BaseTestCase {
+	public void test_trending() {
+		List<TvShow> trending = getManager().showService().trending().fire();
+		assertNotNull("Result was null.", trending);
+		assertFalse("Trending list was empty.", trending.isEmpty());
+		assertNotNull("Trending item was null.", trending.get(0));
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void test_summary() {
 		Date firstAired = new Date(110, 9, 31);

@@ -200,6 +200,15 @@ public class MovieService extends TraktApiService {
 		return new ShoutsBuilder(this).title(tmdbId);
 	}
 	
+	/**
+	 * Returns all movies being watched right now.
+	 * 
+	 * @return Builder instance.
+	 */
+	public TrendingBuilder trending() {
+		return new TrendingBuilder(this);
+	}
+	
 	
 	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
 		private static final String URI = "/movie/cancelwatching/" + FIELD_API_KEY;
@@ -854,6 +863,13 @@ public class MovieService extends TraktApiService {
 		public ShoutsBuilder title(int tmdbId) {
 			this.field(FIELD_TITLE, tmdbId);
 			return this;
+		}
+	}
+	public static final class TrendingBuilder extends TraktApiBuilder<List<Movie>> {
+		private static final String URI = "/movies/trending.json/" + FIELD_API_KEY;
+		
+		private TrendingBuilder(MovieService service) {
+			super(service, new TypeToken<List<Movie>>() {}, URI);
 		}
 	}
 }
