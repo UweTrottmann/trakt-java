@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
+import com.jakewharton.trakt.enumerations.Gender;
 
 public final class UserProfile implements TraktEntity {
 	private static final long serialVersionUID = -4145012978937162733L;
@@ -105,7 +106,7 @@ public final class UserProfile implements TraktEntity {
 	private String username;
 	@SerializedName("protected") private Boolean _protected;
 	@SerializedName("full_name") private String fullName;
-	private String gender; //TODO: enum
+	private Gender gender;
 	private Integer age;
 	private String location;
 	private String about;
@@ -128,7 +129,7 @@ public final class UserProfile implements TraktEntity {
 	public String getFullName() {
 		return this.fullName;
 	}
-	public String getGender() {
+	public Gender getGender() {
 		return this.gender;
 	}
 	public Integer getAge() {

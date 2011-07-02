@@ -12,6 +12,7 @@ Change Log
    seconds. Ones that remain `java.util.Date` should only be used for the date
    they represent, not the time.
  * The search service is now available from `ServiceManager`.
+ * New `enum`s for gender, rating type, and day of the week.
  * __Full test suite implemented__.
 
 

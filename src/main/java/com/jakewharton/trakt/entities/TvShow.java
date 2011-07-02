@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
+import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
 public final class TvShow extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 862473930551420996L;
@@ -13,11 +14,11 @@ public final class TvShow extends MediaBase implements TraktEntity {
 	private String overview;
 	private Integer runtime;
 	private String network;
-	@SerializedName("air_day") private String airDay; //TODO: enum
+	@SerializedName("air_day") private DayOfTheWeek airDay;
 	@SerializedName("air_time") private String airTime;
 	private String certification; //TODO: enum
-	@SerializedName("tvdb_id") private String tvdbId; //TODO: convert to Integer
-	@SerializedName("tvrage_id") private String tvrageId; //TODO: convert to Integer
+	@SerializedName("tvdb_id") private String tvdbId;
+	@SerializedName("tvrage_id") private String tvrageId;
 	private List<TvShowEpisode> episodes;
 	@SerializedName("top_episodes") private List<TvShowEpisode> topEpisodes;
 	private List<TvShowSeason> seasons;
@@ -37,7 +38,7 @@ public final class TvShow extends MediaBase implements TraktEntity {
 	public String getNetwork() {
 		return this.network;
 	}
-	public String getAirDay() {
+	public DayOfTheWeek getAirDay() {
 		return this.airDay;
 	}
 	public String getAirTime() {

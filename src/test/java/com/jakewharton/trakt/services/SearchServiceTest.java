@@ -11,6 +11,7 @@ import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Person;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.enumerations.Gender;
 
 public class SearchServiceTest extends BaseTestCase {
 	public void test_episodes() {
@@ -73,7 +74,7 @@ public class SearchServiceTest extends BaseTestCase {
 		assertNotNull("User protected was null.", user.getProtected());
 		assertEquals("User protected does not match.", false, user.getProtected().booleanValue());
 		assertEquals("User full name does not match.", "Jake Wharton", user.getFullName());
-		assertEquals("User gender does not match.", "male", user.getGender());
+		assertEquals("User gender does not match.", Gender.Male, user.getGender());
 		assertNotNull("User location was null.", user.getLocation());
 		assertTrue("User joined date does not match.", DateUtils.isSameInstant(joined, user.getJoined()));
 		assertNotNull("User avatar was null.", user.getAvatar());

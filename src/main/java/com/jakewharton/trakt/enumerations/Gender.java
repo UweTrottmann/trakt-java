@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import com.jakewharton.trakt.TraktEnumeration;
 
-public enum Rating implements TraktEnumeration {
-	Love("love"),
-	Hate("hate");
+public enum Gender implements TraktEnumeration {
+	Male("male"),
+	Female("female");
 	
 	private final String value;
 	
-	private Rating(String value) {
+	private Gender(String value) {
 		this.value = value;
 	}
 	
@@ -19,15 +19,15 @@ public enum Rating implements TraktEnumeration {
 		return this.value;
 	}
 	
-	private static final Map<String, Rating> STRING_MAPPING = new HashMap<String, Rating>();
+	private static final Map<String, Gender> STRING_MAPPING = new HashMap<String, Gender>();
 
 	static {
-		for (Rating via : Rating.values()) {
+		for (Gender via : Gender.values()) {
 			STRING_MAPPING.put(via.toString().toUpperCase(), via);
 		}
 	}
 	
-	public static Rating fromValue(String value) {
+	public static Gender fromValue(String value) {
 		return STRING_MAPPING.get(value.toUpperCase());
 	}
 }

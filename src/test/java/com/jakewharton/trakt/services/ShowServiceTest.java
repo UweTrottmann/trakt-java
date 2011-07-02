@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.time.DateUtils;
 import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
 public class ShowServiceTest extends BaseTestCase {
 	public void test_trending() {
@@ -31,7 +32,7 @@ public class ShowServiceTest extends BaseTestCase {
 		assertNotNull("Show runtime was null.", show.getRuntime());
 		assertEquals("Show runtime does not match.", 60, show.getRuntime().intValue());
 		assertEquals("Show network does not match.", "AMC", show.getNetwork());
-		assertEquals("Show air day does not match.", "Sunday", show.getAirDay());
+		assertEquals("Show air day does not match.", DayOfTheWeek.Sunday, show.getAirDay());
 		assertEquals("Show air time does not match.", "10:00pm", show.getAirTime());
 		assertEquals("Show certification does not match.", "TV-MA", show.getCertification());
 		assertEquals("Show IMDB ID does not match.", "tt1520211", show.getImdbId());

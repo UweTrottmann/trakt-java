@@ -26,8 +26,11 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
+import com.jakewharton.trakt.enumerations.DayOfTheWeek;
+import com.jakewharton.trakt.enumerations.Gender;
 import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.jakewharton.trakt.enumerations.RatingType;
 import com.jakewharton.trakt.util.Base64;
 
 /**
@@ -336,6 +339,18 @@ public abstract class TraktApiService extends ApiService {
 		});
 		
 		//enum types
+		builder.registerTypeAdapter(DayOfTheWeek.class, new JsonDeserializer<DayOfTheWeek>() {
+			@Override
+			public DayOfTheWeek deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+				return DayOfTheWeek.fromValue(arg0.getAsString());
+			}
+		});
+		builder.registerTypeAdapter(Gender.class, new JsonDeserializer<Gender>() {
+			@Override
+			public Gender deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+				return Gender.fromValue(arg0.getAsString());
+			}
+		});
 		builder.registerTypeAdapter(MediaType.class, new JsonDeserializer<MediaType>() {
 			@Override
 			public MediaType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -352,6 +367,12 @@ public abstract class TraktApiService extends ApiService {
 			@Override
 			public JsonElement serialize(Rating src, Type typeOfSrc, JsonSerializationContext context) {
 				return new JsonPrimitive(src.toString());
+			}
+		});
+		builder.registerTypeAdapter(RatingType.class, new JsonDeserializer<RatingType>() {
+			@Override
+			public RatingType deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+				return RatingType.fromValue(arg0.getAsString());
 			}
 		});
 		

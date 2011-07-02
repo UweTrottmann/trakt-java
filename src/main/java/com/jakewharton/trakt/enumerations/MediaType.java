@@ -23,11 +23,11 @@ public enum MediaType implements TraktEnumeration {
 
 	static {
 		for (MediaType via : MediaType.values()) {
-			STRING_MAPPING.put(via.toString(), via);
+			STRING_MAPPING.put(via.toString().toUpperCase(), via);
 		}
 	}
 	
 	public static MediaType fromValue(String value) {
-		return STRING_MAPPING.get(value);
+		return STRING_MAPPING.get(value.toUpperCase());
 	}
 }

@@ -2,18 +2,19 @@ package com.jakewharton.trakt.entities;
 
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.jakewharton.trakt.enumerations.RatingType;
 
 public class RatingResponse extends Response implements TraktEntity {
 	private static final long serialVersionUID = 8424378149600617021L;
 	
-	private String type; //TODO: enum
+	private RatingType type;
 	private Rating rating;
 	private Ratings ratings;
 	private Boolean facebook;
 	private Boolean twitter;
 	private Boolean tumblr;
 	
-	public String getType() {
+	public RatingType getType() {
 		return this.type;
 	}
 	public Rating getRating() {

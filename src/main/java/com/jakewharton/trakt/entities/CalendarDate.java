@@ -10,17 +10,9 @@ public final class CalendarDate implements TraktEntity {
 	public static final class CalendarTvShowEpisode implements TraktEntity {
 		private static final long serialVersionUID = -7066863350641449761L;
 		
-		private Boolean watched;
-		private String rating; //TODO: enum
 		private TvShow show;
 		private TvShowEpisode episode;
 		
-		public Boolean getWatched() {
-			return this.watched;
-		}
-		public String getRating() {
-			return this.rating;
-		}
 		public TvShow getShow() {
 			return this.show;
 		}
