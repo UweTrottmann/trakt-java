@@ -23,12 +23,10 @@ public class AccountService extends TraktApiService {
 	 * Test trakt credentials. This is useful for your configuration screen and
 	 * is a simple way to test someone's trakt account.
 	 * 
-	 * @param username Username.
-	 * @param password SHA1 hash of password.
 	 * @return Builder instance.
 	 */
-	public TestBuilder test(String username, String password) {
-		return (new TestBuilder(this)).username(username).password(password);
+	public TestBuilder test() {
+		return new TestBuilder(this);
 	}
 	
 	
@@ -77,35 +75,10 @@ public class AccountService extends TraktApiService {
 		}
 	}
 	public static final class TestBuilder extends TraktApiBuilder<Response> {
-		private static final String POST_USERNAME = "username";
-		private static final String POST_PASSWORD = "password";
-		
 		private static final String URI = "/account/test/" + FIELD_API_KEY;
 		
 		private TestBuilder(AccountService service) {
 			super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-		}
-		
-		/**
-		 * Username.
-		 * 
-		 * @param username Value.
-		 * @return Builder instance.
-		 */
-		public TestBuilder username(String username) {
-			this.postParameter(POST_USERNAME, username);
-			return this;
-		}
-		
-		/**
-		 * SHA1 hash of password.
-		 * 
-		 * @param password Value.
-		 * @return Builder instance.
-		 */
-		public TestBuilder password(String password) {
-			this.postParameter(POST_PASSWORD, password);
-			return this;
 		}
 	}
 }
