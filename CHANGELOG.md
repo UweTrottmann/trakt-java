@@ -11,6 +11,8 @@ Change Log
  * Some dates are now a `java.util.Calendar` where the precision is to the
    seconds. Ones that remain `java.util.Date` should only be used for the date
    they represent, not the time.
+ * The search service is now available from `ServiceManager`.
+ * __Full test suite implemented__.
 
 
 1.0.0 *(2011-07-01)*
