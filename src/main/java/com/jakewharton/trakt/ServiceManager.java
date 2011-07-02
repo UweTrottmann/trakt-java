@@ -6,6 +6,7 @@ import com.jakewharton.trakt.services.FriendsService;
 import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.RecommendationsService;
+import com.jakewharton.trakt.services.SearchService;
 import com.jakewharton.trakt.services.ShoutService;
 import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.UserService;
@@ -166,6 +167,12 @@ public class ServiceManager {
 		return service;
 	}
 	
+	public SearchService searchService() {
+		SearchService service = ServiceManager.createSearchService();
+		this.setupService(service);
+		return service;
+	}
+	
 	public ShoutService shoutService() {
 		ShoutService service = ServiceManager.createShoutService();
 		this.setupService(service);
@@ -206,6 +213,10 @@ public class ServiceManager {
 	
 	public static final RecommendationsService createRecommendationsService() {
 		return new RecommendationsService();
+	}
+	
+	public static final SearchService createSearchService() {
+		return new SearchService();
 	}
 	
 	public static final ShoutService createShoutService() {

@@ -103,7 +103,7 @@ public final class UserProfile implements TraktEntity {
 	}
 
 	private String username;
-	private Boolean _protected;
+	@SerializedName("protected") private Boolean _protected;
 	@SerializedName("full_name") private String fullName;
 	private String gender; //TODO: enum
 	private Integer age;
@@ -122,7 +122,7 @@ public final class UserProfile implements TraktEntity {
 	public String getUsername() {
 		return this.username;
 	}
-	public Boolean get_protected() {
+	public Boolean getProtected() {
 		return this._protected;
 	}
 	public String getFullName() {
