@@ -6,7 +6,7 @@ Change Log
 
  * Fix deserialization of fields whose names contained underscores.
  * `getEpisodes()` in `TvShowSeason` is now a complex type that can hold both
-   a count and an episode number list.
+   a count, an episode number list, or a list of episode object.
  * Add new properties to `Movie` and `TvShow`.
  * Some dates are now a `java.util.Calendar` where the precision is to the
    seconds. Ones that remain `java.util.Date` should only be used for the date
