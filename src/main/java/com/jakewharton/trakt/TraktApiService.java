@@ -323,7 +323,7 @@ public abstract class TraktApiService extends ApiService {
 						//Episode count
 						Field fieldCount = TvShowSeason.Episodes.class.getDeclaredField("count");
 						fieldCount.setAccessible(true);
-						fieldCount.setInt(episodes, json.getAsInt());
+						fieldCount.set(episodes, new Integer(json.getAsInt()));
 					}
 				} catch (SecurityException e) {
 					throw new JsonParseException(e);

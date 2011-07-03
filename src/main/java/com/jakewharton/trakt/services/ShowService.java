@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
+import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Shout;
 import com.jakewharton.trakt.entities.TvShow;
@@ -85,6 +86,32 @@ public class ShowService extends TraktApiService {
 	 */
 	public EpisodeSeenBuilder episodeSeen(String title, int year) {
 		return new EpisodeSeenBuilder(this).title(title).year(year);
+	}
+
+	/**
+	 * Returns information for an episode including ratings.
+	 * 
+	 * @param tvdbId The TVDB ID.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeSummaryBuilder episodeSummary(int tvdbId, int season, int episode) {
+		return (new EpisodeSummaryBuilder(this)).tvdbId(tvdbId).season(season).episode(episode);
+	}
+	
+	/**
+	 * Returns information for an episode including ratings.
+	 * 
+	 * @param title Either the slug (i.e. the-walking-dead) or TVDB ID. You can
+	 * get a show's slug by browsing the website and looking at the URL when on
+	 * a show summary page.
+	 * @param season The season number. Use 0 if you want the specials.
+	 * @param episode The episode number.
+	 * @return Builder instance.
+	 */
+	public EpisodeSummaryBuilder episodeSummary(String title, int season, int episode) {
+		return (new EpisodeSummaryBuilder(this)).title(title).season(season).episode(episode);
 	}
 	
 	/**
@@ -633,6 +660,57 @@ public class ShowService extends TraktApiService {
 			this.postParameter(POST_EPISODES, this.episodeList);
 		}
 	}
+	public static final class EpisodeSummaryBuilder extends TraktApiBuilder<MediaEntity> {
+		private static final String URI = "/show/episode/summary.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
+		
+		private EpisodeSummaryBuilder(ShowService service) {
+			super(service, new TypeToken<MediaEntity>() {}, URI);
+		}
+		
+		/**
+		 * Show title.
+		 * 
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeSummaryBuilder title(String title) {
+			this.field(FIELD_TITLE, title);
+			return this;
+		}
+		
+		/**
+		 * Show TVDB ID.
+		 * 
+		 * @param tvdbId Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeSummaryBuilder tvdbId(int tvdbId) {
+			this.field(FIELD_TITLE, tvdbId);
+			return this;
+		}
+		
+		/**
+		 * Show season.
+		 * 
+		 * @param season Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeSummaryBuilder season(int season) {
+			this.field(FIELD_SEASON, season);
+			return this;
+		}
+		
+		/**
+		 * Show episode.
+		 * 
+		 * @param episode Value.
+		 * @return Builder instance.
+		 */
+		public EpisodeSummaryBuilder episode(int episode) {
+			this.field(FIELD_EPISODE, episode);
+			return this;
+		}
+	}
 	public static final class EpisodeUnlibraryBuilder extends TraktApiBuilder<Void> {
 		private static final String POST_IMDB_ID = "imdb_id";
 		private static final String POST_TVDB_ID = "tvdb_id";
@@ -886,7 +964,7 @@ public class ShowService extends TraktApiService {
 		}
 	}
 	public static final class EpisodeWatchingNowBuilder extends TraktApiBuilder<List<UserProfile>> {
-		private static final String URI = "/show/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
+		private static final String URI = "/show/episode/watchingnow.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
 		
 		private EpisodeWatchingNowBuilder(ShowService service) {
 			super(service, new TypeToken<List<UserProfile>>() {}, URI);

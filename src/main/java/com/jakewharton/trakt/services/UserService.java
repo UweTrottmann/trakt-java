@@ -326,8 +326,6 @@ public final class UserService extends TraktApiService {
 		}
 	}
 	public static final class WatchedMoviesBuilder extends TraktApiBuilder<List<MediaEntity>> {
-		private static final String FIELD_USERNAME = "username";
-		
 		private static final String URI = "/user/watched/movies.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchedMoviesBuilder(UserService service, String username) {

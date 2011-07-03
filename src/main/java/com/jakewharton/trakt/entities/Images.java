@@ -8,6 +8,7 @@ public final class Images implements TraktEntity {
 	private String poster;
 	private String fanart;
 	private String headshot;
+	private String screen;
 	
 	public String getPoster() {
 		return this.poster;
@@ -17,5 +18,8 @@ public final class Images implements TraktEntity {
 	}
 	public String getHeadshot() {
 		return this.headshot;
+	}
+	public String getScreen() {
+		return this.screen;
 	}
 }
