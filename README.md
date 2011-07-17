@@ -74,7 +74,7 @@ Quick example:
     	System.out.println();
     }
 
-Real examples and tests to come soon.
+See the test cases for more examples.
 
 
 Documentation

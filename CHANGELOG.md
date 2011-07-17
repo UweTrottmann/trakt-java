@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-1.0.1 *(In Development)*
-------------------------
+1.1.0 *(2011-07-17)*
+--------------------
 
  * Fix deserialization of fields whose names contained underscores.
  * `getEpisodes()` in `TvShowSeason` is now a complex type that can hold both
