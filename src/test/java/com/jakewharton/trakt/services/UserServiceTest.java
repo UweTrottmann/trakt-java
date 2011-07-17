@@ -153,8 +153,8 @@ public class UserServiceTest extends BaseTestCase {
 	}
 	
 	public void test_watching() {
-		MediaEntity entity = getManager().userService().watching("justin").fire();
-		assertNotNull("Result was null.", entity);
+		//This may return null. Only testing for an unchecked exception.
+		getManager().userService().watching("justin").fire();
 	}
 	
 	public void test_watchedEpisodes() {

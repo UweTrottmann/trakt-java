@@ -114,7 +114,7 @@ public final class UserProfile implements TraktEntity {
 	private String avatar;
 	private String url;
 	private Stats stats;
-	private MediaEntity watching;
+	private WatchedMediaEntity watching;
 	private List<MediaEntity> watched;
 	private Integer plays;
 	private TvShowEpisode episode;

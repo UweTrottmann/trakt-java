@@ -24,8 +24,10 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
+import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
+import com.jakewharton.trakt.entities.WatchedMediaEntity;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 import com.jakewharton.trakt.enumerations.Gender;
 import com.jakewharton.trakt.enumerations.MediaType;
@@ -335,6 +337,19 @@ public abstract class TraktApiService extends ApiService {
 					throw new JsonParseException(e);
 				}
 				return episodes;
+			}
+		});
+		builder.registerTypeAdapter(WatchedMediaEntity.class, new JsonDeserializer<WatchedMediaEntity>() {
+			@Override
+			public WatchedMediaEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+				if (json.isJsonArray()) {
+					if (json.getAsJsonArray().size() != 0) {
+						throw new JsonParseException("\"watched\" field returned a non-empty array.");
+					}
+					return null;
+				} else {
+					return context.deserialize(json, (new TypeToken<MediaEntity>() {}).getType());
+				}
 			}
 		});
 		

@@ -10,6 +10,7 @@ import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.entities.WatchedMediaEntity;
 
 public final class UserService extends TraktApiService {
 	/**
@@ -298,11 +299,11 @@ public final class UserService extends TraktApiService {
 			return this;
 		}
 	}
-	public static final class WatchingBuilder extends TraktApiBuilder<MediaEntity> {
+	public static final class WatchingBuilder extends TraktApiBuilder<WatchedMediaEntity> {
 		private static final String URI = "/user/watching.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 		
 		private WatchingBuilder(UserService service, String username) {
-			super(service, new TypeToken<MediaEntity>() {}, URI);
+			super(service, new TypeToken<WatchedMediaEntity>() {}, URI);
 			
 			this.field(FIELD_USERNAME, username);
 		}

@@ -4,7 +4,7 @@ import java.util.Calendar;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.MediaType;
 
-public final class MediaEntity implements TraktEntity {
+public class MediaEntity implements TraktEntity {
 	private static final long serialVersionUID = 4535846809492296227L;
 
 	private MediaType type;
