@@ -7,9 +7,11 @@ import java.util.List;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.entities.Response;
 
 /**
  * Trakt-specific API builder extension which provides helper methods for
@@ -168,13 +170,22 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 			url = url.substring(0, url.length() - 1);
 		}
 		
-		switch (this.method) {
-			case Get:
-				return this.service.get(url);
-			case Post:
-				return this.service.post(url, this.postBody.toString());
-			default:
-				throw new IllegalArgumentException("Unknown HttpMethod type " + this.method.toString());
+		try {
+		    switch (this.method) {
+    			case Get:
+    				return this.service.get(url);
+    			case Post:
+    				return this.service.post(url, this.postBody.toString());
+    			default:
+    				throw new IllegalArgumentException("Unknown HttpMethod type " + this.method.toString());
+    		}
+		} catch (ApiException ae) {
+		    try {
+		        Response response = this.service.unmarshall(new TypeToken<Response>() {}, ae.getMessage());
+		        throw new TraktException(url, this.postBody, ae, response);
+		    } catch (JsonParseException jpe) {
+		        throw new TraktException(url, this.postBody, ae);
+		    }
 		}
 	}
 	

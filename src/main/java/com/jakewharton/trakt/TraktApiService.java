@@ -237,6 +237,19 @@ public abstract class TraktApiService extends ApiService {
 	}
 	
 	/**
+	 * Use GSON to deserialize a JSON string to a native class representation.
+	 * 
+	 * @param <T> Native class type.
+	 * @param typeToken Native class type wrapper.
+	 * @param reponse Serialized JSON string.
+	 * @return Deserialized native instance.
+	 */
+	@SuppressWarnings("unchecked")
+    protected <T> T unmarshall(TypeToken<T> typeToken, String reponse) {
+	    return (T)TraktApiService.getGsonBuilder().create().fromJson(reponse, typeToken.getType());
+	}
+	
+	/**
 	 * Read the entirety of an input stream and parse to a JSON object.
 	 * 
 	 * @param jsonContent JSON content input stream.

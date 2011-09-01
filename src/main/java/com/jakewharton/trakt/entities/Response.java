@@ -7,11 +7,15 @@ public class Response implements TraktEntity {
 	
 	private String status; //TODO: enum
 	private String message;
+	private String error;
 
 	public String getStatus() {
 		return this.status;
 	}
 	public String getMessage() {
 		return this.message;
+	}
+	public String getError() {
+	    return this.error;
 	}
 }
