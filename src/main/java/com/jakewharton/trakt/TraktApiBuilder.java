@@ -178,6 +178,28 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	}
 	
 	/**
+	 * Print the HTTP request that would be made
+	 */
+	public final void print() {
+	    String url = this.buildUrl();
+        while (url.endsWith("/")) {
+            url = url.substring(0, url.length() - 1);
+        }
+        
+        System.out.println(this.method.toString().toUpperCase() + " " + url);
+        for (String name : this.service.getRequestHeaderNames()) {
+            System.out.println(name + " " + this.service.getRequestHeader(name));
+        }
+        
+        switch (this.method) {
+            case Post:
+                System.out.println();
+                System.out.println(this.postBody.toString());
+                break;
+        }
+	}
+	
+	/**
 	 * Set the API key.
 	 * 
 	 * @param apiKey API key string.
