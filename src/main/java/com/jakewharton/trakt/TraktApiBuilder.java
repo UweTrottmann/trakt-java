@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -202,7 +203,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
         switch (this.method) {
             case Post:
                 System.out.println();
-                System.out.println(this.postBody.toString());
+                System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(this.postBody));
                 break;
         }
 	}
