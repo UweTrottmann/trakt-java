@@ -181,6 +181,14 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * Print the HTTP request that would be made
 	 */
 	public final void print() {
+        this.preFireCallback();
+        
+        try {
+            this.performValidation();
+        } catch (Exception e) {
+            throw new ApiException(e);
+        }
+        
 	    String url = this.buildUrl();
         while (url.endsWith("/")) {
             url = url.substring(0, url.length() - 1);
