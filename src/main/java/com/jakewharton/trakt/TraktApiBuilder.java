@@ -188,7 +188,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
         
         System.out.println(this.method.toString().toUpperCase() + " " + url);
         for (String name : this.service.getRequestHeaderNames()) {
-            System.out.println(name + " " + this.service.getRequestHeader(name));
+            System.out.println(name + ": " + this.service.getRequestHeader(name));
         }
         
         switch (this.method) {
