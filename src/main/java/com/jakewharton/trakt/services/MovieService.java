@@ -324,7 +324,7 @@ public class MovieService extends TraktApiService {
 		private final JsonArray movieList;
 		
 		private SeenBuilder(MovieService service) {
-			super(service, new TypeToken<Void>() {}, URI);
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.movieList = new JsonArray();
 		}
@@ -403,7 +403,7 @@ public class MovieService extends TraktApiService {
 		private final JsonArray movieList;
 		
 		private LibraryBuilder(MovieService service) {
-			super(service, new TypeToken<Void>() {}, URI);
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.movieList = new JsonArray();
 		}
@@ -479,7 +479,7 @@ public class MovieService extends TraktApiService {
 		private final JsonArray movieList;
 		
 		private UnlibraryBuilder(MovieService service) {
-			super(service, new TypeToken<Void>() {}, URI);
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.movieList = new JsonArray();
 		}
@@ -546,7 +546,7 @@ public class MovieService extends TraktApiService {
 		private final JsonArray movieList;
 		
 		private UnseenBuilder(MovieService service) {
-			super(service, new TypeToken<Void>() {}, URI);
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.movieList = new JsonArray();
 		}
@@ -613,7 +613,7 @@ public class MovieService extends TraktApiService {
 		private final JsonArray movieList;
 		
 		private UnwatchlistBuilder(MovieService service) {
-			super(service, new TypeToken<Void>() {}, URI);
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.movieList = new JsonArray();
 		}
@@ -781,7 +781,7 @@ public class MovieService extends TraktApiService {
 		private final JsonArray movieList;
 		
 		private WatchlistBuilder(MovieService service) {
-			super(service, new TypeToken<Void>() {}, URI);
+			super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
 			
 			this.movieList = new JsonArray();
 		}
