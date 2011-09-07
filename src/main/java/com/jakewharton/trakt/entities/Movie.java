@@ -16,6 +16,7 @@ public final class Movie extends MediaBase implements TraktEntity {
 	private String tagline;
 	private String overview;
 	private String certification; //TODO make enum
+	private Boolean watched;
 	
 	public String getTmdbId() {
 		return this.tmdbId;
@@ -43,5 +44,8 @@ public final class Movie extends MediaBase implements TraktEntity {
 	}
 	public String getCertification() {
 		return this.certification;
+	}
+	public Boolean getWatched() {
+	    return this.watched;
 	}
 }

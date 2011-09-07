@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
-import com.jakewharton.trakt.enumerations.Rating;
 
 public final class TvShow extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 862473930551420996L;
@@ -23,8 +22,6 @@ public final class TvShow extends MediaBase implements TraktEntity {
 	private List<TvShowEpisode> episodes;
 	@SerializedName("top_episodes") private List<TvShowEpisode> topEpisodes;
 	private List<TvShowSeason> seasons;
-	private Rating rating;
-	@SerializedName("in_watchlist") private Boolean inWatchlist;
 	
 	public Date getFirstAired() {
 		return this.firstAired;
@@ -64,11 +61,5 @@ public final class TvShow extends MediaBase implements TraktEntity {
 	}
 	public List<TvShowSeason> getSeasons() {
 		return this.seasons;
-	}
-	public Rating getRating() {
-		return this.rating;
-	}
-	public Boolean getInWatchlist() {
-		return this.inWatchlist;
 	}
 }

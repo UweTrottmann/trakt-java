@@ -3,16 +3,17 @@ package com.jakewharton.trakt.entities;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
+import com.jakewharton.trakt.enumerations.Rating;
 
 public abstract class MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 753880113366868498L;
-	
+
 	public static class Stats implements TraktEntity {
 		private static final long serialVersionUID = -5436127125832664020L;
-		
+
 		private Integer watchers;
 		private Integer plays;
-		
+
 		public Integer getWatchers() {
 			return this.watchers;
 		}
@@ -29,6 +30,8 @@ public abstract class MediaBase implements TraktEntity {
 	private Ratings ratings;
 	private Stats stats;
 	@SerializedName("imdb_id") private String imdbId;
+	private Rating rating;
+	@SerializedName("in_watchlist") private Boolean inWatchlist;
 
 	public String getTitle() {
 		return this.title;
@@ -53,5 +56,11 @@ public abstract class MediaBase implements TraktEntity {
 	}
 	public String getImdbId() {
 		return this.imdbId;
+	}
+	public Rating getRating() {
+		return this.rating;
+	}
+	public Boolean getInWatchlist() {
+		return this.inWatchlist;
 	}
 }
