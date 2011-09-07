@@ -11,6 +11,9 @@ Change Log
    control whether or not the SSL API endpoint is used.
  * Add `TraktException` which is thrown when an exception was returned from
    the trakt servers.
+ * Add genre service for listing movie and television genres.
+ * Add filtering methods to the recommendations service for start and end year
+   as well as genre.
 
 
 1.1.0 *(2011-07-17)*
