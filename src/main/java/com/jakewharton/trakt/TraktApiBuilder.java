@@ -42,6 +42,9 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 
 	/** Trakt API URL base. */
 	private static final String BASE_URL = "http://api.trakt.tv";
+	
+	/** Trakt API SSL URL base. */
+	private static final String BASE_URL_SSL = "https://api-trakt.apigee.com/";
 
 	/** Number of milliseconds in a single second. */
 	/*package*/ static final long MILLISECONDS_IN_SECOND = 1000;
@@ -89,7 +92,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	 * @param method HTTP method.
 	 */
 	public TraktApiBuilder(TraktApiService service, TypeToken<T> token, String urlFormat, HttpMethod method) {
-		super(BASE_URL + urlFormat);
+		super((service.getUseSsl() ? BASE_URL_SSL : BASE_URL) + urlFormat);
 
 		this.service = service;
 

@@ -91,6 +91,9 @@ public abstract class TraktApiService extends ApiService {
     
     /** Media center build date debug string. */
     private String mediaCenterDate;
+    
+    /** Whether or not to use SSL API endpoint. */
+    private boolean useSsl;
 	
     
     /**
@@ -221,6 +224,24 @@ public abstract class TraktApiService extends ApiService {
 	 */
 	public void setMediaCenterDate(String mediaCenterDate) {
 		this.mediaCenterDate = mediaCenterDate;
+	}
+	
+	/**
+	 * Get whether or not we want to use the SSL API endpoint.
+	 * 
+	 * @return Value.
+	 */
+	/*package*/ boolean getUseSsl() {
+	    return useSsl;
+	}
+	
+	/**
+	 * Set whether or not to use the SSL API endpoint.
+	 * 
+	 * @param useSsl Value.
+	 */
+	public void setUseSsl(boolean useSsl) {
+	    this.useSsl = useSsl;
 	}
 
 	/**

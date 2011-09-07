@@ -33,6 +33,8 @@ public class ServiceManager {
 	private String mediaCenterVersion;
 	/** Media center build date debug string. */
 	private String mediaCenterDate;
+	/** Whether or not to use SSL API endpoint. */
+	private boolean useSsl;
 	
 	
 	/** Create a new manager instance. */
@@ -103,6 +105,17 @@ public class ServiceManager {
 	}
 	
 	/**
+	 * Set whether or not to use SSL API endpoint.
+	 *  
+	 * @param useSsl Value.
+	 * @return Current instance for builder pattern.
+	 */
+	public ServiceManager setUseSsl(boolean useSsl) {
+	    this.useSsl = useSsl;
+	    return this;
+	}
+	
+	/**
 	 * Set up a new service with the defaults.
 	 * 
 	 * @param service Service to set up.
@@ -129,6 +142,7 @@ public class ServiceManager {
 		if (this.mediaCenterDate != null) {
 			service.setMediaCenterDate(this.mediaCenterDate);
 		}
+		service.setUseSsl(this.useSsl);
 	}
 	
 	public AccountService accountService() {
