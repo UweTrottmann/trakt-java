@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+1.2.0 *(2011-09-07)*
+--------------------
+
+ * Add `print()` method which acts like `fire()` except writes relevant info
+   to stdout rather than calling the remote API. This can be very useful for
+   debugging just what your application is sending.
+ * Add `setUseSsl` toggle to `ServiceManager` and the individual services to
+   control whether or not the SSL API endpoint is used.
+ * Add `TraktException` which is thrown when an exception was returned from
+   the trakt servers.
+
+
 1.1.0 *(2011-07-17)*
 --------------------
 
