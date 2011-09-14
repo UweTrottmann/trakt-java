@@ -4,6 +4,7 @@ import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
+import com.jakewharton.trakt.entities.DismissResponse;
 import com.jakewharton.trakt.entities.Genre;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
@@ -29,6 +30,57 @@ public class RecommendationsService extends TraktApiService {
 		return new ShowsBuilder(this);
 	}
 
+	/**
+	 * Dismiss a movie recommendation.
+	 *
+	 * @param imdbId IMDB ID for the movie.
+	 * @return Builder instance.
+	 */
+	public DismissMovieBuilder dismissMovie(String imdbId) {
+		return new DismissMovieBuilder(this).imdbId(imdbId);
+	}
+
+	/**
+	 * Dismiss a movie recommendation.
+	 *
+	 * @param tmdbId TMDB (themoviedb.org) ID for the movie.
+	 * @return Builder instance.
+	 */
+	public DismissMovieBuilder dismissMovie(int tmdbId) {
+		return new DismissMovieBuilder(this).tmdbId(tmdbId);
+	}
+
+	/**
+	 * Dismiss a movie recommendation.
+	 *
+	 * @param title Movie title.
+	 * @param year Movie year.
+	 * @return Builder instance.
+	 */
+	public DismissMovieBuilder dismissMovie(String title, int year) {
+		return new DismissMovieBuilder(this).title(title).year(year);
+	}
+
+	/**
+	 * Dismiss a show recommendation.
+	 *
+	 * @param tvdbId TVDB ID for the show.
+	 * @return Builder instance.
+	 */
+	public DismissShowBuilder dismissShow(int tvdbId) {
+		return new DismissShowBuilder(this).tvdbId(tvdbId);
+	}
+
+	/**
+	 * Dismiss a show recommendation.
+	 *
+	 * @param title Show title.
+	 * @param year Show year.
+	 * @return Builder instance.
+	 */
+	public DismissShowBuilder dismissShow(String title, int year) {
+		return new DismissShowBuilder(this).title(title).year(year);
+	}
 
 	public static final class MoviesBuilder extends TraktApiBuilder<List<Movie>> {
 		private static final String POST_GENRE = "genre";
@@ -117,6 +169,106 @@ public class RecommendationsService extends TraktApiService {
 		 */
 		public ShowsBuilder genre(Genre genre) {
 			this.postParameter(POST_GENRE, genre.getSlug());
+			return this;
+		}
+	}
+	public static final class DismissMovieBuilder extends TraktApiBuilder<DismissResponse> {
+		private static final String POST_IMDB_ID = "imdb_id";
+		private static final String POST_TMDB_ID = "tmdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+
+		private static final String URI = "/recommendations/movies/dismiss/" + FIELD_API_KEY;
+
+		private DismissMovieBuilder(RecommendationsService service) {
+			super(service, new TypeToken<DismissResponse>() {}, URI, HttpMethod.Post);
+		}
+
+		/**
+		 * IMDB ID for the movie.
+		 *
+		 * @param imdbId Value.
+		 * @return Builder instance.
+		 */
+		public DismissMovieBuilder imdbId(String imdbId) {
+			this.postParameter(POST_IMDB_ID, imdbId);
+			return this;
+		}
+
+		/**
+		 * TMDB (themoviedb.org) ID for the movie.
+		 *
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public DismissMovieBuilder tmdbId(int tmdbId) {
+			this.postParameter(POST_TMDB_ID, tmdbId);
+			return this;
+		}
+
+		/**
+		 * Movie title.
+		 *
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public DismissMovieBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+
+		/**
+		 * Movie year.
+		 *
+		 * @param year Value.
+		 * @return Builder instance.
+		 */
+		public DismissMovieBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
+			return this;
+		}
+	}
+	public static final class DismissShowBuilder extends TraktApiBuilder<DismissResponse> {
+		private static final String POST_TVDB_ID = "tvdb_id";
+		private static final String POST_TITLE = "title";
+		private static final String POST_YEAR = "year";
+
+		private static final String URI = "/recommendations/shows/dismiss/" + FIELD_API_KEY;
+
+		private DismissShowBuilder(RecommendationsService service) {
+			super(service, new TypeToken<DismissResponse>() {}, URI, HttpMethod.Post);
+		}
+
+		/**
+		 * TVDB ID for the show.
+		 *
+		 * @param tmdbId Value.
+		 * @return Builder instance.
+		 */
+		public DismissShowBuilder tvdbId(int tmdbId) {
+			this.postParameter(POST_TVDB_ID, tmdbId);
+			return this;
+		}
+
+		/**
+		 * Show title.
+		 *
+		 * @param title Value.
+		 * @return Builder instance.
+		 */
+		public DismissShowBuilder title(String title) {
+			this.postParameter(POST_TITLE, title);
+			return this;
+		}
+
+		/**
+		 * Show year.
+		 *
+		 * @param year Value.
+		 * @return Builder instance.
+		 */
+		public DismissShowBuilder year(int year) {
+			this.postParameter(POST_YEAR, year);
 			return this;
 		}
 	}
