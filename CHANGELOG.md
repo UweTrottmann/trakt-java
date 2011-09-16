@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-1.2.1 *(In Development)*
-------------------------
+1.2.1 *(2011-09-15)*
+--------------------
 
  * Add `dismissShow` and `dismissMovie` methods to the recommendations
    service.
