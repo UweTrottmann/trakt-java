@@ -139,7 +139,7 @@ public class ShowServiceTest extends BaseTestCase {
 		assertEquals("Show runtime does not match.", 60, show.getRuntime().intValue());
 		assertEquals("Show network does not match.", "AMC", show.getNetwork());
 		assertEquals("Show air day does not match.", DayOfTheWeek.Sunday, show.getAirDay());
-		assertEquals("Show air time does not match.", "10:00pm", show.getAirTime());
+		assertEquals("Show air time does not match.", "9:00pm", show.getAirTime());
 		assertEquals("Show certification does not match.", "TV-MA", show.getCertification());
 		assertEquals("Show IMDB ID does not match.", "tt1520211", show.getImdbId());
 		assertEquals("Show TVDB ID does not match.", "153021", show.getTvdbId());

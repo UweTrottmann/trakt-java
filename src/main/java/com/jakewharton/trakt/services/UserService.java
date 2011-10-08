@@ -255,6 +255,21 @@ public final class UserService extends TraktApiService {
 	}
 	
 	/**
+	 * Returns list details and all items it contains. Protected users won't
+	 * return any data unless you are friends. To view your own private lists,
+	 * you will need to authenticate as yourself.
+	 * 
+	 * @param username You can get a username by browsing the website and
+	 * looking at the URL when on a profile page.
+	 * @param slug Valid list slug for this user. You can get all slugs from
+	 * the user/lists method.
+	 * @return Builder instance.
+	 */
+	public ListBuilder list(String username, String slug) {
+		return new ListBuilder(this).username(username).slug(slug);
+	}
+	
+	/**
 	 * Returns all custom lists for a user. Protected users won't return any
 	 * data unless you are friends. To view your own private lists, you will
 	 * need to authenticate as yourself.
@@ -472,6 +487,37 @@ public final class UserService extends TraktApiService {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
 			
 			this.field(FIELD_USERNAME, username);
+		}
+	}
+	public static final class ListBuilder extends TraktApiBuilder<com.jakewharton.trakt.entities.List> {
+		private static final String URI = "/user/list.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_SLUG;
+		
+		private ListBuilder(UserService service) {
+			super(service, new TypeToken<com.jakewharton.trakt.entities.List>() {}, URI);
+		}
+		
+		/**
+		 * Valid list slug for this user. You can get all slugs from the
+		 * user/lists method.
+		 * 
+		 * @param slug Value.
+		 * @return Builder instance.
+		 */
+		public ListBuilder slug(String slug) {
+			super.field(FIELD_SLUG, slug);
+			return this;
+		}
+		
+		/**
+		 * You can get a username by browsing the website and looking at the
+		 * URL when on a profile page.
+		 * 
+		 * @param username Value.
+		 * @return Builder instance.
+		 */
+		public ListBuilder username(String username) {
+			super.field(FIELD_USERNAME, username);
+			return this;
 		}
 	}
 	public static final class ListsBuilder extends TraktApiBuilder<List<com.jakewharton.trakt.entities.List>> {

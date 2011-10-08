@@ -1,6 +1,7 @@
 package com.jakewharton.trakt.entities;
 
 import com.jakewharton.trakt.TraktEntity;
+import com.jakewharton.trakt.enumerations.ListPrivacy;
 
 public class List implements TraktEntity {
 	private static final long serialVersionUID = -5768791212077534364L;
@@ -9,7 +10,8 @@ public class List implements TraktEntity {
 	private String slug;
 	private String url;
 	private String description;
-	private String privacy;
+	private ListPrivacy privacy;
+	private java.util.List<ListItem> items;
 	
 	public String getName() {
 		return this.name;
@@ -23,7 +25,10 @@ public class List implements TraktEntity {
 	public String getDescription() {
 		return this.description;
 	}
-	public String getPrivacy() {
+	public ListPrivacy getPrivacy() {
 		return this.privacy;
+	}
+	public java.util.List<ListItem> getItems() {
+		return this.items;
 	}
 }
