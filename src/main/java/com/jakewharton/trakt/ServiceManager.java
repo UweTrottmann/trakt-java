@@ -4,6 +4,7 @@ import com.jakewharton.trakt.services.AccountService;
 import com.jakewharton.trakt.services.CalendarService;
 import com.jakewharton.trakt.services.FriendsService;
 import com.jakewharton.trakt.services.GenreService;
+import com.jakewharton.trakt.services.ListService;
 import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.RecommendationsService;
@@ -170,6 +171,12 @@ public class ServiceManager {
 		return service;
 	}
 
+	public ListService listService() {
+		ListService service = ServiceManager.createListService();
+		this.setupService(service);
+		return service;
+	}
+
 	public MovieService movieService() {
 		MovieService service = ServiceManager.createMovieService();
 		this.setupService(service);
@@ -226,6 +233,10 @@ public class ServiceManager {
 
 	public static final GenreService createGenreService() {
 		return new GenreService();
+	}
+
+	public static final ListService createListService() {
+		return new ListService();
 	}
 
 	public static final MovieService createMovieService() {
