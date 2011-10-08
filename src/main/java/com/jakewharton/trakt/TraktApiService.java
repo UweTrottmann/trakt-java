@@ -30,6 +30,7 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.entities.WatchedMediaEntity;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 import com.jakewharton.trakt.enumerations.Gender;
+import com.jakewharton.trakt.enumerations.ListPrivacy;
 import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.enumerations.RatingType;
@@ -398,6 +399,12 @@ public abstract class TraktApiService extends ApiService {
 			@Override
 			public Gender deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
 				return Gender.fromValue(arg0.getAsString());
+			}
+		});
+		builder.registerTypeAdapter(ListPrivacy.class, new JsonDeserializer<ListPrivacy>() {
+			@Override
+			public ListPrivacy deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {
+				return ListPrivacy.fromValue(arg0.getAsString());
 			}
 		});
 		builder.registerTypeAdapter(MediaType.class, new JsonDeserializer<MediaType>() {

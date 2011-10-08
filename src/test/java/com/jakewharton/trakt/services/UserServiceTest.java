@@ -139,6 +139,11 @@ public class UserServiceTest extends BaseTestCase {
 		assertFalse("Show episodes list was empty.", seasonEpisodes.getNumbers().isEmpty());
 	}
 	
+	public void test_lists() {
+		List<com.jakewharton.trakt.entities.List> lists = getManager().userService().lists("justin").fire();
+		assertNotNull("Result was null.", lists);
+	}
+	
 	public void test_profile() {
 		UserProfile user = getManager().userService().profile("JakeWharton").fire();
 		assertNotNull("Result was null.", user);

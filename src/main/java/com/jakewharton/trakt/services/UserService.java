@@ -254,6 +254,19 @@ public final class UserService extends TraktApiService {
 		return new LibraryShowsWatchedBuilder(this, username);
 	}
 	
+	/**
+	 * Returns all custom lists for a user. Protected users won't return any
+	 * data unless you are friends. To view your own private lists, you will
+	 * need to authenticate as yourself.
+	 * 
+	 * @param username You can get a username by browsing the website and
+	 * looking at the URL when on a profile page.
+	 * @return Builder instance.
+	 */
+	public ListsBuilder lists(String username) {
+		return new ListsBuilder(this).username(username);
+	}
+	
 	
 	public static final class CalendarShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
 		private static final int DEFAULT_DAYS = 7;
@@ -459,6 +472,25 @@ public final class UserService extends TraktApiService {
 			super(service, new TypeToken<List<TvShow>>() {}, URI);
 			
 			this.field(FIELD_USERNAME, username);
+		}
+	}
+	public static final class ListsBuilder extends TraktApiBuilder<List<com.jakewharton.trakt.entities.List>> {
+		private static final String URI = "/user/lists.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
+		
+		private ListsBuilder(UserService service) {
+			super(service, new TypeToken<List<com.jakewharton.trakt.entities.List>>() {}, URI);
+		}
+		
+		/**
+		 * You can get a username by browsing the website and looking at the
+		 * URL when on a profile page.
+		 * 
+		 * @param username Value.
+		 * @return Builder instance.
+		 */
+		public ListsBuilder username(String username) {
+			super.field(FIELD_USERNAME, username);
+			return this;
 		}
 	}
 }
