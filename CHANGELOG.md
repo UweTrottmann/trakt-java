@@ -5,6 +5,7 @@ Change Log
 ------------------------
 
  * Add list methods.
+ * Add setter methods to all entities so they can be reused externally.
 
 
 1.2.1 *(2011-09-15)*
