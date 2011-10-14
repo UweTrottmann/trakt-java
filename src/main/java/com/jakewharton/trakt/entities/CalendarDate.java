@@ -16,8 +16,14 @@ public final class CalendarDate implements TraktEntity {
 		public TvShow getShow() {
 			return this.show;
 		}
+		public void setShow(TvShow show) {
+			this.show = show;
+		}
 		public TvShowEpisode getEpisode() {
 			return this.episode;
+		}
+		public void setEpisode(TvShowEpisode episode) {
+			this.episode = episode;
 		}
 	}
 	
@@ -27,7 +33,13 @@ public final class CalendarDate implements TraktEntity {
 	public Date getDate() {
 		return this.date;
 	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public List<CalendarTvShowEpisode> getEpisodes() {
 		return this.episodes;
+	}
+	public void setEpisodes(List<CalendarTvShowEpisode> episodes) {
+		this.episodes = episodes;
 	}
 }

@@ -16,19 +16,37 @@ public class ListItem implements TraktEntity {
 	public ListItemType getType() {
 		return type;
 	}
+	public void setType(ListItemType type) {
+		this.type = type;
+	}
 	public Movie getMovie() {
 		return movie;
+	}
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 	public TvShow getShow() {
 		return show;
 	}
+	public void setShow(TvShow show) {
+		this.show = show;
+	}
 	public String getSeason() {
 		return season;
+	}
+	public void setSeason(String season) {
+		this.season = season;
 	}
 	public String getEpisodeNumber() {
 		return episode_num;
 	}
+	public void setEpisodeNumber(String episodeNumber) {
+		this.episode_num = episodeNumber;
+	}
 	public TvShowEpisode getEpisode() {
 		return episode;
+	}
+	public void setEpisode(TvShowEpisode episode) {
+		this.episode = episode;
 	}
 }

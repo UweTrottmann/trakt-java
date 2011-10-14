@@ -17,19 +17,37 @@ public class MediaEntity implements TraktEntity {
 	public MediaType getType() {
 		return this.type;
 	}
+	public void setType(MediaType type) {
+		this.type = type;
+	}
 	public Calendar getWatched() {
 		return this.watched;
+	}
+	public void setWatched(Calendar watched) {
+		this.watched = watched;
 	}
 	public Calendar getDate() {
 		return this.date;
 	}
+	public void setDate(Calendar date) {
+		this.date = date;
+	}
 	public Movie getMovie() {
 		return this.movie;
+	}
+	public void setMovie(Movie movie) {
+		this.movie = movie;
 	}
 	public TvShow getShow() {
 		return this.show;
 	}
+	public void setShow(TvShow show) {
+		this.show = show;
+	}
 	public TvShowEpisode getEpisode() {
 		return this.episode;
+	}
+	public void setEpisode(TvShowEpisode episode) {
+		this.episode = episode;
 	}
 }

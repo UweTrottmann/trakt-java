@@ -13,10 +13,19 @@ public class Shout implements TraktEntity {
 	public Calendar getInserted() {
 		return this.inserted;
 	}
+	public void setInserted(Calendar inserted) {
+		this.inserted = inserted;
+	}
 	public String getShout() {
 		return this.shout;
 	}
+	public void setShout(String shout) {
+		this.shout = shout;
+	}
 	public UserProfile getUser() {
 		return this.user;
+	}
+	public void setUser(UserProfile user) {
+		this.user = user;
 	}
 }

@@ -17,8 +17,14 @@ public abstract class MediaBase implements TraktEntity {
 		public Integer getWatchers() {
 			return this.watchers;
 		}
+		public void setWatchers(Integer watchers) {
+			this.watchers = watchers;
+		}
 		public Integer getPlays() {
 			return this.plays;
+		}
+		public void setPlays(Integer plays) {
+			this.plays = plays;
 		}
 	}
 
@@ -36,31 +42,61 @@ public abstract class MediaBase implements TraktEntity {
 	public String getTitle() {
 		return this.title;
 	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public Integer getYear() {
 		return this.year;
+	}
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 	public String getUrl() {
 		return this.url;
 	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public Images getImages() {
 		return this.images;
+	}
+	public void setImages(Images images) {
+		this.images = images;
 	}
 	public List<UserProfile> getTopWatchers() {
 		return this.topWatchers;
 	}
+	public void setTopWatchers(List<UserProfile> topWatchers) {
+		this.topWatchers = topWatchers;
+	}
 	public Ratings getRatings() {
 		return this.ratings;
+	}
+	public void setRatings(Ratings ratings) {
+		this.ratings = ratings;
 	}
 	public Stats getStats() {
 		return this.stats;
 	}
+	public void setStats(Stats stats) {
+		this.stats = stats;
+	}
 	public String getImdbId() {
 		return this.imdbId;
+	}
+	public void setImdbId(String imdbId) {
+		this.imdbId = imdbId;
 	}
 	public Rating getRating() {
 		return this.rating;
 	}
+	public void setRating(Rating rating) {
+		this.rating = rating;
+	}
 	public Boolean getInWatchlist() {
 		return this.inWatchlist;
+	}
+	public void setInWatchList(Boolean inWatchlist) {
+		this.inWatchlist = inWatchlist;
 	}
 }

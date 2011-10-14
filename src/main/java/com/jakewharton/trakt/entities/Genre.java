@@ -11,7 +11,13 @@ public final class Genre implements TraktEntity {
 	public String getName() {
 		return this.name;
 	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getSlug() {
 		return this.slug;
+	}
+	public void setSlug(String slug) {
+		this.slug = slug;
 	}
 }

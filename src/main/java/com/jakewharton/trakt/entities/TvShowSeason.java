@@ -16,11 +16,20 @@ public class TvShowSeason implements TraktEntity {
 		public Integer getCount() {
 			return this.count;
 		}
+		public void setCount(Integer count) {
+			this.count = count;
+		}
 		public List<Integer> getNumbers() {
 			return this.numbers;
 		}
+		public void setNumbers(List<Integer> numbers) {
+			this.numbers = numbers;
+		}
 		public List<TvShowEpisode> getEpisodes() {
 			return this.episodes;
+		}
+		public void setEpisodes(List<TvShowEpisode> episodes) {
+			this.episodes = episodes;
 		}
 	}
 
@@ -32,13 +41,25 @@ public class TvShowSeason implements TraktEntity {
 	public Integer getSeason() {
 		return this.season;
 	}
+	public void setSeason(Integer season) {
+		this.season = season;
+	}
 	public Episodes getEpisodes() {
 		return this.episodes;
+	}
+	public void setEpisodes(Episodes episodes) {
+		this.episodes = episodes;
 	}
 	public String getUrl() {
 		return this.url;
 	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public Images getImages() {
 		return this.images;
+	}
+	public void setImages(Images images) {
+		this.images = images;
 	}
 }
