@@ -145,4 +145,11 @@ public class ShowServiceTest extends BaseTestCase {
 		assertEquals("Show TVDB ID does not match.", "153021", show.getTvdbId());
 		assertEquals("Show TV Rage ID does not match.", "25056", show.getTvRageId());
 	}
+    
+    public void test_related() {
+        List<TvShow> related = getManager().showService().related("the-walking-dead").extended().fire();
+        assertNotNull("Result was null.", related);
+        assertFalse("Trending list was empty.", related.isEmpty());
+        assertNotNull("Trending item was null.", related.get(0));
+    }
 }

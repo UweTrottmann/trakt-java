@@ -209,6 +209,26 @@ public class MovieService extends TraktApiService {
 		return new TrendingBuilder(this);
 	}
 	
+	/**
+	 * Get the top 10 related movies.
+	 * 
+     * @param slugOrImdbId Movie title or IMDB ID.
+	 * @return Builder instance.
+	 */
+	public RelatedBuilder related(String slugOrImdbId) {
+	    return new RelatedBuilder(this).title(slugOrImdbId);
+	}
+	
+	/**
+	 * Get the top 10 related movies.
+	 * 
+     * @param tmdbId TMDB ID.
+	 * @return Builder instance.
+	 */
+	public RelatedBuilder related(int tmdbId) {
+	    return new RelatedBuilder(this).title(tmdbId);
+	}
+	
 	
 	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
 		private static final String URI = "/movie/cancelwatching/" + FIELD_API_KEY;
@@ -871,5 +891,49 @@ public class MovieService extends TraktApiService {
 		private TrendingBuilder(MovieService service) {
 			super(service, new TypeToken<List<Movie>>() {}, URI);
 		}
+	}
+	public static final class RelatedBuilder extends TraktApiBuilder<List<Movie>> {
+	    private static final String HIDE_WATCHED = "hidewatched";
+	    
+	    private static final String URI = "/movie/related.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_HIDE_WATCHED;
+	    
+	    private RelatedBuilder(MovieService service) {
+	        super(service, new TypeToken<List<Movie>>() {}, URI);
+	    }
+
+        /**
+         * Set show title or IMDB ID.
+         * 
+         * @param slugOrImdbId Value.
+         * @return Builder instance.
+         */
+	    public RelatedBuilder title(String slugOrImdbId) {
+	        this.field(FIELD_TITLE, slugOrImdbId);
+	        return this;
+	    }
+
+        /**
+         * Set show TMDB ID.
+         * 
+         * @param tmdbId Value.
+         * @return Builder instance.
+         */
+	    public RelatedBuilder title(int tmdbId) {
+	        this.field(FIELD_TITLE, tmdbId);
+	        return this;
+	    }
+	    
+	    /**
+	     * If this parameter is set and valid auth is sent, watched movies will be filtered out.
+	     * 
+	     * @param hideWatched Value.
+	     * @return Builder instance.
+	     */
+	    public RelatedBuilder hideWatched(boolean hideWatched) {
+	        if (hideWatched) {
+	            this.field(FIELD_HIDE_WATCHED, HIDE_WATCHED);
+	        }
+	        return this;
+	    }
 	}
 }

@@ -484,6 +484,26 @@ public class ShowService extends TraktApiService {
 		return new EpisodeShoutsBuilder(this).title(tvdbId).season(season).episode(episode);
 	}
 	
+	/**
+	 * Get the top 10 related shows.
+	 * 
+	 * @param slug Show title slug.
+	 * @return Builder instance.
+	 */
+	public RelatedBuilder related(String slug) {
+	    return new RelatedBuilder(this).title(slug);
+	}
+	
+	/**
+	 * Get the top 10 related shows.
+	 * 
+	 * @param tvdbId TVDB ID.
+	 * @return Builder instance.
+	 */
+	public RelatedBuilder related(int tvdbId) {
+	    return new RelatedBuilder(this).title(tvdbId);
+	}
+	
 	
 	public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
 		private static final String URI = "/show/cancelwatching/" + FIELD_API_KEY;
@@ -1666,5 +1686,62 @@ public class ShowService extends TraktApiService {
 			this.field(FIELD_EPISODE, episode);
 			return this;
 		}
+	}
+	public static final class RelatedBuilder extends TraktApiBuilder<List<TvShow>> {
+        private static final String EXTENDED = "extended";
+        private static final String HIDE_WATCHED = "hidewatched";
+        
+	    private static final String URI = "/show/related.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_EXTENDED + "/" + FIELD_HIDE_WATCHED;
+	    
+	    private RelatedBuilder(ShowService service) {
+	        super(service, new TypeToken<List<TvShow>>() {}, URI);
+	    }
+	    
+	    /**
+	     * Show title.
+	     * 
+	     * @param slug Show title slug.
+	     * @return Builder instance.
+	     */
+	    public RelatedBuilder title(String slug) {
+	        this.field(FIELD_TITLE, slug);
+	        return this;
+	    }
+	    
+	    /**
+	     * Show ID.
+	     * 
+	     * @param tvdbId TVDB ID.
+         * @return Builder instance.
+	     */
+	    public RelatedBuilder title(int tvdbId) {
+	        this.field(FIELD_TITLE, tvdbId);
+	        return this;
+	    }
+	    
+        /**
+         * Returns complete season and episode info. Only send this if you
+         * really need the full dump. Use the show/seasons and show/season
+         * methods if you only need some of the season or episode info.
+         * 
+         * @return Builder instance.
+         */
+        public RelatedBuilder extended() {
+            this.field(FIELD_EXTENDED, EXTENDED);
+            return this;
+        }
+	    
+	    /**
+	     * If this parameter is set and valid auth is sent, shows with at least one play will be filtered out.
+	     * 
+	     * @param hideWatched Value.
+	     * @return Builder instance.
+	     */
+	    public RelatedBuilder hideWatched(boolean hideWatched) {
+	        if (hideWatched) {
+	            this.field(FIELD_HIDE_WATCHED, HIDE_WATCHED);
+	        }
+	        return this;
+	    }
 	}
 }

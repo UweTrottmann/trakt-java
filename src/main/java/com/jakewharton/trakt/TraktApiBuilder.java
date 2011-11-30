@@ -33,6 +33,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected static final String FIELD_TITLE = API_URL_DELIMITER_START + "title" + API_URL_DELIMITER_END;
 	protected static final String FIELD_EPISODE = API_URL_DELIMITER_START + "episode" + API_URL_DELIMITER_END;
 	protected static final String FIELD_EXTENDED = API_URL_DELIMITER_START + "extended" + API_URL_DELIMITER_END;
+	protected static final String FIELD_HIDE_WATCHED = API_URL_DELIMITER_START + "hidewatched" + API_URL_DELIMITER_END;
 
 	private static final String POST_PLUGIN_VERSION = "plugin_version";
 	private static final String POST_MEDIA_CENTER_VERSION = "media_center_version";

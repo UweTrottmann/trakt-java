@@ -70,4 +70,11 @@ public class MovieServiceTest extends BaseTestCase {
 		assertNotNull("Movie watchers stats was null.", stats.getWatchers());
 		assertNotNull("Movie plays stats was null.", stats.getPlays());
 	}
+	
+	public void test_related() {
+	    List<Movie> related = getManager().movieService().related("tt1285016").fire();
+        assertNotNull("Result was null.", related);
+        assertFalse("Trending list was empty.", related.isEmpty());
+        assertNotNull("Trending item was null.", related.get(0));
+	}
 }
