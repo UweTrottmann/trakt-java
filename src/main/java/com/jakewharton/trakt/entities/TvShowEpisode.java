@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
 
-public final class TvShowEpisode implements TraktEntity {
+public class TvShowEpisode implements TraktEntity {
     private static final long serialVersionUID = -1550739539663499211L;
 
     public Integer season;

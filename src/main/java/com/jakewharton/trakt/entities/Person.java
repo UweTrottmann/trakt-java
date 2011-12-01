@@ -4,7 +4,7 @@ import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
-public final class Person implements TraktEntity {
+public class Person implements TraktEntity {
     private static final long serialVersionUID = -4755476212550445673L;
 
     public String name;

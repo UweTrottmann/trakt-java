@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Gender;
 
-public final class UserProfile implements TraktEntity {
+public class UserProfile implements TraktEntity {
     private static final long serialVersionUID = -4145012978937162733L;
 
-    public static final class Stats implements TraktEntity {
+    public static class Stats implements TraktEntity {
         private static final long serialVersionUID = -2737256634772977389L;
 
-        public static final class Shows implements TraktEntity {
+        public static class Shows implements TraktEntity {
             private static final long serialVersionUID = -2888630218268563052L;
 
             public Integer library;
@@ -23,7 +23,7 @@ public final class UserProfile implements TraktEntity {
                 return this.library;
             }
         }
-        public static final class Episodes implements TraktEntity {
+        public static class Episodes implements TraktEntity {
             private static final long serialVersionUID = 7210925664642958187L;
 
             public Integer watched;
@@ -64,7 +64,7 @@ public final class UserProfile implements TraktEntity {
                 return this.unwatched;
             }
         }
-        public static final class Movies implements TraktEntity {
+        public static class Movies implements TraktEntity {
             private static final long serialVersionUID = 5061541628681754141L;
 
             public Integer watched;

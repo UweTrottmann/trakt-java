@@ -4,7 +4,7 @@ import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
-public final class Movie extends MediaBase implements TraktEntity {
+public class Movie extends MediaBase implements TraktEntity {
     private static final long serialVersionUID = -1543214252495012419L;
 
     @SerializedName("tmdb_id") public String tmdbId;

@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
-public final class TvShow extends MediaBase implements TraktEntity {
+public class TvShow extends MediaBase implements TraktEntity {
     private static final long serialVersionUID = 862473930551420996L;
 
     @SerializedName("first_aired") public Date firstAired;

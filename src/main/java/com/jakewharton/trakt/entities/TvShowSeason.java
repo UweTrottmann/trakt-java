@@ -6,7 +6,7 @@ import com.jakewharton.trakt.TraktEntity;
 public class TvShowSeason implements TraktEntity {
     private static final long serialVersionUID = -1283154821327471366L;
 
-    public static final class Episodes implements TraktEntity {
+    public static class Episodes implements TraktEntity {
         private static final long serialVersionUID = -8143500365188820979L;
 
         public Integer count;
