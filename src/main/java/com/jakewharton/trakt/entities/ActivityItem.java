@@ -41,16 +41,16 @@ public class ActivityItem implements TraktEntity {
     public ActivityType type;
     public ActivityAction action;
     public UserProfile user;
-    
+
     public Rating rating;
     public Shout shout;
-    
+
     public TvShow show;
     public TvShowEpisode episode;
     public java.util.List<TvShowEpisode> episodes;
-    
+
     public Movie movie;
-    
+
     public List list;
     @SerializedName("list_item")
     public ListItem listItem;

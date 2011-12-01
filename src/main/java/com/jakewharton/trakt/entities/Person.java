@@ -5,49 +5,49 @@ import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 
 public final class Person implements TraktEntity {
-	private static final long serialVersionUID = -4755476212550445673L;
-	
-	public String name;
-	public String url;
-	public String biography;
-	public Date birthday;
-	public String birthplace;
-	@SerializedName("tmdb_id") public Integer tmdbId;
-	public Images images;
+    private static final long serialVersionUID = -4755476212550445673L;
+
+    public String name;
+    public String url;
+    public String biography;
+    public Date birthday;
+    public String birthplace;
+    @SerializedName("tmdb_id") public Integer tmdbId;
+    public Images images;
 
     /** @deprecated Use {@link #name} */
     @Deprecated
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
     /** @deprecated Use {@link #url} */
     @Deprecated
-	public String getUrl() {
-		return this.url;
-	}
+    public String getUrl() {
+        return this.url;
+    }
     /** @deprecated Use {@link #biography} */
     @Deprecated
-	public String getBiography() {
-		return this.biography;
-	}
+    public String getBiography() {
+        return this.biography;
+    }
     /** @deprecated Use {@link #birthday} */
     @Deprecated
-	public Date getBirthday() {
-		return this.birthday;
-	}
+    public Date getBirthday() {
+        return this.birthday;
+    }
     /** @deprecated Use {@link #birthplace} */
     @Deprecated
-	public String getBirthplace() {
-		return this.birthplace;
-	}
+    public String getBirthplace() {
+        return this.birthplace;
+    }
     /** @deprecated Use {@link #tmdbId} */
     @Deprecated
-	public Integer getTmdbId() {
-		return this.tmdbId;
-	}
+    public Integer getTmdbId() {
+        return this.tmdbId;
+    }
     /** @deprecated Use {@link #images} */
     @Deprecated
-	public Images getImages() {
-		return this.images;
-	}
+    public Images getImages() {
+        return this.images;
+    }
 }

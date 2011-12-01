@@ -6,11 +6,11 @@ import com.jakewharton.trakt.entities.Response;
 
 public final class TraktException extends RuntimeException {
     private static final long serialVersionUID = 6158978902757706299L;
-    
+
     private final String url;
     private final JsonObject postBody;
     private final Response response;
-    
+
     public TraktException(String url, ApiException cause) {
         this(url, null, cause);
     }
@@ -26,7 +26,7 @@ public final class TraktException extends RuntimeException {
         this.postBody = postBody;
         this.response = response;
     }
-    
+
     public String getUrl() {
         return this.url;
     }

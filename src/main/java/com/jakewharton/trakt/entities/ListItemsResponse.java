@@ -4,31 +4,31 @@ import com.google.gson.JsonArray;
 import com.google.gson.annotations.SerializedName;
 
 public class ListItemsResponse extends Response {
-	private static final long serialVersionUID = 8123553856114248596L;
+    private static final long serialVersionUID = 8123553856114248596L;
 
-	public Integer inserted;
-	@SerializedName("already_exist") public Integer alreadyExist;
-	public Integer skipped;
-	@SerializedName("skipped_array") public JsonArray skippedArray;
+    public Integer inserted;
+    @SerializedName("already_exist") public Integer alreadyExist;
+    public Integer skipped;
+    @SerializedName("skipped_array") public JsonArray skippedArray;
 
     /** @deprecated Use {@link #inserted} */
     @Deprecated
-	public Integer getInserted() {
-		return this.inserted;
-	}
+    public Integer getInserted() {
+        return this.inserted;
+    }
     /** @deprecated Use {@link #alreadyExist} */
     @Deprecated
-	public Integer getAlreadyExist() {
-		return this.alreadyExist;
-	}
+    public Integer getAlreadyExist() {
+        return this.alreadyExist;
+    }
     /** @deprecated Use {@link #skipped} */
     @Deprecated
-	public Integer getSkipped() {
-		return this.skipped;
-	}
+    public Integer getSkipped() {
+        return this.skipped;
+    }
     /** @deprecated Use {@link #skippedArray} */
     @Deprecated
-	public JsonArray getSkippedArray() {
-		return this.skippedArray;
-	}
+    public JsonArray getSkippedArray() {
+        return this.skippedArray;
+    }
 }
