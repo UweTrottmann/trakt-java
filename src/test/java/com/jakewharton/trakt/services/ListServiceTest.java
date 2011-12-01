@@ -11,13 +11,13 @@ public class ListServiceTest extends BaseTestCase {
 		
 		ListResponse addResponse = service.add("Test List", ListPrivacy.Private).fire();
 		assertNotNull("Response was null.", addResponse);
-		assertEquals("List create was not successful.", "success", addResponse.getStatus());
-		assertEquals("Created list name does not match.", "Test List", addResponse.getName());
-		assertEquals("Created list privacy does not match.", ListPrivacy.Private, addResponse.getPrivacy());
-		assertNotNull("Created list does not have a slug.", addResponse.getSlug());
+		assertEquals("List create was not successful.", "success", addResponse.status);
+		assertEquals("Created list name does not match.", "Test List", addResponse.name);
+		assertEquals("Created list privacy does not match.", ListPrivacy.Private, addResponse.privacy);
+		assertNotNull("Created list does not have a slug.", addResponse.slug);
 		
-		Response delResponse = service.delete(addResponse.getSlug()).fire();
+		Response delResponse = service.delete(addResponse.slug).fire();
 		assertNotNull("Response was null. List will need to be deleted manually.", delResponse);
-		assertEquals("List delete was not successful. List will need to be deleted manually.", "success", delResponse.getStatus());
+		assertEquals("List delete was not successful. List will need to be deleted manually.", "success", delResponse.status);
 	}
 }

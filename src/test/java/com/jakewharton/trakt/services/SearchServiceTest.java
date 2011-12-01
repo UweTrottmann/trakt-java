@@ -21,8 +21,8 @@ public class SearchServiceTest extends BaseTestCase {
 		
 		MediaEntity entity = entities.get(0);
 		assertNotNull("Episode entity was null.", entity);
-		assertNotNull("Show was null.", entity.getShow());
-		assertNotNull("Episode was null.", entity.getEpisode());
+		assertNotNull("Show was null.", entity.show);
+		assertNotNull("Episode was null.", entity.episode);
 	}
 	
 	public void test_movies() {
@@ -32,8 +32,8 @@ public class SearchServiceTest extends BaseTestCase {
 		assertNotNull("Result item was null.", entities.get(0));
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void test_people() {
+	    @SuppressWarnings("deprecation")
 		Date birthday = new Date(74, 0, 30);
 		
 		List<Person> people = getManager().searchService().people("christian bale").fire();
@@ -42,14 +42,14 @@ public class SearchServiceTest extends BaseTestCase {
 		
 		Person person = people.get(0);
 		assertNotNull("Person was null.", person);
-		assertEquals("Person name does not match.", "Christian Bale", person.getName());
-		assertNotNull("Person URL was null.", person.getUrl());
-		assertNotNull("Person biography was null.", person.getBiography());
-		assertTrue("Person birthday does not match.", DateUtils.isSameDay(person.getBirthday(), birthday));
-		assertEquals("Person birthplace does not match.", "Haverfordwest, Wales, UK", person.getBirthplace());
-		assertNotNull("Person TMDB was null.", person.getTmdbId());
-		assertEquals("Person TMDB ID does not match.", 3894, person.getTmdbId().intValue());
-		assertNotNull("Person images was null.", person.getImages());
+		assertEquals("Person name does not match.", "Christian Bale", person.name);
+		assertNotNull("Person URL was null.", person.url);
+		assertNotNull("Person biography was null.", person.biography);
+		assertTrue("Person birthday does not match.", DateUtils.isSameDay(person.birthday, birthday));
+		assertEquals("Person birthplace does not match.", "Haverfordwest, Wales, UK", person.birthplace);
+		assertNotNull("Person TMDB was null.", person.tmdbId);
+		assertEquals("Person TMDB ID does not match.", 3894, person.tmdbId.intValue());
+		assertNotNull("Person images was null.", person.images);
 	}
 	
 	public void test_shows() {
@@ -70,14 +70,14 @@ public class SearchServiceTest extends BaseTestCase {
 		
 		UserProfile user = users.get(0);
 		assertNotNull("User item was null.", user);
-		assertEquals("User username does not match.", "JakeWharton", user.getUsername());
-		assertNotNull("User protected was null.", user.getProtected());
-		assertEquals("User protected does not match.", false, user.getProtected().booleanValue());
-		assertEquals("User full name does not match.", "Jake Wharton", user.getFullName());
-		assertEquals("User gender does not match.", Gender.Male, user.getGender());
-		assertNotNull("User location was null.", user.getLocation());
-		assertTrue("User joined date does not match.", DateUtils.isSameInstant(joined, user.getJoined()));
-		assertNotNull("User avatar was null.", user.getAvatar());
-		assertNotNull("User URL was null.", user.getUrl());
+		assertEquals("User username does not match.", "JakeWharton", user.username);
+		assertNotNull("User protected was null.", user._protected);
+		assertEquals("User protected does not match.", false, user._protected.booleanValue());
+		assertEquals("User full name does not match.", "Jake Wharton", user.fullName);
+		assertEquals("User gender does not match.", Gender.Male, user.gender);
+		assertNotNull("User location was null.", user.location);
+		assertTrue("User joined date does not match.", DateUtils.isSameInstant(joined, user.joined));
+		assertNotNull("User avatar was null.", user.avatar);
+		assertNotNull("User URL was null.", user.url);
 	}
 }
