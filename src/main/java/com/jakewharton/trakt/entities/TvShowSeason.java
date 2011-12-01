@@ -9,57 +9,50 @@ public class TvShowSeason implements TraktEntity {
 	public static final class Episodes implements TraktEntity {
 		private static final long serialVersionUID = -8143500365188820979L;
 		
-		private Integer count;
-		private List<Integer> numbers;
-		private List<TvShowEpisode> episodes;
-		
+		public Integer count;
+		public List<Integer> numbers;
+		public List<TvShowEpisode> episodes;
+
+	    /** @deprecated Use {@link #count} */
+	    @Deprecated
 		public Integer getCount() {
 			return this.count;
 		}
-		public void setCount(Integer count) {
-			this.count = count;
-		}
+	    /** @deprecated Use {@link #numbers} */
+	    @Deprecated
 		public List<Integer> getNumbers() {
 			return this.numbers;
 		}
-		public void setNumbers(List<Integer> numbers) {
-			this.numbers = numbers;
-		}
+	    /** @deprecated Use {@link #episodes} */
+	    @Deprecated
 		public List<TvShowEpisode> getEpisodes() {
 			return this.episodes;
 		}
-		public void setEpisodes(List<TvShowEpisode> episodes) {
-			this.episodes = episodes;
-		}
 	}
 
-	private Integer season;
-	private Episodes episodes;
-	private String url;
-	private Images images;
-	
+	public Integer season;
+	public Episodes episodes;
+	public String url;
+	public Images images;
+
+    /** @deprecated Use {@link #season} */
+    @Deprecated
 	public Integer getSeason() {
 		return this.season;
 	}
-	public void setSeason(Integer season) {
-		this.season = season;
-	}
+    /** @deprecated Use {@link #episodes} */
+    @Deprecated
 	public Episodes getEpisodes() {
 		return this.episodes;
 	}
-	public void setEpisodes(Episodes episodes) {
-		this.episodes = episodes;
-	}
+    /** @deprecated Use {@link #url} */
+    @Deprecated
 	public String getUrl() {
 		return this.url;
 	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /** @deprecated Use {@link #images} */
+    @Deprecated
 	public Images getImages() {
 		return this.images;
-	}
-	public void setImages(Images images) {
-		this.images = images;
 	}
 }

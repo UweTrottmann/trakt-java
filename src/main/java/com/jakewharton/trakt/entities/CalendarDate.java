@@ -10,36 +10,32 @@ public final class CalendarDate implements TraktEntity {
 	public static final class CalendarTvShowEpisode implements TraktEntity {
 		private static final long serialVersionUID = -7066863350641449761L;
 		
-		private TvShow show;
-		private TvShowEpisode episode;
-		
+		public TvShow show;
+		public TvShowEpisode episode;
+
+        /** @deprecated Use {@link #show} */
+		@Deprecated
 		public TvShow getShow() {
 			return this.show;
 		}
-		public void setShow(TvShow show) {
-			this.show = show;
-		}
+		/** @deprecated Use {@link #episode} */
+		@Deprecated
 		public TvShowEpisode getEpisode() {
 			return this.episode;
 		}
-		public void setEpisode(TvShowEpisode episode) {
-			this.episode = episode;
-		}
 	}
 	
-	private Date date;
-	private List<CalendarTvShowEpisode> episodes;
+	public Date date;
+	public List<CalendarTvShowEpisode> episodes;
 	
+	/** @deprecated Use {@link #date} */
+	@Deprecated
 	public Date getDate() {
 		return this.date;
 	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	/** @deprecated Use {@link #episodes} */
+	@Deprecated
 	public List<CalendarTvShowEpisode> getEpisodes() {
 		return this.episodes;
-	}
-	public void setEpisodes(List<CalendarTvShowEpisode> episodes) {
-		this.episodes = episodes;
 	}
 }

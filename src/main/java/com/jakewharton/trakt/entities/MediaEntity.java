@@ -7,47 +7,41 @@ import com.jakewharton.trakt.enumerations.MediaType;
 public class MediaEntity implements TraktEntity {
 	private static final long serialVersionUID = 4535846809492296227L;
 
-	private MediaType type;
-	private Calendar watched;
-	private Calendar date;
-	private Movie movie;
-	private TvShow show;
-	private TvShowEpisode episode;
-	
+	public MediaType type;
+	public Calendar watched;
+	public Calendar date;
+	public Movie movie;
+	public TvShow show;
+	public TvShowEpisode episode;
+
+    /** @deprecated Use {@link #type} */
+    @Deprecated
 	public MediaType getType() {
 		return this.type;
 	}
-	public void setType(MediaType type) {
-		this.type = type;
-	}
+    /** @deprecated Use {@link #watched} */
+    @Deprecated
 	public Calendar getWatched() {
 		return this.watched;
 	}
-	public void setWatched(Calendar watched) {
-		this.watched = watched;
-	}
+    /** @deprecated Use {@link #date} */
+    @Deprecated
 	public Calendar getDate() {
 		return this.date;
 	}
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
+    /** @deprecated Use {@link #movie} */
+    @Deprecated
 	public Movie getMovie() {
 		return this.movie;
 	}
-	public void setMovie(Movie movie) {
-		this.movie = movie;
-	}
+    /** @deprecated Use {@link #show} */
+    @Deprecated
 	public TvShow getShow() {
 		return this.show;
 	}
-	public void setShow(TvShow show) {
-		this.show = show;
-	}
+    /** @deprecated Use {@link #episode} */
+    @Deprecated
 	public TvShowEpisode getEpisode() {
 		return this.episode;
-	}
-	public void setEpisode(TvShowEpisode episode) {
-		this.episode = episode;
 	}
 }

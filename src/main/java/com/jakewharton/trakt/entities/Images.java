@@ -5,33 +5,29 @@ import com.jakewharton.trakt.TraktEntity;
 public final class Images implements TraktEntity {
 	private static final long serialVersionUID = -4374523954772900340L;
 	
-	private String poster;
-	private String fanart;
-	private String headshot;
-	private String screen;
-	
+	public String poster;
+	public String fanart;
+	public String headshot;
+	public String screen;
+
+    /** @deprecated Use {@link #poster} */
+    @Deprecated
 	public String getPoster() {
 		return this.poster;
 	}
-	public void setPoster(String poster) {
-		this.poster = poster;
-	}
+    /** @deprecated Use {@link #fanart} */
+    @Deprecated
 	public String getFanart() {
 		return this.fanart;
 	}
-	public void setFanart(String fanart) {
-		this.fanart = fanart;
-	}
+    /** @deprecated Use {@link #headshot} */
+    @Deprecated
 	public String getHeadshot() {
 		return this.headshot;
 	}
-	public void setHeadshot(String headshot) {
-		this.headshot = headshot;
-	}
+    /** @deprecated Use {@link #screen} */
+    @Deprecated
 	public String getScreen() {
 		return this.screen;
-	}
-	public void setScreen(String screen) {
-		this.screen = screen;
 	}
 }

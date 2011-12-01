@@ -7,54 +7,47 @@ import com.jakewharton.trakt.TraktEntity;
 public final class Person implements TraktEntity {
 	private static final long serialVersionUID = -4755476212550445673L;
 	
-	private String name;
-	private String url;
-	private String biography;
-	private Date birthday;
-	private String birthplace;
-	@SerializedName("tmdb_id") private Integer tmdbId;
-	private Images images;
-	
+	public String name;
+	public String url;
+	public String biography;
+	public Date birthday;
+	public String birthplace;
+	@SerializedName("tmdb_id") public Integer tmdbId;
+	public Images images;
+
+    /** @deprecated Use {@link #name} */
+    @Deprecated
 	public String getName() {
 		return this.name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+    /** @deprecated Use {@link #url} */
+    @Deprecated
 	public String getUrl() {
 		return this.url;
 	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /** @deprecated Use {@link #biography} */
+    @Deprecated
 	public String getBiography() {
 		return this.biography;
 	}
-	public void setBiography(String biography) {
-		this.biography = biography;
-	}
+    /** @deprecated Use {@link #birthday} */
+    @Deprecated
 	public Date getBirthday() {
 		return this.birthday;
 	}
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    /** @deprecated Use {@link #birthplace} */
+    @Deprecated
 	public String getBirthplace() {
 		return this.birthplace;
 	}
-	public void setBirthplace(String birthplace) {
-		this.birthplace = birthplace;
-	}
+    /** @deprecated Use {@link #tmdbId} */
+    @Deprecated
 	public Integer getTmdbId() {
 		return this.tmdbId;
 	}
-	public void setTmdbId(Integer tmdbId) {
-		this.tmdbId = tmdbId;
-	}
+    /** @deprecated Use {@link #images} */
+    @Deprecated
 	public Images getImages() {
 		return this.images;
-	}
-	public void setImages(Images images) {
-		this.images = images;
 	}
 }

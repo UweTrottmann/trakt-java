@@ -9,96 +9,83 @@ import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 public final class TvShow extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 862473930551420996L;
 
-	@SerializedName("first_aired") private Date firstAired;
-	private String country;
-	private String overview;
-	private Integer runtime;
-	private String network;
-	@SerializedName("air_day") private DayOfTheWeek airDay;
-	@SerializedName("air_time") private String airTime;
-	private String certification; //TODO: enum
-	@SerializedName("tvdb_id") private String tvdbId;
-	@SerializedName("tvrage_id") private String tvrageId;
-	private List<TvShowEpisode> episodes;
-	@SerializedName("top_episodes") private List<TvShowEpisode> topEpisodes;
-	private List<TvShowSeason> seasons;
-	
+	@SerializedName("first_aired") public Date firstAired;
+	public String country;
+	public String overview;
+	public Integer runtime;
+	public String network;
+	@SerializedName("air_day") public DayOfTheWeek airDay;
+	@SerializedName("air_time") public String airTime;
+	public String certification; //TODO: enum
+	@SerializedName("tvdb_id") public String tvdbId;
+	@SerializedName("tvrage_id") public String tvrageId;
+	public List<TvShowEpisode> episodes;
+	@SerializedName("top_episodes") public List<TvShowEpisode> topEpisodes;
+	public List<TvShowSeason> seasons;
+
+    /** @deprecated Use {@link #firstAired} */
+    @Deprecated
 	public Date getFirstAired() {
 		return this.firstAired;
 	}
-	public void setFirstAired(Date firstAired) {
-		this.firstAired = firstAired;
-	}
+    /** @deprecated Use {@link #country} */
+    @Deprecated
 	public String getCountry() {
 		return this.country;
 	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    /** @deprecated Use {@link #overview} */
+    @Deprecated
 	public String getOverview() {
 		return this.overview;
 	}
-	public void setOverview(String overview) {
-		this.overview = overview;
-	}
+    /** @deprecated Use {@link #runtime} */
+    @Deprecated
 	public Integer getRuntime() {
 		return this.runtime;
 	}
-	public void setRuntime(Integer runtime) {
-		this.runtime = runtime;
-	}
+    /** @deprecated Use {@link #network} */
+    @Deprecated
 	public String getNetwork() {
 		return this.network;
 	}
-	public void setNetwork(String network) {
-		this.network = network;
-	}
+    /** @deprecated Use {@link #airDay} */
+    @Deprecated
 	public DayOfTheWeek getAirDay() {
 		return this.airDay;
 	}
-	public void setAirDay(DayOfTheWeek airDay) {
-		this.airDay = airDay;
-	}
+    /** @deprecated Use {@link #airTime} */
+    @Deprecated
 	public String getAirTime() {
 		return this.airTime;
 	}
-	public void setAirTime(String airTime) {
-		this.airTime = airTime;
-	}
+    /** @deprecated Use {@link #certification} */
+    @Deprecated
 	public String getCertification() {
 		return this.certification;
 	}
-	public void setCertification(String certification) {
-		this.certification = certification;
-	}
+    /** @deprecated Use {@link #tvdbId} */
+    @Deprecated
 	public String getTvdbId() {
 		return this.tvdbId;
 	}
-	public void setTvdbId(String tvdbId) {
-		this.tvdbId = tvdbId;
-	}
+    /** @deprecated Use {@link #tvrageId} */
+    @Deprecated
 	public String getTvRageId() {
 		return this.tvrageId;
 	}
-	public void setTvRageId(String tvrageId) {
-		this.tvrageId = tvrageId;
-	}
+    /** @deprecated Use {@link #episodes} */
+    @Deprecated
 	public List<TvShowEpisode> getEpisodes() {
 		return this.episodes;
 	}
-	public void setEpisodes(List<TvShowEpisode> episodes) {
-		this.episodes = episodes;
-	}
+    /** @deprecated Use {@link #topEpisodes} */
+    @Deprecated
 	public List<TvShowEpisode> getTopEpisodes() {
 		return this.topEpisodes;
 	}
-	public void setTopEpisodes(List<TvShowEpisode> topEpisodes) {
-		this.topEpisodes = topEpisodes;
-	}
+    /** @deprecated Use {@link #seasons} */
+    @Deprecated
 	public List<TvShowSeason> getSeasons() {
 		return this.seasons;
-	}
-	public void setSeasons(List<TvShowSeason> seasons) {
-		this.seasons = seasons;
 	}
 }

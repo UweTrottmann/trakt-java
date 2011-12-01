@@ -1,25 +1,34 @@
 package com.jakewharton.trakt.entities;
 
 import com.google.gson.JsonArray;
+import com.google.gson.annotations.SerializedName;
 
 public class ListItemsResponse extends Response {
 	private static final long serialVersionUID = 8123553856114248596L;
 
-	private Integer inserted;
-	private Integer already_exist;
-	private Integer skipped;
-	private JsonArray skipped_array;
-	
+	public Integer inserted;
+	@SerializedName("already_exist") public Integer alreadyExist;
+	public Integer skipped;
+	@SerializedName("skipped_array") public JsonArray skippedArray;
+
+    /** @deprecated Use {@link #inserted} */
+    @Deprecated
 	public Integer getInserted() {
 		return this.inserted;
 	}
+    /** @deprecated Use {@link #alreadyExist} */
+    @Deprecated
 	public Integer getAlreadyExist() {
-		return this.already_exist;
+		return this.alreadyExist;
 	}
+    /** @deprecated Use {@link #skipped} */
+    @Deprecated
 	public Integer getSkipped() {
 		return this.skipped;
 	}
+    /** @deprecated Use {@link #skippedArray} */
+    @Deprecated
 	public JsonArray getSkippedArray() {
-		return this.skipped_array;
+		return this.skippedArray;
 	}
 }

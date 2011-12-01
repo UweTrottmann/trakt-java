@@ -6,26 +6,23 @@ import com.jakewharton.trakt.TraktEntity;
 public class Shout implements TraktEntity {
 	private static final long serialVersionUID = 4324069488018464744L;
 
-	private Calendar inserted;
-	private String shout;
-	private UserProfile user;
-	
+	public Calendar inserted;
+	public String shout;
+	public UserProfile user;
+
+    /** @deprecated Use {@link #inserted} */
+    @Deprecated
 	public Calendar getInserted() {
 		return this.inserted;
 	}
-	public void setInserted(Calendar inserted) {
-		this.inserted = inserted;
-	}
+    /** @deprecated Use {@link #shout} */
+    @Deprecated
 	public String getShout() {
 		return this.shout;
 	}
-	public void setShout(String shout) {
-		this.shout = shout;
-	}
+    /** @deprecated Use {@link #user} */
+    @Deprecated
 	public UserProfile getUser() {
 		return this.user;
-	}
-	public void setUser(UserProfile user) {
-		this.user = user;
 	}
 }

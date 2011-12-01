@@ -11,92 +11,80 @@ public abstract class MediaBase implements TraktEntity {
 	public static class Stats implements TraktEntity {
 		private static final long serialVersionUID = -5436127125832664020L;
 
-		private Integer watchers;
-		private Integer plays;
+		public Integer watchers;
+		public Integer plays;
 
+	    /** @deprecated Use {@link #watchers} */
+	    @Deprecated
 		public Integer getWatchers() {
 			return this.watchers;
 		}
-		public void setWatchers(Integer watchers) {
-			this.watchers = watchers;
-		}
+	    /** @deprecated Use {@link #plays} */
+	    @Deprecated
 		public Integer getPlays() {
 			return this.plays;
 		}
-		public void setPlays(Integer plays) {
-			this.plays = plays;
-		}
 	}
 
-	private String title;
-	private Integer year;
-	private String url;
-	private Images images;
-	@SerializedName("top_watchers") private List<UserProfile> topWatchers;
-	private Ratings ratings;
-	private Stats stats;
-	@SerializedName("imdb_id") private String imdbId;
-	private Rating rating;
-	@SerializedName("in_watchlist") private Boolean inWatchlist;
+	public String title;
+	public Integer year;
+	public String url;
+	public Images images;
+	@SerializedName("top_watchers") public List<UserProfile> topWatchers;
+	public Ratings ratings;
+	public Stats stats;
+	@SerializedName("imdb_id") public String imdbId;
+	public Rating rating;
+	@SerializedName("in_watchlist") public Boolean inWatchlist;
 
+    /** @deprecated Use {@link #title} */
+    @Deprecated
 	public String getTitle() {
 		return this.title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /** @deprecated Use {@link #year} */
+    @Deprecated
 	public Integer getYear() {
 		return this.year;
 	}
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+    /** @deprecated Use {@link #url} */
+    @Deprecated
 	public String getUrl() {
 		return this.url;
 	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /** @deprecated Use {@link #images} */
+    @Deprecated
 	public Images getImages() {
 		return this.images;
 	}
-	public void setImages(Images images) {
-		this.images = images;
-	}
+    /** @deprecated Use {@link #topWatchers} */
+    @Deprecated
 	public List<UserProfile> getTopWatchers() {
 		return this.topWatchers;
 	}
-	public void setTopWatchers(List<UserProfile> topWatchers) {
-		this.topWatchers = topWatchers;
-	}
+    /** @deprecated Use {@link #ratings} */
+    @Deprecated
 	public Ratings getRatings() {
 		return this.ratings;
 	}
-	public void setRatings(Ratings ratings) {
-		this.ratings = ratings;
-	}
+    /** @deprecated Use {@link #stats} */
+    @Deprecated
 	public Stats getStats() {
 		return this.stats;
 	}
-	public void setStats(Stats stats) {
-		this.stats = stats;
-	}
+    /** @deprecated Use {@link #imdbId} */
+    @Deprecated
 	public String getImdbId() {
 		return this.imdbId;
 	}
-	public void setImdbId(String imdbId) {
-		this.imdbId = imdbId;
-	}
+    /** @deprecated Use {@link #rating} */
+    @Deprecated
 	public Rating getRating() {
 		return this.rating;
 	}
-	public void setRating(Rating rating) {
-		this.rating = rating;
-	}
+    /** @deprecated Use {@link #inWatchlist} */
+    @Deprecated
 	public Boolean getInWatchlist() {
 		return this.inWatchlist;
-	}
-	public void setInWatchList(Boolean inWatchlist) {
-		this.inWatchlist = inWatchlist;
 	}
 }

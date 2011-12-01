@@ -1,5 +1,6 @@
 package com.jakewharton.trakt.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.ListItemType;
 
@@ -10,43 +11,37 @@ public class ListItem implements TraktEntity {
 	public Movie movie;
 	public TvShow show;
 	public String season;
-	public String episode_num;
+	@SerializedName("episode_num") public String episodeNumber;
 	public TvShowEpisode episode;
 
+    /** @deprecated Use {@link #type} */
+    @Deprecated
 	public ListItemType getType() {
 		return type;
 	}
-	public void setType(ListItemType type) {
-		this.type = type;
-	}
+    /** @deprecated Use {@link #movie} */
+    @Deprecated
 	public Movie getMovie() {
 		return movie;
 	}
-	public void setMovie(Movie movie) {
-		this.movie = movie;
-	}
+    /** @deprecated Use {@link #show} */
+    @Deprecated
 	public TvShow getShow() {
 		return show;
 	}
-	public void setShow(TvShow show) {
-		this.show = show;
-	}
+    /** @deprecated Use {@link #season} */
+    @Deprecated
 	public String getSeason() {
 		return season;
 	}
-	public void setSeason(String season) {
-		this.season = season;
-	}
+    /** @deprecated Use {@link #episodeNumber} */
+    @Deprecated
 	public String getEpisodeNumber() {
-		return episode_num;
+		return episodeNumber;
 	}
-	public void setEpisodeNumber(String episodeNumber) {
-		this.episode_num = episodeNumber;
-	}
+    /** @deprecated Use {@link #episode} */
+    @Deprecated
 	public TvShowEpisode getEpisode() {
 		return episode;
-	}
-	public void setEpisode(TvShowEpisode episode) {
-		this.episode = episode;
 	}
 }

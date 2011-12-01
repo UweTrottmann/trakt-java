@@ -15,259 +15,225 @@ public final class UserProfile implements TraktEntity {
 		public static final class Shows implements TraktEntity {
 			private static final long serialVersionUID = -2888630218268563052L;
 			
-			private Integer library;
-			
+			public Integer library;
+
+		    /** @deprecated Use {@link #library} */
+		    @Deprecated
 			public Integer getLibrary() {
 				return this.library;
-			}
-			public void setLibrary(Integer library) {
-				this.library = library;
 			}
 		}
 		public static final class Episodes implements TraktEntity {
 			private static final long serialVersionUID = 7210925664642958187L;
 			
-			private Integer watched;
-			@SerializedName("watched_unique") private Integer watchedUnique;
-			@SerializedName("watched_trakt") private Integer watchedTrakt;
-			@SerializedName("watched_trakt_unique") private Integer watchedTraktUnique;
-			@SerializedName("watched_elsewhere") private Integer watchedElsewhere;
-			private Integer unwatched;
-			
+			public Integer watched;
+			@SerializedName("watched_unique") public Integer watchedUnique;
+			@SerializedName("watched_trakt") public Integer watchedTrakt;
+			@SerializedName("watched_trakt_unique") public Integer watchedTraktUnique;
+			@SerializedName("watched_elsewhere") public Integer watchedElsewhere;
+			public Integer unwatched;
+
+		    /** @deprecated Use {@link #watched} */
+		    @Deprecated
 			public Integer getWatched() {
 				return this.watched;
 			}
-			public void setWatched(Integer watched) {
-				this.watched = watched;
-			}
+		    /** @deprecated Use {@link #watchedUnique} */
+		    @Deprecated
 			public Integer getWatchedUnique() {
 				return this.watchedUnique;
 			}
-			public void setWatchedUnique(Integer watchedUnique) {
-				this.watchedUnique = watchedUnique;
-			}
+		    /** @deprecated Use {@link #watchedTrakt} */
+		    @Deprecated
 			public Integer getWatchedTrakt() {
 				return this.watchedTrakt;
 			}
-			public void setWatchedTrakt(Integer watchedTrakt) {
-				this.watchedTrakt = watchedTrakt;
-			}
+		    /** @deprecated Use {@link #watchedTraktUnique} */
+		    @Deprecated
 			public Integer getWatchedTraktUnique() {
 				return this.watchedTraktUnique;
 			}
-			public void setWatchedTraktUnique(Integer watchedTraktUnique) {
-				this.watchedTraktUnique = watchedTraktUnique;
-			}
+		    /** @deprecated Use {@link #watchedElsewhere} */
+		    @Deprecated
 			public Integer getWatchedElsewhere() {
 				return this.watchedElsewhere;
 			}
-			public void setWatchedElsewhere(Integer watchedElsewhere) {
-				this.watchedElsewhere = watchedElsewhere;
-			}
+		    /** @deprecated Use {@link #unwatched} */
+		    @Deprecated
 			public Integer getUnwatched() {
 				return this.unwatched;
-			}
-			public void setUnwatched(Integer unwatched) {
-				this.unwatched = unwatched;
 			}
 		}
 		public static final class Movies implements TraktEntity {
 			private static final long serialVersionUID = 5061541628681754141L;
 			
-			private Integer watched;
-			@SerializedName("watched_unique") private Integer watchedUnique;
-			@SerializedName("watched_trakt") private Integer watchedTrakt;
-			@SerializedName("watched_trakt_unique") private Integer watchedTraktUnique;
-			@SerializedName("watched_elsewhere") private Integer watchedElsewhere;
-			private Integer library;
-			private Integer unwatched;
-			
+			public Integer watched;
+			@SerializedName("watched_unique") public Integer watchedUnique;
+			@SerializedName("watched_trakt") public Integer watchedTrakt;
+			@SerializedName("watched_trakt_unique") public Integer watchedTraktUnique;
+			@SerializedName("watched_elsewhere") public Integer watchedElsewhere;
+			public Integer library;
+			public Integer unwatched;
+
+		    /** @deprecated Use {@link #watched} */
+		    @Deprecated
 			public Integer getWatched() {
 				return this.watched;
 			}
-			public void setWatched(Integer watched) {
-				this.watched = watched;
-			}
+		    /** @deprecated Use {@link #watchedUnique} */
+		    @Deprecated
 			public Integer getWatchedUnique() {
 				return this.watchedUnique;
 			}
-			public void setWatchedUnique(Integer watchedUnique) {
-				this.watchedUnique = watchedUnique;
-			}
+		    /** @deprecated Use {@link #watchedTrakt} */
+		    @Deprecated
 			public Integer getWatchedTrakt() {
 				return this.watchedTrakt;
 			}
-			public void setWatchedTrakt(Integer watchedTrakt) {
-				this.watchedTrakt = watchedTrakt;
-			}
+		    /** @deprecated Use {@link #watchedTraktUnique} */
+		    @Deprecated
 			public Integer getWatchedTraktUnique() {
 				return this.watchedTraktUnique;
 			}
-			public void setWatchedTraktUnique(Integer watchedTraktUnique) {
-				this.watchedTraktUnique = watchedTraktUnique;
-			}
+		    /** @deprecated Use {@link #watchedElsewhere} */
+		    @Deprecated
 			public Integer getWatchedElsewhere() {
 				return this.watchedElsewhere;
 			}
-			public void setWatchedElsewhere(Integer watchedElsewhere) {
-				this.watchedElsewhere = watchedElsewhere;
-			}
+		    /** @deprecated Use {@link #library} */
+		    @Deprecated
 			public Integer getLibrary() {
 				return this.library;
 			}
-			public void setLibrary(Integer library) {
-				this.library = library;
-			}
+		    /** @deprecated Use {@link #unwatched} */
+		    @Deprecated
 			public Integer getUnwatched() {
 				return this.unwatched;
 			}
-			public void setUnwatched(Integer unwatched) {
-				this.unwatched = unwatched;
-			}
 		}
 		
-		private Integer friends;
-		private Shows shows;
-		private Episodes episodes;
-		private Movies movies;
-		
+		public Integer friends;
+		public Shows shows;
+		public Episodes episodes;
+		public Movies movies;
+
+	    /** @deprecated Use {@link #friends} */
+	    @Deprecated
 		public Integer getFriends() {
 			return this.friends;
 		}
-		public void setFriends(Integer friends) {
-			this.friends = friends;
-		}
+	    /** @deprecated Use {@link #shows} */
+	    @Deprecated
 		public Shows getShows() {
 			return this.shows;
 		}
-		public void setShows(Shows shows) {
-			this.shows = shows;
-		}
+	    /** @deprecated Use {@link #episodes} */
+	    @Deprecated
 		public Episodes getEpisodes() {
 			return this.episodes;
 		}
-		public void setEpisodes(Episodes episodes) {
-			this.episodes = episodes;
-		}
+	    /** @deprecated Use {@link #movies} */
+	    @Deprecated
 		public Movies getMovies() {
 			return this.movies;
 		}
-		public void setMovies(Movies movies) {
-			this.movies = movies;
-		}
 	}
 
-	private String username;
-	@SerializedName("protected") private Boolean _protected;
-	@SerializedName("full_name") private String fullName;
-	private Gender gender;
-	private Integer age;
-	private String location;
-	private String about;
-	private Calendar joined;
-	private String avatar;
-	private String url;
-	private Stats stats;
-	private WatchedMediaEntity watching;
-	private List<MediaEntity> watched;
-	private Integer plays;
-	private TvShowEpisode episode;
-	private Calendar approved;
-	
+	public String username;
+	@SerializedName("protected") public Boolean _protected;
+	@SerializedName("full_name") public String fullName;
+	public Gender gender;
+	public Integer age;
+	public String location;
+	public String about;
+	public Calendar joined;
+	public String avatar;
+	public String url;
+	public Stats stats;
+	public WatchedMediaEntity watching;
+	public List<MediaEntity> watched;
+	public Integer plays;
+	public TvShowEpisode episode;
+	public Calendar approved;
+
+    /** @deprecated Use {@link #username} */
+    @Deprecated
 	public String getUsername() {
 		return this.username;
 	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /** @deprecated Use {@link #_protected} */
+    @Deprecated
 	public Boolean getProtected() {
 		return this._protected;
 	}
-	public void setProtected(Boolean _protected) {
-		this._protected = _protected;
-	}
+    /** @deprecated Use {@link #fullName} */
+    @Deprecated
 	public String getFullName() {
 		return this.fullName;
 	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
+    /** @deprecated Use {@link #gender} */
+    @Deprecated
 	public Gender getGender() {
 		return this.gender;
 	}
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    /** @deprecated Use {@link #age} */
+    @Deprecated
 	public Integer getAge() {
 		return this.age;
 	}
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    /** @deprecated Use {@link #location} */
+    @Deprecated
 	public String getLocation() {
 		return this.location;
 	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    /** @deprecated Use {@link #about} */
+    @Deprecated
 	public String getAbout() {
 		return this.about;
 	}
-	public void setAbout(String about) {
-		this.about = about;
-	}
+    /** @deprecated Use {@link #joined} */
+    @Deprecated
 	public Calendar getJoined() {
 		return this.joined;
 	}
-	public void setJoined(Calendar joined) {
-		this.joined = joined;
-	}
+    /** @deprecated Use {@link #avatar} */
+    @Deprecated
 	public String getAvatar() {
 		return this.avatar;
 	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+    /** @deprecated Use {@link #url} */
+    @Deprecated
 	public String getUrl() {
 		return this.url;
 	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /** @deprecated Use {@link #stats} */
+    @Deprecated
 	public Stats getStats() {
 		return this.stats;
 	}
-	public void setStats(Stats stats) {
-		this.stats = stats;
-	}
+    /** @deprecated Use {@link #watching} */
+    @Deprecated
 	public MediaEntity getWatching() {
 		return this.watching;
 	}
-	public void setWatching(WatchedMediaEntity watching) {
-		this.watching = watching;
-	}
+    /** @deprecated Use {@link #watched} */
+    @Deprecated
 	public List<MediaEntity> getWatched() {
 		return this.watched;
 	}
-	public void setWatched(List<MediaEntity> watched) {
-		this.watched = watched;
-	}
+    /** @deprecated Use {@link #plays} */
+    @Deprecated
 	public Integer getPlays() {
 		return this.plays;
 	}
-	public void setPlays(Integer plays) {
-		this.plays = plays;
-	}
+    /** @deprecated Use {@link #episode} */
+    @Deprecated
 	public TvShowEpisode getEpisode() {
 		return this.episode;
 	}
-	public void setEpisode(TvShowEpisode episode) {
-		this.episode = episode;
-	}
+    /** @deprecated Use {@link #approved} */
+    @Deprecated
 	public Calendar getApproved() {
 		return this.approved;
-	}
-	public void setApproved(Calendar approved) {
-		this.approved = approved;
 	}
 }

@@ -7,75 +7,65 @@ import com.jakewharton.trakt.TraktEntity;
 public final class Movie extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = -1543214252495012419L;
 
-	@SerializedName("tmdb_id") private String tmdbId;
-	private Integer plays;
-	@SerializedName("in_collection") private Boolean inCollection;
-	private Date released;
-	private String trailer;
-	private Integer runtime;
-	private String tagline;
-	private String overview;
-	private String certification; //TODO make enum
-	private Boolean watched;
-	
+	@SerializedName("tmdb_id") public String tmdbId;
+	public Integer plays;
+	@SerializedName("in_collection") public Boolean inCollection;
+	public Date released;
+	public String trailer;
+	public Integer runtime;
+	public String tagline;
+	public String overview;
+	public String certification; //TODO make enum
+	public Boolean watched;
+
+    /** @deprecated Use {@link #tmdbId} */
+    @Deprecated
 	public String getTmdbId() {
 		return this.tmdbId;
 	}
-	public void setTmdbId(String tmdbId) {
-		this.tmdbId = tmdbId;
-	}
+    /** @deprecated Use {@link #plays} */
+    @Deprecated
 	public Integer getPlays() {
 		return this.plays;
 	}
-	public void setPlays(Integer plays) {
-		this.plays = plays;
-	}
+    /** @deprecated Use {@link #inCollection} */
+    @Deprecated
 	public Boolean getInCollection() {
 		return this.inCollection;
 	}
-	public void setInCollection(Boolean inCollection) {
-		this.inCollection = inCollection;
-	}
+    /** @deprecated Use {@link #released} */
+    @Deprecated
 	public Date getReleased() {
 		return this.released;
 	}
-	public void setReleased(Date released) {
-		this.released = released;
-	}
+    /** @deprecated Use {@link #trailer} */
+    @Deprecated
 	public String getTrailer() {
 		return this.trailer;
 	}
-	public void setTrailer(String trailer) {
-		this.trailer = trailer;
-	}
+    /** @deprecated Use {@link #runtime} */
+    @Deprecated
 	public Integer getRuntime() {
 		return this.runtime;
 	}
-	public void setRuntime(Integer runtime) {
-		this.runtime = runtime;
-	}
+    /** @deprecated Use {@link #tagline} */
+    @Deprecated
 	public String getTagline() {
 		return this.tagline;
 	}
-	public void setTagline(String tagline) {
-		this.tagline = tagline;
-	}
+    /** @deprecated Use {@link #overview} */
+    @Deprecated
 	public String getOverview() {
 		return this.overview;
 	}
-	public void setOverview(String overview) {
-		this.overview = overview;
-	}
+    /** @deprecated Use {@link #certification} */
+    @Deprecated
 	public String getCertification() {
 		return this.certification;
 	}
-	public void setCertification(String certification) {
-		this.certification = certification;
-	}
+    /** @deprecated Use {@link #watched} */
+    @Deprecated
 	public Boolean getWatched() {
 	    return this.watched;
-	}
-	public void setWatched(Boolean watched) {
-		this.watched = watched;
 	}
 }
