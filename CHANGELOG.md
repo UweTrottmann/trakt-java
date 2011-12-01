@@ -4,9 +4,9 @@ Change Log
 1.3.0 *(In Development)*
 ------------------------
 
- * Add list service.
- * Add activity service.
- * Add setter methods to all entities so they can be reused externally.
+ * Added list and activity service.
+ * All "getter" methods have been deprecated and instead the instance
+   properties should be used directly.
 
 
 1.2.1 *(2011-09-15)*
