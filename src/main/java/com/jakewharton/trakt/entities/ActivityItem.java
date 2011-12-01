@@ -8,8 +8,10 @@ import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.enumerations.Rating;
 
 /**
- * Represents a Trakt activity item. See http://trakt.tv/api-docs/activity-community
- * for a list of {@link #type}s and {@link #action}s and which properties they include.
+ * Represents a Trakt activity item. See
+ * <a href="http://trakt.tv/api-docs/activity-community"> the documentation</a>
+ * for a list of {@link #type}s and {@link #action}s and which properties they
+ * include.
  */
 public class ActivityItem implements TraktEntity {
     private static final long serialVersionUID = -7644201423350992899L;
