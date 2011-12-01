@@ -123,7 +123,7 @@ public class RecommendationsService extends TraktApiService {
 		 * @return
 		 */
 		public MoviesBuilder genre(Genre genre) {
-			this.postParameter(POST_GENRE, genre.getSlug());
+			this.postParameter(POST_GENRE, genre.slug);
 			return this;
 		}
 	}
@@ -168,7 +168,7 @@ public class RecommendationsService extends TraktApiService {
 		 * @return
 		 */
 		public ShowsBuilder genre(Genre genre) {
-			this.postParameter(POST_GENRE, genre.getSlug());
+			this.postParameter(POST_GENRE, genre.slug);
 			return this;
 		}
 	}
