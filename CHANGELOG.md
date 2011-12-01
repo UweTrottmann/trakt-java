@@ -4,7 +4,8 @@ Change Log
 1.3.0 *(In Development)*
 ------------------------
 
- * Add list methods.
+ * Add list service.
+ * Add activity service.
  * Add setter methods to all entities so they can be reused externally.
 
 

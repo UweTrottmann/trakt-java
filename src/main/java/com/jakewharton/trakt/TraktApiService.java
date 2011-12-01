@@ -28,6 +28,8 @@ import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.entities.WatchedMediaEntity;
+import com.jakewharton.trakt.enumerations.ActivityAction;
+import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 import com.jakewharton.trakt.enumerations.Gender;
 import com.jakewharton.trakt.enumerations.ListItemType;
@@ -388,8 +390,19 @@ public abstract class TraktApiService extends ApiService {
 				}
 			}
 		});
-		
 		//enum types
+		builder.registerTypeAdapter(ActivityAction.class, new JsonDeserializer<ActivityAction>() {
+            @Override
+            public ActivityAction deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return ActivityAction.fromValue(json.getAsString());
+            }
+		});
+        builder.registerTypeAdapter(ActivityType.class, new JsonDeserializer<ActivityType>() {
+            @Override
+            public ActivityType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return ActivityType.fromValue(json.getAsString());
+            }
+        });
 		builder.registerTypeAdapter(DayOfTheWeek.class, new JsonDeserializer<DayOfTheWeek>() {
 			@Override
 			public DayOfTheWeek deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {

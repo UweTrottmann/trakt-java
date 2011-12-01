@@ -34,6 +34,9 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected static final String FIELD_EPISODE = API_URL_DELIMITER_START + "episode" + API_URL_DELIMITER_END;
 	protected static final String FIELD_EXTENDED = API_URL_DELIMITER_START + "extended" + API_URL_DELIMITER_END;
 	protected static final String FIELD_HIDE_WATCHED = API_URL_DELIMITER_START + "hidewatched" + API_URL_DELIMITER_END;
+	protected static final String FIELD_TYPES = API_URL_DELIMITER_START + "types" + API_URL_DELIMITER_END;
+	protected static final String FIELD_ACTIONS = API_URL_DELIMITER_START + "actions" + API_URL_DELIMITER_END;
+	protected static final String FIELD_TIMESTAMP = API_URL_DELIMITER_START + "timestamp" + API_URL_DELIMITER_END;
 
 	private static final String POST_PLUGIN_VERSION = "plugin_version";
 	private static final String POST_MEDIA_CENTER_VERSION = "media_center_version";
@@ -49,7 +52,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	private static final String BASE_URL_SSL = "https://api-trakt.apigee.com/";
 
 	/** Number of milliseconds in a single second. */
-	/*package*/ static final long MILLISECONDS_IN_SECOND = 1000;
+	protected static final long MILLISECONDS_IN_SECOND = 1000;
 
 	/** Valued-list seperator. */
 	private static final char SEPERATOR = ',';
@@ -292,6 +295,60 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 	protected final ApiBuilder field(String name, Date date) {
 		return this.field(name, URL_DATE_FORMAT.format(date));
 	}
+	
+	/**
+	 * Add a URL field value.
+	 * 
+	 * @param name Name.
+	 * @param valueList List of values.
+	 * @return Current instance for builder pattern.
+	 */
+	protected final <K extends TraktEnumeration> ApiBuilder field(String name, K[] valueList) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < valueList.length; i++) {
+            builder.append(encodeUrl(valueList[i].toString()));
+            if (i < valueList.length - 1) {
+                builder.append(SEPERATOR);
+            }
+        }
+        return this.field(name, builder.toString());
+	}
+	
+	/**
+	 * Add a URL field value.
+	 * 
+	 * @param name Name.
+	 * @param valueList List of values.
+	 * @return Current instance for builder pattern.
+	 */
+	protected final ApiBuilder field(String name, int[] valueList) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < valueList.length; i++) {
+            builder.append(valueList[i]);
+            if (i < valueList.length - 1) {
+                builder.append(SEPERATOR);
+            }
+        }
+        return this.field(name, builder.toString());
+	}
+    
+    /**
+     * Add a URL field value.
+     * 
+     * @param name Name.
+     * @param valueList List of values.
+     * @return Current instance for builder pattern.
+     */
+    protected final ApiBuilder field(String name, String[] valueList) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < valueList.length; i++) {
+            builder.append(encodeUrl(valueList[i]));
+            if (i < valueList.length - 1) {
+                builder.append(SEPERATOR);
+            }
+        }
+        return this.field(name, builder.toString());
+    }
 
 	/**
 	 * Add a URL field value.
@@ -306,6 +363,18 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 		} else {
 			return this.field(name, value.toString());
 		}
+	}
+	
+	/**
+	 * Add a URL field value.
+	 * 
+	 * @param name Name.
+	 * @param value Value.
+	 * @return Current instance for builder pattern.
+	 */
+	protected final ApiBuilder field(String name, long value) {
+	    //TODO move to api builder
+	    return this.field(name, Long.toString(value));
 	}
 
 	protected final boolean hasPostParameter(String name) {
