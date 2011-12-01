@@ -38,39 +38,20 @@ public final class UserService extends TraktApiService {
 		return new WatchingBuilder(this, username);
 	}
 	
-	/**
-	 * Returns the last 100 TV show episodes and movies a user has watched
-	 * using Trakt. Protected users won't return any data unless you are
-	 * friends.
-	 * 
-	 * @param username You can get a username by browsing the website and
-	 * looking at the URL when on a profile page.
-	 * @return Builder instance.
-	 */
+	/** @deprecated Use {@link ActivityService#user(String)} */
+	@Deprecated
 	public WatchedBuilder watched(String username) {
 		return new WatchedBuilder(this, username);
 	}
 	
-	/**
-	 * Returns the last 100 TV show episodes a user has watched using Trakt.
-	 * Protected users won't return any data unless you are friends.
-	 * 
-	 * @param username You can get a username by browsing the website and
-	 * looking at the URL when on a profile page.
-	 * @return Builder instance.
-	 */
+	/** @deprecated Use {@link ActivityService#user(String) */
+	@Deprecated
 	public WatchedEpisodesBuilder watchedEpisodes(String username) {
 		return new WatchedEpisodesBuilder(this, username);
 	}
 
-	/**
-	 * Returns the last 100 movies a user has watched using Trakt. Protected
-	 * users won't return any data unless you are friends.
-	 * 
-	 * @param username You can get a username by browsing the website and
-	 * looking at the URL when on a profile page.
-	 * @return Builder instance.
-	 */
+    /** @deprecated Use {@link ActivityService#user(String) */
+    @Deprecated
 	public WatchedMoviesBuilder watchedMovies(String username) {
 		return new WatchedMoviesBuilder(this, username);
 	}

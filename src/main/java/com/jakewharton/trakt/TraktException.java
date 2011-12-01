@@ -21,7 +21,7 @@ public final class TraktException extends RuntimeException {
         this.response = null;
     }
     public TraktException(String url, JsonObject postBody, ApiException cause, Response response) {
-        super(response.getError(), cause);
+        super(response.error, cause);
         this.url = url;
         this.postBody = postBody;
         this.response = response;
