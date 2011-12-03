@@ -5,6 +5,7 @@ Change Log
 ------------------------
 
  * Added list and activity service.
+ * Movie and show services now have `checkin` and `cancelchecking` methods.
  * All "getter" methods have been deprecated and instead the instance
    properties should be used directly.
 
