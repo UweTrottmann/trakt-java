@@ -6,20 +6,20 @@ import java.util.List;
 import java.util.TimeZone;
 import org.apache.commons.lang.time.DateUtils;
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Person;
+import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.Gender;
 
 public class SearchServiceTest extends BaseTestCase {
 	public void test_episodes() {
-		List<MediaEntity> entities = getManager().searchService().episodes("warfare").fire();
+		List<TvEntity> entities = getManager().searchService().episodes("warfare").fire();
 		assertNotNull("Result was null.", entities);
 		assertFalse("Episode entity list was empty.", entities.isEmpty());
 		
-		MediaEntity entity = entities.get(0);
+		TvEntity entity = entities.get(0);
 		assertNotNull("Episode entity was null.", entity);
 		assertNotNull("Show was null.", entity.show);
 		assertNotNull("Episode was null.", entity.episode);

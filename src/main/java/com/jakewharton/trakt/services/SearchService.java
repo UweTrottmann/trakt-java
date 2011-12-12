@@ -4,9 +4,9 @@ import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
-import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Person;
+import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
 
@@ -62,11 +62,11 @@ public class SearchService extends TraktApiService {
     }
 
 
-    public static final class EpisodesBuilder extends TraktApiBuilder<List<MediaEntity>> {
+    public static final class EpisodesBuilder extends TraktApiBuilder<List<TvEntity>> {
         private static final String URI = "/search/episodes.json/" + FIELD_API_KEY + "/" + FIELD_QUERY;
 
         private EpisodesBuilder(SearchService service, String query) {
-            super(service, new TypeToken<List<MediaEntity>>() {}, URI);
+            super(service, new TypeToken<List<TvEntity>>() {}, URI);
 
             this.field(FIELD_QUERY, query);
         }

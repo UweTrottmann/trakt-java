@@ -24,10 +24,10 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
-import com.jakewharton.trakt.entities.MediaEntity;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.ActivityItemBase;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
-import com.jakewharton.trakt.entities.WatchedMediaEntity;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
@@ -353,7 +353,7 @@ public abstract class TraktApiService extends ApiService {
      *
      * @return Assembled GSON builder instance.
      */
-    static GsonBuilder getGsonBuilder() {
+    public static GsonBuilder getGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
 
         //class types
@@ -427,16 +427,17 @@ public abstract class TraktApiService extends ApiService {
                 return episodes;
             }
         });
-        builder.registerTypeAdapter(WatchedMediaEntity.class, new JsonDeserializer<WatchedMediaEntity>() {
+        builder.registerTypeAdapter(ActivityItemBase.class, new JsonDeserializer<ActivityItemBase>() {
+            //XXX See: https://groups.google.com/d/topic/traktapi/GQlT9HfAEjw/discussion
             @Override
-            public WatchedMediaEntity deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            public ActivityItemBase deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 if (json.isJsonArray()) {
                     if (json.getAsJsonArray().size() != 0) {
                         throw new JsonParseException("\"watched\" field returned a non-empty array.");
                     }
                     return null;
                 } else {
-                    return context.deserialize(json, (new TypeToken<MediaEntity>() {}).getType());
+                    return context.deserialize(json, ActivityItem.class);
                 }
             }
         });

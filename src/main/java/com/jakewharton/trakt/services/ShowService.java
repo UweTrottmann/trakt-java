@@ -6,9 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
-import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Shout;
+import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
@@ -722,11 +722,11 @@ public class ShowService extends TraktApiService {
             this.postParameter(POST_EPISODES, this.episodeList);
         }
     }
-    public static final class EpisodeSummaryBuilder extends TraktApiBuilder<MediaEntity> {
+    public static final class EpisodeSummaryBuilder extends TraktApiBuilder<TvEntity> {
         private static final String URI = "/show/episode/summary.json/" + FIELD_API_KEY + "/" + FIELD_TITLE + "/" + FIELD_SEASON + "/" + FIELD_EPISODE;
 
         private EpisodeSummaryBuilder(ShowService service) {
-            super(service, new TypeToken<MediaEntity>() {}, URI);
+            super(service, new TypeToken<TvEntity>() {}, URI);
         }
 
         /**

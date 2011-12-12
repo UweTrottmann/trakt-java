@@ -42,7 +42,7 @@ public class MovieServiceTest extends BaseTestCase {
 		assertNotNull("Movie URL was null.", movie.url);
 		assertNotNull("Movie trailer was null.", movie.trailer);
 		assertNotNull("Movie runtime was null.", movie.runtime);
-		assertEquals("Movie runtime does not match.", 121, movie.runtime.intValue());
+		assertEquals("Movie runtime does not match.", 120, movie.runtime.intValue());
 		assertNotNull("Movie tagline was null.", movie.tagline);
 		assertNotNull("Movie overview was null.", movie.overview);
 		assertEquals("Movie certification does not match.", "PG-13", movie.certification);

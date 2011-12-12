@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang.time.DateUtils;
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Shout;
+import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
@@ -21,7 +21,7 @@ public class ShowServiceTest extends BaseTestCase {
 	}
 	
 	public void test_episodeSummary() {
-		MediaEntity entity = getManager().showService().episodeSummary("the-league", 1, 1).fire();
+		TvEntity entity = getManager().showService().episodeSummary("the-league", 1, 1).fire();
 		assertNotNull("Result was null.", entity);
 		
 		TvShow show = entity.show;
