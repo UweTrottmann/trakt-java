@@ -69,19 +69,19 @@ public abstract class TraktApiService extends ApiService {
     private static final SimpleDateFormat JSON_STRING_DATE = new SimpleDateFormat("yyy-MM-dd");
 
     /** Default plugin version debug string. */
-    private static final String DEFAULT_PLUGIN_VERSION = Version.FULL;
+    private static final String DEFAULT_PLUGIN_VERSION = Info.FULL_NAME;
 
     /** Default media center version debug string. */
-    private static final String DEFAULT_MEDIA_CENTER_VERSION = Version.FULL;
+    private static final String DEFAULT_MEDIA_CENTER_VERSION = Info.FULL_NAME;
 
     /** Default media center build date debug string. */
-    private static final String DEFAULT_MEDIA_CENTER_DATE = Version.DATE;
+    private static final String DEFAULT_MEDIA_CENTER_DATE = Info.DATE;
 
     /** Default application name debug string. */
-    private static final String DEFAULT_APP_DATE = Version.DATE;
+    private static final String DEFAULT_APP_DATE = Info.DATE;
 
     /** Default application version debug string. */
-    private static final String DEFAULT_APP_VERSION = Version.FULL;
+    private static final String DEFAULT_APP_VERSION = Info.FULL_NAME;
 
     /** Time zone for Trakt dates. */
     private static final TimeZone TRAKT_TIME_ZONE = TimeZone.getTimeZone("GMT-8:00");
