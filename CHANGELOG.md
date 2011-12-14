@@ -1,13 +1,15 @@
 Change Log
 ==========
 
-1.3.0 *(In Development)*
-------------------------
+1.3.0 *(2011-12-13)*
+-------------------
 
  * Added list and activity service.
  * Movie and show services now have `checkin` and `cancelchecking` methods.
  * All "getter" methods have been deprecated and instead the instance
    properties should be used directly.
+ * Transitioned methods which returned `MediaEntity` to use the more userful
+   `ActivityInfo` type.
 
 
 1.2.1 *(2011-09-15)*
