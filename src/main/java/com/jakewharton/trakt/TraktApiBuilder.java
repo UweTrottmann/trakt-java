@@ -398,6 +398,11 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
     protected final TraktApiBuilder<T> postParameter(String name, int value) {
         return this.postParameter(name, Integer.toString(value));
     }
+    
+    protected final TraktApiBuilder<T> postParameter(String name, Boolean value) {
+        this.postBody.addProperty(name, value);
+        return this;
+    }
 
     protected final <K extends TraktEnumeration> TraktApiBuilder<T> postParameter(String name, K value) {
         if ((value != null) && (value.toString() != null) && (value.toString().length() > 0)) {
