@@ -483,7 +483,7 @@ public final class UserService extends TraktApiService {
          * @param ExtendedParam
          * @return Builder instance
          */
-        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+        public LibraryMoviesCollectionBuilder extended(ExtendedParam extended) {
             this.field(FIELD_EXTENDED, extended.toString());
             return this;
         }
@@ -510,7 +510,7 @@ public final class UserService extends TraktApiService {
          * @param ExtendedParam
          * @return Builder instance
          */
-        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+        public LibraryMoviesHatedBuilder extended(ExtendedParam extended) {
             this.field(FIELD_EXTENDED, extended.toString());
             return this;
         }
@@ -537,7 +537,7 @@ public final class UserService extends TraktApiService {
          * @param ExtendedParam
          * @return Builder instance
          */
-        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+        public LibraryMoviesLovedBuilder extended(ExtendedParam extended) {
             this.field(FIELD_EXTENDED, extended.toString());
             return this;
         }
@@ -591,7 +591,7 @@ public final class UserService extends TraktApiService {
          * @param ExtendedParam
          * @return Builder instance
          */
-        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+        public LibraryShowsAllBuilder extended(ExtendedParam extended) {
             this.field(FIELD_EXTENDED, extended.toString());
             return this;
         }
@@ -618,7 +618,7 @@ public final class UserService extends TraktApiService {
          * @param ExtendedParam
          * @return Builder instance
          */
-        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+        public LibraryShowsCollectionBuilder extended(ExtendedParam extended) {
             this.field(FIELD_EXTENDED, extended.toString());
             return this;
         }
@@ -645,7 +645,7 @@ public final class UserService extends TraktApiService {
          * @param ExtendedParam
          * @return Builder instance
          */
-        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+        public LibraryShowsHatedBuilder extended(ExtendedParam extended) {
             this.field(FIELD_EXTENDED, extended.toString());
             return this;
         }
