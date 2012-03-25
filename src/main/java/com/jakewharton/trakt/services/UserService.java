@@ -1,6 +1,8 @@
 
 package com.jakewharton.trakt.services;
 
+import java.util.Date;
+import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
@@ -12,16 +14,13 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
 
-import java.util.Date;
-import java.util.List;
-
 public final class UserService extends TraktApiService {
     /**
      * Returns a users shows airing during the time period specified. Protected
      * users won't return any data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public CalendarShowsBuilder calendarShows(String username) {
@@ -30,11 +29,11 @@ public final class UserService extends TraktApiService {
 
     /**
      * Returns the TV show episode or movie a user is currently watching. If
-     * they aren't watching anything, a blank object will be returned. Protected
-     * users won't return any data unless you are friends.
-     * 
+     * they aren't watching anything, a blank object will be returned.
+     * Protected users won't return any data unless you are friends.
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public WatchingBuilder watching(String username) {
@@ -47,13 +46,13 @@ public final class UserService extends TraktApiService {
         return new WatchedBuilder(this, username);
     }
 
-    /** @deprecated Use {@link ActivityService#user(String)  */
+    /** @deprecated Use {@link ActivityService#user(String) */
     @Deprecated
     public WatchedEpisodesBuilder watchedEpisodes(String username) {
         return new WatchedEpisodesBuilder(this, username);
     }
 
-    /** @deprecated Use {@link ActivityService#user(String)  */
+    /** @deprecated Use {@link ActivityService#user(String) */
     @Deprecated
     public WatchedMoviesBuilder watchedMovies(String username) {
         return new WatchedMoviesBuilder(this, username);
@@ -63,9 +62,9 @@ public final class UserService extends TraktApiService {
      * Returns all episodes in a user's watchlist. Each show will have its own
      * entry and will contain all episodes in the watchlist. Protected users
      * won't return any data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public WatchlistEpisodesBuilder watchlistEpisodes(String username) {
@@ -76,9 +75,9 @@ public final class UserService extends TraktApiService {
      * Returns all movies in a user's watchlist. Each movie will indicate when
      * it was added to the watchlist. Protected users won't return any data
      * unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public WatchlistMoviesBuilder watchlistMovies(String username) {
@@ -89,9 +88,9 @@ public final class UserService extends TraktApiService {
      * Returns all shows in a user's watchlist. Each show will indicate when it
      * was added to the watchlist. Protected users won't return any data unless
      * you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public WatchlistShowsBuilder watchlistShows(String username) {
@@ -101,9 +100,9 @@ public final class UserService extends TraktApiService {
     /**
      * Returns profile information for a user. Protected users won't return any
      * data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public ProfileBuilder profile(String username) {
@@ -116,9 +115,9 @@ public final class UserService extends TraktApiService {
      * watches. Protected users won't return any data unless you are friends.
      * Any friends of the main user that are protected won't display data
      * either.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public FriendsBuilder friends(String username) {
@@ -127,11 +126,11 @@ public final class UserService extends TraktApiService {
 
     /**
      * Returns all movies in a user's library. Each movie will indicate if it's
-     * in the user's collection and how many plays it has. Protected users won't
-     * return any data unless you are friends.
-     * 
+     * in the user's collection and how many plays it has. Protected users
+     * won't return any data unless you are friends.
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryMoviesAllBuilder libraryMoviesAll(String username) {
@@ -139,12 +138,12 @@ public final class UserService extends TraktApiService {
     }
 
     /**
-     * Returns all movies in a user's library collection. Collection items might
-     * include Blu-rays, DVDs, and digital downloads. Protected users won't
-     * return any data unless you are friends.
-     * 
+     * Returns all movies in a user's library collection. Collection items
+     * might include Blu-rays, DVDs, and digital downloads. Protected users
+     * won't return any data unless you are friends.
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryMoviesCollectionBuilder libraryMoviesCollection(String username) {
@@ -154,9 +153,9 @@ public final class UserService extends TraktApiService {
     /**
      * Returns all movies a user has hated. Protected users won't return any
      * data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryMoviesHatedBuilder libraryMoviesHated(String username) {
@@ -166,9 +165,9 @@ public final class UserService extends TraktApiService {
     /**
      * Returns all movies a user has loved. Protected users won't return any
      * data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryMoviesLovedBuilder libraryMoviesLoved(String username) {
@@ -192,9 +191,9 @@ public final class UserService extends TraktApiService {
      * Returns all shows in a user's library. Each show will indicate how many
      * plays it has. Protected users won't return any data unless you are
      * friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryShowsAllBuilder libraryShowsAll(String username) {
@@ -202,12 +201,12 @@ public final class UserService extends TraktApiService {
     }
 
     /**
-     * Returns all shows and episodes in a user's library collection. Collection
-     * items might include Blu-rays, DVDs, and digital downloads. Protected
-     * users won't return any data unless you are friends.
-     * 
+     * Returns all shows and episodes in a user's library collection.
+     * Collection items might include Blu-rays, DVDs, and digital downloads.
+     * Protected users won't return any data unless you are friends.
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryShowsCollectionBuilder libraryShowsCollection(String username) {
@@ -215,11 +214,11 @@ public final class UserService extends TraktApiService {
     }
 
     /**
-     * Returns all shows a user has hated. Protected users won't return any data
-     * unless you are friends.
-     * 
+     * Returns all shows a user has hated. Protected users won't return any
+     * data unless you are friends.
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryShowsHatedBuilder libraryShowsHated(String username) {
@@ -227,11 +226,11 @@ public final class UserService extends TraktApiService {
     }
 
     /**
-     * Returns all shows a user has loved. Protected users won't return any data
-     * unless you are friends.
-     * 
+     * Returns all shows a user has loved. Protected users won't return any
+     * data unless you are friends.
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryShowsLovedBuilder libraryShowsLoved(String username) {
@@ -242,9 +241,9 @@ public final class UserService extends TraktApiService {
      * Returns all shows and episodes that a user has watched. This method is
      * useful to sync trakt's data with local media center. Protected users
      * won't return any data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public LibraryShowsWatchedBuilder libraryShowsWatched(String username) {
@@ -255,11 +254,11 @@ public final class UserService extends TraktApiService {
      * Returns list details and all items it contains. Protected users won't
      * return any data unless you are friends. To view your own private lists,
      * you will need to authenticate as yourself.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
-     * @param slug Valid list slug for this user. You can get all slugs from the
-     *            user/lists method.
+     * looking at the URL when on a profile page.
+     * @param slug Valid list slug for this user. You can get all slugs from
+     * the user/lists method.
      * @return Builder instance.
      */
     public ListBuilder list(String username, String slug) {
@@ -270,31 +269,29 @@ public final class UserService extends TraktApiService {
      * Returns all custom lists for a user. Protected users won't return any
      * data unless you are friends. To view your own private lists, you will
      * need to authenticate as yourself.
-     * 
+     *
      * @param username You can get a username by browsing the website and
-     *            looking at the URL when on a profile page.
+     * looking at the URL when on a profile page.
      * @return Builder instance.
      */
     public ListsBuilder lists(String username) {
         return new ListsBuilder(this).username(username);
     }
 
+
     public static final class CalendarShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
         private static final int DEFAULT_DAYS = 7;
-
-        private static final String URI = "/user/calendar/shows.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;
+        private static final String URI = "/user/calendar/shows.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_DATE + "/" + FIELD_DAYS;
 
         private CalendarShowsBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<CalendarDate>>() {
-            }, URI);
+            super(service, new TypeToken<List<CalendarDate>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
 
         /**
          * Start date for the calendar.
-         * 
+         *
          * @param date Value.
          * @return Builder instance.
          */
@@ -302,7 +299,7 @@ public final class UserService extends TraktApiService {
             this.field(FIELD_DATE, date);
 
             if (!this.hasField(FIELD_DAYS)) {
-                // Set default.
+                //Set default.
                 this.field(FIELD_DAYS, DEFAULT_DAYS);
             }
 
@@ -311,7 +308,7 @@ public final class UserService extends TraktApiService {
 
         /**
          * Number of days to display starting from the date.
-         * 
+         *
          * @param days Value.
          * @return Builder instance.
          */
@@ -319,129 +316,99 @@ public final class UserService extends TraktApiService {
             this.field(FIELD_DAYS, days);
 
             if (!this.hasField(FIELD_DATE)) {
-                // Set default.
+                //Set default.
                 this.field(FIELD_DATE, new Date());
             }
 
             return this;
         }
     }
-
     public static final class WatchingBuilder extends TraktApiBuilder<ActivityItemBase> {
-        private static final String URI = "/user/watching.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watching.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchingBuilder(UserService service, String username) {
-            super(service, new TypeToken<ActivityItemBase>() {
-            }, URI);
+            super(service, new TypeToken<ActivityItemBase>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class WatchedBuilder extends TraktApiBuilder<List<ActivityItem>> {
-        private static final String URI = "/user/watched.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watched.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<ActivityItem>>() {
-            }, URI);
+            super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class WatchedEpisodesBuilder extends TraktApiBuilder<List<ActivityItem>> {
-        private static final String URI = "/user/watched/episodes.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watched/episodes.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchedEpisodesBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<ActivityItem>>() {
-            }, URI);
+            super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class WatchedMoviesBuilder extends TraktApiBuilder<List<ActivityItem>> {
-        private static final String URI = "/user/watched/movies.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watched/movies.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchedMoviesBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<ActivityItem>>() {
-            }, URI);
+            super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class WatchlistEpisodesBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/watchlist/episodes.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watchlist/episodes.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchlistEpisodesBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class WatchlistMoviesBuilder extends TraktApiBuilder<List<Movie>> {
-        private static final String URI = "/user/watchlist/movies.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watchlist/movies.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchlistMoviesBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<Movie>>() {
-            }, URI);
+            super(service, new TypeToken<List<Movie>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class WatchlistShowsBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/watchlist/shows.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/watchlist/shows.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchlistShowsBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class ProfileBuilder extends TraktApiBuilder<UserProfile> {
-        private static final String URI = "/user/profile.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/profile.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private ProfileBuilder(UserService service, String username) {
-            super(service, new TypeToken<UserProfile>() {
-            }, URI);
+            super(service, new TypeToken<UserProfile>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class FriendsBuilder extends TraktApiBuilder<List<UserProfile>> {
-        private static final String URI = "/user/friends.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+        private static final String URI = "/user/friends.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private FriendsBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<UserProfile>>() {
-            }, URI);
+            super(service, new TypeToken<List<UserProfile>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-
     public static final class LibraryMoviesAllBuilder extends TraktApiBuilder<List<Movie>> {
-        private static final String URI = "/user/library/movies/all.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/movies/all.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesAllBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<Movie>>() {
-            }, URI);
+            super(service, new TypeToken<List<Movie>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -461,14 +428,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryMoviesCollectionBuilder extends TraktApiBuilder<List<Movie>> {
-        private static final String URI = "/user/library/movies/collection.json/" + FIELD_API_KEY
-                + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/movies/collection.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesCollectionBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<Movie>>() {
-            }, URI);
+            super(service, new TypeToken<List<Movie>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -488,14 +452,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryMoviesHatedBuilder extends TraktApiBuilder<List<Movie>> {
-        private static final String URI = "/user/library/movies/hated.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/movies/hated.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesHatedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<Movie>>() {
-            }, URI);
+            super(service, new TypeToken<List<Movie>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -515,14 +476,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryMoviesLovedBuilder extends TraktApiBuilder<List<Movie>> {
-        private static final String URI = "/user/library/movies/loved.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/movies/loved.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesLovedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<Movie>>() {
-            }, URI);
+            super(service, new TypeToken<List<Movie>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -542,7 +500,6 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-    
     public static final class LibraryMoviesWatchedBuilder extends TraktApiBuilder<List<Movie>> {
         private static final String URI = "/user/library/movies/watched.json/" + FIELD_API_KEY + "/"
                 + FIELD_USERNAME + "/" + FIELD_EXTENDED;
@@ -569,14 +526,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryShowsAllBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/library/shows/all.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/shows/all.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsAllBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -596,14 +550,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryShowsCollectionBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/library/shows/collection.json/" + FIELD_API_KEY
-                + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/shows/collection.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsCollectionBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -623,14 +574,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryShowsHatedBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/library/shows/hated.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/shows/hated.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsHatedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -650,14 +598,11 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryShowsLovedBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/library/shows/loved.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/shows/loved.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsLovedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
@@ -677,18 +622,15 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
     public static final class LibraryShowsWatchedBuilder extends TraktApiBuilder<List<TvShow>> {
-        private static final String URI = "/user/library/shows/watched.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+        private static final String URI = "/user/library/shows/watched.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsWatchedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<TvShow>>() {
-            }, URI);
+            super(service, new TypeToken<List<TvShow>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
-
+        
         /**
          * Returns complete show info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
@@ -704,21 +646,17 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
-    public static final class ListBuilder extends
-            TraktApiBuilder<com.jakewharton.trakt.entities.List> {
-        private static final String URI = "/user/list.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME
-                + "/" + FIELD_SLUG;
+    public static final class ListBuilder extends TraktApiBuilder<com.jakewharton.trakt.entities.List> {
+        private static final String URI = "/user/list.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME + "/" + FIELD_SLUG;
 
         private ListBuilder(UserService service) {
-            super(service, new TypeToken<com.jakewharton.trakt.entities.List>() {
-            }, URI);
+            super(service, new TypeToken<com.jakewharton.trakt.entities.List>() {}, URI);
         }
 
         /**
          * Valid list slug for this user. You can get all slugs from the
          * user/lists method.
-         * 
+         *
          * @param slug Value.
          * @return Builder instance.
          */
@@ -728,9 +666,9 @@ public final class UserService extends TraktApiService {
         }
 
         /**
-         * You can get a username by browsing the website and looking at the URL
-         * when on a profile page.
-         * 
+         * You can get a username by browsing the website and looking at the
+         * URL when on a profile page.
+         *
          * @param username Value.
          * @return Builder instance.
          */
@@ -739,21 +677,17 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-
-    public static final class ListsBuilder extends
-            TraktApiBuilder<List<com.jakewharton.trakt.entities.List>> {
-        private static final String URI = "/user/lists.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+    public static final class ListsBuilder extends TraktApiBuilder<List<com.jakewharton.trakt.entities.List>> {
+        private static final String URI = "/user/lists.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private ListsBuilder(UserService service) {
-            super(service, new TypeToken<List<com.jakewharton.trakt.entities.List>>() {
-            }, URI);
+            super(service, new TypeToken<List<com.jakewharton.trakt.entities.List>>() {}, URI);
         }
 
         /**
-         * You can get a username by browsing the website and looking at the URL
-         * when on a profile page.
-         * 
+         * You can get a username by browsing the website and looking at the
+         * URL when on a profile page.
+         *
          * @param username Value.
          * @return Builder instance.
          */
