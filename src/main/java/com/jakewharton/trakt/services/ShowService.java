@@ -1795,6 +1795,7 @@ public class ShowService extends TraktApiService {
         private static final String POST_DURATION = "duration";
         private static final String POST_VENUE_ID = "venue_id";
         private static final String POST_VENUE_NAME = "venue_name";
+        private static final String POST_MESSAGE = "message";
 
         private static final String URI = "/show/checkin/" + FIELD_API_KEY;
 
@@ -1848,6 +1849,17 @@ public class ShowService extends TraktApiService {
         /** Custom venue name for display purposes. */
         public CheckinBuilder venueName(String venueName) {
             this.postParameter(POST_VENUE_NAME, venueName);
+            return this;
+        }
+        
+        /**
+         * The message to use for sharing. If not sent, it will use the
+         * localized watching string set on the connections page. The message
+         * will be truncated to 100 characters to make sure it fits in the tweet
+         * with the url and hashtag.
+         */
+        public CheckinBuilder message(String message) {
+            this.postParameter(POST_MESSAGE, message);
             return this;
         }
     }
