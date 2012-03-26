@@ -464,7 +464,7 @@ public abstract class TraktApiService extends ApiService {
         builder.registerTypeAdapter(ExtendedParam.class, new JsonDeserializer<ExtendedParam>() {
             @Override
             public ExtendedParam deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                return ExtendedParam.fromValue(arg0.getAsString());
+                return ExtendedParam.fromValue(json.getAsString());
             }
         });
         builder.registerTypeAdapter(Gender.class, new JsonDeserializer<Gender>() {
