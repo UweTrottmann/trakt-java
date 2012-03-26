@@ -31,6 +31,7 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
+import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.jakewharton.trakt.enumerations.Gender;
 import com.jakewharton.trakt.enumerations.ListItemType;
 import com.jakewharton.trakt.enumerations.ListPrivacy;
