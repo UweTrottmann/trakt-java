@@ -460,6 +460,12 @@ public abstract class TraktApiService extends ApiService {
                 return DayOfTheWeek.fromValue(arg0.getAsString());
             }
         });
+        builder.registerTypeAdapter(ExtendedParam.class, new JsonDeserializer<ExtendedParam>() {
+            @Override
+            public ExtendedParam deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                return ExtendedParam.fromValue(arg0.getAsString());
+            }
+        });
         builder.registerTypeAdapter(Gender.class, new JsonDeserializer<Gender>() {
             @Override
             public Gender deserialize(JsonElement arg0, Type arg1, JsonDeserializationContext arg2) throws JsonParseException {

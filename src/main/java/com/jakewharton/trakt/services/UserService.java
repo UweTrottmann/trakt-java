@@ -424,7 +424,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryMoviesAllBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -448,7 +448,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryMoviesCollectionBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -472,7 +472,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryMoviesHatedBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -496,7 +496,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryMoviesLovedBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -522,7 +522,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryMoviesWatchedBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -546,7 +546,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryShowsAllBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -570,7 +570,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryShowsCollectionBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -594,7 +594,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryShowsHatedBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -618,7 +618,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
@@ -642,7 +642,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance
          */
         public LibraryShowsWatchedBuilder extended(ExtendedParam extended) {
-            this.field(FIELD_EXTENDED, extended.toString());
+            this.field(FIELD_EXTENDED, extended);
             return this;
         }
     }
