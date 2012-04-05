@@ -199,7 +199,7 @@ public class ShoutService extends TraktApiService {
          * @param spoiler Value.
          * @return Builder instance.
          */
-        public EpisodeBuilder spoiler(Boolean spoiler) {
+        public EpisodeBuilder spoiler(boolean spoiler) {
             this.postParameter(POST_SPOILER, spoiler);
             return this;
         }
@@ -279,7 +279,7 @@ public class ShoutService extends TraktApiService {
          * @param spoiler Value.
          * @return Builder instance.
          */
-        public MovieBuilder spoiler(Boolean spoiler) {
+        public MovieBuilder spoiler(boolean spoiler) {
             this.postParameter(POST_SPOILER, spoiler);
             return this;
         }
@@ -359,7 +359,7 @@ public class ShoutService extends TraktApiService {
          * @param spoiler Value.
          * @return Builder instance.
          */
-        public ShowBuilder spoiler(Boolean spoiler) {
+        public ShowBuilder spoiler(boolean spoiler) {
             this.postParameter(POST_SPOILER, spoiler);
             return this;
         }

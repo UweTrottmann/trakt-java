@@ -9,7 +9,7 @@ public class Shout implements TraktEntity {
     public Calendar inserted;
     public String shout;
     public UserProfile user;
-    public Boolean spoiler;
+    public boolean spoiler;
 
     /** @deprecated Use {@link #inserted} */
     @Deprecated
