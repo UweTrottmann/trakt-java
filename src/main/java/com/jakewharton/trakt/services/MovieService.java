@@ -240,7 +240,7 @@ public class MovieService extends TraktApiService {
      * @param imdbId IMDB ID for movie.
      * @return Builder instance.
      */
-    public CheckinBuilder checking(String imdbId) {
+    public CheckinBuilder checkin(String imdbId) {
         return new CheckinBuilder(this).imdbId(imdbId);
     }
 
