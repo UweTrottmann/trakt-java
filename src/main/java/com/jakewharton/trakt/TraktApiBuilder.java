@@ -356,7 +356,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
                 builder.append(SEPERATOR);
             }
         }
-        return this.field(name, builder.toString());
+        return this.field(name, builder.toString(), false);
     }
 
     /**
