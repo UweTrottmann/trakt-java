@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+1.4.0 *(In Development)*
+------------------------
+
+ * Support 1-10 ratings.
+ * Correct `MovieService#checking` to `MovieService#checkin`.
+
+
 1.3.0 *(2011-12-13)*
 -------------------
 

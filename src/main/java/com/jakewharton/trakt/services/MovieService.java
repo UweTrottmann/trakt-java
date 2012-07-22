@@ -1051,7 +1051,7 @@ public class MovieService extends TraktApiService {
             this.postParameter(POST_VENUE_NAME, venueName);
             return this;
         }
-        
+
         /**
          * The message to use for sharing. If not sent, it will use the
          * localized watching string set on the connections page. The message
