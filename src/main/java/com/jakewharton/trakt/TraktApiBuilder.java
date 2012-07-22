@@ -1,9 +1,5 @@
 package com.jakewharton.trakt;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +8,11 @@ import com.google.gson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.entities.Response;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Trakt-specific API builder extension which provides helper methods for
@@ -410,7 +411,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
         this.postBody.add(name, value);
         return this;
     }
-	
+
     protected final TraktApiBuilder<T> postParameter(String name, boolean value) {
         this.postBody.addProperty(name, value);
         return this;

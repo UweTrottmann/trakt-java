@@ -173,12 +173,12 @@ public final class UserService extends TraktApiService {
     public LibraryMoviesLovedBuilder libraryMoviesLoved(String username) {
         return new LibraryMoviesLovedBuilder(this, username);
     }
-    
+
     /**
      * Returns all movies that a user has watched. This method is useful to sync
      * trakt's data with local media center. Protected users won't return any
      * data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
      *            looking at the URL when on a profile page.
      * @return Builder instance.
@@ -412,14 +412,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id,
          * plays, in_collection, unseen) required for media center syncing if
          * set to min. This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -436,14 +436,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
          * required for media center syncing if set to min. This sends about
          * half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -460,14 +460,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
          * required for media center syncing if set to min. This sends about
          * half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -484,14 +484,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
          * required for media center syncing if set to min. This sends about
          * half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -510,14 +510,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id,
          * plays) required for media center syncing if set to min. This sends
          * about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -534,14 +534,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id, plays) required for media center syncing if set to min.
          * This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -558,14 +558,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id, seasons) required for media center syncing if set to min.
          * This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -582,14 +582,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id) required for media center syncing if set to min. This
          * sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -606,14 +606,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id) required for media center syncing if set to min. This
          * sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -630,14 +630,14 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
-        
+
         /**
          * Returns complete show info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id, seasons) required for media center syncing if set to Min.
          * This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
