@@ -192,7 +192,7 @@ public class ShoutService extends TraktApiService {
             this.postParameter(POST_SHOUT, shout);
             return this;
         }
-        
+
         /**
          * Shout contains a spoiler
          *
@@ -272,7 +272,7 @@ public class ShoutService extends TraktApiService {
             this.postParameter(POST_SHOUT, shout);
             return this;
         }
-        
+
         /**
          * Shout contains a spoiler
          *

@@ -8,3 +8,7 @@ pom.xml.*
 .project
 .settings
 bin
+
+#IntelliJ IDEA
+.idea/
+*.iml

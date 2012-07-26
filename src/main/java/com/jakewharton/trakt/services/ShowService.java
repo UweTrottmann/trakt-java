@@ -1,6 +1,5 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +12,8 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.entities.UserProfile;
+
+import java.util.List;
 
 public class ShowService extends TraktApiService {
     /**
@@ -1851,7 +1852,7 @@ public class ShowService extends TraktApiService {
             this.postParameter(POST_VENUE_NAME, venueName);
             return this;
         }
-        
+
         /**
          * The message to use for sharing. If not sent, it will use the
          * localized watching string set on the connections page. The message

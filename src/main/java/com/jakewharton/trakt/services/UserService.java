@@ -173,12 +173,12 @@ public final class UserService extends TraktApiService {
     public LibraryMoviesLovedBuilder libraryMoviesLoved(String username) {
         return new LibraryMoviesLovedBuilder(this, username);
     }
-    
+
     /**
      * Returns all movies that a user has watched. This method is useful to sync
      * trakt's data with local media center. Protected users won't return any
      * data unless you are friends.
-     * 
+     *
      * @param username You can get a username by browsing the website and
      *            looking at the URL when on a profile page.
      * @return Builder instance.
@@ -286,7 +286,7 @@ public final class UserService extends TraktApiService {
         private CalendarShowsBuilder(UserService service, String username) {
             super(service, new TypeToken<List<CalendarDate>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
 
         /**
@@ -329,7 +329,7 @@ public final class UserService extends TraktApiService {
         private WatchingBuilder(UserService service, String username) {
             super(service, new TypeToken<ActivityItemBase>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class WatchedBuilder extends TraktApiBuilder<List<ActivityItem>> {
@@ -338,7 +338,7 @@ public final class UserService extends TraktApiService {
         private WatchedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class WatchedEpisodesBuilder extends TraktApiBuilder<List<ActivityItem>> {
@@ -347,7 +347,7 @@ public final class UserService extends TraktApiService {
         private WatchedEpisodesBuilder(UserService service, String username) {
             super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class WatchedMoviesBuilder extends TraktApiBuilder<List<ActivityItem>> {
@@ -356,7 +356,7 @@ public final class UserService extends TraktApiService {
         private WatchedMoviesBuilder(UserService service, String username) {
             super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class WatchlistEpisodesBuilder extends TraktApiBuilder<List<TvShow>> {
@@ -365,7 +365,7 @@ public final class UserService extends TraktApiService {
         private WatchlistEpisodesBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class WatchlistMoviesBuilder extends TraktApiBuilder<List<Movie>> {
@@ -374,7 +374,7 @@ public final class UserService extends TraktApiService {
         private WatchlistMoviesBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class WatchlistShowsBuilder extends TraktApiBuilder<List<TvShow>> {
@@ -383,7 +383,7 @@ public final class UserService extends TraktApiService {
         private WatchlistShowsBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class ProfileBuilder extends TraktApiBuilder<UserProfile> {
@@ -392,7 +392,7 @@ public final class UserService extends TraktApiService {
         private ProfileBuilder(UserService service, String username) {
             super(service, new TypeToken<UserProfile>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class FriendsBuilder extends TraktApiBuilder<List<UserProfile>> {
@@ -401,7 +401,7 @@ public final class UserService extends TraktApiService {
         private FriendsBuilder(UserService service, String username) {
             super(service, new TypeToken<List<UserProfile>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
     }
     public static final class LibraryMoviesAllBuilder extends TraktApiBuilder<List<Movie>> {
@@ -410,16 +410,16 @@ public final class UserService extends TraktApiService {
         private LibraryMoviesAllBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id,
          * plays, in_collection, unseen) required for media center syncing if
          * set to min. This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -434,16 +434,16 @@ public final class UserService extends TraktApiService {
         private LibraryMoviesCollectionBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
          * required for media center syncing if set to min. This sends about
          * half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -458,16 +458,16 @@ public final class UserService extends TraktApiService {
         private LibraryMoviesHatedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
          * required for media center syncing if set to min. This sends about
          * half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -482,16 +482,16 @@ public final class UserService extends TraktApiService {
         private LibraryMoviesLovedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
          * required for media center syncing if set to min. This sends about
          * half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -508,16 +508,16 @@ public final class UserService extends TraktApiService {
             super(service, new TypeToken<List<Movie>>() {
             }, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tmdb_id,
          * plays) required for media center syncing if set to min. This sends
          * about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -532,16 +532,16 @@ public final class UserService extends TraktApiService {
         private LibraryShowsAllBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id, plays) required for media center syncing if set to min.
          * This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -556,16 +556,16 @@ public final class UserService extends TraktApiService {
         private LibraryShowsCollectionBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id, seasons) required for media center syncing if set to min.
          * This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -580,16 +580,16 @@ public final class UserService extends TraktApiService {
         private LibraryShowsHatedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id) required for media center syncing if set to min. This
          * sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -604,16 +604,16 @@ public final class UserService extends TraktApiService {
         private LibraryShowsLovedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete movie info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id) required for media center syncing if set to min. This
          * sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -628,16 +628,16 @@ public final class UserService extends TraktApiService {
         private LibraryShowsWatchedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {}, URI);
 
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
         }
-        
+
         /**
          * Returns complete show info if set to Extended. Only send this if you
          * really need the full dump as it doubles the data size being sent
          * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
          * tvrage_id, seasons) required for media center syncing if set to Min.
          * This sends about half the data.
-         * 
+         *
          * @param ExtendedParam
          * @return Builder instance
          */
@@ -673,7 +673,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance.
          */
         public ListBuilder username(String username) {
-            super.field(FIELD_USERNAME, username);
+            super.field(FIELD_USERNAME, username, false);
             return this;
         }
     }
@@ -692,7 +692,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance.
          */
         public ListsBuilder username(String username) {
-            super.field(FIELD_USERNAME, username);
+            super.field(FIELD_USERNAME, username, false);
             return this;
         }
     }
