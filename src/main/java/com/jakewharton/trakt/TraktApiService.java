@@ -362,7 +362,7 @@ public abstract class TraktApiService extends ApiService {
             @Override
             public Integer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 try {
-                    return new Integer(json.getAsInt());
+                    return Integer.valueOf(json.getAsInt());
                 } catch (NumberFormatException e) {
                     return null;
                 }
@@ -414,7 +414,7 @@ public abstract class TraktApiService extends ApiService {
                         //Episode count
                         Field fieldCount = TvShowSeason.Episodes.class.getDeclaredField("count");
                         fieldCount.setAccessible(true);
-                        fieldCount.set(episodes, new Integer(json.getAsInt()));
+                        fieldCount.set(episodes, Integer.valueOf(json.getAsInt()));
                     }
                 } catch (SecurityException e) {
                     throw new JsonParseException(e);
