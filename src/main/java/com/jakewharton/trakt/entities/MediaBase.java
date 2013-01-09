@@ -4,7 +4,6 @@ import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
 
-import java.util.Date;
 import java.util.List;
 
 public abstract class MediaBase implements TraktEntity {
@@ -38,7 +37,6 @@ public abstract class MediaBase implements TraktEntity {
     @SerializedName("imdb_id") public String imdbId;
     public Rating rating;
     @SerializedName("in_watchlist") public Boolean inWatchlist;
-    @SerializedName("last_updated") public Date lastUpdated;
 
     /** @deprecated Use {@link #title} */
     @Deprecated
