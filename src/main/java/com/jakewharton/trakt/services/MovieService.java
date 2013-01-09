@@ -1,7 +1,5 @@
 package com.jakewharton.trakt.services;
 
-import java.util.Date;
-import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -11,6 +9,9 @@ import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Shout;
 import com.jakewharton.trakt.entities.UserProfile;
+
+import java.util.Date;
+import java.util.List;
 
 public class MovieService extends TraktApiService {
     /**

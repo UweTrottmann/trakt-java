@@ -1,6 +1,5 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
@@ -9,6 +8,8 @@ import com.jakewharton.trakt.entities.Person;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
+
+import java.util.List;
 
 public class SearchService extends TraktApiService {
     /**
