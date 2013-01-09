@@ -1,10 +1,10 @@
 package com.jakewharton.trakt;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.GsonBuilder;
+import com.google.myjson.JsonElement;
+import com.google.myjson.JsonObject;
+import com.google.myjson.JsonParseException;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.entities.Response;
