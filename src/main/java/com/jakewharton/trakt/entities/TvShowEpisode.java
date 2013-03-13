@@ -22,6 +22,7 @@ public class TvShowEpisode implements TraktEntity {
     public Ratings ratings;
     public Boolean watched;
     public Rating rating;
+    public Rating rating_advanced;
     @SerializedName("in_watchlist") public Boolean inWatchlist;
 
     /** @deprecated Use {@link #season} */
