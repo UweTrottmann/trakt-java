@@ -43,19 +43,6 @@ public class NetworkService extends TraktApiService {
     }
 
     /**
-     * Approve a follower request.
-     * 
-     * @param user Username of the follower to approve.
-     * @param followBack If true, the follower request will be approved, plus
-     *            the user will be followed back. If false, only the approval
-     *            will take place.
-     * @return Builder instance.
-     */
-    public ApproveBuilder approve(String user, boolean followBack) {
-        return (new ApproveBuilder(this)).user(user).followBack(followBack);
-    }
-
-    /**
      * Deny a follower request.
      * 
      * @param user Username of the follower to deny.
