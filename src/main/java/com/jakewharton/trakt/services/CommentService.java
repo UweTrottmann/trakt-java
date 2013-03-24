@@ -1,3 +1,4 @@
+
 package com.jakewharton.trakt.services;
 
 import com.google.myjson.reflect.TypeToken;
@@ -5,10 +6,10 @@ import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Response;
 
-public class ShoutService extends TraktApiService {
+public class CommentService extends TraktApiService {
     /**
-     * Add a shout to an episode on trakt.
-     *
+     * Add a comment (shout or review) to an episode on trakt.
+     * 
      * @param imdbId IMDB ID for the show.
      * @return Builder instance.
      */
@@ -17,8 +18,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to an episode on trakt.
-     *
+     * Add a comment (shout or review) to an episode on trakt.
+     * 
      * @param tvdbId TVDB ID (thetvdb.com) for the show.
      * @return Builder instance.
      */
@@ -27,8 +28,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to an episode on trakt.
-     *
+     * Add a comment (shout or review) to an episode on trakt.
+     * 
      * @param title Show title.
      * @param year Show title.
      * @return Builder instance.
@@ -38,8 +39,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to a movie on trakt.
-     *
+     * Add a comment (shout or review) to a movie on trakt.
+     * 
      * @param imdbId IMDB ID for the movie.
      * @return Builder instance.
      */
@@ -48,8 +49,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to a movie on trakt.
-     *
+     * Add a comment (shout or review) to a movie on trakt.
+     * 
      * @param tmdbId TMDB (themoviedb.org) ID for the movie.
      * @return Builder instance.
      */
@@ -58,8 +59,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to a movie on trakt.
-     *
+     * Add a comment (shout or review) to a movie on trakt.
+     * 
      * @param title Movie title.
      * @param year Movie year.
      * @return Builder instance.
@@ -69,8 +70,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to a show on trakt.
-     *
+     * Add a comment (shout or review) to a show on trakt.
+     * 
      * @param imdbId IMDB ID for the show.
      * @return Builder instance.
      */
@@ -79,8 +80,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to a show on trakt.
-     *
+     * Add a comment (shout or review) to a show on trakt.
+     * 
      * @param tvdbId TVDB ID (thetvdb.com) for the show.
      * @return Builder instance.
      */
@@ -89,8 +90,8 @@ public class ShoutService extends TraktApiService {
     }
 
     /**
-     * Add a shout to a show on trakt.
-     *
+     * Add a comment (shout or review) to a show on trakt.
+     * 
      * @param title Show title.
      * @param year Show year.
      * @return Builder instance.
@@ -99,269 +100,299 @@ public class ShoutService extends TraktApiService {
         return new ShowBuilder(this).title(title).year(year);
     }
 
+    private static final String POST_IMDB_ID = "imdb_id";
+    private static final String POST_TVDB_ID = "tvdb_id";
+    private static final String POST_TMDB_ID = "tmdb_id";
+    private static final String POST_TITLE = "title";
+    private static final String POST_YEAR = "year";
+    private static final String POST_COMMENT = "comment";
+    private static final String POST_SPOILER = "spoiler";
+    private static final String POST_REVIEW = "review";
 
     public static final class EpisodeBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
         private static final String POST_SEASON = "season";
         private static final String POST_EPISODE = "episode";
-        private static final String POST_SHOUT = "shout";
-        private static final String POST_SPOILER = "spoiler";
 
-        private static final String URI = "/shout/episode/" + FIELD_API_KEY;
+        private static final String URI = "/comment/episode/" + FIELD_API_KEY;
 
-        private EpisodeBuilder(ShoutService service) {
-            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+        private EpisodeBuilder(CommentService service) {
+            super(service, new TypeToken<Response>() {
+            }, URI, HttpMethod.Post);
         }
 
         /**
          * Show IMDB ID.
-         *
+         * 
          * @param imdbId Value.
          * @return Builder instance.
          */
         public EpisodeBuilder imdbId(String imdbId) {
-            this.postParameter(POST_IMDB_ID, imdbId);
+            postParameter(POST_IMDB_ID, imdbId);
             return this;
         }
 
         /**
          * Show TVDB ID.
-         *
+         * 
          * @param tvdbId Value.
          * @return Builder instance.
          */
         public EpisodeBuilder tvdbId(int tvdbId) {
-            this.postParameter(POST_TVDB_ID, tvdbId);
+            postParameter(POST_TVDB_ID, tvdbId);
             return this;
         }
 
         /**
          * Show title.
-         *
+         * 
          * @param title Value.
          * @return Builder instance.
          */
         public EpisodeBuilder title(String title) {
-            this.postParameter(POST_TITLE, title);
+            postParameter(POST_TITLE, title);
             return this;
         }
 
         /**
          * Show year.
-         *
+         * 
          * @param year Value.
          * @return Builder instance.
          */
         public EpisodeBuilder year(int year) {
-            this.postParameter(POST_YEAR, year);
+            postParameter(POST_YEAR, year);
             return this;
         }
 
         /**
          * Show season. Send 0 if watching a special.
-         *
+         * 
          * @param season Value.
          * @return Builder instance.
          */
         public EpisodeBuilder season(int season) {
-            this.postParameter(POST_SEASON, season);
+            postParameter(POST_SEASON, season);
             return this;
         }
 
         /**
          * Show episode.
-         *
+         * 
          * @param episode Value.
          * @return Builder instance.
          */
         public EpisodeBuilder episode(int episode) {
-            this.postParameter(POST_EPISODE, episode);
+            postParameter(POST_EPISODE, episode);
             return this;
         }
 
         /**
-         * Text for the shout.
-         *
-         * @param shout Value.
+         * Text for the comment.
+         * 
+         * @param comment Value.
          * @return Builder instance.
          */
-        public EpisodeBuilder shout(String shout) {
-            this.postParameter(POST_SHOUT, shout);
+        public EpisodeBuilder comment(String comment) {
+            postParameter(POST_COMMENT, comment);
             return this;
         }
 
         /**
-         * Shout contains a spoiler
-         *
+         * Set to true to indicate the comment is a spoiler. Defaults to false.
+         * 
          * @param spoiler Value.
          * @return Builder instance.
          */
         public EpisodeBuilder spoiler(boolean spoiler) {
-            this.postParameter(POST_SPOILER, spoiler);
+            postParameter(POST_SPOILER, spoiler);
             return this;
-        }
-    }
-    public static final class MovieBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TMDB_ID = "tmdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SHOUT = "shout";
-        private static final String POST_SPOILER = "spoiler";
-
-        private static final String URI = "/shout/movie/" + FIELD_API_KEY;
-
-        private MovieBuilder(ShoutService service) {
-            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
         }
 
         /**
-         * Show IMDB ID.
-         *
+         * Set to true to indicate the comment is a 200+ word review. Defaults
+         * to false.
+         * 
+         * @param review Value.
+         * @return Builder instance.
+         */
+        public EpisodeBuilder review(boolean review) {
+            postParameter(POST_REVIEW, review);
+            return this;
+        }
+    }
+
+    public static final class MovieBuilder extends TraktApiBuilder<Response> {
+
+        private static final String URI = "/comment/movie/" + FIELD_API_KEY;
+
+        private MovieBuilder(CommentService service) {
+            super(service, new TypeToken<Response>() {
+            }, URI, HttpMethod.Post);
+        }
+
+        /**
+         * IMDB ID for the movie.
+         * 
          * @param imdbId Value.
          * @return Builder instance.
          */
         public MovieBuilder imdbId(String imdbId) {
-            this.postParameter(POST_IMDB_ID, imdbId);
+            postParameter(POST_IMDB_ID, imdbId);
             return this;
         }
 
         /**
-         * Show TMDB ID.
-         *
+         * TMDB (themoviedb.org) ID for the movie.
+         * 
          * @param tmdbId Value.
          * @return Builder instance.
          */
         public MovieBuilder tmdbId(int tmdbId) {
-            this.postParameter(POST_TMDB_ID, tmdbId);
+            postParameter(POST_TMDB_ID, tmdbId);
             return this;
         }
 
         /**
-         * Show title.
-         *
+         * Movie title.
+         * 
          * @param title Value.
          * @return Builder instance.
          */
         public MovieBuilder title(String title) {
-            this.postParameter(POST_TITLE, title);
+            postParameter(POST_TITLE, title);
             return this;
         }
 
         /**
-         * Show year.
-         *
+         * Movie year.
+         * 
          * @param year Value.
          * @return Builder instance.
          */
         public MovieBuilder year(int year) {
-            this.postParameter(POST_YEAR, year);
+            postParameter(POST_YEAR, year);
             return this;
         }
 
         /**
-         * Text for the shout.
-         *
-         * @param shout Value.
+         * Text for the comment.
+         * 
+         * @param comment Value.
          * @return Builder instance.
          */
-        public MovieBuilder shout(String shout) {
-            this.postParameter(POST_SHOUT, shout);
+        public MovieBuilder comment(String comment) {
+            postParameter(POST_COMMENT, comment);
             return this;
         }
 
         /**
-         * Shout contains a spoiler
-         *
+         * Set to true to indicate the shout is a spoiler. Defaults to false.
+         * 
          * @param spoiler Value.
          * @return Builder instance.
          */
         public MovieBuilder spoiler(boolean spoiler) {
-            this.postParameter(POST_SPOILER, spoiler);
+            postParameter(POST_SPOILER, spoiler);
+            return this;
+        }
+
+        /**
+         * Set to true to indicate the comment is a 200+ word review. Defaults
+         * to false.
+         * 
+         * @param review Value.
+         * @return Builder instance.
+         */
+        public MovieBuilder review(boolean review) {
+            postParameter(POST_REVIEW, review);
             return this;
         }
     }
+
     public static final class ShowBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SHOUT = "shout";
-        private static final String POST_SPOILER = "spoiler";
 
-        private static final String URI = "/shout/show/" + FIELD_API_KEY;
+        private static final String URI = "/comment/show/" + FIELD_API_KEY;
 
-        private ShowBuilder(ShoutService service) {
-            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+        private ShowBuilder(CommentService service) {
+            super(service, new TypeToken<Response>() {
+            }, URI, HttpMethod.Post);
         }
 
         /**
          * Show IMDB ID.
-         *
+         * 
          * @param imdbId Value.
          * @return Builder instance.
          */
         public ShowBuilder imdbId(String imdbId) {
-            this.postParameter(POST_IMDB_ID, imdbId);
+            postParameter(POST_IMDB_ID, imdbId);
             return this;
         }
 
         /**
          * Show TVDB ID.
-         *
+         * 
          * @param tvdbId Value.
          * @return Builder instance.
          */
         public ShowBuilder tvdbId(int tvdbId) {
-            this.postParameter(POST_TVDB_ID, tvdbId);
+            postParameter(POST_TVDB_ID, tvdbId);
             return this;
         }
 
         /**
          * Show title.
-         *
+         * 
          * @param title Value.
          * @return Builder instance.
          */
         public ShowBuilder title(String title) {
-            this.postParameter(POST_TITLE, title);
+            postParameter(POST_TITLE, title);
             return this;
         }
 
         /**
          * Show year.
-         *
+         * 
          * @param year Value.
          * @return Builder instance.
          */
         public ShowBuilder year(int year) {
-            this.postParameter(POST_YEAR, year);
+            postParameter(POST_YEAR, year);
             return this;
         }
 
         /**
-         * Text for the shout.
-         *
-         * @param shout Value.
+         * Text for the comment.
+         * 
+         * @param comment Value.
          * @return Builder instance.
          */
-        public ShowBuilder shout(String shout) {
-            this.postParameter(POST_SHOUT, shout);
+        public ShowBuilder comment(String comment) {
+            postParameter(POST_COMMENT, comment);
             return this;
         }
 
-
         /**
-         * Shout contains a spoiler
-         *
+         * Set to true to indicate the comment is a spoiler. Defaults to false.
+         * 
          * @param spoiler Value.
          * @return Builder instance.
          */
         public ShowBuilder spoiler(boolean spoiler) {
-            this.postParameter(POST_SPOILER, spoiler);
+            postParameter(POST_SPOILER, spoiler);
+            return this;
+        }
+
+        /**
+         * Set to true to indicate the comment is a 200+ word review. Defaults
+         * to false.
+         * 
+         * @param review Value.
+         * @return Builder instance.
+         */
+        public ShowBuilder review(boolean review) {
+            postParameter(POST_REVIEW, review);
             return this;
         }
     }

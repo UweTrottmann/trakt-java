@@ -10,7 +10,7 @@ import com.jakewharton.trakt.services.NetworkService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.RecommendationsService;
 import com.jakewharton.trakt.services.SearchService;
-import com.jakewharton.trakt.services.ShoutService;
+import com.jakewharton.trakt.services.CommentService;
 import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.UserService;
 
@@ -208,8 +208,8 @@ public class ServiceManager {
         return service;
     }
 
-    public ShoutService shoutService() {
-        ShoutService service = ServiceManager.createShoutService();
+    public CommentService commentService() {
+        CommentService service = ServiceManager.createCommentService();
         this.setupService(service);
         return service;
     }
@@ -266,8 +266,8 @@ public class ServiceManager {
         return new SearchService();
     }
 
-    public static final ShoutService createShoutService() {
-        return new ShoutService();
+    public static final CommentService createCommentService() {
+        return new CommentService();
     }
 
     public static final ShowService createShowService() {
