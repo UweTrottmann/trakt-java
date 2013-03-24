@@ -203,7 +203,7 @@ public class MovieService extends TraktApiService {
      * @param slugOrImdbId Movie slug or IMDB ID.
      * @return Builder instance.
      */
-    public ShoutsBuilder shouts(String slugOrImdbId) {
+    public ShoutsBuilder comments(String slugOrImdbId) {
         return new ShoutsBuilder(this).title(slugOrImdbId);
     }
 
@@ -214,7 +214,7 @@ public class MovieService extends TraktApiService {
      * @param tmdbId TMDB ID.
      * @return Builder instance.
      */
-    public ShoutsBuilder shouts(int tmdbId) {
+    public ShoutsBuilder comments(int tmdbId) {
         return new ShoutsBuilder(this).title(tmdbId);
     }
 
