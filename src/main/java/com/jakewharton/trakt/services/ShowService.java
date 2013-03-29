@@ -428,6 +428,37 @@ public class ShowService extends TraktApiService {
     }
 
     /**
+     * Add all episodes for a show to your library collection.
+     * 
+     * @param imdbId Show IMDB ID.
+     * @return Builder instance.
+     */
+    public ShowLibraryBuilder showLibrary(String imdbId) {
+        return new ShowLibraryBuilder(this).imdbId(imdbId);
+    }
+
+    /**
+     * Add all episodes for a show to your library collection.
+     * 
+     * @param tvdbId Show TVDB ID.
+     * @return Builder instance.
+     */
+    public ShowLibraryBuilder showLibrary(int tvdbId) {
+        return new ShowLibraryBuilder(this).tvdbId(tvdbId);
+    }
+
+    /**
+     * Add all episodes for a show to your library collection.
+     * 
+     * @param title Show title.
+     * @param year Show year.
+     * @return Builder instance.
+     */
+    public ShowLibraryBuilder showLibrary(String title, int year) {
+        return new ShowLibraryBuilder(this).title(title).year(year);
+    }
+
+    /**
      * Returns information for a TV show including ratings, top watchers, and
      * most watched episodes.
      * 
@@ -1575,6 +1606,59 @@ public class ShowService extends TraktApiService {
          * @return Builder instance.
          */
         public ShowSeenBuilder year(int year) {
+            postParameter(POST_YEAR, year);
+            return this;
+        }
+    }
+
+    public static final class ShowLibraryBuilder extends TraktApiBuilder<Void> {
+        private static final String URI = "/show/library/" + FIELD_API_KEY;
+
+        private ShowLibraryBuilder(ShowService service) {
+            super(service, new TypeToken<Void>() {
+            }, URI, HttpMethod.Post);
+        }
+
+        /**
+         * Show IMDB ID.
+         * 
+         * @param imdbId Value.
+         * @return Builder instance.
+         */
+        public ShowLibraryBuilder imdbId(String imdbId) {
+            postParameter(POST_IMDB_ID, imdbId);
+            return this;
+        }
+
+        /**
+         * Show TVDB ID.
+         * 
+         * @param tvdbId Value.
+         * @return Builder instance.
+         */
+        public ShowLibraryBuilder tvdbId(int tvdbId) {
+            postParameter(POST_TVDB_ID, tvdbId);
+            return this;
+        }
+
+        /**
+         * Show title.
+         * 
+         * @param title Value.
+         * @return Builder instance.
+         */
+        public ShowLibraryBuilder title(String title) {
+            postParameter(POST_TITLE, title);
+            return this;
+        }
+
+        /**
+         * Show year.
+         * 
+         * @param year Value.
+         * @return Builder instance.
+         */
+        public ShowLibraryBuilder year(int year) {
             postParameter(POST_YEAR, year);
             return this;
         }
