@@ -366,6 +366,37 @@ public class ShowService extends TraktApiService {
     }
 
     /**
+     * Add all episodes for a season to your library collection.
+     * 
+     * @param imdbId Show IMDB ID.
+     * @return Builder instance.
+     */
+    public SeasonLibraryBuilder seasonLibrary(String imdbId) {
+        return new SeasonLibraryBuilder(this).imdbId(imdbId);
+    }
+
+    /**
+     * Add all episodes for a season to your library collection.
+     * 
+     * @param tvdbId Show TVDB ID.
+     * @return Builder instance.
+     */
+    public SeasonLibraryBuilder seasonLibrary(int tvdbId) {
+        return new SeasonLibraryBuilder(this).tvdbId(tvdbId);
+    }
+
+    /**
+     * Add all episodes for a season to your library collection.
+     * 
+     * @param title Show title.
+     * @param year Show year.
+     * @return Builder instance.
+     */
+    public SeasonLibraryBuilder seasonLibrary(String title, int year) {
+        return new SeasonLibraryBuilder(this).title(title).year(year);
+    }
+
+    /**
      * Add all episodes for a show watched outside of trakt to your library.
      * 
      * @param imdbId Show IMDB ID.
@@ -647,6 +678,17 @@ public class ShowService extends TraktApiService {
         return new CancelCheckinBuilder(this);
     }
 
+    private static final String POST_IMDB_ID = "imdb_id";
+    private static final String POST_TVDB_ID = "tvdb_id";
+    private static final String POST_TITLE = "title";
+    private static final String POST_YEAR = "year";
+    private static final String POST_SHOWS = "shows";
+    private static final String POST_SEASON = "season";
+    private static final String POST_EPISODE = "episode";
+    private static final String POST_EPISODES = "episodes";
+    private static final String POST_DURATION = "duration";
+    private static final String POST_PROGRESS = "progress";
+
     public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
         private static final String URI = "/show/cancelwatching/" + FIELD_API_KEY;
 
@@ -657,14 +699,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class EpisodeLibraryBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_EPISODES = "episodes";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-
         private static final String URI = "/show/episode/library/" + FIELD_API_KEY;
 
         private JsonArray episodeList;
@@ -743,14 +777,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class EpisodeSeenBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_EPISODES = "episodes";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-
         private static final String URI = "/show/episode/seen/" + FIELD_API_KEY;
 
         private JsonArray episodeList;
@@ -883,14 +909,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class EpisodeUnlibraryBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_EPISODES = "episodes";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-
         private static final String URI = "/show/episode/unlibrary/" + FIELD_API_KEY;
 
         private JsonArray episodeList;
@@ -969,14 +987,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class EpisodeUnseenBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_EPISODES = "episodes";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-
         private static final String URI = "/show/episode/unseen/" + FIELD_API_KEY;
 
         private JsonArray episodeList;
@@ -1055,14 +1065,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class EpisodeUnwatchlistBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_EPISODES = "episodes";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-
         private static final String URI = "/show/episode/unwatchlist/" + FIELD_API_KEY;
 
         private JsonArray episodeList;
@@ -1186,14 +1188,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class EpisodeWatchlistBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_EPISODES = "episodes";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-
         private static final String URI = "/show/episode/watchlist/" + FIELD_API_KEY;
 
         private JsonArray episodeList;
@@ -1272,15 +1266,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class ScrobbleBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-        private static final String POST_DURATION = "duration";
-        private static final String POST_PROGRESS = "progress";
-
         private static final String URI = "/show/scrobble/" + FIELD_API_KEY;
 
         private ScrobbleBuilder(ShowService service) {
@@ -1415,12 +1400,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class SeasonSeenBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SEASON = "season";
-
         private static final String URI = "/show/season/seen/" + FIELD_API_KEY;
 
         private SeasonSeenBuilder(ShowService service) {
@@ -1484,12 +1463,71 @@ public class ShowService extends TraktApiService {
         }
     }
 
-    public static final class ShowSeenBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
+    public static final class SeasonLibraryBuilder extends TraktApiBuilder<Void> {
+        private static final String URI = "/show/season/library/" + FIELD_API_KEY;
 
+        private SeasonLibraryBuilder(ShowService service) {
+            super(service, new TypeToken<Void>() {
+            }, URI, HttpMethod.Post);
+        }
+
+        /**
+         * Show IMDB ID.
+         * 
+         * @param imdbId Value.
+         * @return Builder instance.
+         */
+        public SeasonLibraryBuilder imdbId(String imdbId) {
+            postParameter(POST_IMDB_ID, imdbId);
+            return this;
+        }
+
+        /**
+         * Show TVDB ID.
+         * 
+         * @param tvdbId Value.
+         * @return Builder instance.
+         */
+        public SeasonLibraryBuilder tvdbId(int tvdbId) {
+            postParameter(POST_TVDB_ID, tvdbId);
+            return this;
+        }
+
+        /**
+         * Show title.
+         * 
+         * @param title Value.
+         * @return Builder instance.
+         */
+        public SeasonLibraryBuilder title(String title) {
+            postParameter(POST_TITLE, title);
+            return this;
+        }
+
+        /**
+         * Show year.
+         * 
+         * @param year Value.
+         * @return Builder instance.
+         */
+        public SeasonLibraryBuilder year(int year) {
+            postParameter(POST_YEAR, year);
+            return this;
+        }
+
+        /**
+         * Season.
+         * 
+         * @param season Season number.
+         * @return Builder instance.
+         */
+        public SeasonLibraryBuilder season(int season) {
+            postParameter(POST_SEASON, season);
+            return this;
+        }
+    }
+
+    public static final class ShowSeenBuilder extends TraktApiBuilder<Void> {
         private static final String URI = "/show/seen/" + FIELD_API_KEY;
 
         private ShowSeenBuilder(ShowService service) {
@@ -1589,11 +1627,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class UnlibraryBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-
         private static final String URI = "/show/unlibrary/" + FIELD_API_KEY;
 
         private UnlibraryBuilder(ShowService service) {
@@ -1647,12 +1680,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class UnwatchlistBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SHOWS = "shows";
-
         private static final String URI = "/show/unwatchlist/" + FIELD_API_KEY;
 
         private JsonArray showList;
@@ -1712,15 +1739,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class WatchingBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-        private static final String POST_DURATION = "duration";
-        private static final String POST_PROGRESS = "progress";
-
         private static final String URI = "/show/watching/" + FIELD_API_KEY;
 
         private WatchingBuilder(ShowService service) {
@@ -1854,12 +1872,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class WatchlistBuilder extends TraktApiBuilder<Void> {
-        private static final String POST_IMDB_ID = "imdb_id";
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SHOWS = "shows";
-
         private static final String URI = "/show/watchlist/" + FIELD_API_KEY;
 
         private JsonArray showList;
@@ -2070,12 +2082,6 @@ public class ShowService extends TraktApiService {
     }
 
     public static final class CheckinBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_TVDB_ID = "tvdb_id";
-        private static final String POST_TITLE = "title";
-        private static final String POST_YEAR = "year";
-        private static final String POST_SEASON = "season";
-        private static final String POST_EPISODE = "episode";
-        private static final String POST_DURATION = "duration";
         private static final String POST_VENUE_ID = "venue_id";
         private static final String POST_VENUE_NAME = "venue_name";
         private static final String POST_MESSAGE = "message";
