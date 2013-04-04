@@ -1,7 +1,10 @@
 package com.jakewharton.trakt.services;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import java.util.Calendar;
 import java.util.List;
+
 import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.CalendarDate;
 import com.jakewharton.trakt.entities.Movie;
@@ -144,9 +147,15 @@ public class UserServiceTest extends BaseTestCase {
 	}
 	
 	public void test_profile() {
-		UserProfile user = getManager().userService().profile("JakeWharton").fire();
-		assertNotNull("Result was null.", user);
-		//TODO
+		UserProfile user = getManager().userService().profile("sgtest").fire();
+		assertThat(user).isNotNull();
+		assertThat(user.username).isEqualTo("sgtest");
+		assertThat(user.url).isEqualTo("http://trakt.tv/user/sgtest");
+		assertThat(user.vip).isEqualTo(false);
+		assertThat(user.watched).isNotNull();
+		assertThat(user.stats).isNotNull();
+		assertThat(user.stats.friends).isEqualTo(1);
+		// TODO more important properties
 	}
 	
 	public void test_watching() {
