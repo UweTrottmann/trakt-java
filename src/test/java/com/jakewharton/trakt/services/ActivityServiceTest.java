@@ -23,7 +23,7 @@ public class ActivityServiceTest extends BaseTestCase {
     }
     
     public void test_movies() {
-        Activity activity = getManager().activityService().movies("the-matrix-1999").fire();
+        Activity activity = getManager().activityService().movies("the-matrix-1999","cloud-atlas-2012").fire();
         assertNotNull("Result was null.", activity);
         //TODO
     }
