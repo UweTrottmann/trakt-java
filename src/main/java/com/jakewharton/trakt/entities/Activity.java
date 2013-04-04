@@ -1,8 +1,9 @@
 package com.jakewharton.trakt.entities;
 
+import com.jakewharton.trakt.TraktEntity;
+
 import java.util.Date;
 import java.util.List;
-import com.jakewharton.trakt.TraktEntity;
 
 public class Activity implements TraktEntity {
     private static final long serialVersionUID = -3180174955865068567L;

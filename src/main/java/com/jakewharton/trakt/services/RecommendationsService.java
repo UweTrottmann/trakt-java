@@ -1,13 +1,14 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.DismissResponse;
 import com.jakewharton.trakt.entities.Genre;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
+
+import java.util.List;
 
 public class RecommendationsService extends TraktApiService {
     /**

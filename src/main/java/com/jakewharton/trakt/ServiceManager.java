@@ -3,14 +3,14 @@ package com.jakewharton.trakt;
 import com.jakewharton.trakt.services.AccountService;
 import com.jakewharton.trakt.services.ActivityService;
 import com.jakewharton.trakt.services.CalendarService;
-import com.jakewharton.trakt.services.FriendsService;
 import com.jakewharton.trakt.services.GenreService;
 import com.jakewharton.trakt.services.ListService;
 import com.jakewharton.trakt.services.MovieService;
+import com.jakewharton.trakt.services.NetworkService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.RecommendationsService;
 import com.jakewharton.trakt.services.SearchService;
-import com.jakewharton.trakt.services.ShoutService;
+import com.jakewharton.trakt.services.CommentService;
 import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.UserService;
 
@@ -166,8 +166,8 @@ public class ServiceManager {
         return service;
     }
 
-    public FriendsService friendsService() {
-        FriendsService service = ServiceManager.createFriendsService();
+    public NetworkService networkService() {
+        NetworkService service = ServiceManager.createNetworkService();
         this.setupService(service);
         return service;
     }
@@ -208,8 +208,8 @@ public class ServiceManager {
         return service;
     }
 
-    public ShoutService shoutService() {
-        ShoutService service = ServiceManager.createShoutService();
+    public CommentService commentService() {
+        CommentService service = ServiceManager.createCommentService();
         this.setupService(service);
         return service;
     }
@@ -238,8 +238,8 @@ public class ServiceManager {
         return new CalendarService();
     }
 
-    public static final FriendsService createFriendsService() {
-        return new FriendsService();
+    public static final NetworkService createNetworkService() {
+        return new NetworkService();
     }
 
     public static final GenreService createGenreService() {
@@ -266,8 +266,8 @@ public class ServiceManager {
         return new SearchService();
     }
 
-    public static final ShoutService createShoutService() {
-        return new ShoutService();
+    public static final CommentService createCommentService() {
+        return new CommentService();
     }
 
     public static final ShowService createShowService() {

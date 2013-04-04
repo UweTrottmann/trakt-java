@@ -1,12 +1,13 @@
 package com.jakewharton.trakt.services;
 
-import java.util.Date;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Activity;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
+
+import java.util.Date;
 
 public class ActivityService extends TraktApiService {
     /**

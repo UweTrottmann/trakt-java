@@ -1,9 +1,10 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.List;
-import com.google.gson.annotations.SerializedName;
+import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
+
+import java.util.List;
 
 public abstract class MediaBase implements TraktEntity {
     private static final long serialVersionUID = 753880113366868498L;
@@ -35,6 +36,7 @@ public abstract class MediaBase implements TraktEntity {
     public Stats stats;
     @SerializedName("imdb_id") public String imdbId;
     public Rating rating;
+    public Rating rating_advanced;
     @SerializedName("in_watchlist") public Boolean inWatchlist;
 
     /** @deprecated Use {@link #title} */

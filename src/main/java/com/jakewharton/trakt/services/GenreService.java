@@ -1,10 +1,11 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Genre;
+
+import java.util.List;
 
 public class GenreService extends TraktApiService {
     public MoviesBuilder movies() {

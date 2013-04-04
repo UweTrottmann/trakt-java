@@ -1,27 +1,15 @@
 package com.jakewharton.trakt;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.nio.charset.Charset;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.GsonBuilder;
+import com.google.myjson.JsonDeserializationContext;
+import com.google.myjson.JsonDeserializer;
+import com.google.myjson.JsonElement;
+import com.google.myjson.JsonParseException;
+import com.google.myjson.JsonParser;
+import com.google.myjson.JsonPrimitive;
+import com.google.myjson.JsonSerializationContext;
+import com.google.myjson.JsonSerializer;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.apibuilder.ApiService;
 import com.jakewharton.trakt.entities.ActivityItem;
@@ -39,6 +27,19 @@ import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.enumerations.RatingType;
 import com.jakewharton.trakt.util.Base64;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Trakt-specific API service extension which facilitates provides helper
@@ -362,7 +363,7 @@ public abstract class TraktApiService extends ApiService {
             @Override
             public Integer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 try {
-                    return new Integer(json.getAsInt());
+                    return Integer.valueOf(json.getAsInt());
                 } catch (NumberFormatException e) {
                     return null;
                 }
@@ -414,7 +415,7 @@ public abstract class TraktApiService extends ApiService {
                         //Episode count
                         Field fieldCount = TvShowSeason.Episodes.class.getDeclaredField("count");
                         fieldCount.setAccessible(true);
-                        fieldCount.set(episodes, new Integer(json.getAsInt()));
+                        fieldCount.set(episodes, Integer.valueOf(json.getAsInt()));
                     }
                 } catch (SecurityException e) {
                     throw new JsonParseException(e);

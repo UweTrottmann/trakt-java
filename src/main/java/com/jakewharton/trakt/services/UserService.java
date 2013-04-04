@@ -1,9 +1,7 @@
 
 package com.jakewharton.trakt.services;
 
-import java.util.Date;
-import java.util.List;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.ActivityItem;
@@ -13,6 +11,9 @@ import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
+
+import java.util.Date;
+import java.util.List;
 
 public final class UserService extends TraktApiService {
     /**

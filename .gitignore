@@ -12,3 +12,10 @@ bin
 #IntelliJ IDEA
 .idea/
 *.iml
+
+#############
+## Android
+#############
+# generated files
+bin/
+gen/

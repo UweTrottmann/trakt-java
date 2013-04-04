@@ -1,10 +1,10 @@
 package com.jakewharton.trakt;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
+import com.google.myjson.GsonBuilder;
+import com.google.myjson.JsonElement;
+import com.google.myjson.JsonObject;
+import com.google.myjson.JsonParseException;
+import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.entities.Response;
@@ -357,7 +357,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
                 builder.append(SEPERATOR);
             }
         }
-        return this.field(name, builder.toString(), false);
+        return this.field(name, builder.toString());
     }
 
     /**
@@ -411,7 +411,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
         this.postBody.add(name, value);
         return this;
     }
-
+	
     protected final TraktApiBuilder<T> postParameter(String name, boolean value) {
         this.postBody.addProperty(name, value);
         return this;
