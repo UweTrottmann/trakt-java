@@ -6,6 +6,13 @@ Change Log
 
  * Support 1-10 ratings.
  * Correct `MovieService#checking` to `MovieService#checkin`.
+ * Support new comments API. Shouts calls have been removed.
+ * Support `show/library`, `show/season/library`, `show/seen`, `show/season/seen`.
+ * Support new `NetworkService` which (partially) replaces `FriendsService`.
+ * Add `vip` property for `UserProfile`.
+ * Add advanced rating fields to shows and episodes.
+ * Add `show` and `movie` property to `Response`.
+ * Use Gson 2.2.2.
 
 
 1.3.0 *(2011-12-13)*
