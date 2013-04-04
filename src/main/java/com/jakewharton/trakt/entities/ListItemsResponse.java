@@ -1,7 +1,7 @@
 package com.jakewharton.trakt.entities;
 
-import com.google.myjson.JsonArray;
-import com.google.myjson.annotations.SerializedName;
+import com.google.gson.JsonArray;
+import com.google.gson.annotations.SerializedName;
 
 public class ListItemsResponse extends Response {
     private static final long serialVersionUID = 8123553856114248596L;

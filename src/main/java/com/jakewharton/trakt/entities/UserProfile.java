@@ -1,7 +1,7 @@
 
 package com.jakewharton.trakt.entities;
 
-import com.google.myjson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Gender;
 

@@ -1,6 +1,6 @@
 package com.jakewharton.trakt.services;
 
-import com.google.myjson.reflect.TypeToken;
+import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.DismissResponse;

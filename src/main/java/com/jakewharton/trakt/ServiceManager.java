@@ -3,6 +3,7 @@ package com.jakewharton.trakt;
 import com.jakewharton.trakt.services.AccountService;
 import com.jakewharton.trakt.services.ActivityService;
 import com.jakewharton.trakt.services.CalendarService;
+import com.jakewharton.trakt.services.CommentService;
 import com.jakewharton.trakt.services.GenreService;
 import com.jakewharton.trakt.services.ListService;
 import com.jakewharton.trakt.services.MovieService;
@@ -10,7 +11,6 @@ import com.jakewharton.trakt.services.NetworkService;
 import com.jakewharton.trakt.services.RateService;
 import com.jakewharton.trakt.services.RecommendationsService;
 import com.jakewharton.trakt.services.SearchService;
-import com.jakewharton.trakt.services.CommentService;
 import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.UserService;
 

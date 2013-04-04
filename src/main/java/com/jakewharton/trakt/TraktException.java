@@ -1,6 +1,6 @@
 package com.jakewharton.trakt;
 
-import com.google.myjson.JsonObject;
+import com.google.gson.JsonObject;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.entities.Response;
 
