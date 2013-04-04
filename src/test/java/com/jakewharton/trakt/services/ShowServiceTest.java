@@ -1,10 +1,7 @@
 package com.jakewharton.trakt.services;
 
-import java.util.Date;
-import java.util.List;
-import org.apache.commons.lang.time.DateUtils;
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.Shout;
+import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
@@ -12,12 +9,17 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
+import org.apache.commons.lang.time.DateUtils;
+
+import java.util.Date;
+import java.util.List;
+
 public class ShowServiceTest extends BaseTestCase {
-	public void test_episodeShouts() {
-		List<Shout> shouts = getManager().showService().episodeShouts("the-walking-dead", 1, 1).fire();
-		assertNotNull("Result was null.", shouts);
-		assertFalse("Shout list was empty.", shouts.isEmpty());
-		assertNotNull("Shout item was null.", shouts.get(0));
+	public void test_episodeComments() {
+		List<Comment> comments = getManager().showService().episodeComments("the-walking-dead", 1, 1).fire();
+		assertNotNull("Result was null.", comments);
+		assertFalse("Comment list was empty.", comments.isEmpty());
+		assertNotNull("Comment item was null.", comments.get(0));
 	}
 	
 	public void test_episodeSummary() {
@@ -98,11 +100,11 @@ public class ShowServiceTest extends BaseTestCase {
 		assertNotNull("Season images was null.", season.images); //TODO own test cases
 	}
 	
-	public void test_shouts() {
-		List<Shout> shouts = getManager().showService().shouts("the-walking-dead").fire();
+	public void test_comments() {
+		List<Comment> shouts = getManager().showService().comments("the-walking-dead").fire();
 		assertNotNull("Result was null.", shouts);
-		assertFalse("Shout list was empty.", shouts.isEmpty());
-		assertNotNull("Shout was null.", shouts.get(0));
+		assertFalse("Comment list was empty.", shouts.isEmpty());
+		assertNotNull("Comment was null.", shouts.get(0));
 	}
 	
 	public void test_watchingNow() {

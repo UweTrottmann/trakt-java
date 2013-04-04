@@ -1,13 +1,14 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
 import com.jakewharton.trakt.BaseTestCase;
+import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Images;
+import com.jakewharton.trakt.entities.MediaBase.Stats;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Ratings;
-import com.jakewharton.trakt.entities.Shout;
 import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.entities.MediaBase.Stats;
+
+import java.util.List;
 
 public class MovieServiceTest extends BaseTestCase {
 	public void test_watchingNow() {
@@ -19,11 +20,11 @@ public class MovieServiceTest extends BaseTestCase {
 		}
 	}
 	
-	public void test_shouts() {
-		List<Shout> shouts = getManager().movieService().shouts("tt0079470").fire();
-		assertNotNull("Result was null.", shouts);
-		assertFalse("Shout list was empty.", shouts.isEmpty());
-		assertNotNull("Shout item was null.", shouts.get(0));
+	public void test_comments() {
+		List<Comment> comments = getManager().movieService().comments("tt0079470").fire();
+		assertNotNull("Result was null.", comments);
+		assertFalse("Shout list was empty.", comments.isEmpty());
+		assertNotNull("Shout item was null.", comments.get(0));
 	}
 	
 	public void test_trending() {
