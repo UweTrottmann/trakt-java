@@ -11,24 +11,4 @@ public class ListItemsResponse extends Response {
     public Integer skipped;
     @SerializedName("skipped_array") public JsonArray skippedArray;
 
-    /** @deprecated Use {@link #inserted} */
-    @Deprecated
-    public Integer getInserted() {
-        return this.inserted;
-    }
-    /** @deprecated Use {@link #alreadyExist} */
-    @Deprecated
-    public Integer getAlreadyExist() {
-        return this.alreadyExist;
-    }
-    /** @deprecated Use {@link #skipped} */
-    @Deprecated
-    public Integer getSkipped() {
-        return this.skipped;
-    }
-    /** @deprecated Use {@link #skippedArray} */
-    @Deprecated
-    public JsonArray getSkippedArray() {
-        return this.skippedArray;
-    }
 }

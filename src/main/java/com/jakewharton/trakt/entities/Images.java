@@ -10,24 +10,4 @@ public class Images implements TraktEntity {
     public String headshot;
     public String screen;
 
-    /** @deprecated Use {@link #poster} */
-    @Deprecated
-    public String getPoster() {
-        return this.poster;
-    }
-    /** @deprecated Use {@link #fanart} */
-    @Deprecated
-    public String getFanart() {
-        return this.fanart;
-    }
-    /** @deprecated Use {@link #headshot} */
-    @Deprecated
-    public String getHeadshot() {
-        return this.headshot;
-    }
-    /** @deprecated Use {@link #screen} */
-    @Deprecated
-    public String getScreen() {
-        return this.screen;
-    }
 }

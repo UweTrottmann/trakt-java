@@ -29,14 +29,4 @@ public class CalendarDate implements TraktEntity {
     public Date date;
     public List<CalendarTvShowEpisode> episodes;
 
-    /** @deprecated Use {@link #date} */
-    @Deprecated
-    public Date getDate() {
-        return this.date;
-    }
-    /** @deprecated Use {@link #episodes} */
-    @Deprecated
-    public List<CalendarTvShowEpisode> getEpisodes() {
-        return this.episodes;
-    }
 }

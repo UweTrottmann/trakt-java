@@ -10,24 +10,4 @@ public class Ratings implements TraktEntity {
     public Integer loved;
     public Integer hated;
 
-    /** @deprecated Use {@link #percentage} */
-    @Deprecated
-    public Integer getPercentage() {
-        return percentage;
-    }
-    /** @deprecated Use {@link #votes} */
-    @Deprecated
-    public Integer getVotes() {
-        return votes;
-    }
-    /** @deprecated Use {@link #loved} */
-    @Deprecated
-    public Integer getLoved() {
-        return loved;
-    }
-    /** @deprecated Use {@link #hated} */
-    @Deprecated
-    public Integer getHated() {
-        return hated;
-    }
 }

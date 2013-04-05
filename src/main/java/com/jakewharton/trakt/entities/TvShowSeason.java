@@ -36,24 +36,4 @@ public class TvShowSeason implements TraktEntity {
     public String url;
     public Images images;
 
-    /** @deprecated Use {@link #season} */
-    @Deprecated
-    public Integer getSeason() {
-        return this.season;
-    }
-    /** @deprecated Use {@link #episodes} */
-    @Deprecated
-    public Episodes getEpisodes() {
-        return this.episodes;
-    }
-    /** @deprecated Use {@link #url} */
-    @Deprecated
-    public String getUrl() {
-        return this.url;
-    }
-    /** @deprecated Use {@link #images} */
-    @Deprecated
-    public Images getImages() {
-        return this.images;
-    }
 }

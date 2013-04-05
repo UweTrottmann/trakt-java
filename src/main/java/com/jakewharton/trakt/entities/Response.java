@@ -19,21 +19,4 @@ public class Response implements TraktEntity {
     public String error;
     public int wait;
 
-    /** @deprecated Use {@link #status} */
-    @Deprecated
-    public String getStatus() {
-        return this.status;
-    }
-
-    /** @deprecated Use {@link #message} */
-    @Deprecated
-    public String getMessage() {
-        return this.message;
-    }
-
-    /** @deprecated Use {@link #error} */
-    @Deprecated
-    public String getError() {
-        return this.error;
-    }
 }

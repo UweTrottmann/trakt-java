@@ -16,39 +16,4 @@ public class Person implements TraktEntity {
     @SerializedName("tmdb_id") public Integer tmdbId;
     public Images images;
 
-    /** @deprecated Use {@link #name} */
-    @Deprecated
-    public String getName() {
-        return this.name;
-    }
-    /** @deprecated Use {@link #url} */
-    @Deprecated
-    public String getUrl() {
-        return this.url;
-    }
-    /** @deprecated Use {@link #biography} */
-    @Deprecated
-    public String getBiography() {
-        return this.biography;
-    }
-    /** @deprecated Use {@link #birthday} */
-    @Deprecated
-    public Date getBirthday() {
-        return this.birthday;
-    }
-    /** @deprecated Use {@link #birthplace} */
-    @Deprecated
-    public String getBirthplace() {
-        return this.birthplace;
-    }
-    /** @deprecated Use {@link #tmdbId} */
-    @Deprecated
-    public Integer getTmdbId() {
-        return this.tmdbId;
-    }
-    /** @deprecated Use {@link #images} */
-    @Deprecated
-    public Images getImages() {
-        return this.images;
-    }
 }
