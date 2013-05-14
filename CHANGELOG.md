@@ -12,7 +12,9 @@ Change Log
  * Add `vip` property for `UserProfile`.
  * Add advanced rating fields to shows and episodes.
  * Add `show` and `movie` property to `Response`.
- * Use Gson 2.2.2.
+ * Removed deprecated methods.
+ * Start testing with FEST.
+ * Use Gson 2.2.4.
 
 
 1.3.0 *(2011-12-13)*
