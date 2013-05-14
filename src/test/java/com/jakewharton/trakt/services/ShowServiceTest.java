@@ -11,8 +11,11 @@ import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
 import org.apache.commons.lang.time.DateUtils;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ShowServiceTest extends BaseTestCase {
 	public void test_episodeComments() {
@@ -124,8 +127,9 @@ public class ShowServiceTest extends BaseTestCase {
 	}
 	
 	public void test_summary() {
-	    @SuppressWarnings("deprecation")
-		Date firstAired = new Date(110, 9, 31);
+	    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+	    cal.set(2010, 9, 31, 21, 0);
+		Date firstAired = cal.getTime();
 		
 		TvShow show = getManager().showService().summary("the-walking-dead").extended().fire();
 		assertNotNull("Result was null.", show);
