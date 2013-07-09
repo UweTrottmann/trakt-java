@@ -4,6 +4,7 @@ Change Log
 1.4.0 *(In Development)*
 ------------------------
 
+ * Support min parameter for activity methods.
  * Support 1-10 ratings.
  * Correct `MovieService#checking` to `MovieService#checkin`.
  * Support new comments API. Shouts calls have been removed.
