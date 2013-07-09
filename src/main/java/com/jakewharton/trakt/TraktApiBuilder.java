@@ -38,6 +38,8 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
     protected static final String FIELD_TYPES = API_URL_DELIMITER_START + "types" + API_URL_DELIMITER_END;
     protected static final String FIELD_ACTIONS = API_URL_DELIMITER_START + "actions" + API_URL_DELIMITER_END;
     protected static final String FIELD_TIMESTAMP = API_URL_DELIMITER_START + "timestamp" + API_URL_DELIMITER_END;
+    
+    protected static final String PARAMETER_MIN = "min";
 
     private static final String POST_PLUGIN_VERSION = "plugin_version";
     private static final String POST_MEDIA_CENTER_VERSION = "media_center_version";

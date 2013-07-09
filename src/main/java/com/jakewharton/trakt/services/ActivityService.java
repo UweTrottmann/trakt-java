@@ -560,5 +560,17 @@ public class ActivityService extends TraktApiService {
             this.field(FIELD_TIMESTAMP, timestamp);
             return this;
         }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public UserBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
+            return this;
+        }
     }
 }
