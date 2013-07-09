@@ -146,7 +146,7 @@ public class ShowServiceTest extends BaseTestCase {
 		assertEquals("Show network does not match.", "AMC", show.network);
 		assertEquals("Show air day does not match.", DayOfTheWeek.Sunday, show.airDay);
 		assertEquals("Show air time does not match.", "9:00pm", show.airTime);
-		assertEquals("Show certification does not match.", "TV-14", show.certification);
+		assertEquals("Show certification does not match.", "TV-MA", show.certification);
 		assertEquals("Show IMDB ID does not match.", "tt1520211", show.imdbId);
 		assertEquals("Show TVDB ID does not match.", "153021", show.tvdbId);
 		assertEquals("Show TV Rage ID does not match.", "25056", show.tvrageId);
