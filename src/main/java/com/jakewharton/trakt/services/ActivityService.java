@@ -199,6 +199,18 @@ public class ActivityService extends TraktApiService {
             this.field(FIELD_TIMESTAMP, timestamp);
             return this;
         }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public CommunityBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
+            return this;
+        }
     }
 
     public static class EpisodesBuilder extends TraktApiBuilder<Activity> {
@@ -273,6 +285,18 @@ public class ActivityService extends TraktApiService {
             this.field(FIELD_TIMESTAMP, timestamp);
             return this;
         }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public EpisodesBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
+            return this;
+        }
     }
 
     public static class FriendsBuilder extends TraktApiBuilder<Activity> {
@@ -320,6 +344,18 @@ public class ActivityService extends TraktApiService {
                 this.actions(ActivityAction.All);
             }
             this.field(FIELD_TIMESTAMP, timestamp);
+            return this;
+        }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public FriendsBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
             return this;
         }
     }
@@ -378,6 +414,18 @@ public class ActivityService extends TraktApiService {
                 this.actions(ActivityAction.All);
             }
             this.field(FIELD_TIMESTAMP, timestamp);
+            return this;
+        }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public MoviesBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
             return this;
         }
     }
@@ -445,6 +493,18 @@ public class ActivityService extends TraktApiService {
             this.field(FIELD_TIMESTAMP, timestamp);
             return this;
         }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public SeasonsBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
+            return this;
+        }
     }
 
     public static class ShowsBuilder extends TraktApiBuilder<Activity> {
@@ -500,6 +560,18 @@ public class ActivityService extends TraktApiService {
                 this.actions(ActivityAction.All);
             }
             this.field(FIELD_TIMESTAMP, timestamp);
+            return this;
+        }
+
+        /**
+         * Call to set min to 1, to return only minimal information like the
+         * timestamp, type, action, username, and IDs. This is highly
+         * recommended since it returns 90% less data! It is especially useful
+         * for incrementally syncing changes to a user's activity and on mobile
+         * devices.
+         */
+        public ShowsBuilder minimal() {
+            parameter(PARAMETER_MIN, 1);
             return this;
         }
     }
