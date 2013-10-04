@@ -1,18 +1,9 @@
 package com.jakewharton.trakt;
 
-import com.jakewharton.trakt.services.AccountService;
-import com.jakewharton.trakt.services.ActivityService;
-import com.jakewharton.trakt.services.CalendarService;
-import com.jakewharton.trakt.services.CommentService;
-import com.jakewharton.trakt.services.GenreService;
-import com.jakewharton.trakt.services.ListService;
-import com.jakewharton.trakt.services.MovieService;
-import com.jakewharton.trakt.services.NetworkService;
-import com.jakewharton.trakt.services.RateService;
-import com.jakewharton.trakt.services.RecommendationsService;
-import com.jakewharton.trakt.services.SearchService;
-import com.jakewharton.trakt.services.ShowService;
-import com.jakewharton.trakt.services.UserService;
+import com.jakewharton.trakt.services.*;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 /**
  * Class to manage service creation with default settings.
@@ -20,6 +11,10 @@ import com.jakewharton.trakt.services.UserService;
  * @author Jake Wharton <jakewharton@gmail.com>
  */
 public class ServiceManager {
+
+    /** API key path parameter name. */
+    protected static final String PARAM_API_KEY = "apikey";
+
     /** API key. */
     private String apiKeyValue;
     /** User email. */
@@ -214,10 +209,23 @@ public class ServiceManager {
         return service;
     }
 
-    public ShowService showService() {
-        ShowService service = ServiceManager.createShowService();
-        this.setupService(service);
-        return service;
+    /** trakt API URL. */
+    private static final String API_URL = "http://api.trakt.tv";
+
+    public Show showService() {
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setServer(API_URL)
+                .setConverter(new GsonConverter(TraktApiService.getGsonBuilder().create()))
+                .setRequestInterceptor(new RequestInterceptor() {
+                    @Override
+                    public void intercept(RequestFacade requestFacade) {
+                        requestFacade.addPathParam(PARAM_API_KEY, apiKeyValue);
+                    }
+                })
+                .build();
+
+        Show show = restAdapter.create(Show.class);
+        return show;
     }
 
     public UserService userService() {
