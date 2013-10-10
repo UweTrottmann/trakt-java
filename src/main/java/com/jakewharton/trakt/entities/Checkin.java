@@ -4,8 +4,6 @@ import com.jakewharton.trakt.TraktEntity;
 
 public class Checkin implements TraktEntity {
 
-    public String username;
-    public String password;
     public String imdb_id;
     public int tvdb_id;
     public String title;
