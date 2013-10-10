@@ -4,9 +4,9 @@ import com.jakewharton.trakt.TraktEntity;
 
 public class Share implements TraktEntity {
 
-    boolean facebook;
-    boolean twitter;
-    boolean tumblr;
-    boolean path;
+    public boolean facebook;
+    public boolean twitter;
+    public boolean tumblr;
+    public boolean path;
 
 }
