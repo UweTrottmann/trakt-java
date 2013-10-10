@@ -1,12 +1,7 @@
 package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.Comment;
-import com.jakewharton.trakt.entities.TvEntity;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.entities.TvShowSeason;
-import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.entities.*;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -16,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ShowServiceTest extends BaseTestCase {
 //	public void test_episodeComments() {
@@ -125,33 +122,33 @@ public class ShowServiceTest extends BaseTestCase {
 //		assertFalse("Trending list was empty.", trending.isEmpty());
 //		assertNotNull("Trending item was null.", trending.get(0));
 //	}
-	
-	public void test_summary() {
-	    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-	    cal.set(2010, 9, 31, 21, 0);
-		Date firstAired = cal.getTime();
-		
-		TvShow show = getManager().showService().summaryExtended("the-walking-dead");
-		assertNotNull("Result was null.", show);
-		assertEquals("Show title does not match.", "The Walking Dead", show.title);
-		assertNotNull("Show year was null.", show.year);
-		assertEquals("Show year does not match.", 2010, show.year.intValue());
-		assertNotNull("Show URL was null.", show.url);
-		assertNotNull("Show first aired was null.", show.firstAired);
-		assertTrue("Show first aired does not match.", DateUtils.isSameDay(firstAired, show.firstAired));
-		assertEquals("Show country does not match.", "United States", show.country);
-		assertNotNull("Show overview was null.", show.overview);
-		assertNotNull("Show runtime was null.", show.runtime);
-		assertEquals("Show runtime does not match.", 60, show.runtime.intValue());
-		assertEquals("Show network does not match.", "AMC", show.network);
-		assertEquals("Show air day does not match.", DayOfTheWeek.Sunday, show.airDay);
-		assertEquals("Show air time does not match.", "9:00pm", show.airTime);
-		assertEquals("Show certification does not match.", "TV-MA", show.certification);
-		assertEquals("Show IMDB ID does not match.", "tt1520211", show.imdbId);
-		assertEquals("Show TVDB ID does not match.", "153021", show.tvdbId);
-		assertEquals("Show TV Rage ID does not match.", "25056", show.tvrageId);
-	}
-    
+
+    public void test_summary() {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+        cal.set(2010, 9, 31, 21, 0);
+        Date firstAired = cal.getTime();
+
+        TvShow show = getManager().showService().summaryExtended("the-walking-dead");
+        assertThat(show).isNotNull();
+        assertThat(show.title).isEqualTo("The Walking Dead");
+        assertThat(show.year).isNotNull();
+        assertThat(show.year.intValue()).isEqualTo(2010);
+        assertThat(show.url);
+        assertThat(show.firstAired);
+        assertThat(DateUtils.isSameDay(firstAired, show.firstAired)).isTrue();
+        assertThat(show.country).isEqualTo("United States");
+        assertThat(show.overview).isNotNull();
+        assertThat(show.runtime).isNotNull();
+        assertThat(show.runtime.intValue()).isEqualTo(60);
+        assertThat(show.network).isEqualTo("AMC");
+        assertThat(show.airDay).isEqualTo(DayOfTheWeek.Sunday);
+        assertThat(show.airTime).isEqualTo("9:00pm");
+        assertThat(show.certification).isEqualTo("TV-14");
+        assertThat(show.imdb_id).isEqualTo("tt1520211");
+        assertThat(show.tvdb_id).isEqualTo(153021);
+        assertThat(show.tvrage_id).isEqualTo(25056);
+    }
+
 //    public void test_related() {
 //        List<TvShow> related = getManager().showService().related("the-walking-dead").extended().fire();
 //        assertNotNull("Result was null.", related);

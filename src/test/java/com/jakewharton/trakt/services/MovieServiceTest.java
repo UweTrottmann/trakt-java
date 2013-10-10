@@ -47,7 +47,7 @@ public class MovieServiceTest extends BaseTestCase {
 		assertNotNull("Movie tagline was null.", movie.tagline);
 		assertNotNull("Movie overview was null.", movie.overview);
 		assertEquals("Movie certification does not match.", "PG-13", movie.certification);
-		assertEquals("Movie IMDB ID does not match.", "tt1285016", movie.imdbId);
+		assertEquals("Movie IMDB ID does not match.", "tt1285016", movie.imdb_id);
 		assertEquals("Movie TMDB ID does not match.", "37799", movie.tmdbId);
 		
 		Images movieImages = movie.images;
