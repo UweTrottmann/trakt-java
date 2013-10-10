@@ -1,6 +1,7 @@
 package com.jakewharton.trakt;
 
 import com.jakewharton.trakt.services.*;
+import com.jakewharton.trakt.util.Base64;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -220,8 +221,12 @@ public class ServiceManager {
                     @Override
                     public void intercept(RequestFacade requestFacade) {
                         requestFacade.addPathParam(PARAM_API_KEY, apiKeyValue);
+                        String source = username + ":" + password_sha;
+                        String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
+                        requestFacade.addHeader("Authorization", authorization);
                     }
                 })
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
         Show show = restAdapter.create(Show.class);
