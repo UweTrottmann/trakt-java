@@ -18,8 +18,8 @@ public class TvShow extends MediaBase implements TraktEntity {
     @SerializedName("air_day") public DayOfTheWeek airDay;
     @SerializedName("air_time") public String airTime;
     public String certification; //TODO: enum
-    @SerializedName("tvdb_id") public String tvdbId;
-    @SerializedName("tvrage_id") public String tvrageId;
+    public Integer tvdb_id;
+    public Integer tvrage_id;
     public List<TvShowEpisode> episodes;
     @SerializedName("top_episodes") public List<TvShowEpisode> topEpisodes;
     public List<TvShowSeason> seasons;

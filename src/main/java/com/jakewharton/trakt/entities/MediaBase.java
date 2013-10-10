@@ -34,7 +34,7 @@ public abstract class MediaBase implements TraktEntity {
     @SerializedName("top_watchers") public List<UserProfile> topWatchers;
     public Ratings ratings;
     public Stats stats;
-    @SerializedName("imdb_id") public String imdbId;
+    public String imdb_id;
     public Rating rating;
     public Rating rating_advanced;
     @SerializedName("in_watchlist") public Boolean inWatchlist;
