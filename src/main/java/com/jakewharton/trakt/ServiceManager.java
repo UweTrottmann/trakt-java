@@ -111,8 +111,7 @@ public class ServiceManager {
     }
 
     public CalendarService calendarService() {
-        CalendarService service = ServiceManager.createCalendarService();
-        this.setupService(service);
+        CalendarService service = buildRestAdapter().create(CalendarService.class);
         return service;
     }
 
@@ -173,10 +172,6 @@ public class ServiceManager {
         UserService service = ServiceManager.createUserService();
         this.setupService(service);
         return service;
-    }
-
-    public static final CalendarService createCalendarService() {
-        return new CalendarService();
     }
 
     public static final NetworkService createNetworkService() {
