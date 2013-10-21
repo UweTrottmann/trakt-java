@@ -13,15 +13,20 @@ import retrofit.converter.GsonConverter;
  */
 public class ServiceManager {
 
+    /** trakt API URL. */
+    private static final String API_URL = "http://api.trakt.tv";
+
     /** API key path parameter name. */
     protected static final String PARAM_API_KEY = "apikey";
 
+    /** Whether to return more detailed log output. */
+    private boolean mIsDebug;
     /** API key. */
     private String apiKeyValue;
     /** User email. */
-    private String username;
+    private String mUsername;
     /** User password. */
-    private String password_sha;
+    private String mPasswordSha1;
     /** Connection timeout (in milliseconds). */
     private Integer connectionTimeout;
     /** Read timeout (in milliseconds). */
@@ -48,8 +53,8 @@ public class ServiceManager {
      * @return Current instance for builder pattern.
      */
     public ServiceManager setAuthentication(String username, String password_sha) {
-        this.username = username;
-        this.password_sha = password_sha;
+        this.mUsername = username;
+        this.mPasswordSha1 = password_sha;
         return this;
     }
 
@@ -123,8 +128,8 @@ public class ServiceManager {
         if (this.apiKeyValue != null) {
             service.setApiKey(this.apiKeyValue);
         }
-        if ((this.username != null) && (this.password_sha != null)) {
-            service.setAuthentication(this.username, this.password_sha);
+        if ((this.mUsername != null) && (this.mPasswordSha1 != null)) {
+            service.setAuthentication(this.mUsername, this.mPasswordSha1);
         }
         if (this.connectionTimeout != null) {
             service.setConnectTimeout(this.connectionTimeout);
@@ -142,6 +147,31 @@ public class ServiceManager {
             service.setMediaCenterDate(this.mediaCenterDate);
         }
         service.setUseSsl(this.useSsl);
+    }
+
+    private RestAdapter buildRestAdapter() {
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setServer(API_URL)
+                .setConverter(new GsonConverter(TraktApiService.getGsonBuilder().create()));
+
+        // if available, send mUsername and password in header
+        if ((mUsername != null) && (mPasswordSha1 != null)) {
+            builder.setRequestInterceptor(new RequestInterceptor() {
+                @Override
+                public void intercept(RequestFacade requestFacade) {
+                    requestFacade.addPathParam(PARAM_API_KEY, apiKeyValue);
+                    String source = mUsername + ":" + mPasswordSha1;
+                    String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
+                    requestFacade.addHeader("Authorization", authorization);
+                }
+            });
+        }
+
+        if (mIsDebug) {
+            builder.setLogLevel(RestAdapter.LogLevel.FULL);
+        }
+
+        return builder.build();
     }
 
     public AccountService accountService() {
@@ -210,26 +240,8 @@ public class ServiceManager {
         return service;
     }
 
-    /** trakt API URL. */
-    private static final String API_URL = "http://api.trakt.tv";
-
     public Show showService() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setServer(API_URL)
-                .setConverter(new GsonConverter(TraktApiService.getGsonBuilder().create()))
-                .setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestFacade requestFacade) {
-                        requestFacade.addPathParam(PARAM_API_KEY, apiKeyValue);
-                        String source = username + ":" + password_sha;
-                        String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
-                        requestFacade.addHeader("Authorization", authorization);
-                    }
-                })
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-
-        Show show = restAdapter.create(Show.class);
+        Show show = buildRestAdapter().create(Show.class);
         return show;
     }
 
