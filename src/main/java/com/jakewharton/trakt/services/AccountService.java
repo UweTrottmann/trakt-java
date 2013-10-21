@@ -1,11 +1,7 @@
 package com.jakewharton.trakt.services;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import com.jakewharton.trakt.TraktApiBuilder;
-import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.entities.Share;
 import retrofit.http.Body;
 import retrofit.http.POST;
 
