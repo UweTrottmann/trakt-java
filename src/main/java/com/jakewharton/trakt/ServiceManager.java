@@ -134,8 +134,7 @@ public class ServiceManager {
     }
 
     public MovieService movieService() {
-        MovieService service = ServiceManager.createMovieService();
-        this.setupService(service);
+        MovieService service = buildRestAdapter().create(MovieService.class);
         return service;
     }
 
@@ -184,10 +183,6 @@ public class ServiceManager {
 
     public static final ListService createListService() {
         return new ListService();
-    }
-
-    public static final MovieService createMovieService() {
-        return new MovieService();
     }
 
     public static final RateService createRateService() {
