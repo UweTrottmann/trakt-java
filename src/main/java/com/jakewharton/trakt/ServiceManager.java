@@ -168,8 +168,7 @@ public class ServiceManager {
     }
 
     public UserService userService() {
-        UserService service = ServiceManager.createUserService();
-        this.setupService(service);
+        UserService service = buildRestAdapter().create(UserService.class);
         return service;
     }
 
@@ -199,9 +198,5 @@ public class ServiceManager {
 
     public static final CommentService createCommentService() {
         return new CommentService();
-    }
-
-    public static final UserService createUserService() {
-        return new UserService();
     }
 }
