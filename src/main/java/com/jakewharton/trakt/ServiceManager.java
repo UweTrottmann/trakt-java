@@ -108,6 +108,11 @@ public class ServiceManager {
         return this;
     }
 
+    public ServiceManager isDebug(boolean isDebug) {
+        mIsDebug = isDebug;
+        return this;
+    }
+
     /**
      * Set whether or not to use SSL API endpoint.
      *
