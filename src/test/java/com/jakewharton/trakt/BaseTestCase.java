@@ -11,6 +11,7 @@ public abstract class BaseTestCase extends TestCase {
     public void setUp() {
         manager.setApiKey(API_KEY);
         manager.setAuthentication("sgtest", "2a4d398c09ec9c6915d1f46710ceed9673fa4e3d");
+        manager.setIsDebug(true);
     }
 
     protected final ServiceManager getManager() {
