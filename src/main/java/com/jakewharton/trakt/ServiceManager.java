@@ -106,8 +106,7 @@ public class ServiceManager {
     }
 
     public ActivityService activityService() {
-        ActivityService service = ServiceManager.createActivityService();
-        this.setupService(service);
+        ActivityService service = buildRestAdapter().create(ActivityService.class);
         return service;
     }
 
@@ -174,10 +173,6 @@ public class ServiceManager {
         UserService service = ServiceManager.createUserService();
         this.setupService(service);
         return service;
-    }
-
-    public static final ActivityService createActivityService() {
-        return new ActivityService();
     }
 
     public static final CalendarService createCalendarService() {

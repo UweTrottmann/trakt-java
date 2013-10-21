@@ -12,6 +12,7 @@ public class Activity implements TraktEntity {
         private static final long serialVersionUID = 7812411503074767278L;
 
         public Date start;
+        public Date end;
         public Date current;
     }
 
