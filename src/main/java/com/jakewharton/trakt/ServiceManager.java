@@ -166,9 +166,9 @@ public class ServiceManager {
         return service;
     }
 
-    public Show showService() {
-        Show show = buildRestAdapter().create(Show.class);
-        return show;
+    public ShowService showService() {
+        ShowService service = buildRestAdapter().create(ShowService.class);
+        return service;
     }
 
     public UserService userService() {
