@@ -221,10 +221,6 @@ public class ServiceManager {
         return new CommentService();
     }
 
-    public static final ShowService createShowService() {
-        return new ShowService();
-    }
-
     public static final UserService createUserService() {
         return new UserService();
     }
