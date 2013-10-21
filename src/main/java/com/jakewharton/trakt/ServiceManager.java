@@ -22,23 +22,11 @@ public class ServiceManager {
     /** Whether to return more detailed log output. */
     private boolean mIsDebug;
     /** API key. */
-    private String apiKeyValue;
+    private String mApiKey;
     /** User email. */
     private String mUsername;
     /** User password. */
     private String mPasswordSha1;
-    /** Connection timeout (in milliseconds). */
-    private Integer connectionTimeout;
-    /** Read timeout (in milliseconds). */
-    private Integer readTimeout;
-    /** Plugin version debug string. */
-    private String pluginVersion;
-    /** Media center version debug string. */
-    private String mediaCenterVersion;
-    /** Media center build date debug string. */
-    private String mediaCenterDate;
-    /** Whether or not to use SSL API endpoint. */
-    private boolean useSsl;
 
 
     /** Create a new manager instance. */
@@ -46,81 +34,30 @@ public class ServiceManager {
 
 
     /**
-     * Set default authentication credentials.
+     * POST API methods on trakt require basic setAuthentication. You must set your trakt username
+     * and sha1 of the password. They will be sent in the HTTP header.
      *
-     * @param username Username.
-     * @param password_sha SHA1 of user password.
-     * @return Current instance for builder pattern.
+     * @param username     Username.
+     * @param passwordSha1 SHA1 of user password.
      */
-    public ServiceManager setAuthentication(String username, String password_sha) {
-        this.mUsername = username;
-        this.mPasswordSha1 = password_sha;
+    public ServiceManager setAuthentication(String username, String passwordSha1) {
+        mUsername = username;
+        mPasswordSha1 = passwordSha1;
         return this;
     }
 
     /**
-     * Set default API key.
+     * Set your trakt API key. All API methods require a valid API key.
      *
-     * @param value API key value.
-     * @return Current instance for builder pattern.
+     * @param key trakt API key value.
      */
-    public ServiceManager setApiKey(String value) {
-        this.apiKeyValue = value;
+    public ServiceManager setApiKey(String key) {
+        mApiKey = key;
         return this;
     }
 
-    /**
-     * Set default connection timeout.
-     *
-     * @param connectionTimeout Timeout (in milliseconds).
-     * @return Current instance for builder pattern.
-     */
-    public ServiceManager setConnectionTimeout(int connectionTimeout) {
-        this.connectionTimeout = connectionTimeout;
-        return this;
-    }
-
-    /**
-     * Set default read timeout.
-     *
-     * @param readTimeout Timeout (in milliseconds).
-     * @return Current instance for builder pattern.
-     */
-    public ServiceManager setReadTimeout(int readTimeout) {
-        this.readTimeout = readTimeout;
-        return this;
-    }
-
-    /**
-     * Set default debug information when using a developer method.
-     *
-     * @param pluginVersion Internal version of your plugin. Make sure to
-     * increment this for each plugin update.
-     * @param mediaCenterVersion Version number of the media center, be as
-     * specific as you can including nightly build number, etc.
-     * @param mediaCenterDate Build date of the media center.
-     * @return Current instance for builder pattern.
-     */
-    public ServiceManager setDebugInfo(String pluginVersion, String mediaCenterVersion, String mediaCenterDate) {
-        this.pluginVersion = pluginVersion;
-        this.mediaCenterVersion = mediaCenterVersion;
-        this.mediaCenterDate = mediaCenterDate;
-        return this;
-    }
-
-    public ServiceManager isDebug(boolean isDebug) {
+    public ServiceManager setIsDebug(boolean isDebug) {
         mIsDebug = isDebug;
-        return this;
-    }
-
-    /**
-     * Set whether or not to use SSL API endpoint.
-     *
-     * @param useSsl Value.
-     * @return Current instance for builder pattern.
-     */
-    public ServiceManager setUseSsl(boolean useSsl) {
-        this.useSsl = useSsl;
         return this;
     }
 
@@ -130,28 +67,12 @@ public class ServiceManager {
      * @param service Service to set up.
      */
     private void setupService(TraktApiService service) {
-        if (this.apiKeyValue != null) {
-            service.setApiKey(this.apiKeyValue);
+        if (this.mApiKey != null) {
+            service.setApiKey(this.mApiKey);
         }
         if ((this.mUsername != null) && (this.mPasswordSha1 != null)) {
             service.setAuthentication(this.mUsername, this.mPasswordSha1);
         }
-        if (this.connectionTimeout != null) {
-            service.setConnectTimeout(this.connectionTimeout);
-        }
-        if (this.readTimeout != null) {
-            service.setReadTimeout(this.readTimeout);
-        }
-        if (this.pluginVersion != null) {
-            service.setPluginVersion(this.pluginVersion);
-        }
-        if (this.mediaCenterVersion != null) {
-            service.setMediaCenterVersion(this.mediaCenterVersion);
-        }
-        if (this.mediaCenterDate != null) {
-            service.setMediaCenterDate(this.mediaCenterDate);
-        }
-        service.setUseSsl(this.useSsl);
     }
 
     private RestAdapter buildRestAdapter() {
@@ -164,7 +85,7 @@ public class ServiceManager {
             builder.setRequestInterceptor(new RequestInterceptor() {
                 @Override
                 public void intercept(RequestFacade requestFacade) {
-                    requestFacade.addPathParam(PARAM_API_KEY, apiKeyValue);
+                    requestFacade.addPathParam(PARAM_API_KEY, mApiKey);
                     String source = mUsername + ":" + mPasswordSha1;
                     String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
                     requestFacade.addHeader("Authorization", authorization);
