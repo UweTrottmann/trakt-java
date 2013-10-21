@@ -1,84 +1,131 @@
 package com.jakewharton.trakt.services;
 
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Share;
+import retrofit.http.Body;
+import retrofit.http.POST;
 
-public class AccountService extends TraktApiService {
+/**
+ * Endpoints for Account.
+ */
+public interface AccountService {
+
+    static class Settings extends Response {
+        static class Profile {
+            String username;
+            String full_name;
+            String gender;
+            Integer age;
+            String location;
+            String about;
+            int joined;
+            int last_login;
+            String avatar;
+            String url;
+            boolean vip;
+        }
+
+        static class Account {
+            /**
+             * <a href="http://go.trakt.tv/HX7SfQ">Info about timezone descriptors.</a>
+             */
+            String timezone;
+            boolean use_24hr;
+            @SerializedName("protected")
+            boolean _protected;
+        }
+
+        static class Viewing {
+            static class Ratings {
+                /**
+                 * simple, advanced
+                 */
+                String mode;
+            }
+
+            static class Shouts {
+                boolean show_badges;
+                boolean show_spoilers;
+            }
+
+            Ratings ratings;
+            Shouts shouts;
+        }
+
+        static class Connections {
+            static class Facebook {
+                boolean connected;
+            }
+
+            static class Twitter {
+                boolean connected;
+            }
+
+            static class Tumblr {
+                boolean connected;
+            }
+
+            static class Path {
+                boolean connected;
+            }
+
+            static class Prowl {
+                boolean connected;
+            }
+
+            Facebook facebook;
+            Twitter twitter;
+            Tumblr tumblr;
+            Path path;
+            Prowl prowl;
+        }
+
+        static class SharingText {
+            String watching;
+            String watched;
+        }
+
+        Profile profile;
+        Account account;
+        Viewing viewing;
+        Connections connections;
+        SharingText sharing_text;
+    }
+
+    static class NewAccount {
+        String username;
+        String password;
+        String email;
+    }
+
     /**
      * Create a new trakt account. Username and e-mail must be unique and not
      * already exist in trakt.
-     *
-     * @param username Username to register.
-     * @param password SHA1 hash of password.
-     * @param email E-mail to register, a welcome email will automatically be sent here.
-     * @return Builder instance.
      */
-    public CreateBuilder create(String username, String password, String email) {
-        return (new CreateBuilder(this)).username(username).password(password).email(email);
-    }
+    @POST("/account/create/{apikey}")
+    Response create(
+            @Body NewAccount account
+    );
+
+    /**
+     * Returns all settings for the authenticated user. Use these settings to
+     * customize your app based on the user's settings. For example, if they use
+     * advanced ratings show a 10 heart scale. If they prefer simple ratings,
+     * show the binary scale. The social connections are also useful to
+     * customize the checkin prompt.
+     */
+    @POST("/account/settings/{apikey}")
+    Settings settings();
 
     /**
      * Test trakt credentials. This is useful for your configuration screen and
      * is a simple way to test someone's trakt account.
-     *
-     * @return Builder instance.
      */
-    public TestBuilder test() {
-        return new TestBuilder(this);
-    }
+    @POST("/account/test/{apikey}")
+    Response test();
 
-
-    public static final class CreateBuilder extends TraktApiBuilder<Response> {
-        private static final String POST_USERNAME = "username";
-        private static final String POST_PASSWORD = "password";
-        private static final String POST_EMAIL = "email";
-
-        private static final String URI = "/account/create/" + FIELD_API_KEY;
-
-        private CreateBuilder(AccountService service) {
-            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-        }
-
-        /**
-         * Username to register.
-         *
-         * @param username Value.
-         * @return Builder instance.
-         */
-        public CreateBuilder username(String username) {
-            this.postParameter(POST_USERNAME, username);
-            return this;
-        }
-
-        /**
-         * SHA1 hash of password.
-         *
-         * @param password Value.
-         * @return Builder instance.
-         */
-        public CreateBuilder password(String password) {
-            this.postParameter(POST_PASSWORD, password);
-            return this;
-        }
-
-        /**
-         * E-mail to register, a welcome email will automatically be sent here.
-         *
-         * @param email Value.
-         * @return Builder instance.
-         */
-        public CreateBuilder email(String email) {
-            this.postParameter(POST_EMAIL, email);
-            return this;
-        }
-    }
-    public static final class TestBuilder extends TraktApiBuilder<Response> {
-        private static final String URI = "/account/test/" + FIELD_API_KEY;
-
-        private TestBuilder(AccountService service) {
-            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-        }
-    }
 }

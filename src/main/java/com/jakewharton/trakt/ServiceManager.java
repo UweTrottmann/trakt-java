@@ -101,8 +101,7 @@ public class ServiceManager {
     }
 
     public AccountService accountService() {
-        AccountService service = ServiceManager.createAccountService();
-        this.setupService(service);
+        AccountService service = buildRestAdapter().create(AccountService.class);
         return service;
     }
 
@@ -175,10 +174,6 @@ public class ServiceManager {
         UserService service = ServiceManager.createUserService();
         this.setupService(service);
         return service;
-    }
-
-    public static final AccountService createAccountService() {
-        return new AccountService();
     }
 
     public static final ActivityService createActivityService() {
