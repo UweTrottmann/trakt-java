@@ -5,6 +5,7 @@ import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.TvShow;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.http.Body;
@@ -155,6 +156,17 @@ public interface ShowService {
 
         public List<Episode> episodes;
 
+        public Episodes(int tvdbId, int season, int episode) {
+            this.tvdb_id = tvdbId;
+            episodes = new ArrayList<Episode>();
+            episodes.add(new Episode(season, episode));
+        }
+
+        public Episodes(int tvdbId, List<Episode> episodes) {
+            this.tvdb_id = tvdbId;
+            this.episodes = episodes;
+        }
+
         public static class Episode {
 
             public int season;
@@ -162,6 +174,11 @@ public interface ShowService {
             public int episode;
 
             public String last_played;
+
+            public Episode(int season, int episode) {
+                this.season = season;
+                this.episode = episode;
+            }
         }
     }
 
