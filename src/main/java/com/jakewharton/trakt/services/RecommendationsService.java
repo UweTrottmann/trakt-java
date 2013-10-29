@@ -44,31 +44,56 @@ public interface RecommendationsService {
 
     public static class RecommendationsQuery {
 
+        public String genre;
+
+        public Integer start_year;
+
+        public Integer end_year;
+
+        public Boolean hide_collected;
+
+        public Boolean hide_watchlisted;
+
         /**
          * <em>Optional.</em> Genre slug to filter by. See genres/movies or genres/shows for a list
          * of valid genres.
          */
-        public String genre;
+        public RecommendationsQuery genre(String genre) {
+            this.genre = genre;
+            return this;
+        }
 
         /**
          * <em>Optional.</em> 4 digit year to filter movies released in this year or later.
          */
-        public Integer start_year;
+        public RecommendationsQuery startYear(int startYear) {
+            this.start_year = startYear;
+            return this;
+        }
 
         /**
          * <em>Optional.</em> 4 digit year to filter movies released in this year or earlier.
          */
-        public Integer end_year;
+        public RecommendationsQuery endYear(int endYear) {
+            this.end_year = endYear;
+            return this;
+        }
 
         /**
          * <em>Optional.</em> Set to true to hide any movies the user has collected.
          */
-        public Boolean hide_collected;
+        public RecommendationsQuery hideCollected(boolean isHidingCollected) {
+            this.hide_collected = isHidingCollected;
+            return this;
+        }
 
         /**
          * <em>Optional.</em> Set to true to hide any movies on the user's watchlist.
          */
-        public Boolean hide_watchlisted;
+        public RecommendationsQuery hideWatchlisted(boolean isHidingWatchlisted) {
+            this.hide_watchlisted = isHidingWatchlisted;
+            return this;
+        }
     }
 
 }
