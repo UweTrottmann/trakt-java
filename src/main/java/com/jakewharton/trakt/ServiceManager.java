@@ -67,10 +67,6 @@ public class ServiceManager {
         return new NetworkService();
     }
 
-    public static final GenreService createGenreService() {
-        return new GenreService();
-    }
-
     public static final ListService createListService() {
         return new ListService();
     }
@@ -169,9 +165,7 @@ public class ServiceManager {
     }
 
     public GenreService genreService() {
-        GenreService service = ServiceManager.createGenreService();
-        this.setupService(service);
-        return service;
+        return buildRestAdapter().create(GenreService.class);
     }
 
     public ListService listService() {
