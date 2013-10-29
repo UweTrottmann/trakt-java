@@ -83,6 +83,56 @@ public interface ShowService {
     );
 
     /**
+     * Returns all comments (shouts and reviews) for an episode. Most recent comments returned
+     * first.
+     */
+    @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}")
+    List<Comment> episodeComments(
+            @Path("title") int tvdbId,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for an episode. Most recent comments returned
+     * first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}/{type}")
+    List<Comment> episodeComments(
+            @Path("title") int tvdbId,
+            @Path("season") int season,
+            @Path("episode") int episode,
+            @Path("type") String type
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for an episode. Most recent comments returned
+     * first.
+     */
+    @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}")
+    List<Comment> episodeComments(
+            @Path("title") String slug,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for an episode. Most recent comments returned
+     * first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}/{type}")
+    List<Comment> episodeComments(
+            @Path("title") String slug,
+            @Path("season") int season,
+            @Path("episode") int episode,
+            @Path("type") String type
+    );
+
+    /**
      * Add episodes to your library collection.
      */
     @POST("/show/episode/library/{apikey}")

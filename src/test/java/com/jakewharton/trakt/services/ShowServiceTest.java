@@ -15,12 +15,13 @@ import java.util.TimeZone;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ShowServiceTest extends BaseTestCase {
-//	public void test_episodeComments() {
-//		List<Comment> comments = getManager().showService().episodeComments("the-walking-dead", 1, 1).fire();
-//		assertNotNull("Result was null.", comments);
-//		assertFalse("Comment list was empty.", comments.isEmpty());
-//		assertNotNull("Comment item was null.", comments.get(0));
-//	}
+
+    public void test_episodeComments() {
+        List<Comment> comments = getManager().showService().episodeComments("the-walking-dead", 1,
+                1);
+        assertThat(comments).isNotEmpty();
+        assertThat(comments.get(0)).isNotNull();
+    }
 //
 //	public void test_episodeSummary() {
 //		TvEntity entity = getManager().showService().episodeSummary("the-league", 1, 1).fire();
