@@ -1,7 +1,8 @@
 package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.*;
+import com.jakewharton.trakt.entities.Comment;
+import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
 import org.apache.commons.lang.time.DateUtils;
@@ -9,7 +10,6 @@ import org.apache.commons.lang.time.DateUtils;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -99,13 +99,12 @@ public class ShowServiceTest extends BaseTestCase {
 //		assertNotNull("Season URL was null.", season.url);
 //		assertNotNull("Season images was null.", season.images); //TODO own test cases
 //	}
-//
-//	public void test_comments() {
-//		List<Comment> shouts = getManager().showService().comments("the-walking-dead").fire();
-//		assertNotNull("Result was null.", shouts);
-//		assertFalse("Comment list was empty.", shouts.isEmpty());
-//		assertNotNull("Comment was null.", shouts.get(0));
-//	}
+
+    public void test_comments() {
+        List<Comment> shouts = getManager().showService().comments("the-walking-dead");
+        assertThat(shouts).isNotEmpty();
+        assertThat(shouts.get(0)).isNotNull();
+    }
 //
 //	public void test_watchingNow() {
 //		List<UserProfile> users = getManager().showService().watchingNow("the-walking-dead").fire();

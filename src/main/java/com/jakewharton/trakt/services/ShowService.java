@@ -2,6 +2,7 @@ package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.entities.Checkin;
 import com.jakewharton.trakt.entities.CheckinResponse;
+import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.TvShow;
 
@@ -41,6 +42,44 @@ public interface ShowService {
     @POST("/show/checkin/{apikey}")
     CheckinResponse checkin(
             @Body Checkin checkin
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
+     */
+    @GET("/show/comments.json/{apikey}/{title}")
+    List<Comment> comments(
+            @Path("title") int tvdbId
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/show/comments.json/{apikey}/{title}/{type}")
+    List<Comment> comments(
+            @Path("title") int tvdbId,
+            @Path("type") String type
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
+     */
+    @GET("/show/comments.json/{apikey}/{title}")
+    List<Comment> comments(
+            @Path("title") String slug
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/show/comments.json/{apikey}/{title}/{type}")
+    List<Comment> comments(
+            @Path("title") String slug,
+            @Path("type") String type
     );
 
     /**
