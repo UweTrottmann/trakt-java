@@ -63,10 +63,6 @@ public class ServiceManager {
     public ServiceManager() {
     }
 
-    public static final NetworkService createNetworkService() {
-        return new NetworkService();
-    }
-
     public static final RateService createRateService() {
         return new RateService();
     }
@@ -155,9 +151,7 @@ public class ServiceManager {
     }
 
     public NetworkService networkService() {
-        NetworkService service = ServiceManager.createNetworkService();
-        this.setupService(service);
-        return service;
+        return buildRestAdapter().create(NetworkService.class);
     }
 
     public GenreService genreService() {

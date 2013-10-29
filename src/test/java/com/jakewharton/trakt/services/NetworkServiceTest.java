@@ -1,16 +1,18 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.entities.FollowResponse;
+import com.jakewharton.trakt.enumerations.Status;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 public class NetworkServiceTest extends BaseTestCase {
-	public void test_requests() {
-		List<UserProfile> requests = getManager().networkService().requests().fire();
-		assertNotNull("Result was null.", requests);
-		
-		if (!requests.isEmpty()) {
-			assertNotNull("Request list item was null.", requests.get(0));
-		}
-	}
+
+    public void test_follow() {
+        FollowResponse response = getManager().networkService()
+                .follow(new NetworkService.User("aeonmckay"));
+
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
 }
