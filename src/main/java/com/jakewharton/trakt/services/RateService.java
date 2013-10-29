@@ -28,7 +28,7 @@ public interface RateService {
         public Rating rating;
 
         public ShowRating(int tvdbId, Rating rating) {
-            this.tvdb_id = tvdbId;
+            super(tvdbId);
             this.rating = rating;
         }
     }
@@ -42,7 +42,7 @@ public interface RateService {
         public Rating rating;
 
         public EpisodeRating(int tvdbId, int season, int episode, Rating rating) {
-            this.tvdb_id = tvdbId;
+            super(tvdbId);
             this.season = season;
             this.episode = episode;
             this.rating = rating;
@@ -54,12 +54,12 @@ public interface RateService {
         public Rating rating;
 
         public MovieRating(String imdbId, Rating rating) {
-            this.imdb_id = imdbId;
+            super(imdbId);
             this.rating = rating;
         }
 
         public MovieRating(int tmdbId, Rating rating) {
-            this.tmdb_id = tmdbId;
+            super(tmdbId);
             this.rating = rating;
         }
     }

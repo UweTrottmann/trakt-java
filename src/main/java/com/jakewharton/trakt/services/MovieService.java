@@ -35,6 +35,11 @@ public interface MovieService {
             @Body Movies movies
     );
 
+    @POST("/movie/library/{apikey}")
+    void library(
+            @Body Movies movies
+    );
+
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
             @Path("title") String imdbIdOrSlug
@@ -54,18 +59,32 @@ public interface MovieService {
         public String title;
 
         public Integer year;
+
+        public Movie(String imdbId) {
+            this.imdb_id = imdbId;
+        }
+
+        public Movie(int tmdbId) {
+            this.tmdb_id = tmdbId;
+        }
+
+        public Movie(String title, int year) {
+            this.title = title;
+            this.year = year;
+        }
     }
 
     public static class SeenMovie extends Movie {
 
         public String last_played;
 
+
         public SeenMovie(String imdbId) {
-            this.imdb_id = imdbId;
+            super(imdbId);
         }
 
         public SeenMovie(int tmdbId) {
-            this.tmdb_id = tmdbId;
+            super(tmdbId);
         }
     }
 

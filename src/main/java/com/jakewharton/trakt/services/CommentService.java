@@ -37,38 +37,74 @@ public interface CommentService {
         public int season;
 
         public int episode;
+
+        public EpisodeComment(int tvdbId, int season, int episode, String comment) {
+            super(tvdbId, comment);
+            this.season = season;
+            this.episode = episode;
+        }
     }
 
     public static class ShowComment extends ShowService.Show {
 
         public String comment;
 
+        public Boolean spoiler;
+
+        public Boolean review;
+
+        public ShowComment(int tvdbId, String comment) {
+            super(tvdbId);
+            this.comment = comment;
+        }
+
         /**
          * <em>Optional.</em> Set to true to indicate the shout is a spoiler. Defaults to false.
          */
-        public Boolean spoiler;
+        public ShowComment spoiler(boolean isSpoiler) {
+            this.spoiler = isSpoiler;
+            return this;
+        }
 
         /**
          * <em>Optional.</em> Set to true to indicate the comment is a 200+ word review. Defaults to
          * false.
          */
-        public Boolean review;
+        public ShowComment review(boolean isReview) {
+            this.review = isReview;
+            return this;
+        }
     }
 
     public static class MovieComment extends MovieService.Movie {
 
         public String comment;
 
+        public Boolean spoiler;
+
+        public Boolean review;
+
+        public MovieComment(String imdbId, String comment) {
+            super(imdbId);
+            this.comment = comment;
+        }
+
         /**
          * <em>Optional.</em> Set to true to indicate the shout is a spoiler. Defaults to false.
          */
-        public Boolean spoiler;
+        public MovieComment spoiler(boolean isSpoiler) {
+            this.spoiler = isSpoiler;
+            return this;
+        }
 
         /**
          * <em>Optional.</em> Set to true to indicate the comment is a 200+ word review. Defaults to
          * false.
          */
-        public Boolean review;
+        public MovieComment review(boolean isReview) {
+            this.review = isReview;
+            return this;
+        }
     }
 
 }

@@ -144,12 +144,29 @@ public interface ShowService {
         public String title;
 
         public Integer year;
+
+        public Show(int tvdbId) {
+            this.tvdb_id = tvdbId;
+        }
+
+        public Show(String imdbId) {
+            this.imdb_id = imdbId;
+        }
+
+        public Show(String title, int year) {
+            this.title = title;
+            this.year = year;
+        }
     }
 
     public static class Season extends Show {
 
         public int season;
 
+        public Season(int tvdbId, int season) {
+            super(tvdbId);
+            this.season = season;
+        }
     }
 
     public static class Episodes extends Show {
@@ -157,13 +174,13 @@ public interface ShowService {
         public List<Episode> episodes;
 
         public Episodes(int tvdbId, int season, int episode) {
-            this.tvdb_id = tvdbId;
+            super(tvdbId);
             episodes = new ArrayList<Episode>();
             episodes.add(new Episode(season, episode));
         }
 
         public Episodes(int tvdbId, List<Episode> episodes) {
-            this.tvdb_id = tvdbId;
+            super(tvdbId);
             this.episodes = episodes;
         }
 
