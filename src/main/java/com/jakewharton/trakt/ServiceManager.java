@@ -63,10 +63,6 @@ public class ServiceManager {
     public ServiceManager() {
     }
 
-    public static final RateService createRateService() {
-        return new RateService();
-    }
-
     public static final SearchService createSearchService() {
         return new SearchService();
     }
@@ -167,9 +163,7 @@ public class ServiceManager {
     }
 
     public RateService rateService() {
-        RateService service = ServiceManager.createRateService();
-        this.setupService(service);
-        return service;
+        return buildRestAdapter().create(RateService.class);
     }
 
     public RecommendationsService recommendationsService() {

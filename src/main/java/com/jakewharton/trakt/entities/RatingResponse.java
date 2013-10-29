@@ -13,5 +13,6 @@ public class RatingResponse extends Response implements TraktEntity {
     public Boolean facebook;
     public Boolean twitter;
     public Boolean tumblr;
+    public Boolean path;
 
 }

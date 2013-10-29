@@ -55,15 +55,7 @@ public interface CommentService {
         public Boolean review;
     }
 
-    public static class MovieComment {
-
-        public String imdb_id;
-
-        public Integer tmdb_id;
-
-        public String title;
-
-        public Integer year;
+    public static class MovieComment extends MovieService.Movie {
 
         public String comment;
 
