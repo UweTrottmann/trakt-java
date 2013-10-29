@@ -50,5 +50,9 @@ public class ActivityServiceTest extends BaseTestCase {
         activity = getManager().activityService()
                 .user("JakeWharton", "all", "checkin,seen", null, null);
         assertThat(activity).isNotNull();
+
+        activity = getManager().activityService()
+                .user("JakeWharton", "all", "checkin,seen", 1, 1);
+        assertThat(activity).isNotNull();
     }
 }
