@@ -63,10 +63,6 @@ public class ServiceManager {
     public ServiceManager() {
     }
 
-    public static final SearchService createSearchService() {
-        return new SearchService();
-    }
-
     /**
      * POST API methods on trakt require basic setAuthentication. You must set your trakt username
      * and sha1 of the password. They will be sent in the HTTP header.
@@ -171,9 +167,7 @@ public class ServiceManager {
     }
 
     public SearchService searchService() {
-        SearchService service = ServiceManager.createSearchService();
-        this.setupService(service);
-        return service;
+        return buildRestAdapter().create(SearchService.class);
     }
 
     public CommentService commentService() {
