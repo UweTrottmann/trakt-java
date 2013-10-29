@@ -7,8 +7,8 @@ import com.jakewharton.trakt.entities.UserProfile;
 
 import java.util.List;
 
+import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 public interface UserService {
 
@@ -19,7 +19,7 @@ public interface UserService {
      */
     @GET("/user/network/followers.json/{apikey}/{username}")
     List<UserProfile> followers(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -29,7 +29,7 @@ public interface UserService {
      */
     @GET("/user/network/following.json/{apikey}/{username}")
     List<UserProfile> following(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -40,7 +40,7 @@ public interface UserService {
      */
     @GET("/user/network/friends.json/{apikey}/{username}")
     List<UserProfile> friends(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -52,7 +52,7 @@ public interface UserService {
      */
     @GET("/user/watchlist/movies.json/{apikey}/{username}")
     List<Movie> watchlistMovies(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -64,7 +64,7 @@ public interface UserService {
      */
     @GET("/user/watchlist/shows.json/{apikey}/{username}")
     List<TvShow> watchlistShows(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -76,7 +76,7 @@ public interface UserService {
      */
     @GET("/user/library/shows/all.json/{apikey}/{username}")
     List<TvShow> libraryShowsAll(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -88,7 +88,7 @@ public interface UserService {
      */
     @GET("/user/library/shows/all.json/{apikey}/{username}/extended")
     List<TvShow> libraryShowsAllExtended(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -100,7 +100,34 @@ public interface UserService {
      */
     @GET("/user/library/shows/all.json/{apikey}/{username}/min")
     List<TvShow> libraryShowsAllMinimum(
-            @Path("username") String username
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
+     * data with local media center. Protected users won't return any data unless you are friends.
+     */
+    @GET("/user/library/shows/watched.json/{apikey}/{username}")
+    List<TvShow> libraryShowsWatched(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
+     * data with local media center. Protected users won't return any data unless you are friends.
+     */
+    @GET("/user/library/shows/watched.json/{apikey}/{username}/extended")
+    List<TvShow> libraryShowsWatchedExtended(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
+     * data with local media center. Protected users won't return any data unless you are friends.
+     */
+    @GET("/user/library/shows/watched.json/{apikey}/{username}/min")
+    List<TvShow> libraryShowsWatchedMinimum(
+            @EncodedPath("username") String username
     );
 
 }

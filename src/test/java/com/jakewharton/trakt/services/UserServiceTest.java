@@ -39,6 +39,24 @@ public class UserServiceTest extends BaseTestCase {
         assertThat(shows.get(0)).isNotNull();
     }
 
+    public void test_libraryShowsWatched() {
+        List<TvShow> shows = getManager().userService().libraryShowsWatched("JakeWharton");
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+    }
+
+    public void test_libraryShowsWatchedExtended() {
+        List<TvShow> shows = getManager().userService().libraryShowsWatchedExtended("JakeWharton");
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+    }
+
+    public void test_libraryShowsWatchedMin() {
+        List<TvShow> shows = getManager().userService().libraryShowsWatchedMinimum("JakeWharton");
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+    }
+
     public void test_watchlistMovies() {
         List<Movie> movies = getManager().userService().watchlistMovies("justin");
         assertThat(movies).isNotEmpty();
