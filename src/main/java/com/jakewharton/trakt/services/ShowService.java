@@ -90,6 +90,30 @@ public interface ShowService {
             @Body Season season
     );
 
+    /**
+     * Add all episodes for a show to your library collection.
+     */
+    @POST("/show/library/{apikey}")
+    void showLibrary(
+            @Body Show show
+    );
+
+    /**
+     * Remove an entire show (including all episodes) from your library collection.
+     */
+    @POST("/show/unlibrary/{apikey}")
+    void showUnlibrary(
+            @Body Show show
+    );
+
+    /**
+     * Add all episodes for a show watched outside of trakt to your library.
+     */
+    @POST("/show/seen/{apikey}")
+    void showSeen(
+            @Body Show show
+    );
+
     @GET("/show/summary.json/{apikey}/{title}")
     TvShow summary(
             @Path("title") String slug
