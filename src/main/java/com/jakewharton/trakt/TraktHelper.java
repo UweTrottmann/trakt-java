@@ -46,6 +46,8 @@ public abstract class TraktHelper {
      */
     private static final TimeZone TRAKT_TIME_ZONE = TimeZone.getTimeZone("GMT-8:00");
 
+    private static final long SECOND_IN_MILLISECONDS = 1000;
+
     /**
      * Create a {@link GsonBuilder} and register all of the custom types needed in order to properly
      * deserialize complex Trakt-specific type.
@@ -74,7 +76,7 @@ public abstract class TraktHelper {
                 try {
                     long value = json.getAsLong();
                     Calendar date = Calendar.getInstance(TRAKT_TIME_ZONE);
-                    date.setTimeInMillis(value * TraktApiBuilder.MILLISECONDS_IN_SECOND);
+                    date.setTimeInMillis(value * SECOND_IN_MILLISECONDS);
                     return date.getTime();
                 } catch (NumberFormatException outer) {
                     try {
@@ -90,7 +92,7 @@ public abstract class TraktHelper {
             public Calendar deserialize(JsonElement json, Type typeOfT,
                     JsonDeserializationContext context) throws JsonParseException {
                 Calendar value = Calendar.getInstance(TRAKT_TIME_ZONE);
-                value.setTimeInMillis(json.getAsLong() * TraktApiBuilder.MILLISECONDS_IN_SECOND);
+                value.setTimeInMillis(json.getAsLong() * SECOND_IN_MILLISECONDS);
                 return value;
             }
         });
