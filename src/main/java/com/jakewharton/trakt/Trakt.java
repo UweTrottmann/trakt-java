@@ -19,12 +19,7 @@ import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-/**
- * Class to manage service creation with default settings.
- *
- * @author Jake Wharton <jakewharton@gmail.com>
- */
-public class ServiceManager {
+public class Trakt {
 
     /**
      * API key path parameter name.
@@ -60,7 +55,7 @@ public class ServiceManager {
     /**
      * Create a new manager instance.
      */
-    public ServiceManager() {
+    public Trakt() {
     }
 
     /**
@@ -70,7 +65,7 @@ public class ServiceManager {
      * @param username     Username.
      * @param passwordSha1 SHA1 of user password.
      */
-    public ServiceManager setAuthentication(String username, String passwordSha1) {
+    public Trakt setAuthentication(String username, String passwordSha1) {
         mUsername = username;
         mPasswordSha1 = passwordSha1;
         return this;
@@ -81,12 +76,12 @@ public class ServiceManager {
      *
      * @param key trakt API key value.
      */
-    public ServiceManager setApiKey(String key) {
+    public Trakt setApiKey(String key) {
         mApiKey = key;
         return this;
     }
 
-    public ServiceManager setIsDebug(boolean isDebug) {
+    public Trakt setIsDebug(boolean isDebug) {
         mIsDebug = isDebug;
         return this;
     }

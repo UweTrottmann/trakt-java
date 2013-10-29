@@ -7,7 +7,7 @@ public abstract class BaseTestCase extends TestCase {
     public static final String USERNAME = "sgtest";
     public static final String PASSWORD_SHA_1 = "2a4d398c09ec9c6915d1f46710ceed9673fa4e3d";
 
-    private final ServiceManager manager = new ServiceManager();
+    private final Trakt manager = new Trakt();
 
     @Override
     public void setUp() {
@@ -16,7 +16,7 @@ public abstract class BaseTestCase extends TestCase {
         manager.setIsDebug(true);
     }
 
-    protected final ServiceManager getManager() {
+    protected final Trakt getManager() {
         return manager;
     }
 }
