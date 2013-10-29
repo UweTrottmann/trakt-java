@@ -26,7 +26,7 @@ public interface ActivityService {
      */
     @GET("/activity/user.json/{apikey}/{username}")
     Activity user(
-            @Path("username") String username
+            @EncodedPath("username") String username
     );
 
     /**
@@ -40,7 +40,7 @@ public interface ActivityService {
      */
     @GET("/activity/user.json/{apikey}/{username}")
     Activity user(
-            @Path("username") String username,
+            @EncodedPath("username") String username,
             @Query("min") Integer minimal,
             @Query("images") Integer images
     );
@@ -60,7 +60,7 @@ public interface ActivityService {
      */
     @GET("/activity/user.json/{apikey}/{username}/{types}/{actions}")
     Activity user(
-            @Path("username") String username,
+            @EncodedPath("username") String username,
             @EncodedPath("types") String types,
             @EncodedPath("actions") String actions,
             @Query("min") Integer minimal,
@@ -82,7 +82,7 @@ public interface ActivityService {
      */
     @GET("/activity/user.json/{apikey}/{username}/{types}/{actions}/{start_ts}")
     Activity user(
-            @Path("username") String username,
+            @EncodedPath("username") String username,
             @EncodedPath("types") String types,
             @EncodedPath("actions") String actions,
             @Path("start_ts") Long start_ts,
@@ -105,7 +105,7 @@ public interface ActivityService {
      */
     @GET("/activity/user.json/{apikey}/{username}/{types}/{actions}/{start_ts}/{end_ts}")
     Activity user(
-            @Path("username") String username,
+            @EncodedPath("username") String username,
             @EncodedPath("types") String types,
             @EncodedPath("actions") String actions,
             @Path("start_ts") Long start_ts,
