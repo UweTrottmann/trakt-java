@@ -67,10 +67,6 @@ public class ServiceManager {
         return new NetworkService();
     }
 
-    public static final ListService createListService() {
-        return new ListService();
-    }
-
     public static final RateService createRateService() {
         return new RateService();
     }
@@ -169,9 +165,7 @@ public class ServiceManager {
     }
 
     public ListService listService() {
-        ListService service = ServiceManager.createListService();
-        this.setupService(service);
-        return service;
+        return buildRestAdapter().create(ListService.class);
     }
 
     public MovieService movieService() {
