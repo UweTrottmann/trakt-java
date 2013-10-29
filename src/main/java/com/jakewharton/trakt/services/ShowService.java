@@ -74,6 +74,22 @@ public interface ShowService {
             @Body Episodes episodes
     );
 
+    /**
+     * Add all episodes for a season to your library collection.
+     */
+    @POST("/show/season/library/{apikey}")
+    void seasonLibrary(
+            @Body Season season
+    );
+
+    /**
+     * Add all episodes from a season watched outside of trakt to your library.
+     */
+    @POST("/show/library/seen/{apikey}")
+    void seasonSeen(
+            @Body Season season
+    );
+
     @GET("/show/summary.json/{apikey}/{title}")
     TvShow summary(
             @Path("title") String slug
@@ -94,7 +110,7 @@ public interface ShowService {
             @Path("title") int tvdbId
     );
 
-    public static class Episodes {
+    public static class Show {
 
         public String imdb_id;
 
@@ -103,6 +119,15 @@ public interface ShowService {
         public String title;
 
         public Integer year;
+    }
+
+    public static class Season extends Show {
+
+        public int season;
+
+    }
+
+    public static class Episodes extends Show {
 
         public List<Episode> episodes;
 
