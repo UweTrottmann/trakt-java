@@ -13,7 +13,7 @@ public class ActivityServiceTest extends BaseTestCase {
         //TODO
     }
 
-//	public void test_episodes() {
+    //	public void test_episodes() {
 //	    Activity activity = getManager().activityService().episodes("the-walking-dead", 2, 1).fire();
 //        assertNotNull("Result was null.", activity);
 //        //TODO
@@ -43,9 +43,12 @@ public class ActivityServiceTest extends BaseTestCase {
 //        //TODO
 //    }
 //
-//    public void test_user() {
-//        Activity activity = getManager().activityService().user("JakeWharton").fire();
-//        assertNotNull("Result was null.", activity);
-//        //TODO
-//    }
+    public void test_user() {
+        Activity activity = getManager().activityService().user("JakeWharton");
+        assertThat(activity).isNotNull();
+
+        activity = getManager().activityService()
+                .user("JakeWharton", "all", "checkin,seen", null, null);
+        assertThat(activity).isNotNull();
+    }
 }
