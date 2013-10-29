@@ -1,7 +1,20 @@
 package com.jakewharton.trakt;
 
-import com.jakewharton.trakt.services.*;
+import com.jakewharton.trakt.services.AccountService;
+import com.jakewharton.trakt.services.ActivityService;
+import com.jakewharton.trakt.services.CalendarService;
+import com.jakewharton.trakt.services.CommentService;
+import com.jakewharton.trakt.services.GenreService;
+import com.jakewharton.trakt.services.ListService;
+import com.jakewharton.trakt.services.MovieService;
+import com.jakewharton.trakt.services.NetworkService;
+import com.jakewharton.trakt.services.RateService;
+import com.jakewharton.trakt.services.RecommendationsService;
+import com.jakewharton.trakt.services.SearchService;
+import com.jakewharton.trakt.services.ShowService;
+import com.jakewharton.trakt.services.UserService;
 import com.jakewharton.trakt.util.Base64;
+
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -13,25 +26,66 @@ import retrofit.converter.GsonConverter;
  */
 public class ServiceManager {
 
-    /** trakt API URL. */
-    private static final String API_URL = "http://api.trakt.tv";
-
-    /** API key path parameter name. */
+    /**
+     * API key path parameter name.
+     */
     protected static final String PARAM_API_KEY = "apikey";
 
-    /** Whether to return more detailed log output. */
+    /**
+     * trakt API URL.
+     */
+    private static final String API_URL = "http://api.trakt.tv";
+
+    /**
+     * Whether to return more detailed log output.
+     */
     private boolean mIsDebug;
-    /** API key. */
+
+    /**
+     * API key.
+     */
     private String mApiKey;
-    /** User email. */
+
+    /**
+     * User email.
+     */
     private String mUsername;
-    /** User password. */
+
+    /**
+     * User password.
+     */
     private String mPasswordSha1;
 
 
-    /** Create a new manager instance. */
-    public ServiceManager() {}
+    /**
+     * Create a new manager instance.
+     */
+    public ServiceManager() {
+    }
 
+    public static final NetworkService createNetworkService() {
+        return new NetworkService();
+    }
+
+    public static final GenreService createGenreService() {
+        return new GenreService();
+    }
+
+    public static final ListService createListService() {
+        return new ListService();
+    }
+
+    public static final RateService createRateService() {
+        return new RateService();
+    }
+
+    public static final SearchService createSearchService() {
+        return new SearchService();
+    }
+
+    public static final CommentService createCommentService() {
+        return new CommentService();
+    }
 
     /**
      * POST API methods on trakt require basic setAuthentication. You must set your trakt username
@@ -101,18 +155,15 @@ public class ServiceManager {
     }
 
     public AccountService accountService() {
-        AccountService service = buildRestAdapter().create(AccountService.class);
-        return service;
+        return buildRestAdapter().create(AccountService.class);
     }
 
     public ActivityService activityService() {
-        ActivityService service = buildRestAdapter().create(ActivityService.class);
-        return service;
+        return buildRestAdapter().create(ActivityService.class);
     }
 
     public CalendarService calendarService() {
-        CalendarService service = buildRestAdapter().create(CalendarService.class);
-        return service;
+        return buildRestAdapter().create(CalendarService.class);
     }
 
     public NetworkService networkService() {
@@ -134,8 +185,7 @@ public class ServiceManager {
     }
 
     public MovieService movieService() {
-        MovieService service = buildRestAdapter().create(MovieService.class);
-        return service;
+        return buildRestAdapter().create(MovieService.class);
     }
 
     public RateService rateService() {
@@ -145,9 +195,7 @@ public class ServiceManager {
     }
 
     public RecommendationsService recommendationsService() {
-        RecommendationsService service = ServiceManager.createRecommendationsService();
-        this.setupService(service);
-        return service;
+        return buildRestAdapter().create(RecommendationsService.class);
     }
 
     public SearchService searchService() {
@@ -163,40 +211,10 @@ public class ServiceManager {
     }
 
     public ShowService showService() {
-        ShowService service = buildRestAdapter().create(ShowService.class);
-        return service;
+        return buildRestAdapter().create(ShowService.class);
     }
 
     public UserService userService() {
-        UserService service = buildRestAdapter().create(UserService.class);
-        return service;
-    }
-
-    public static final NetworkService createNetworkService() {
-        return new NetworkService();
-    }
-
-    public static final GenreService createGenreService() {
-        return new GenreService();
-    }
-
-    public static final ListService createListService() {
-        return new ListService();
-    }
-
-    public static final RateService createRateService() {
-        return new RateService();
-    }
-
-    public static final RecommendationsService createRecommendationsService() {
-        return new RecommendationsService();
-    }
-
-    public static final SearchService createSearchService() {
-        return new SearchService();
-    }
-
-    public static final CommentService createCommentService() {
-        return new CommentService();
+        return buildRestAdapter().create(UserService.class);
     }
 }
