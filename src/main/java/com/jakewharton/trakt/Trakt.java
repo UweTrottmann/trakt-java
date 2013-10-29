@@ -86,24 +86,10 @@ public class Trakt {
         return this;
     }
 
-    /**
-     * Set up a new service with the defaults.
-     *
-     * @param service Service to set up.
-     */
-    private void setupService(TraktApiService service) {
-        if (this.mApiKey != null) {
-            service.setApiKey(this.mApiKey);
-        }
-        if ((this.mUsername != null) && (this.mPasswordSha1 != null)) {
-            service.setAuthentication(this.mUsername, this.mPasswordSha1);
-        }
-    }
-
     private RestAdapter buildRestAdapter() {
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setServer(API_URL)
-                .setConverter(new GsonConverter(TraktApiService.getGsonBuilder().create()));
+                .setConverter(new GsonConverter(TraktHelper.getGsonBuilder().create()));
 
         // if available, send mUsername and password in header
         if ((mUsername != null) && (mPasswordSha1 != null)) {

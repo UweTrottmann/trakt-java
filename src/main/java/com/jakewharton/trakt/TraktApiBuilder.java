@@ -70,7 +70,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
 
 
     /** Service instance. */
-    private final TraktApiService service;
+    private final TraktHelper service;
 
     /** Type token of return type. */
     private final TypeToken<T> token;
@@ -89,7 +89,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
      * @param token Return type token.
      * @param methodUri URI method format string.
      */
-    public TraktApiBuilder(TraktApiService service, TypeToken<T> token, String methodUri) {
+    public TraktApiBuilder(TraktHelper service, TypeToken<T> token, String methodUri) {
         this(service, token, methodUri, HttpMethod.Get);
     }
 
@@ -101,7 +101,7 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
      * @param urlFormat URL format string.
      * @param method HTTP method.
      */
-    public TraktApiBuilder(TraktApiService service, TypeToken<T> token, String urlFormat, HttpMethod method) {
+    public TraktApiBuilder(TraktHelper service, TypeToken<T> token, String urlFormat, HttpMethod method) {
         super((service.getUseSsl() ? BASE_URL_SSL : BASE_URL) + urlFormat);
 
         this.service = service;
