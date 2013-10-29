@@ -43,6 +43,22 @@ public interface ShowService {
     );
 
     /**
+     * Add episodes to your library collection.
+     */
+    @POST("/show/episode/library/{apikey}")
+    void episodeLibrary(
+            @Body Episodes episodes
+    );
+
+    /**
+     * Remove episodes from your library collection.
+     */
+    @POST("/show/episode/unlibrary/{apikey}")
+    void episodeUnlibrary(
+            @Body Episodes episodes
+    );
+
+    /**
      * Add episodes watched outside of trakt to your library.
      */
     @POST("/show/episode/seen/{apikey}")
