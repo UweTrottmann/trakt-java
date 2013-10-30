@@ -162,6 +162,12 @@ public interface AccountService {
         String password;
 
         String email;
+
+        public NewAccount(String username, String passwordSha1Hash, String email) {
+            this.username = username;
+            this.password = passwordSha1Hash;
+            this.email = email;
+        }
     }
 
 }
