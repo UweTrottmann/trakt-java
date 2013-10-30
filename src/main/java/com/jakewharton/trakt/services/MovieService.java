@@ -1,6 +1,7 @@
 
 package com.jakewharton.trakt.services;
 
+import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
 
 import java.util.ArrayList;
@@ -29,6 +30,44 @@ public interface MovieService {
      */
     @POST("/movie/cancelwatching/{apikey}")
     Response cancelwatching();
+
+    /**
+     * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
+     */
+    @GET("/movie/comments.json/{apikey}/{title}")
+    List<Comment> comments(
+            @Path("title") int tmdbId
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/movie/comments.json/{apikey}/{title}/{type}")
+    List<Comment> comments(
+            @Path("title") int tmdbId,
+            @Path("type") String type
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
+     */
+    @GET("/movie/comments.json/{apikey}/{title}")
+    List<Comment> comments(
+            @Path("title") String imdbIdOrSlug
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/movie/comments.json/{apikey}/{title}/{type}")
+    List<Comment> comments(
+            @Path("title") String imdbIdOrSlug,
+            @Path("type") String type
+    );
 
     @POST("/movie/seen/{apikey}")
     void seen(
