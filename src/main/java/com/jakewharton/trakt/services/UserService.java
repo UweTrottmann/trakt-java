@@ -104,6 +104,36 @@ public interface UserService {
     );
 
     /**
+     * Returns all shows and episodes in a user's library collection. Collection items might include
+     * blu-rays, dvds, and digital downloads. Protected users won't return any data unless you are
+     * friends.
+     */
+    @GET("/user/library/shows/collection.json/{apikey}/{username}")
+    List<TvShow> libraryShowsCollection(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows and episodes in a user's library collection. Collection items might include
+     * blu-rays, dvds, and digital downloads. Protected users won't return any data unless you are
+     * friends.
+     */
+    @GET("/user/library/shows/collection.json/{apikey}/{username}/extended")
+    List<TvShow> libraryShowsCollectionExtended(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows and episodes in a user's library collection. Collection items might include
+     * blu-rays, dvds, and digital downloads. Protected users won't return any data unless you are
+     * friends.
+     */
+    @GET("/user/library/shows/collection.json/{apikey}/{username}/min")
+    List<TvShow> libraryShowsCollectionMinimum(
+            @EncodedPath("username") String username
+    );
+
+    /**
      * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
      * data with local media center. Protected users won't return any data unless you are friends.
      */
