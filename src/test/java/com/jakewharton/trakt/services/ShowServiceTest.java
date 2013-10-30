@@ -2,6 +2,7 @@ package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.Comment;
+import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 
@@ -16,13 +17,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ShowServiceTest extends BaseTestCase {
 
-    public void test_episodeComments() {
-        List<Comment> comments = getManager().showService().episodeComments("the-walking-dead", 1,
-                1);
-        assertThat(comments).isNotEmpty();
-        assertThat(comments.get(0)).isNotNull();
-    }
-//
+    //
 //	public void test_episodeSummary() {
 //		TvEntity entity = getManager().showService().episodeSummary("the-league", 1, 1).fire();
 //		assertNotNull("Result was null.", entity);
@@ -99,13 +94,21 @@ public class ShowServiceTest extends BaseTestCase {
 //		assertNotNull("Season episodes count was null.", season.episodes.count);
 //		assertNotNull("Season URL was null.", season.url);
 //		assertNotNull("Season images was null.", season.images); //TODO own test cases
-//	}
 
     public void test_comments() {
         List<Comment> shouts = getManager().showService().comments("the-walking-dead");
         assertThat(shouts).isNotEmpty();
         assertThat(shouts.get(0)).isNotNull();
     }
+
+    public void test_episodeComments() {
+        List<Comment> comments = getManager().showService().episodeComments("the-walking-dead", 1,
+                1);
+        assertThat(comments).isNotEmpty();
+        assertThat(comments.get(0)).isNotNull();
+    }
+
+//	}
 //
 //	public void test_watchingNow() {
 //		List<UserProfile> users = getManager().showService().watchingNow("the-walking-dead").fire();
@@ -116,10 +119,16 @@ public class ShowServiceTest extends BaseTestCase {
 //		}
 //	}
 
-    public void test_trending() {
-        List<TvShow> shows = getManager().showService().trending();
-        assertThat(shows).isNotEmpty();
-        assertThat(shows.get(0)).isNotNull();
+    public void test_episodeStats() {
+        Stats stats = getManager().showService().episodeStats("the-walking-dead", 1, 1);
+        assertThat(stats).isNotNull();
+        assertThat(stats.ratings).isNotNull();
+        assertThat(stats.ratings.distribution).isNotNull();
+        assertThat(stats.scrobbles).isNotNull();
+        assertThat(stats.checkins).isNotNull();
+        assertThat(stats.collection).isNotNull();
+        assertThat(stats.lists).isNotNull();
+        assertThat(stats.comments).isNotNull();
     }
 
     public void test_summary() {
@@ -146,6 +155,12 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.imdb_id).isEqualTo("tt1520211");
         assertThat(show.tvdb_id).isEqualTo(153021);
         assertThat(show.tvrage_id).isEqualTo(25056);
+    }
+
+    public void test_trending() {
+        List<TvShow> shows = getManager().showService().trending();
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
     }
 
 //    public void test_related() {

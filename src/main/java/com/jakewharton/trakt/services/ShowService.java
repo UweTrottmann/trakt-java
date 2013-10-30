@@ -4,6 +4,7 @@ import com.jakewharton.trakt.entities.Checkin;
 import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvShow;
 
 import java.util.ArrayList;
@@ -162,6 +163,20 @@ public interface ShowService {
     @POST("/show/episode/unseen/{apikey}")
     void episodeUnseen(
             @Body Episodes episodes
+    );
+
+    @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
+    Stats episodeStats(
+            @Path("title") int showTvdbId,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
+    Stats episodeStats(
+            @Path("title") String slug,
+            @Path("season") int season,
+            @Path("episode") int episode
     );
 
     /**
