@@ -43,6 +43,23 @@ public interface CommentService {
             this.season = season;
             this.episode = episode;
         }
+
+        /**
+         * <em>Optional.</em> Set to true to indicate the shout is a spoiler. Defaults to false.
+         */
+        public EpisodeComment spoiler(boolean isSpoiler) {
+            this.spoiler = isSpoiler;
+            return this;
+        }
+
+        /**
+         * <em>Optional.</em> Set to true to indicate the comment is a 200+ word review. Defaults to
+         * false.
+         */
+        public EpisodeComment review(boolean isReview) {
+            this.review = isReview;
+            return this;
+        }
     }
 
     public static class ShowComment extends ShowService.Show {
