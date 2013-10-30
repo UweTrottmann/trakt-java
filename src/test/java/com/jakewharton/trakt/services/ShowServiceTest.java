@@ -10,6 +10,7 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 import com.jakewharton.trakt.enumerations.Status;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,17 @@ public class ShowServiceTest extends BaseTestCase {
     public void test_episodeSeen() {
         Response response = getManager().showService().episodeSeen(new ShowService.Episodes(
                 153021, 1, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_episodesSeen() {
+        List<ShowService.Episodes.Episode> episodes = new ArrayList<ShowService.Episodes.Episode>();
+        episodes.add(new ShowService.Episodes.Episode(1, 1));
+        episodes.add(new ShowService.Episodes.Episode(1, 2));
+        Response response = getManager().showService().episodeSeen(new ShowService.Episodes(
+                153021, episodes
         ));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);
@@ -123,6 +135,33 @@ public class ShowServiceTest extends BaseTestCase {
     public void test_episodeUnseen() {
         Response response = getManager().showService().episodeUnseen(new ShowService.Episodes(
                 153021, 1, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_episodesUnseen() {
+        List<ShowService.Episodes.Episode> episodes = new ArrayList<ShowService.Episodes.Episode>();
+        episodes.add(new ShowService.Episodes.Episode(1, 1));
+        episodes.add(new ShowService.Episodes.Episode(1, 2));
+        Response response = getManager().showService().episodeUnseen(new ShowService.Episodes(
+                153021, episodes
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_seasonLibrary() {
+        Response response = getManager().showService().seasonLibrary(new ShowService.Season(
+                153021, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_seasonSeen() {
+        Response response = getManager().showService().seasonSeen(new ShowService.Season(
+                153021, 1
         ));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);

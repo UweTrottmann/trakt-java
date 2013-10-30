@@ -204,15 +204,15 @@ public interface ShowService {
      * Add all episodes for a season to your library collection.
      */
     @POST("/show/season/library/{apikey}")
-    Void seasonLibrary(
+    Response seasonLibrary(
             @Body Season season
     );
 
     /**
      * Add all episodes from a season watched outside of trakt to your library.
      */
-    @POST("/show/library/seen/{apikey}")
-    Void seasonSeen(
+    @POST("/show/season/seen/{apikey}")
+    Response seasonSeen(
             @Body Season season
     );
 
