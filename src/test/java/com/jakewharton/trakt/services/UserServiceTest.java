@@ -77,6 +77,13 @@ public class UserServiceTest extends BaseTestCase {
         assertThat(shows.get(0)).isNotNull();
     }
 
+    public void test_profile() {
+        UserProfile profile = getManager().userService().profile("justin");
+        assertThat(profile).isNotNull();
+        assertThat(profile.username).isEqualTo("justin");
+        assertThat(profile.watched).isNotNull();
+    }
+
     public void test_watchlistMovies() {
         List<Movie> movies = getManager().userService().watchlistMovies("justin");
         assertThat(movies).isNotEmpty();

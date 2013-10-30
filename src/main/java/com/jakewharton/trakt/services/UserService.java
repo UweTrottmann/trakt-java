@@ -44,30 +44,6 @@ public interface UserService {
     );
 
     /**
-     * Returns all movies in a user's watchlist. Each movie will indicate when it was added to the
-     * watchlist. Protected users won't return any data unless you are friends.
-     *
-     * @param username You can get a username by browsing the website and looking at the URL when on
-     *                 a profile page.
-     */
-    @GET("/user/watchlist/movies.json/{apikey}/{username}")
-    List<Movie> watchlistMovies(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns all shows in a user's watchlist. Each show will indicate when it was added to the
-     * watchlist. Protected users won't return any data unless you are friends.
-     *
-     * @param username You can get a username by browsing the website and looking at the URL when on
-     *                 a profile page.
-     */
-    @GET("/user/watchlist/shows.json/{apikey}/{username}")
-    List<TvShow> watchlistShows(
-            @EncodedPath("username") String username
-    );
-
-    /**
      * Returns all shows in a user's library. Each show will indicate how many plays it has.
      * Protected users won't return any data unless you are friends.
      *
@@ -157,6 +133,39 @@ public interface UserService {
      */
     @GET("/user/library/shows/watched.json/{apikey}/{username}/min")
     List<TvShow> libraryShowsWatchedMinimum(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns profile information for a user. Protected users won't return any data unless you are
+     * friends.
+     */
+    @GET("/user/profile.json/{apikey}/{username}")
+    UserProfile profile(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all movies in a user's watchlist. Each movie will indicate when it was added to the
+     * watchlist. Protected users won't return any data unless you are friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     */
+    @GET("/user/watchlist/movies.json/{apikey}/{username}")
+    List<Movie> watchlistMovies(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows in a user's watchlist. Each show will indicate when it was added to the
+     * watchlist. Protected users won't return any data unless you are friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     */
+    @GET("/user/watchlist/shows.json/{apikey}/{username}")
+    List<TvShow> watchlistShows(
             @EncodedPath("username") String username
     );
 
