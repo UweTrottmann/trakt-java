@@ -17,6 +17,5 @@ public class Response implements TraktEntity {
     public Movie movie;
     public String message;
     public String error;
-    public int wait;
 
 }

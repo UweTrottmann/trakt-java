@@ -13,11 +13,10 @@ public class CheckinResponse extends Response {
     }
 
     public Timestamps timestamps;
-    public Movie movie;
-    public TvShow show;
     public boolean facebook;
     public boolean twitter;
     public boolean tumblr;
     public boolean path;
+    public int wait;
 
 }
