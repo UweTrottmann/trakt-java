@@ -7,13 +7,15 @@ public abstract class BaseTestCase extends TestCase {
     public static final String USERNAME = "sgtest";
     public static final String PASSWORD_SHA_1 = "2a4d398c09ec9c6915d1f46710ceed9673fa4e3d";
 
+    private static final boolean DEBUG = false;
+
     private final Trakt manager = new Trakt();
 
     @Override
     public void setUp() {
         manager.setApiKey(API_KEY);
         manager.setAuthentication(USERNAME, PASSWORD_SHA_1);
-        manager.setIsDebug(true);
+        manager.setIsDebug(DEBUG);
     }
 
     protected final Trakt getManager() {
