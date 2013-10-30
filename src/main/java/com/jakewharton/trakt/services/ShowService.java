@@ -1,9 +1,9 @@
 package com.jakewharton.trakt.services;
 
-import com.jakewharton.trakt.entities.Checkin;
 import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvShow;
 
@@ -42,7 +42,7 @@ public interface ShowService {
      */
     @POST("/show/checkin/{apikey}")
     CheckinResponse checkin(
-            @Body Checkin checkin
+            @Body ShowCheckin checkin
     );
 
     /**
@@ -252,6 +252,51 @@ public interface ShowService {
     @GET("/shows/trending.json/{apikey}")
     List<TvShow> trending();
 
+    public class ShowCheckin extends Show {
+
+        public Integer season;
+
+        public Integer episode;
+
+        public Integer episode_tvdb_id;
+
+        public Integer duration;
+
+        public Integer venue_id;
+
+        public String venue_name;
+
+        public Share share;
+
+        public String message;
+
+        public String app_version;
+
+        public String app_date;
+
+        /**
+         * @param appVersion Version number of the app, be as specific as you can including nightly
+         *                   build number, etc. Used to help debug.
+         * @param appDate    Build date of the media center. Used to help debug.
+         */
+        public ShowCheckin(int showTvdbId, int season, int episode, String appVersion,
+                String appDate) {
+            super(showTvdbId);
+            this.season = season;
+            this.episode = episode;
+            this.app_version = appVersion;
+            this.app_date = appDate;
+        }
+
+        public ShowCheckin(int showTvdbId, int season, int episode, String message,
+                String appVersion,
+                String appDate) {
+            this(showTvdbId, season, episode, appVersion, appDate);
+            this.message = message;
+        }
+
+    }
+
     public static class Show {
 
         public String imdb_id;
@@ -262,8 +307,8 @@ public interface ShowService {
 
         public Integer year;
 
-        public Show(int tvdbId) {
-            this.tvdb_id = tvdbId;
+        public Show(int showTvdbId) {
+            this.tvdb_id = showTvdbId;
         }
 
         public Show(String imdbId) {
@@ -280,8 +325,8 @@ public interface ShowService {
 
         public int season;
 
-        public Season(int tvdbId, int season) {
-            super(tvdbId);
+        public Season(int showTvdbId, int season) {
+            super(showTvdbId);
             this.season = season;
         }
     }
@@ -290,14 +335,14 @@ public interface ShowService {
 
         public List<Episode> episodes;
 
-        public Episodes(int tvdbId, int season, int episode) {
-            super(tvdbId);
+        public Episodes(int showTvdbId, int season, int episode) {
+            super(showTvdbId);
             episodes = new ArrayList<Episode>();
             episodes.add(new Episode(season, episode));
         }
 
-        public Episodes(int tvdbId, List<Episode> episodes) {
-            super(tvdbId);
+        public Episodes(int showTvdbId, List<Episode> episodes) {
+            super(showTvdbId);
             this.episodes = episodes;
         }
 

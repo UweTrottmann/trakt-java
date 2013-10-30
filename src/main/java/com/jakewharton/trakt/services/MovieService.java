@@ -1,8 +1,10 @@
 
 package com.jakewharton.trakt.services;
 
+import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
 
 import java.util.ArrayList;
@@ -31,6 +33,16 @@ public interface MovieService {
      */
     @POST("/movie/cancelwatching/{apikey}")
     Response cancelwatching();
+
+    /**
+     * Check into a movie on trakt. Think of this method as in between a seen and a scrobble. After
+     * checking in, the trakt will automatically display it as watching then switch over to watched
+     * status once the duration has elapsed.
+     */
+    @POST("/movie/checkin/{apikey}")
+    CheckinResponse checkin(
+            @Body MovieCheckin checkin
+    );
 
     /**
      * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
@@ -99,6 +111,39 @@ public interface MovieService {
     com.jakewharton.trakt.entities.Movie summary(
             @Path("title") int tmdbId
     );
+
+    public static class MovieCheckin extends Movie {
+
+        public Integer duration;
+
+        public Integer venue_id;
+
+        public String venue_name;
+
+        public Share share;
+
+        public String message;
+
+        public String app_version;
+
+        public String app_date;
+
+        /**
+         * @param appVersion Version number of the app, be as specific as you can including nightly
+         *                   build number, etc. Used to help debug.
+         * @param appDate    Build date of the media center. Used to help debug.
+         */
+        public MovieCheckin(String imdbId, String appVersion, String appDate) {
+            super(imdbId);
+            this.app_version = appVersion;
+            this.app_date = appDate;
+        }
+
+        public MovieCheckin(String imdbId, String message, String appVersion, String appDate) {
+            this(imdbId, appVersion, appDate);
+            this.message = message;
+        }
+    }
 
     public static class Movie {
 
