@@ -220,7 +220,7 @@ public interface ShowService {
      * Add all episodes for a show to your library collection.
      */
     @POST("/show/library/{apikey}")
-    Void showLibrary(
+    Response showLibrary(
             @Body Show show
     );
 
@@ -228,7 +228,7 @@ public interface ShowService {
      * Remove an entire show (including all episodes) from your library collection.
      */
     @POST("/show/unlibrary/{apikey}")
-    Void showUnlibrary(
+    Response showUnlibrary(
             @Body Show show
     );
 
@@ -236,7 +236,7 @@ public interface ShowService {
      * Add all episodes for a show watched outside of trakt to your library.
      */
     @POST("/show/seen/{apikey}")
-    Void showSeen(
+    Response showSeen(
             @Body Show show
     );
 

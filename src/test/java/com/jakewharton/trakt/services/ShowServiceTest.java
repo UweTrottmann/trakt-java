@@ -2,11 +2,13 @@ package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.Comment;
+import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
+import com.jakewharton.trakt.enumerations.Status;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -94,6 +96,24 @@ public class ShowServiceTest extends BaseTestCase {
                 episode.in_watchlist.booleanValue());
     }
 
+    public void test_showLibrary() {
+        Response response = getManager().showService().showLibrary(new ShowService.Show(153021));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_showSeen() {
+        Response response = getManager().showService().showSeen(new ShowService.Show(153021));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_showUnlibrary() {
+        Response response = getManager().showService().showUnlibrary(new ShowService.Show(153021));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
     public void test_stats() {
         Stats stats = getManager().showService().stats("the-walking-dead");
         assertThat(stats).isNotNull();
@@ -136,5 +156,6 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(shows).isNotEmpty();
         assertThat(shows.get(0)).isNotNull();
     }
+
 
 }
