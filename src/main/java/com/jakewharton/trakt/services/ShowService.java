@@ -224,6 +224,9 @@ public interface ShowService {
             @Path("title") int tvdbId
     );
 
+    @GET("/shows/trending.json/{apikey}")
+    List<TvShow> trending();
+
     public static class Show {
 
         public String imdb_id;

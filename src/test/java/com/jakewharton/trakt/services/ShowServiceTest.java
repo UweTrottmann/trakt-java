@@ -115,13 +115,12 @@ public class ShowServiceTest extends BaseTestCase {
 //			assertNotNull("User was null.", users.get(0));
 //		}
 //	}
-//
-//	public void test_trending() {
-//		List<TvShow> trending = getManager().showService().trending().fire();
-//		assertNotNull("Result was null.", trending);
-//		assertFalse("Trending list was empty.", trending.isEmpty());
-//		assertNotNull("Trending item was null.", trending.get(0));
-//	}
+
+    public void test_trending() {
+        List<TvShow> shows = getManager().showService().trending();
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+    }
 
     public void test_summary() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
