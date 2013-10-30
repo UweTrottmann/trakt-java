@@ -92,17 +92,17 @@ public class Trakt {
                 .setConverter(new GsonConverter(TraktHelper.getGsonBuilder().create()));
 
         // if available, send mUsername and password in header
-        if ((mUsername != null) && (mPasswordSha1 != null)) {
-            builder.setRequestInterceptor(new RequestInterceptor() {
-                @Override
-                public void intercept(RequestFacade requestFacade) {
-                    requestFacade.addPathParam(PARAM_API_KEY, mApiKey);
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade requestFacade) {
+                requestFacade.addPathParam(PARAM_API_KEY, mApiKey);
+                if ((mUsername != null) && (mPasswordSha1 != null)) {
                     String source = mUsername + ":" + mPasswordSha1;
                     String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
                     requestFacade.addHeader("Authorization", authorization);
                 }
-            });
-        }
+            }
+        });
 
         if (mIsDebug) {
             builder.setLogLevel(RestAdapter.LogLevel.FULL);
