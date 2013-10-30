@@ -97,19 +97,53 @@ public interface MovieService {
             @Path("title") int tmdbId
     );
 
+    /**
+     * Returns lots of stats for for a movie including all ratings breakdowns, scrobbles, checkins,
+     * collections, lists, and comments.
+     */
     @GET("/movie/stats.json/{apikey}/{title}")
     Stats stats(
             @Path("title") String imdbIdOrslug
     );
 
+    /**
+     * Returns information for a movie including ratings and top watchers.
+     */
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
             @Path("title") String imdbIdOrSlug
     );
 
+    /**
+     * Returns information for a movie including ratings and top watchers.
+     */
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
             @Path("title") int tmdbId
+    );
+
+    /**
+     * Remove movies watched outside of trakt from your library.
+     */
+    @POST("/movie/unseen/{apikey}")
+    void unseen(
+            @Body Movies movies
+    );
+
+    /**
+     * Remove one or more movies from your watchlist.
+     */
+    @POST("/movie/unwatchlist/{apikey}")
+    void unwatchlist(
+            @Body Movies movies
+    );
+
+    /**
+     * Add one or more movies to your watchlist.
+     */
+    @POST("/movie/watchlist/{apikey}")
+    void watchlist(
+            @Body Movies movies
     );
 
     public static class MovieCheckin extends Movie {
@@ -180,6 +214,10 @@ public interface MovieService {
 
         public SeenMovie(int tmdbId) {
             super(tmdbId);
+        }
+
+        public SeenMovie(String title, int year) {
+            super(title, year);
         }
     }
 
