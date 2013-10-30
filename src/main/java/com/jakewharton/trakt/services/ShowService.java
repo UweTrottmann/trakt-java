@@ -138,7 +138,7 @@ public interface ShowService {
      * Add episodes to your library collection.
      */
     @POST("/show/episode/library/{apikey}")
-    Void episodeLibrary(
+    Response episodeLibrary(
             @Body Episodes episodes
     );
 
@@ -146,7 +146,7 @@ public interface ShowService {
      * Remove episodes from your library collection.
      */
     @POST("/show/episode/unlibrary/{apikey}")
-    Void episodeUnlibrary(
+    Response episodeUnlibrary(
             @Body Episodes episodes
     );
 
@@ -154,7 +154,7 @@ public interface ShowService {
      * Add episodes watched outside of trakt to your library.
      */
     @POST("/show/episode/seen/{apikey}")
-    Void episodeSeen(
+    Response episodeSeen(
             @Body Episodes episodes
     );
 
@@ -162,7 +162,7 @@ public interface ShowService {
      * Remove episodes watched outside of trakt from your library.
      */
     @POST("/show/episode/unseen/{apikey}")
-    Void episodeUnseen(
+    Response episodeUnseen(
             @Body Episodes episodes
     );
 

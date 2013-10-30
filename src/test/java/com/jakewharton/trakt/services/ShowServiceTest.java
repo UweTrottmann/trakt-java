@@ -32,6 +32,22 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(comments.get(0)).isNotNull();
     }
 
+    public void test_episodeLibrary() {
+        Response response = getManager().showService().episodeLibrary(new ShowService.Episodes(
+                153021, 1, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_episodeSeen() {
+        Response response = getManager().showService().episodeSeen(new ShowService.Episodes(
+                153021, 1, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
     public void test_episodeStats() {
         Stats stats = getManager().showService().episodeStats("the-walking-dead", 1, 1);
         assertThat(stats).isNotNull();
@@ -94,6 +110,22 @@ public class ShowServiceTest extends BaseTestCase {
         assertNotNull("Episode in watchlist boolean was null.", episode.in_watchlist);
         assertEquals("Episode in watchlist boolean does not match.", false,
                 episode.in_watchlist.booleanValue());
+    }
+
+    public void test_episodeUnlibrary() {
+        Response response = getManager().showService().episodeUnlibrary(new ShowService.Episodes(
+                153021, 1, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_episodeUnseen() {
+        Response response = getManager().showService().episodeUnseen(new ShowService.Episodes(
+                153021, 1, 1
+        ));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
     public void test_showLibrary() {
