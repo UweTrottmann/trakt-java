@@ -3,6 +3,7 @@ package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Stats;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,16 @@ public interface MovieService {
     @POST("/movie/library/{apikey}")
     void library(
             @Body Movies movies
+    );
+
+    @GET("/movie/stats.json/{apikey}/{title}")
+    Stats stats(
+            @Path("title") int tmdbId
+    );
+
+    @GET("/movie/stats.json/{apikey}/{title}")
+    Stats stats(
+            @Path("title") String imdbIdOrslug
     );
 
     @GET("/movie/summary.json/{apikey}/{title}")
