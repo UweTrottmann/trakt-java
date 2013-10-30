@@ -10,7 +10,8 @@ import java.util.List;
 public class TvShow extends MediaBase implements TraktEntity {
     private static final long serialVersionUID = 862473930551420996L;
 
-    @SerializedName("first_aired") public Date firstAired;
+    public Date first_aired;
+    public long first_aired_utc;
     public String country;
     public String overview;
     public Integer runtime;

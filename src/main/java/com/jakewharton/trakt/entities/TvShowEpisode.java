@@ -1,28 +1,41 @@
 package com.jakewharton.trakt.entities;
 
-import com.google.gson.annotations.SerializedName;
-import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
 
-import java.util.Calendar;
 import java.util.Date;
 
-public class TvShowEpisode implements TraktEntity {
-    private static final long serialVersionUID = -1550739539663499211L;
+public class TvShowEpisode {
 
-    public Integer season;
-    public Integer number;
+    public int season;
+
+    public int number;
+
+    public String imdb_id;
+
+    public int tvdb_id;
+
     public String title;
+
     public String overview;
+
     public String url;
-    @SerializedName("first_aired") public Date firstAired;
-    public Calendar inserted;
-    public Integer plays;
+
+    public Date first_aired;
+
+    public long first_aired_utc;
+
     public Images images;
+
     public Ratings ratings;
+
     public Boolean watched;
-    public Rating rating;
+
+    public Integer plays;
+
     public Rating rating_advanced;
-    @SerializedName("in_watchlist") public Boolean inWatchlist;
+
+    public Boolean in_watchlist;
+
+    public Boolean in_collection;
 
 }
