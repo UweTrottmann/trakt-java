@@ -131,6 +131,18 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(stats.comments).isNotNull();
     }
 
+    public void test_stats() {
+        Stats stats = getManager().showService().stats("the-walking-dead");
+        assertThat(stats).isNotNull();
+        assertThat(stats.ratings).isNotNull();
+        assertThat(stats.ratings.distribution).isNotNull();
+        assertThat(stats.scrobbles).isNotNull();
+        assertThat(stats.checkins).isNotNull();
+        assertThat(stats.collection).isNotNull();
+        assertThat(stats.lists).isNotNull();
+        assertThat(stats.comments).isNotNull();
+    }
+
     public void test_summary() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
         cal.set(2010, 9, 31, 21, 0);

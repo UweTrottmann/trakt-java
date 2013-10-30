@@ -219,6 +219,16 @@ public interface ShowService {
             @Body Show show
     );
 
+    @GET("/show/stats.json/{apikey}/{title}")
+    Stats stats(
+            @Path("title") int showTvdbId
+    );
+
+    @GET("/show/stats.json/{apikey}/{title}")
+    Stats stats(
+            @Path("title") String slug
+    );
+
     @GET("/show/summary.json/{apikey}/{title}")
     TvShow summary(
             @Path("title") String slug
