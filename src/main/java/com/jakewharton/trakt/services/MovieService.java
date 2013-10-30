@@ -87,11 +87,18 @@ public interface MovieService {
             @Body Movies movies
     );
 
+    /**
+     * Add movies to your library collection.
+     */
     @POST("/movie/library/{apikey}")
     void library(
             @Body Movies movies
     );
 
+    /**
+     * Returns lots of stats for for a movie including all ratings breakdowns, scrobbles, checkins,
+     * collections, lists, and comments.
+     */
     @GET("/movie/stats.json/{apikey}/{title}")
     Stats stats(
             @Path("title") int tmdbId
