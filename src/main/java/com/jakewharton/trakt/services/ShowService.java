@@ -7,7 +7,6 @@ import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowEpisode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +176,16 @@ public interface ShowService {
     @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
     Stats episodeStats(
             @Path("title") String slug,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Returns information for an episode including ratings.
+     */
+    @GET("/show/episode/summary.json/{apikey}/{title}/{season}/{episode}")
+    TvEntity episodeSummary(
+            @Path("title") int showTvdbId,
             @Path("season") int season,
             @Path("episode") int episode
     );
