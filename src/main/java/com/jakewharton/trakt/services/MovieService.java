@@ -1,6 +1,7 @@
 
 package com.jakewharton.trakt.services;
 
+import com.jakewharton.trakt.entities.ActionResponse;
 import com.jakewharton.trakt.entities.CheckinResponse;
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
@@ -83,7 +84,7 @@ public interface MovieService {
     );
 
     @POST("/movie/seen/{apikey}")
-    Response seen(
+    ActionResponse seen(
             @Body Movies movies
     );
 
@@ -91,7 +92,7 @@ public interface MovieService {
      * Add movies to your library collection.
      */
     @POST("/movie/library/{apikey}")
-    Void library(
+    ActionResponse library(
             @Body Movies movies
     );
 
@@ -130,10 +131,18 @@ public interface MovieService {
     );
 
     /**
+     * Add movies to your library collection.
+     */
+    @POST("/movie/unlibrary/{apikey}")
+    Response unlibrary(
+            @Body Movies movies
+    );
+
+    /**
      * Remove movies watched outside of trakt from your library.
      */
     @POST("/movie/unseen/{apikey}")
-    Void unseen(
+    Response unseen(
             @Body Movies movies
     );
 
@@ -141,7 +150,7 @@ public interface MovieService {
      * Remove one or more movies from your watchlist.
      */
     @POST("/movie/unwatchlist/{apikey}")
-    Void unwatchlist(
+    Response unwatchlist(
             @Body Movies movies
     );
 
@@ -149,7 +158,7 @@ public interface MovieService {
      * Add one or more movies to your watchlist.
      */
     @POST("/movie/watchlist/{apikey}")
-    Void watchlist(
+    ActionResponse watchlist(
             @Body Movies movies
     );
 
