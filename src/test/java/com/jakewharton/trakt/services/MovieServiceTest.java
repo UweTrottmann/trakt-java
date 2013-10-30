@@ -17,6 +17,16 @@ public class MovieServiceTest extends BaseTestCase {
         assertThat(comments.get(0)).isNotNull();
     }
 
+    public void test_library() {
+        getManager().movieService().library(new MovieService.Movies(
+                new MovieService.SeenMovie("the-social-network-2010")));
+    }
+
+    public void test_seen() {
+        getManager().movieService().seen(new MovieService.Movies(
+                new MovieService.SeenMovie("the-social-network-2010")));
+    }
+
     public void test_stats() {
         Stats stats = getManager().movieService().stats("the-social-network-2010");
         assertThat(stats).isNotNull();

@@ -138,7 +138,7 @@ public interface ShowService {
      * Add episodes to your library collection.
      */
     @POST("/show/episode/library/{apikey}")
-    void episodeLibrary(
+    Void episodeLibrary(
             @Body Episodes episodes
     );
 
@@ -146,7 +146,7 @@ public interface ShowService {
      * Remove episodes from your library collection.
      */
     @POST("/show/episode/unlibrary/{apikey}")
-    void episodeUnlibrary(
+    Void episodeUnlibrary(
             @Body Episodes episodes
     );
 
@@ -154,7 +154,7 @@ public interface ShowService {
      * Add episodes watched outside of trakt to your library.
      */
     @POST("/show/episode/seen/{apikey}")
-    void episodeSeen(
+    Void episodeSeen(
             @Body Episodes episodes
     );
 
@@ -162,7 +162,7 @@ public interface ShowService {
      * Remove episodes watched outside of trakt from your library.
      */
     @POST("/show/episode/unseen/{apikey}")
-    void episodeUnseen(
+    Void episodeUnseen(
             @Body Episodes episodes
     );
 
@@ -204,7 +204,7 @@ public interface ShowService {
      * Add all episodes for a season to your library collection.
      */
     @POST("/show/season/library/{apikey}")
-    void seasonLibrary(
+    Void seasonLibrary(
             @Body Season season
     );
 
@@ -212,7 +212,7 @@ public interface ShowService {
      * Add all episodes from a season watched outside of trakt to your library.
      */
     @POST("/show/library/seen/{apikey}")
-    void seasonSeen(
+    Void seasonSeen(
             @Body Season season
     );
 
@@ -220,7 +220,7 @@ public interface ShowService {
      * Add all episodes for a show to your library collection.
      */
     @POST("/show/library/{apikey}")
-    void showLibrary(
+    Void showLibrary(
             @Body Show show
     );
 
@@ -228,7 +228,7 @@ public interface ShowService {
      * Remove an entire show (including all episodes) from your library collection.
      */
     @POST("/show/unlibrary/{apikey}")
-    void showUnlibrary(
+    Void showUnlibrary(
             @Body Show show
     );
 
@@ -236,7 +236,7 @@ public interface ShowService {
      * Add all episodes for a show watched outside of trakt to your library.
      */
     @POST("/show/seen/{apikey}")
-    void showSeen(
+    Void showSeen(
             @Body Show show
     );
 

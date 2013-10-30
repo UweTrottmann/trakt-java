@@ -83,7 +83,7 @@ public interface MovieService {
     );
 
     @POST("/movie/seen/{apikey}")
-    void seen(
+    Response seen(
             @Body Movies movies
     );
 
@@ -91,7 +91,7 @@ public interface MovieService {
      * Add movies to your library collection.
      */
     @POST("/movie/library/{apikey}")
-    void library(
+    Void library(
             @Body Movies movies
     );
 
@@ -133,7 +133,7 @@ public interface MovieService {
      * Remove movies watched outside of trakt from your library.
      */
     @POST("/movie/unseen/{apikey}")
-    void unseen(
+    Void unseen(
             @Body Movies movies
     );
 
@@ -141,7 +141,7 @@ public interface MovieService {
      * Remove one or more movies from your watchlist.
      */
     @POST("/movie/unwatchlist/{apikey}")
-    void unwatchlist(
+    Void unwatchlist(
             @Body Movies movies
     );
 
@@ -149,7 +149,7 @@ public interface MovieService {
      * Add one or more movies to your watchlist.
      */
     @POST("/movie/watchlist/{apikey}")
-    void watchlist(
+    Void watchlist(
             @Body Movies movies
     );
 
