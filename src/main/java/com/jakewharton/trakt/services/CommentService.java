@@ -17,19 +17,19 @@ public interface CommentService {
     );
 
     /**
-     * Add a comment (shout or review) to a show on trakt.
-     */
-    @POST("/comment/show/{apikey}")
-    Response show(
-            @Body ShowComment comment
-    );
-
-    /**
      * Add a comment (shout or review) to a movie on trakt.
      */
     @POST("/comment/movie/{apikey}")
     Response movie(
             @Body MovieComment comment
+    );
+
+    /**
+     * Add a comment (shout or review) to a show on trakt.
+     */
+    @POST("/comment/show/{apikey}")
+    Response show(
+            @Body ShowComment comment
     );
 
     public static class EpisodeComment extends ShowComment {
@@ -57,6 +57,37 @@ public interface CommentService {
          * false.
          */
         public EpisodeComment review(boolean isReview) {
+            this.review = isReview;
+            return this;
+        }
+    }
+
+    public static class MovieComment extends MovieService.Movie {
+
+        public String comment;
+
+        public Boolean spoiler;
+
+        public Boolean review;
+
+        public MovieComment(String imdbId, String comment) {
+            super(imdbId);
+            this.comment = comment;
+        }
+
+        /**
+         * <em>Optional.</em> Set to true to indicate the shout is a spoiler. Defaults to false.
+         */
+        public MovieComment spoiler(boolean isSpoiler) {
+            this.spoiler = isSpoiler;
+            return this;
+        }
+
+        /**
+         * <em>Optional.</em> Set to true to indicate the comment is a 200+ word review. Defaults to
+         * false.
+         */
+        public MovieComment review(boolean isReview) {
             this.review = isReview;
             return this;
         }
@@ -93,35 +124,5 @@ public interface CommentService {
         }
     }
 
-    public static class MovieComment extends MovieService.Movie {
-
-        public String comment;
-
-        public Boolean spoiler;
-
-        public Boolean review;
-
-        public MovieComment(String imdbId, String comment) {
-            super(imdbId);
-            this.comment = comment;
-        }
-
-        /**
-         * <em>Optional.</em> Set to true to indicate the shout is a spoiler. Defaults to false.
-         */
-        public MovieComment spoiler(boolean isSpoiler) {
-            this.spoiler = isSpoiler;
-            return this;
-        }
-
-        /**
-         * <em>Optional.</em> Set to true to indicate the comment is a 200+ word review. Defaults to
-         * false.
-         */
-        public MovieComment review(boolean isReview) {
-            this.review = isReview;
-            return this;
-        }
-    }
 
 }

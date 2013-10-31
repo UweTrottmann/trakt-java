@@ -24,6 +24,15 @@ public interface ListService {
             @Body UpdatedList list
     );
 
+    public static class DeleteList {
+
+        public String slug;
+
+        public DeleteList(String slug) {
+            this.slug = slug;
+        }
+    }
+
     public static class NewList {
 
         public String name;
@@ -54,15 +63,6 @@ public interface ListService {
         public NewList allowShouts(boolean allowShouts) {
             this.allow_shouts = allowShouts;
             return this;
-        }
-    }
-
-    public static class DeleteList {
-
-        public String slug;
-
-        public DeleteList(String slug) {
-            this.slug = slug;
         }
     }
 

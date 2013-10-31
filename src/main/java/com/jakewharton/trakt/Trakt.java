@@ -22,19 +22,14 @@ import retrofit.converter.GsonConverter;
 public class Trakt {
 
     /**
-     * API key path parameter name.
-     */
-    protected static final String PARAM_API_KEY = "apikey";
-
-    /**
      * trakt API URL.
      */
     private static final String API_URL = "http://api.trakt.tv";
 
     /**
-     * Whether to return more detailed log output.
+     * API key path parameter name.
      */
-    private boolean mIsDebug;
+    private static final String PARAM_API_KEY = "apikey";
 
     /**
      * API key.
@@ -42,14 +37,19 @@ public class Trakt {
     private String mApiKey;
 
     /**
-     * User email.
+     * Whether to return more detailed log output.
      */
-    private String mUsername;
+    private boolean mIsDebug;
 
     /**
      * User password.
      */
     private String mPasswordSha1;
+
+    /**
+     * User email.
+     */
+    private String mUsername;
 
 
     /**
@@ -123,8 +123,8 @@ public class Trakt {
         return buildRestAdapter().create(CalendarService.class);
     }
 
-    public NetworkService networkService() {
-        return buildRestAdapter().create(NetworkService.class);
+    public CommentService commentService() {
+        return buildRestAdapter().create(CommentService.class);
     }
 
     public GenreService genreService() {
@@ -139,6 +139,10 @@ public class Trakt {
         return buildRestAdapter().create(MovieService.class);
     }
 
+    public NetworkService networkService() {
+        return buildRestAdapter().create(NetworkService.class);
+    }
+
     public RateService rateService() {
         return buildRestAdapter().create(RateService.class);
     }
@@ -149,10 +153,6 @@ public class Trakt {
 
     public SearchService searchService() {
         return buildRestAdapter().create(SearchService.class);
-    }
-
-    public CommentService commentService() {
-        return buildRestAdapter().create(CommentService.class);
     }
 
     public ShowService showService() {

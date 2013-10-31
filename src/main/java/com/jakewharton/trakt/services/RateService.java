@@ -23,16 +23,6 @@ public interface RateService {
             @Body ShowRating rating
     );
 
-    public static class ShowRating extends ShowService.Show {
-
-        public Rating rating;
-
-        public ShowRating(int tvdbId, Rating rating) {
-            super(tvdbId);
-            this.rating = rating;
-        }
-    }
-
     public static class EpisodeRating extends ShowService.Show {
 
         public int season;
@@ -60,6 +50,16 @@ public interface RateService {
 
         public MovieRating(int tmdbId, Rating rating) {
             super(tmdbId);
+            this.rating = rating;
+        }
+    }
+
+    public static class ShowRating extends ShowService.Show {
+
+        public Rating rating;
+
+        public ShowRating(int tvdbId, Rating rating) {
+            super(tvdbId);
             this.rating = rating;
         }
     }

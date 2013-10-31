@@ -17,19 +17,19 @@ public class RateServiceTest extends BaseTestCase {
         assertThat(response.rating).isEqualTo(Rating.Meh);
     }
 
-    public void test_show() {
-        RatingResponse response = getManager().rateService()
-                .show(new RateService.ShowRating(213221, Rating.Meh));
-        assertThat(response).isNotNull();
-        assertThat(response.type).isEqualTo(RatingType.Show);
-        assertThat(response.rating).isEqualTo(Rating.Meh);
-    }
-
     public void test_movie() {
         RatingResponse response = getManager().rateService()
                 .movie(new RateService.MovieRating("tt0082971", Rating.Meh));
         assertThat(response).isNotNull();
         assertThat(response.type).isEqualTo(RatingType.Movie);
+        assertThat(response.rating).isEqualTo(Rating.Meh);
+    }
+
+    public void test_show() {
+        RatingResponse response = getManager().rateService()
+                .show(new RateService.ShowRating(213221, Rating.Meh));
+        assertThat(response).isNotNull();
+        assertThat(response.type).isEqualTo(RatingType.Show);
         assertThat(response.rating).isEqualTo(Rating.Meh);
     }
 

@@ -13,17 +13,6 @@ public class CalendarDate implements TraktEntity {
 
         public TvShow show;
         public TvShowEpisode episode;
-
-        /** @deprecated Use {@link #show} */
-        @Deprecated
-        public TvShow getShow() {
-            return this.show;
-        }
-        /** @deprecated Use {@link #episode} */
-        @Deprecated
-        public TvShowEpisode getEpisode() {
-            return this.episode;
-        }
     }
 
     public Date date;

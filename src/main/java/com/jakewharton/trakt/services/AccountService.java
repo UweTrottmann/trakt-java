@@ -37,6 +37,21 @@ public interface AccountService {
     @POST("/account/test/{apikey}")
     Response test();
 
+    static class NewAccount {
+
+        String username;
+
+        String password;
+
+        String email;
+
+        public NewAccount(String username, String passwordSha1Hash, String email) {
+            this.username = username;
+            this.password = passwordSha1Hash;
+            this.email = email;
+        }
+    }
+
     static class Settings extends Response {
 
         Profile profile;
@@ -155,19 +170,5 @@ public interface AccountService {
         }
     }
 
-    static class NewAccount {
-
-        String username;
-
-        String password;
-
-        String email;
-
-        public NewAccount(String username, String passwordSha1Hash, String email) {
-            this.username = username;
-            this.password = passwordSha1Hash;
-            this.email = email;
-        }
-    }
 
 }
