@@ -66,15 +66,15 @@ public class MovieServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
-    public void test_watchlist() {
-        ActionResponse response = getManager().movieService().watchlist(new MovieService.Movies(
+    public void test_unwatchlist() {
+        Response response = getManager().movieService().unwatchlist(new MovieService.Movies(
                 new MovieService.SeenMovie("tt1285016")));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
-    public void test_unwatchlist() {
-        Response response = getManager().movieService().unwatchlist(new MovieService.Movies(
+    public void test_watchlist() {
+        ActionResponse response = getManager().movieService().watchlist(new MovieService.Movies(
                 new MovieService.SeenMovie("tt1285016")));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);
