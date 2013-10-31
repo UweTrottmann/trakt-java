@@ -55,17 +55,6 @@ public interface MovieService {
 
     /**
      * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
-     *
-     * @param type Set to all (default), shouts, or reviews.
-     */
-    @GET("/movie/comments.json/{apikey}/{title}/{type}")
-    List<Comment> comments(
-            @Path("title") int tmdbId,
-            @Path("type") String type
-    );
-
-    /**
-     * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
      */
     @GET("/movie/comments.json/{apikey}/{title}")
     List<Comment> comments(
@@ -79,13 +68,19 @@ public interface MovieService {
      */
     @GET("/movie/comments.json/{apikey}/{title}/{type}")
     List<Comment> comments(
-            @Path("title") String imdbIdOrSlug,
+            @Path("title") int tmdbId,
             @Path("type") String type
     );
 
-    @POST("/movie/seen/{apikey}")
-    ActionResponse seen(
-            @Body Movies movies
+    /**
+     * Returns all comments (shouts and reviews) for a movie. Most recent comments returned first.
+     *
+     * @param type Set to all (default), shouts, or reviews.
+     */
+    @GET("/movie/comments.json/{apikey}/{title}/{type}")
+    List<Comment> comments(
+            @Path("title") String imdbIdOrSlug,
+            @Path("type") String type
     );
 
     /**
@@ -93,6 +88,11 @@ public interface MovieService {
      */
     @POST("/movie/library/{apikey}")
     ActionResponse library(
+            @Body Movies movies
+    );
+
+    @POST("/movie/seen/{apikey}")
+    ActionResponse seen(
             @Body Movies movies
     );
 
@@ -119,7 +119,7 @@ public interface MovieService {
      */
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
-            @Path("title") String imdbIdOrSlug
+            @Path("title") int tmdbId
     );
 
     /**
@@ -127,7 +127,7 @@ public interface MovieService {
      */
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
-            @Path("title") int tmdbId
+            @Path("title") String imdbIdOrSlug
     );
 
     /**
@@ -162,6 +162,30 @@ public interface MovieService {
             @Body Movies movies
     );
 
+    public static class Movie {
+
+        public String imdb_id;
+
+        public Integer tmdb_id;
+
+        public String title;
+
+        public Integer year;
+
+        public Movie(String imdbId) {
+            this.imdb_id = imdbId;
+        }
+
+        public Movie(int tmdbId) {
+            this.tmdb_id = tmdbId;
+        }
+
+        public Movie(String title, int year) {
+            this.title = title;
+            this.year = year;
+        }
+    }
+
     public static class MovieCheckin extends Movie {
 
         public Integer duration;
@@ -195,27 +219,17 @@ public interface MovieService {
         }
     }
 
-    public static class Movie {
+    public static class Movies {
 
-        public String imdb_id;
+        public List<SeenMovie> movies;
 
-        public Integer tmdb_id;
-
-        public String title;
-
-        public Integer year;
-
-        public Movie(String imdbId) {
-            this.imdb_id = imdbId;
+        public Movies(List<SeenMovie> seenMovies) {
+            movies = seenMovies;
         }
 
-        public Movie(int tmdbId) {
-            this.tmdb_id = tmdbId;
-        }
-
-        public Movie(String title, int year) {
-            this.title = title;
-            this.year = year;
+        public Movies(SeenMovie seenMovie) {
+            movies = new ArrayList<SeenMovie>();
+            movies.add(seenMovie);
         }
     }
 
@@ -234,20 +248,6 @@ public interface MovieService {
 
         public SeenMovie(String title, int year) {
             super(title, year);
-        }
-    }
-
-    public static class Movies {
-
-        public List<SeenMovie> movies;
-
-        public Movies(List<SeenMovie> seenMovies) {
-            movies = seenMovies;
-        }
-
-        public Movies(SeenMovie seenMovie) {
-            movies = new ArrayList<SeenMovie>();
-            movies.add(seenMovie);
         }
     }
 

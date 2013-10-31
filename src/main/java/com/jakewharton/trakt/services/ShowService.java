@@ -56,6 +56,14 @@ public interface ShowService {
 
     /**
      * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
+     */
+    @GET("/show/comments.json/{apikey}/{title}")
+    List<Comment> comments(
+            @Path("title") String slug
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
      *
      * @param type Set to all (default), shouts, or reviews.
      */
@@ -63,14 +71,6 @@ public interface ShowService {
     List<Comment> comments(
             @Path("title") int tvdbId,
             @Path("type") String type
-    );
-
-    /**
-     * Returns all comments (shouts and reviews) for a show. Most recent comments returned first.
-     */
-    @GET("/show/comments.json/{apikey}/{title}")
-    List<Comment> comments(
-            @Path("title") String slug
     );
 
     /**
@@ -91,6 +91,17 @@ public interface ShowService {
     @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}")
     List<Comment> episodeComments(
             @Path("title") int tvdbId,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Returns all comments (shouts and reviews) for an episode. Most recent comments returned
+     * first.
+     */
+    @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}")
+    List<Comment> episodeComments(
+            @Path("title") String slug,
             @Path("season") int season,
             @Path("episode") int episode
     );
@@ -107,17 +118,6 @@ public interface ShowService {
             @Path("season") int season,
             @Path("episode") int episode,
             @Path("type") String type
-    );
-
-    /**
-     * Returns all comments (shouts and reviews) for an episode. Most recent comments returned
-     * first.
-     */
-    @GET("/show/episode/comments.json/{apikey}/{title}/{season}/{episode}")
-    List<Comment> episodeComments(
-            @Path("title") String slug,
-            @Path("season") int season,
-            @Path("episode") int episode
     );
 
     /**
@@ -143,18 +143,52 @@ public interface ShowService {
     );
 
     /**
-     * Remove episodes from your library collection.
-     */
-    @POST("/show/episode/unlibrary/{apikey}")
-    Response episodeUnlibrary(
-            @Body Episodes episodes
-    );
-
-    /**
      * Add episodes watched outside of trakt to your library.
      */
     @POST("/show/episode/seen/{apikey}")
     Response episodeSeen(
+            @Body Episodes episodes
+    );
+
+    @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
+    Stats episodeStats(
+            @Path("title") int showTvdbId,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
+    Stats episodeStats(
+            @Path("title") String slug,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Returns information for an episode including ratings.
+     */
+    @GET("/show/episode/summary.json/{apikey}/{title}/{season}/{episode}")
+    TvEntity episodeSummary(
+            @Path("title") int showTvdbId,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Returns information for an episode including ratings.
+     */
+    @GET("/show/episode/summary.json/{apikey}/{title}/{season}/{episode}")
+    TvEntity episodeSummary(
+            @Path("title") String slug,
+            @Path("season") int season,
+            @Path("episode") int episode
+    );
+
+    /**
+     * Remove episodes from your library collection.
+     */
+    @POST("/show/episode/unlibrary/{apikey}")
+    Response episodeUnlibrary(
             @Body Episodes episodes
     );
 
@@ -164,40 +198,6 @@ public interface ShowService {
     @POST("/show/episode/unseen/{apikey}")
     Response episodeUnseen(
             @Body Episodes episodes
-    );
-
-    @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
-    Stats episodeStats(
-            @Path("title") int showTvdbId,
-            @Path("season") int season,
-            @Path("episode") int episode
-    );
-
-    @GET("/show/episode/stats.json/{apikey}/{title}/{season}/{episode}")
-    Stats episodeStats(
-            @Path("title") String slug,
-            @Path("season") int season,
-            @Path("episode") int episode
-    );
-
-    /**
-     * Returns information for an episode including ratings.
-     */
-    @GET("/show/episode/summary.json/{apikey}/{title}/{season}/{episode}")
-    TvEntity episodeSummary(
-            @Path("title") int showTvdbId,
-            @Path("season") int season,
-            @Path("episode") int episode
-    );
-
-    /**
-     * Returns information for an episode including ratings.
-     */
-    @GET("/show/episode/summary.json/{apikey}/{title}/{season}/{episode}")
-    TvEntity episodeSummary(
-            @Path("title") String slug,
-            @Path("season") int season,
-            @Path("episode") int episode
     );
 
     /**
@@ -225,18 +225,18 @@ public interface ShowService {
     );
 
     /**
-     * Remove an entire show (including all episodes) from your library collection.
-     */
-    @POST("/show/unlibrary/{apikey}")
-    Response showUnlibrary(
-            @Body Show show
-    );
-
-    /**
      * Add all episodes for a show watched outside of trakt to your library.
      */
     @POST("/show/seen/{apikey}")
     Response showSeen(
+            @Body Show show
+    );
+
+    /**
+     * Remove an entire show (including all episodes) from your library collection.
+     */
+    @POST("/show/unlibrary/{apikey}")
+    Response showUnlibrary(
             @Body Show show
     );
 
@@ -252,16 +252,11 @@ public interface ShowService {
 
     @GET("/show/summary.json/{apikey}/{title}")
     TvShow summary(
-            @Path("title") String slug
+            @Path("title") int tvdbId
     );
 
     @GET("/show/summary.json/{apikey}/{title}")
     TvShow summary(
-            @Path("title") int tvdbId
-    );
-
-    @GET("/show/summary.json/{apikey}/{title}/extended")
-    TvShow summaryExtended(
             @Path("title") String slug
     );
 
@@ -270,8 +265,77 @@ public interface ShowService {
             @Path("title") int tvdbId
     );
 
+    @GET("/show/summary.json/{apikey}/{title}/extended")
+    TvShow summaryExtended(
+            @Path("title") String slug
+    );
+
     @GET("/shows/trending.json/{apikey}")
     List<TvShow> trending();
+
+    public static class Episodes extends Show {
+
+        public List<Episode> episodes;
+
+        public Episodes(int showTvdbId, int season, int episode) {
+            super(showTvdbId);
+            episodes = new ArrayList<Episode>();
+            episodes.add(new Episode(season, episode));
+        }
+
+        public Episodes(int showTvdbId, List<Episode> episodes) {
+            super(showTvdbId);
+            this.episodes = episodes;
+        }
+
+        public static class Episode {
+
+            public int season;
+
+            public int episode;
+
+            public String last_played;
+
+            public Episode(int season, int episode) {
+                this.season = season;
+                this.episode = episode;
+            }
+        }
+    }
+
+    public static class Season extends Show {
+
+        public int season;
+
+        public Season(int showTvdbId, int season) {
+            super(showTvdbId);
+            this.season = season;
+        }
+    }
+
+    public static class Show {
+
+        public String imdb_id;
+
+        public Integer tvdb_id;
+
+        public String title;
+
+        public Integer year;
+
+        public Show(int showTvdbId) {
+            this.tvdb_id = showTvdbId;
+        }
+
+        public Show(String imdbId) {
+            this.imdb_id = imdbId;
+        }
+
+        public Show(String title, int year) {
+            this.title = title;
+            this.year = year;
+        }
+    }
 
     public class ShowCheckin extends Show {
 
@@ -318,68 +382,5 @@ public interface ShowService {
 
     }
 
-    public static class Show {
-
-        public String imdb_id;
-
-        public Integer tvdb_id;
-
-        public String title;
-
-        public Integer year;
-
-        public Show(int showTvdbId) {
-            this.tvdb_id = showTvdbId;
-        }
-
-        public Show(String imdbId) {
-            this.imdb_id = imdbId;
-        }
-
-        public Show(String title, int year) {
-            this.title = title;
-            this.year = year;
-        }
-    }
-
-    public static class Season extends Show {
-
-        public int season;
-
-        public Season(int showTvdbId, int season) {
-            super(showTvdbId);
-            this.season = season;
-        }
-    }
-
-    public static class Episodes extends Show {
-
-        public List<Episode> episodes;
-
-        public Episodes(int showTvdbId, int season, int episode) {
-            super(showTvdbId);
-            episodes = new ArrayList<Episode>();
-            episodes.add(new Episode(season, episode));
-        }
-
-        public Episodes(int showTvdbId, List<Episode> episodes) {
-            super(showTvdbId);
-            this.episodes = episodes;
-        }
-
-        public static class Episode {
-
-            public int season;
-
-            public int episode;
-
-            public String last_played;
-
-            public Episode(int season, int episode) {
-                this.season = season;
-                this.episode = episode;
-            }
-        }
-    }
 
 }
