@@ -29,13 +29,13 @@ Calling endpoints
     trakt.setApiKey("api_key");
     
     // Get trending shows on trakt
-    List<TvShow> shows = getManager().showService().trending();
+    List<TvShow> shows = trakt.showService().trending();
     for (TvShow show : shows) {
     	System.out.println("Title: " + show.title);
     }
     
     // Post an episode as seen
-    Response response = getManager().showService().episodeSeen(new ShowService.Episodes(
+    Response response = trakt.showService().episodeSeen(new ShowService.Episodes(
         153021 // TVDb id of show, 1 // season, 1 // episode
     ));
     if (response != null && response.status == Status.SUCCESS) {
