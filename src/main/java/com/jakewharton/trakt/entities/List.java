@@ -13,34 +13,4 @@ public class List implements TraktEntity {
     public ListPrivacy privacy;
     public java.util.List<ListItem> items;
 
-    /** @deprecated Use {@link #name} */
-    @Deprecated
-    public String getName() {
-        return this.name;
-    }
-    /** @deprecated Use {@link #slug} */
-    @Deprecated
-    public String getSlug() {
-        return this.slug;
-    }
-    /** @deprecated Use {@link #url} */
-    @Deprecated
-    public String getUrl() {
-        return this.url;
-    }
-    /** @deprecated Use {@link #description} */
-    @Deprecated
-    public String getDescription() {
-        return this.description;
-    }
-    /** @deprecated Use {@link #privacy} */
-    @Deprecated
-    public ListPrivacy getPrivacy() {
-        return this.privacy;
-    }
-    /** @deprecated Use {@link #items} */
-    @Deprecated
-    public java.util.List<ListItem> getItems() {
-        return this.items;
-    }
 }

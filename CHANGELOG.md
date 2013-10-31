@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+2.0.0 *(2013-10-31)*
+------------------------
+
+ * More or less complete rewrite for retrofit backend. Not all previously supported endpoints are available yet (pull request to add new ones, it's easy!), but there are also new ones previously unsupported.
+ * `ServiceManager` is now just `Trakt`, endpoints do not require you to call `.fire()` anymore either.
+ * For now this is NOT published to a Maven repository, let me know if there is demand.
+ * Start testing with FEST.
+ * Use retrofit 1.2.2.
+
+
 1.3.0 *(2011-12-13)*
 -------------------
 

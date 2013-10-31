@@ -13,35 +13,6 @@ public class RatingResponse extends Response implements TraktEntity {
     public Boolean facebook;
     public Boolean twitter;
     public Boolean tumblr;
+    public Boolean path;
 
-    /** @deprecated Use {@link #type} */
-    @Deprecated
-    public RatingType getType() {
-        return this.type;
-    }
-    /** @deprecated Use {@link #rating} */
-    @Deprecated
-    public Rating getRating() {
-        return this.rating;
-    }
-    /** @deprecated Use {@link #ratings} */
-    @Deprecated
-    public Ratings getRatings() {
-        return this.ratings;
-    }
-    /** @deprecated Use {@link #facebook} */
-    @Deprecated
-    public Boolean getFacebook() {
-        return this.facebook;
-    }
-    /** @deprecated Use {@link #twitter} */
-    @Deprecated
-    public Boolean getTwitter() {
-        return this.twitter;
-    }
-    /** @deprecated Use {@link #tumblr} */
-    @Deprecated
-    public Boolean getTumblr() {
-        return this.tumblr;
-    }
 }
