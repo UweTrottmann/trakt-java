@@ -1,114 +1,48 @@
 package com.jakewharton.trakt.services;
 
-import java.util.Date;
-import java.util.List;
-import com.google.gson.reflect.TypeToken;
-import com.jakewharton.trakt.TraktApiBuilder;
-import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.CalendarDate;
+import retrofit.http.GET;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
-public class CalendarService extends TraktApiService {
+import java.util.List;
+
+public interface CalendarService {
+
+    /**
+     * Returns all shows premiering during the time period specified.
+     */
+    @GET("/calendar/premieres/{apikey}")
+    List<CalendarDate> premieres();
+
     /**
      * Returns all shows premiering during the time period specified.
      *
-     * @return Builder instance.
+     * @param date Start date for the calendar in the format Ymd (i.e. 20110421). If blank, defaults to today.
+     * @param days Number of days to display starting from the date. If blank, defaults to 7 days.
      */
-    public PremieresBuilder premieres() {
-        return new PremieresBuilder(this);
-    }
+    @GET("/calendar/premieres/{apikey}")
+    List<CalendarDate> premieres(
+            @Query("date") String date,
+            @Query("days") int days
+    );
 
     /**
      * Returns all shows airing during the time period specified.
-     *
-     * @return Builder instance.
      */
-    public ShowsBuilder shows() {
-        return new ShowsBuilder(this);
-    }
+    @GET("/calendar/shows/{apikey}")
+    List<CalendarDate> shows();
 
+    /**
+     * Returns all shows premiering during the time period specified.
+     *
+     * @param date Start date for the calendar in the format Ymd (i.e. 20110421). If blank, defaults to today.
+     * @param days Number of days to display starting from the date. If blank, defaults to 7 days.
+     */
+    @GET("/calendar/shows/{apikey}")
+    List<CalendarDate> shows(
+            @Query("date") String date,
+            @Query("days") int days
+    );
 
-    public static final class PremieresBuilder extends TraktApiBuilder<List<CalendarDate>> {
-        private static final int DEFAULT_DAYS = 7;
-        private static final String URI = "/calendar/premieres.json/" + FIELD_API_KEY + "/" + FIELD_DATE + "/" + FIELD_DAYS;
-
-        private PremieresBuilder(CalendarService service) {
-            super(service, new TypeToken<List<CalendarDate>>() {}, URI);
-        }
-
-        /**
-         * Start date for the calendar.
-         *
-         * @param date Value.
-         * @return Builder instance.
-         */
-        public PremieresBuilder date(Date date) {
-            this.field(FIELD_DATE, date);
-
-            if (!this.hasField(FIELD_DAYS)) {
-                //Set default.
-                this.field(FIELD_DAYS, DEFAULT_DAYS);
-            }
-
-            return this;
-        }
-
-        /**
-         * Number of days to display starting from the date.
-         *
-         * @param days Value.
-         * @return Builder instance.
-         */
-        public PremieresBuilder days(int days) {
-            this.field(FIELD_DAYS, days);
-
-            if (!this.hasField(FIELD_DATE)) {
-                //Set default (today).
-                this.field(FIELD_DATE, new Date());
-            }
-
-            return this;
-        }
-    }
-    public static final class ShowsBuilder extends TraktApiBuilder<List<CalendarDate>> {
-        private static final int DEFAULT_DAYS = 7;
-        private static final String URI = "/calendar/shows.json/" + FIELD_API_KEY + "/" + FIELD_DATE + "/" + FIELD_DAYS;
-
-        private ShowsBuilder(CalendarService service) {
-            super(service, new TypeToken<List<CalendarDate>>() {}, URI);
-        }
-
-        /**
-         * Start date for the calendar.
-         *
-         * @param date Value.
-         * @return Builder instance.
-         */
-        public ShowsBuilder date(Date date) {
-            this.field(FIELD_DATE, date);
-
-            if (!this.hasField(FIELD_DAYS)) {
-                //Set default.
-                this.field(FIELD_DAYS, DEFAULT_DAYS);
-            }
-
-            return this;
-        }
-
-        /**
-         * Number of days to display starting from the date.
-         *
-         * @param days Value.
-         * @return Builder instance.
-         */
-        public ShowsBuilder days(int days) {
-            this.field(FIELD_DAYS, days);
-
-            if (!this.hasField(FIELD_DATE)) {
-                //Set default (today).
-                this.field(FIELD_DATE, new Date());
-            }
-
-            return this;
-        }
-    }
 }

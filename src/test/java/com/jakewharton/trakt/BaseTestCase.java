@@ -3,17 +3,22 @@ package com.jakewharton.trakt;
 import junit.framework.TestCase;
 
 public abstract class BaseTestCase extends TestCase {
-	protected static final String API_KEY = "7f9fb61a46ed0d8ecc917b789154d397";
-	
-	private final ServiceManager manager = new ServiceManager();
-	
-	@Override
-	public void setUp() {
-		manager.setApiKey(API_KEY);
-		manager.setAuthentication("trakt-java", "e00e0e31fe07213b59e5784c9942cfe220771827");
-	}
-	
-	protected final ServiceManager getManager() {
-		return manager;
-	}
+    protected static final String API_KEY = "5abdaea0246b840cb7c709f8e1788fed";
+    public static final String USERNAME = "sgtest";
+    public static final String PASSWORD_SHA_1 = "2a4d398c09ec9c6915d1f46710ceed9673fa4e3d";
+
+    private static final boolean DEBUG = false;
+
+    private final Trakt manager = new Trakt();
+
+    @Override
+    public void setUp() {
+        manager.setApiKey(API_KEY);
+        manager.setAuthentication(USERNAME, PASSWORD_SHA_1);
+        manager.setIsDebug(DEBUG);
+    }
+
+    protected final Trakt getManager() {
+        return manager;
+    }
 }

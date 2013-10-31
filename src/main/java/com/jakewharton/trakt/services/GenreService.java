@@ -1,32 +1,23 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
-import com.google.gson.reflect.TypeToken;
-import com.jakewharton.trakt.TraktApiBuilder;
-import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Genre;
 
-public class GenreService extends TraktApiService {
-    public MoviesBuilder movies() {
-        return new MoviesBuilder(this);
-    }
+import java.util.List;
 
-    public ShowsBuilder shows() {
-        return new ShowsBuilder(this);
-    }
+import retrofit.http.GET;
 
-    public static final class MoviesBuilder extends TraktApiBuilder<List<Genre>> {
-        private static final String URI = "/genres/movies.json/" + FIELD_API_KEY;
+public interface GenreService {
 
-        private MoviesBuilder(GenreService service) {
-            super(service, new TypeToken<List<Genre>>() {}, URI);
-        }
-    }
-    public static final class ShowsBuilder extends TraktApiBuilder<List<Genre>> {
-        private static final String URI = "/genres/shows.json/" + FIELD_API_KEY;
+    /**
+     * Get a list of all movie genres including names and slugs.
+     */
+    @GET("/genres/movies.json/{apikey}")
+    List<Genre> movies();
 
-        private ShowsBuilder(GenreService service) {
-            super(service, new TypeToken<List<Genre>>() {}, URI);
-        }
-    }
+    /**
+     * Get a list of all show genres including names and slugs.
+     */
+    @GET("/genres/shows.json/{apikey}")
+    List<Genre> shows();
+
 }

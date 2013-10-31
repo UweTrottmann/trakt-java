@@ -1,3 +1,4 @@
+
 package com.jakewharton.trakt.enumerations;
 
 import com.jakewharton.trakt.TraktEnumeration;
@@ -5,15 +6,12 @@ import com.jakewharton.trakt.TraktEnumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ListItemType implements TraktEnumeration {
-    Movie("movie"),
-    TvShow("show"),
-    TvShowSeason("season"),
-    TvShowEpisode("episode");
+public enum ExtendedParam implements TraktEnumeration {
+    Extended("extended"), Min("min");
 
     private final String value;
 
-    private ListItemType(String value) {
+    private ExtendedParam(String value) {
         this.value = value;
     }
 
@@ -22,15 +20,15 @@ public enum ListItemType implements TraktEnumeration {
         return this.value;
     }
 
-    private static final Map<String, ListItemType> STRING_MAPPING = new HashMap<String, ListItemType>();
+    private static final Map<String, ExtendedParam> STRING_MAPPING = new HashMap<String, ExtendedParam>();
 
     static {
-        for (ListItemType via : ListItemType.values()) {
+        for (ExtendedParam via : ExtendedParam.values()) {
             STRING_MAPPING.put(via.toString().toUpperCase(), via);
         }
     }
 
-    public static ListItemType fromValue(String value) {
+    public static ExtendedParam fromValue(String value) {
         return STRING_MAPPING.get(value.toUpperCase());
     }
 }

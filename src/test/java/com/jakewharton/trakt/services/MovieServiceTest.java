@@ -1,80 +1,82 @@
 package com.jakewharton.trakt.services;
 
-import java.util.List;
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.entities.Images;
+import com.jakewharton.trakt.entities.ActionResponse;
+import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Movie;
-import com.jakewharton.trakt.entities.Ratings;
-import com.jakewharton.trakt.entities.Shout;
-import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.entities.MediaBase.Stats;
+import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Stats;
+import com.jakewharton.trakt.enumerations.Status;
+
+import java.util.List;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 public class MovieServiceTest extends BaseTestCase {
-	public void test_watchingNow() {
-		List<UserProfile> users = getManager().movieService().watchingNow("tt1285016").fire();
-		assertNotNull("Result was null.", users);
-		
-		if (!users.isEmpty()) {
-			assertNotNull("User item was null.", users.get(0));
-		}
-	}
-	
-	public void test_shouts() {
-		List<Shout> shouts = getManager().movieService().shouts("tt0079470").fire();
-		assertNotNull("Result was null.", shouts);
-		assertFalse("Shout list was empty.", shouts.isEmpty());
-		assertNotNull("Shout item was null.", shouts.get(0));
-	}
-	
-	public void test_trending() {
-		List<Movie> trending = getManager().movieService().trending().fire();
-		assertNotNull("Result was null.", trending);
-		assertFalse("Trending list was empty.", trending.isEmpty());
-		assertNotNull("Trending item was null.", trending.get(0));
-	}
-	
-	public void test_summary() {
-		Movie movie = getManager().movieService().summary("tt1285016").fire();
-		assertNotNull("Result was null.", movie);
-		assertEquals("Move title does not match.", "The Social Network", movie.title);
-		assertNotNull("Movie year was null.", movie.year);
-		assertEquals("Movie year does not match.", 2010, movie.year.intValue());
-		assertNotNull("Movie URL was null.", movie.url);
-		assertNotNull("Movie trailer was null.", movie.trailer);
-		assertNotNull("Movie runtime was null.", movie.runtime);
-		assertEquals("Movie runtime does not match.", 120, movie.runtime.intValue());
-		assertNotNull("Movie tagline was null.", movie.tagline);
-		assertNotNull("Movie overview was null.", movie.overview);
-		assertEquals("Movie certification does not match.", "PG-13", movie.certification);
-		assertEquals("Movie IMDB ID does not match.", "tt1285016", movie.imdbId);
-		assertEquals("Movie TMDB ID does not match.", "37799", movie.tmdbId);
-		
-		Images movieImages = movie.images;
-		assertNotNull("Movie images was null.", movieImages);
-		assertNotNull("Movie poster image was null.", movieImages.poster);
-		assertNotNull("Movie fan art image was null.", movieImages.fanart);
-		
-		List<UserProfile> topWatchers = movie.topWatchers;
-		assertNotNull("Movie top watchers list was null.", topWatchers);
-		assertFalse("Movie top watchers list was empty.", topWatchers.isEmpty());
-		
-		Ratings ratings = movie.ratings;
-		assertNotNull("Movie ratings was null.", ratings);
-		assertNotNull("Movie percentage rating was null.", ratings.percentage);
-		assertNotNull("Movie votes rating was null.", ratings.votes);
-		assertNotNull("Movie loved rating was null.", ratings.loved);
-		assertNotNull("Movie hated rating was null.", ratings.hated);
-		
-		Stats stats = movie.stats;
-		assertNotNull("Movie stats was null.", stats);
-		assertNotNull("Movie watchers stats was null.", stats.watchers);
-		assertNotNull("Movie plays stats was null.", stats.plays);
-	}
-	
-	public void test_related() {
-	    List<Movie> related = getManager().movieService().related("tt1285016").fire();
-        assertNotNull("Result was null.", related);
-        assertFalse("Trending list was empty.", related.isEmpty());
-        assertNotNull("Trending item was null.", related.get(0));
-	}
+
+    public void test_comments() {
+        List<Comment> comments = getManager().movieService().comments("tt0079470");
+        assertThat(comments).isNotEmpty();
+        assertThat(comments.get(0)).isNotNull();
+    }
+
+    public void test_library() {
+        ActionResponse response = getManager().movieService().library(new MovieService.Movies(
+                new MovieService.SeenMovie("tt1285016")));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_seen() {
+        ActionResponse response = getManager().movieService().seen(new MovieService.Movies(
+                new MovieService.SeenMovie("tt1285016")));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_stats() {
+        Stats stats = getManager().movieService().stats("the-social-network-2010");
+        assertThat(stats).isNotNull();
+        assertThat(stats.ratings).isNotNull();
+        assertThat(stats.ratings.distribution).isNotNull();
+        assertThat(stats.scrobbles).isNotNull();
+        assertThat(stats.checkins).isNotNull();
+        assertThat(stats.collection).isNotNull();
+        assertThat(stats.lists).isNotNull();
+        assertThat(stats.comments).isNotNull();
+    }
+
+    public void test_summary() {
+        Movie movie = getManager().movieService().summary("tt1285016");
+        assertThat(movie).isNotNull();
+        assertThat(movie.title).isEqualTo("The Social Network");
+    }
+
+    public void test_unlibrary() {
+        Response response = getManager().movieService().unlibrary(new MovieService.Movies(
+                new MovieService.SeenMovie("tt1285016")));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_unseen() {
+        Response response = getManager().movieService().unseen(new MovieService.Movies(
+                new MovieService.SeenMovie("tt1285016")));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_unwatchlist() {
+        Response response = getManager().movieService().unwatchlist(new MovieService.Movies(
+                new MovieService.SeenMovie("tt1285016")));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
+
+    public void test_watchlist() {
+        ActionResponse response = getManager().movieService().watchlist(new MovieService.Movies(
+                new MovieService.SeenMovie("tt1285016")));
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+    }
 }

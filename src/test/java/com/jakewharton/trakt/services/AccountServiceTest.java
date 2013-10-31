@@ -1,47 +1,44 @@
 package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.enumerations.Status;
+
+import retrofit.RetrofitError;
+
+import static org.fest.assertions.api.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.failBecauseExceptionWasNotThrown;
 
 public class AccountServiceTest extends BaseTestCase {
-	/*
-	//XXX: This requires a developer API key.
-	public void test_create() {
-		try {
-			getManager().accountService().create("JakeWharton", "zomg secret password", "jakewharton@gmail.com").fire();
-			fail("Account creation of duplicate user succeeded.");
-		} catch (ApiException e) {
-			assertEquals("Exception text does not match.", "{\"status\":\"failure\",\"error\":\"JakeWharton is already a registered username\"}", e.message.trim());
 
-			//TODO: change this to a custom error that includes a response we
-			//can actually test against to differentiate between a problem with
-			//the API or simply a failed creation.
-		}
-	}
-	*/
+    public void test_settings() {
+        AccountService.Settings settings = getManager().accountService().settings();
+        assertThat(settings).isNotNull();
+        assertThat(settings.status).isEqualTo(Status.SUCCESS);
+        assertThat(settings.message).isEqualTo("All settings for " + BaseTestCase.USERNAME);
+    }
 
-	public void test_testSuccess() {
-		Response response = getManager().accountService().test().fire();
-		assertNotNull("Result was null.", response);
-		assertEquals("Authentication failed.", "success", response.status);
-		assertEquals("Authentication failed.", "all good!", response.message);
-	}
+    public void test_testFailure() {
+        // We have to create our own uninitialized service for this
+        Trakt manager = new Trakt();
+        manager.setIsDebug(true);
+        manager.setApiKey(BaseTestCase.API_KEY);
+        manager.setAuthentication(BaseTestCase.USERNAME, "this is not my password hash!");
 
-	public void test_testFailure() {
-		//We have to create our own uninitialized service for this
-		AccountService service = ServiceManager.createAccountService();
-		service.setApiKey(BaseTestCase.API_KEY);
-		service.setAuthentication("JakeWharton", "this is not my password hash!");
+        try {
+            Response response = manager.accountService().test();
+            failBecauseExceptionWasNotThrown(RetrofitError.class);
+        } catch (RetrofitError e) {
+            assertThat(e.getResponse()).isNotNull();
+            assertThat(e.getResponse().getStatus()).isEqualTo(401); // unauthorized
+        }
+    }
 
-		try {
-			service.test().fire();
-			fail("Authentication test succeeded with invalid credentials.");
-		} catch (TraktException e) {
-			assertNotNull("Response was null.", e.getResponse());
-			assertEquals("Response error does not match.", "failure", e.getResponse().status);
-			assertEquals("Response error does not match.", "failed authentication", e.getResponse().error);
-		}
-	}
+    public void test_testSuccess() {
+        Response response = getManager().accountService().test();
+        assertThat(response).isNotNull();
+        assertThat(response.status).isEqualTo(Status.SUCCESS);
+        assertThat(response.message).isEqualTo("all good!");
+    }
 }

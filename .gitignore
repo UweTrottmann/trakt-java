@@ -8,3 +8,14 @@ pom.xml.*
 .project
 .settings
 bin
+
+#IntelliJ IDEA
+.idea/
+*.iml
+
+#############
+## Android
+#############
+# generated files
+bin/
+gen/

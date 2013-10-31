@@ -1,11 +1,12 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.enumerations.Rating;
+
+import java.util.Date;
 
 /**
  * Represents a Trakt activity item. See
@@ -36,6 +37,7 @@ public class ActivityItemBase implements TraktEntity {
     }
 
     public Date timestamp;
+    public Date watched;
     public When when;
     public Elapsed elapsed;
     public ActivityType type;
