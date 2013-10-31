@@ -1,7 +1,7 @@
 trakt-java
 ==========
 
-A Java wrapper around the [Trakt API][1] using [retrofit][2].
+A Java wrapper around the [trakt API][1] using [retrofit][2].
 
 Remote services are grouped into local service objects which can be centrally
 managed by a `Trakt` instance. It will act as a factory for
@@ -14,7 +14,7 @@ Usage
 Dependencies
 ------------
 
-The released jar is built without dependencies, add these yourself as you see fit.
+The [released jar][4] is built without dependencies, add these yourself as you see fit.
 For example in a gradle.build file:
 ```
 compile 'com.squareup.okhttp:okhttp:1.2.1' // not mandatory, but greatly recommended
@@ -72,3 +72,4 @@ License
  [1]: http://trakt.tv/api-docs
  [2]: https://github.com/square/retrofit
  [3]: https://github.com/JakeWharton/trakt-java/
+ [4]: https://github.com/UweTrottmann/trakt-java/releases
