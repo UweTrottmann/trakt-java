@@ -14,17 +14,6 @@ public abstract class MediaBase implements TraktEntity {
 
         public Integer watchers;
         public Integer plays;
-
-        /** @deprecated Use {@link #watchers} */
-        @Deprecated
-        public Integer getWatchers() {
-            return this.watchers;
-        }
-        /** @deprecated Use {@link #plays} */
-        @Deprecated
-        public Integer getPlays() {
-            return this.plays;
-        }
     }
 
     public String title;
