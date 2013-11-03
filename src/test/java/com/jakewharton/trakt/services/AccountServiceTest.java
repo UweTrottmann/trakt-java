@@ -5,6 +5,8 @@ import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Status;
 
+import org.junit.Test;
+
 import retrofit.RetrofitError;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -12,6 +14,7 @@ import static org.fest.assertions.api.Assertions.failBecauseExceptionWasNotThrow
 
 public class AccountServiceTest extends BaseTestCase {
 
+    @Test
     public void test_settings() {
         AccountService.Settings settings = getManager().accountService().settings();
         assertThat(settings).isNotNull();
@@ -19,6 +22,7 @@ public class AccountServiceTest extends BaseTestCase {
         assertThat(settings.message).isEqualTo("All settings for " + BaseTestCase.USERNAME);
     }
 
+    @Test
     public void test_testFailure() {
         // We have to create our own uninitialized service for this
         Trakt manager = new Trakt();
@@ -35,6 +39,7 @@ public class AccountServiceTest extends BaseTestCase {
         }
     }
 
+    @Test
     public void test_testSuccess() {
         Response response = getManager().accountService().test();
         assertThat(response).isNotNull();
