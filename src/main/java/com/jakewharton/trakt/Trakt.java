@@ -51,6 +51,11 @@ public class Trakt {
      */
     private String mUsername;
 
+    /**
+     * Currently valid instance of RestAdapter.
+     */
+    private RestAdapter mRestAdapter;
+
 
     /**
      * Create a new manager instance.
@@ -68,6 +73,7 @@ public class Trakt {
     public Trakt setAuthentication(String username, String passwordSha1) {
         mUsername = username;
         mPasswordSha1 = passwordSha1;
+        mRestAdapter = null;
         return this;
     }
 
@@ -78,37 +84,47 @@ public class Trakt {
      */
     public Trakt setApiKey(String key) {
         mApiKey = key;
+        mRestAdapter = null;
         return this;
     }
 
     public Trakt setIsDebug(boolean isDebug) {
         mIsDebug = isDebug;
+        mRestAdapter = null;
         return this;
     }
 
+    /**
+     * If no instance exists yet, builds a new {@link RestAdapter} using the currently set
+     * authentication information, API key and debug flag.
+     */
     private RestAdapter buildRestAdapter() {
-        RestAdapter.Builder builder = new RestAdapter.Builder()
-                .setServer(API_URL)
-                .setConverter(new GsonConverter(TraktHelper.getGsonBuilder().create()));
+        if (mRestAdapter == null) {
+            RestAdapter.Builder builder = new RestAdapter.Builder()
+                    .setServer(API_URL)
+                    .setConverter(new GsonConverter(TraktHelper.getGsonBuilder().create()));
 
-        // if available, send mUsername and password in header
-        builder.setRequestInterceptor(new RequestInterceptor() {
-            @Override
-            public void intercept(RequestFacade requestFacade) {
-                requestFacade.addPathParam(PARAM_API_KEY, mApiKey);
-                if ((mUsername != null) && (mPasswordSha1 != null)) {
-                    String source = mUsername + ":" + mPasswordSha1;
-                    String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
-                    requestFacade.addHeader("Authorization", authorization);
+            // if available, send mUsername and password in header
+            builder.setRequestInterceptor(new RequestInterceptor() {
+                @Override
+                public void intercept(RequestFacade requestFacade) {
+                    requestFacade.addPathParam(PARAM_API_KEY, mApiKey);
+                    if ((mUsername != null) && (mPasswordSha1 != null)) {
+                        String source = mUsername + ":" + mPasswordSha1;
+                        String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
+                        requestFacade.addHeader("Authorization", authorization);
+                    }
                 }
-            }
-        });
+            });
 
-        if (mIsDebug) {
-            builder.setLogLevel(RestAdapter.LogLevel.FULL);
+            if (mIsDebug) {
+                builder.setLogLevel(RestAdapter.LogLevel.FULL);
+            }
+
+            mRestAdapter = builder.build();
         }
 
-        return builder.build();
+        return mRestAdapter;
     }
 
     public AccountService accountService() {
