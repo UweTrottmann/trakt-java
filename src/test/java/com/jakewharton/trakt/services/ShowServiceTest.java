@@ -10,6 +10,8 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 import com.jakewharton.trakt.enumerations.Status;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,15 +19,19 @@ import java.util.List;
 import java.util.TimeZone;
 
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ShowServiceTest extends BaseTestCase {
 
+    @Test
     public void test_comments() {
         List<Comment> shouts = getManager().showService().comments("the-walking-dead");
         assertThat(shouts).isNotEmpty();
         assertThat(shouts.get(0)).isNotNull();
     }
 
+    @Test
     public void test_episodeComments() {
         List<Comment> comments = getManager().showService().episodeComments("the-walking-dead", 1,
                 1);
@@ -33,6 +39,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(comments.get(0)).isNotNull();
     }
 
+    @Test
     public void test_episodeLibrary() {
         Response response = getManager().showService().episodeLibrary(new ShowService.Episodes(
                 153021, 1, 1
@@ -41,6 +48,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_episodeSeen() {
         Response response = getManager().showService().episodeSeen(new ShowService.Episodes(
                 153021, 1, 1
@@ -49,6 +57,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_episodesSeen() {
         List<ShowService.Episodes.Episode> episodes = new ArrayList<ShowService.Episodes.Episode>();
         episodes.add(new ShowService.Episodes.Episode(1, 1));
@@ -60,6 +69,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_episodeStats() {
         Stats stats = getManager().showService().episodeStats("the-walking-dead", 1, 1);
         assertThat(stats).isNotNull();
@@ -72,6 +82,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(stats.comments).isNotNull();
     }
 
+    @Test
     public void test_episodeSummary() {
         TvEntity entity = getManager().showService().episodeSummary("the-league", 1, 1);
         assertThat(entity).isNotNull();
@@ -124,6 +135,7 @@ public class ShowServiceTest extends BaseTestCase {
                 episode.in_watchlist.booleanValue());
     }
 
+    @Test
     public void test_episodeUnlibrary() {
         Response response = getManager().showService().episodeUnlibrary(new ShowService.Episodes(
                 153021, 1, 1
@@ -132,6 +144,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_episodeUnseen() {
         Response response = getManager().showService().episodeUnseen(new ShowService.Episodes(
                 153021, 1, 1
@@ -140,6 +153,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_episodesUnseen() {
         List<ShowService.Episodes.Episode> episodes = new ArrayList<ShowService.Episodes.Episode>();
         episodes.add(new ShowService.Episodes.Episode(1, 1));
@@ -151,6 +165,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_seasonLibrary() {
         Response response = getManager().showService().seasonLibrary(new ShowService.Season(
                 153021, 1
@@ -159,6 +174,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_seasonSeen() {
         Response response = getManager().showService().seasonSeen(new ShowService.Season(
                 153021, 1
@@ -167,24 +183,28 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_showLibrary() {
         Response response = getManager().showService().showLibrary(new ShowService.Show(153021));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_showSeen() {
         Response response = getManager().showService().showSeen(new ShowService.Show(153021));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_showUnlibrary() {
         Response response = getManager().showService().showUnlibrary(new ShowService.Show(153021));
         assertThat(response).isNotNull();
         assertThat(response.status).isEqualTo(Status.SUCCESS);
     }
 
+    @Test
     public void test_stats() {
         Stats stats = getManager().showService().stats("the-walking-dead");
         assertThat(stats).isNotNull();
@@ -197,6 +217,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(stats.comments).isNotNull();
     }
 
+    @Test
     public void test_summary() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
         cal.set(2010, 9, 31, 21, 0);
@@ -222,6 +243,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.tvrage_id).isEqualTo(25056);
     }
 
+    @Test
     public void test_trending() {
         List<TvShow> shows = getManager().showService().trending();
         assertThat(shows).isNotEmpty();

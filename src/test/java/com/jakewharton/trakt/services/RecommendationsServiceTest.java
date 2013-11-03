@@ -4,12 +4,15 @@ import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 
+import org.junit.Test;
+
 import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class RecommendationsServiceTest extends BaseTestCase {
 
+    @Test
     public void test_movies() {
         List<Movie> movies = getManager().recommendationsService().movies();
         assertThat(movies).isNotNull();
@@ -19,6 +22,7 @@ public class RecommendationsServiceTest extends BaseTestCase {
         }
     }
 
+    @Test
     public void test_shows() {
         List<TvShow> tvShows = getManager().recommendationsService().shows();
         assertThat(tvShows).isNotNull();

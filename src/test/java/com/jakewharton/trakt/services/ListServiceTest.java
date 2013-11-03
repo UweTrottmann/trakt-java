@@ -6,10 +6,13 @@ import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.ListPrivacy;
 import com.jakewharton.trakt.enumerations.Status;
 
+import org.junit.Test;
+
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ListServiceTest extends BaseTestCase {
 
+    @Test
     public void test_list() {
         final ListService service = getManager().listService();
 
