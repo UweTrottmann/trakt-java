@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+2.0.1 *(2013-11-03)*
+------------------------
+
+ * Only create new `RestAdapter` instance when changing auth, API key or debug flag.
+ * Changed tests to use annotations, only setup trakt once per class.
+
 2.0.0 *(2013-10-31)*
 ------------------------
 
