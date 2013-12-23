@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Extended implements TraktEnumeration {
-    Extended("extended"),
-    Min("min"),
-    Default("");
+    EXTENDED("extended"),
+    MIN("min"),
+    DEFAULT("");
 
     private static final Map<String, com.jakewharton.trakt.enumerations.Extended> STRING_MAPPING
             = new HashMap<String, com.jakewharton.trakt.enumerations.Extended>();
