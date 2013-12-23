@@ -104,91 +104,50 @@ public interface UserService {
      *
      * @param username You can get a username by browsing the website and looking at the URL when on
      *                 a profile page.
+     * @param extended Returns complete show info if set to EXTENDED. Only send this if you really
+     *                 need the full dump as it doubles the data size being sent back. Returns only
+     *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, plays) required
+     *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/all.json/{apikey}/{username}")
+    @GET("/user/library/shows/all.json/{apikey}/{username}/{extended}")
     List<TvShow> libraryShowsAll(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns complete show info if set to true. Only send this if you really need the full dump as
-     * it doubles the data size being sent back.
-     *
-     * @param username You can get a username by browsing the website and looking at the URL when on
-     *                 a profile page.
-     */
-    @GET("/user/library/shows/all.json/{apikey}/{username}/extended")
-    List<TvShow> libraryShowsAllExtended(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns only the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, plays) required for
-     * media center syncing if set to min. This sends about half the data.
-     *
-     * @param username You can get a username by browsing the website and looking at the URL when on
-     *                 a profile page.
-     */
-    @GET("/user/library/shows/all.json/{apikey}/{username}/min")
-    List<TvShow> libraryShowsAllMinimum(
-            @EncodedPath("username") String username
+            @EncodedPath("username") String username,
+            @Path("extended") Extended extended
     );
 
     /**
      * Returns all shows and episodes in a user's library collection. Collection items might include
      * blu-rays, dvds, and digital downloads. Protected users won't return any data unless you are
      * friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     * @param extended Returns complete show info if set to EXTENDED. Only send this if you really
+     *                 need the full dump as it doubles the data size being sent back. Returns only
+     *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, seasons) required
+     *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/collection.json/{apikey}/{username}")
+    @GET("/user/library/shows/collection.json/{apikey}/{username}/{extended}")
     List<TvShow> libraryShowsCollection(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns all shows and episodes in a user's library collection. Collection items might include
-     * blu-rays, dvds, and digital downloads. Protected users won't return any data unless you are
-     * friends.
-     */
-    @GET("/user/library/shows/collection.json/{apikey}/{username}/extended")
-    List<TvShow> libraryShowsCollectionExtended(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns all shows and episodes in a user's library collection. Collection items might include
-     * blu-rays, dvds, and digital downloads. Protected users won't return any data unless you are
-     * friends.
-     */
-    @GET("/user/library/shows/collection.json/{apikey}/{username}/min")
-    List<TvShow> libraryShowsCollectionMinimum(
-            @EncodedPath("username") String username
+            @EncodedPath("username") String username,
+            @Path("extended") Extended extended
     );
 
     /**
      * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
      * data with local media center. Protected users won't return any data unless you are friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     * @param extended Returns complete show info if set to EXTENDED. Only send this if you really
+     *                 need the full dump as it doubles the data size being sent back. Returns only
+     *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, seasons) required
+     *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/watched.json/{apikey}/{username}")
+    @GET("/user/library/shows/watched.json/{apikey}/{username}/{extended}")
     List<TvShow> libraryShowsWatched(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
-     * data with local media center. Protected users won't return any data unless you are friends.
-     */
-    @GET("/user/library/shows/watched.json/{apikey}/{username}/extended")
-    List<TvShow> libraryShowsWatchedExtended(
-            @EncodedPath("username") String username
-    );
-
-    /**
-     * Returns all shows and episodes that a user has watched. This method is useful to sync trakt's
-     * data with local media center. Protected users won't return any data unless you are friends.
-     */
-    @GET("/user/library/shows/watched.json/{apikey}/{username}/min")
-    List<TvShow> libraryShowsWatchedMinimum(
-            @EncodedPath("username") String username
+            @EncodedPath("username") String username,
+            @Path("extended") Extended extended
     );
 
     /**
