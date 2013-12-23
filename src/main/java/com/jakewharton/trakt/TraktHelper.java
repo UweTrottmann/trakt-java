@@ -17,7 +17,7 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
-import com.jakewharton.trakt.enumerations.ExtendedParam;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Gender;
 import com.jakewharton.trakt.enumerations.ListItemType;
 import com.jakewharton.trakt.enumerations.ListPrivacy;
@@ -179,11 +179,11 @@ public abstract class TraktHelper {
                 return DayOfTheWeek.fromValue(arg0.getAsString());
             }
         });
-        builder.registerTypeAdapter(ExtendedParam.class, new JsonDeserializer<ExtendedParam>() {
+        builder.registerTypeAdapter(Extended.class, new JsonDeserializer<Extended>() {
             @Override
-            public ExtendedParam deserialize(JsonElement json, Type typeOfT,
+            public Extended deserialize(JsonElement json, Type typeOfT,
                     JsonDeserializationContext context) throws JsonParseException {
-                return ExtendedParam.fromValue(json.getAsString());
+                return Extended.fromValue(json.getAsString());
             }
         });
         builder.registerTypeAdapter(Gender.class, new JsonDeserializer<Gender>() {
