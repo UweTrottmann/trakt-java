@@ -4,6 +4,7 @@ import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.enumerations.Extended;
 
 import org.junit.Test;
 
@@ -23,6 +24,30 @@ public class UserServiceTest extends BaseTestCase {
     public void test_friends() {
         List<UserProfile> following = getManager().userService().friends("sgtest");
         assertThat(following).isNotNull();
+    }
+
+    @Test
+    public void test_libraryMoviesAll() {
+        List<Movie> movies = getManager().userService().libraryMoviesAll("sgtest",
+                Extended.DEFAULT);
+        assertThat(movies).isNotEmpty();
+        assertThat(movies.get(0)).isNotNull();
+    }
+
+    @Test
+    public void test_libraryMoviesCollection() {
+        List<Movie> movies = getManager().userService().libraryMoviesCollection("sgtest",
+                Extended.DEFAULT);
+        assertThat(movies).isNotEmpty();
+        assertThat(movies.get(0)).isNotNull();
+    }
+
+    @Test
+    public void test_libraryMoviesWatched() {
+        List<Movie> movies = getManager().userService().libraryMoviesWatched("sgtest",
+                Extended.DEFAULT);
+        assertThat(movies).isNotEmpty();
+        assertThat(movies.get(0)).isNotNull();
     }
 
     @Test

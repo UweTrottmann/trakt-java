@@ -4,11 +4,13 @@ package com.jakewharton.trakt.services;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.enumerations.Extended;
 
 import java.util.List;
 
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
+import retrofit.http.Path;
 
 public interface UserService {
 
@@ -41,6 +43,59 @@ public interface UserService {
     @GET("/user/network/friends.json/{apikey}/{username}")
     List<UserProfile> friends(
             @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all movies in a user's library. Each movie will indicate if it's in the user's
+     * collection and how many plays it has. Protected users won't return any data unless you are
+     * friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     * @param extended Returns complete movie info if set to EXTENDED. Only send this if you really
+     *                 need the full dump as it doubles the data size being sent back. Returns only
+     *                 the minimal info (title, year, imdb_id, tmdb_id, plays, in_collection,
+     *                 unseen) required for media center syncing if set to MIN. This sends about
+     *                 half the data.
+     */
+    @GET("/user/library/movies/all.json/{apikey}/{username}/{extended}")
+    List<Movie> libraryMoviesAll(
+            @EncodedPath("username") String username,
+            @Path("extended") Extended extended
+    );
+
+    /**
+     * Returns all movies in a user's library collection. Collection items might include blu-rays,
+     * dvds, and digital downloads. Protected users won't return any data unless you are friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     * @param extended Returns complete movie info if set to EXTENDED. Only send this if you really
+     *                 need the full dump as it doubles the data size being sent back. Returns only
+     *                 the minimal info (title, year, imdb_id, tmdb_id) required for media center
+     *                 syncing if set to MIN. This sends about half the data.
+     */
+    @GET("/user/library/movies/collection.json/{apikey}/{username}/{extended}")
+    List<Movie> libraryMoviesCollection(
+            @EncodedPath("username") String username,
+            @Path("extended") Extended extended
+    );
+
+    /**
+     * Returns all movies that a user has watched. This method is useful to sync trakt's data with
+     * local media center. Protected users won't return any data unless you are friends.
+     *
+     * @param username You can get a username by browsing the website and looking at the URL when on
+     *                 a profile page.
+     * @param extended Returns complete movie info if set to EXTENDED. Only send this if you really
+     *                 need the full dump as it doubles the data size being sent back. Returns only
+     *                 the minimal info (title, year, imdb_id, tmdb_id, plays) required for media
+     *                 center syncing if set to MIN. This sends about half the data.
+     */
+    @GET("/user/library/movies/watched.json/{apikey}/{username}/{extended}")
+    List<Movie> libraryMoviesWatched(
+            @EncodedPath("username") String username,
+            @Path("extended") Extended extended
     );
 
     /**
