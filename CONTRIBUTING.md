@@ -4,7 +4,7 @@ Contributing
 #### Would you like to contribute code?
 
 1. [Fork trakt-java][1].
-2. Create a new branch and make [great commits + messages][2]. If you add new endpoints, make sure to also add a basic test ensuring it works (see `src/test`).
+2. Create a new branch and make [great commits + messages][2]. If you add or modify endpoints, make sure to also create and run basic tests ensuring they work (see `src/test`).
 3. [Start a pull request][3] against dev. Reference [existing issues][4] when possible.
 
 #### No code!
