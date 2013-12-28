@@ -91,6 +91,15 @@ public interface MovieService {
             @Body Movies movies
     );
 
+    /**
+     * Get the top 10 related movies.
+     */
+    @GET("/movie/related.json/{apikey}/{title}/{hidewatched}")
+    List<com.jakewharton.trakt.entities.Movie> related(
+                    @Path("title") String imdbIdOrSlug,
+                    @Path("hidewatched") String hideWatched
+    );
+    
     @POST("/movie/seen/{apikey}")
     ActionResponse seen(
             @Body Movies movies
