@@ -7,6 +7,7 @@ import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
+import com.jakewharton.trakt.enumerations.HideWatched;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,13 +94,16 @@ public interface MovieService {
 
     /**
      * Get the top 10 related movies.
+     *
+     * @param hideWatched If this parameter is set and valid auth is sent, watched movies will be
+     *                    filtered out.
      */
     @GET("/movie/related.json/{apikey}/{title}/{hidewatched}")
     List<com.jakewharton.trakt.entities.Movie> related(
-                    @Path("title") String imdbIdOrSlug,
-                    @Path("hidewatched") String hideWatched
+            @Path("title") String imdbIdOrSlug,
+            @Path("hidewatched") HideWatched hideWatched
     );
-    
+
     @POST("/movie/seen/{apikey}")
     ActionResponse seen(
             @Body Movies movies

@@ -6,6 +6,7 @@ import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Stats;
+import com.jakewharton.trakt.enumerations.HideWatched;
 import com.jakewharton.trakt.enumerations.Status;
 
 import org.junit.Test;
@@ -33,14 +34,14 @@ public class MovieServiceTest extends BaseTestCase {
 
     @Test
     public void test_related() {
-    	 List<Movie> related = getManager().movieService().related( "tt0079470", "false");
-    	 assertThat(related).isNotNull();
-    	 assertThat(related).isNotEmpty();
-    	 for( Movie movie : related ) {
-    		 assertThat(movie).isNotNull();
-    	 }
+        List<Movie> related = getManager().movieService().related("tt0079470", HideWatched.DEFAULT);
+        assertThat(related).isNotNull();
+        assertThat(related).isNotEmpty();
+        for (Movie movie : related) {
+            assertThat(movie).isNotNull();
+        }
     }
-    
+
     @Test
     public void test_seen() {
         ActionResponse response = getManager().movieService().seen(new MovieService.Movies(
