@@ -32,6 +32,16 @@ public class MovieServiceTest extends BaseTestCase {
     }
 
     @Test
+    public void test_related() {
+    	 List<Movie> related = getManager().movieService().related( "tt0079470", "false");
+    	 assertThat(related).isNotNull();
+    	 assertThat(related).isNotEmpty();
+    	 for( Movie movie : related ) {
+    		 assertThat(movie).isNotNull();
+    	 }
+    }
+    
+    @Test
     public void test_seen() {
         ActionResponse response = getManager().movieService().seen(new MovieService.Movies(
                 new MovieService.SeenMovie("tt1285016")));
