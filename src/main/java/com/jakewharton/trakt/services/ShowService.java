@@ -268,7 +268,7 @@ public interface ShowService {
             @Path("title") String slugs
     );
 
-    @GET("/show/summarizq.json/{apikey}/{title}/extended")
+    @GET("/show/summaries.json/{apikey}/{title}/extended")
     List<TvShow> summariesExtended(
             @Path("title") String slugs
     );
