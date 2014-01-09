@@ -7,12 +7,14 @@ import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
+import com.jakewharton.trakt.enumerations.Extended2;
 import com.jakewharton.trakt.enumerations.HideWatched;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.http.Body;
+import retrofit.http.EncodedPath;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -141,6 +143,19 @@ public interface MovieService {
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
             @Path("title") String imdbIdOrSlug
+    );
+
+    /**
+     * Returns information for one or more movies.
+     *
+     * @param extended2 By default, this returns the minimal info. Set to NORMAL for more info (url,
+     *                  images, genres). Set to FULL for full info. Only send this if you really
+     *                  need the full dump as it doubles the data size being sent back.
+     */
+    @GET("/movie/summaries.json/{apikey}/{title}/{extended}")
+    List<com.jakewharton.trakt.entities.Movie> summaries(
+            @EncodedPath("title") String imdbIdsOrSlugs,
+            @Path("extended") Extended2 extended2
     );
 
     /**
