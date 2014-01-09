@@ -8,6 +8,7 @@ import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
+import com.jakewharton.trakt.enumerations.Extended2;
 import com.jakewharton.trakt.enumerations.Status;
 
 import org.junit.Test;
@@ -241,6 +242,23 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.imdb_id).isEqualTo("tt1520211");
         assertThat(show.tvdb_id).isEqualTo(153021);
         assertThat(show.tvrage_id).isEqualTo(25056);
+    }
+
+    @Test
+    public void test_summaries() {
+        // default
+        List<TvShow> shows = getManager().showService()
+                .summaries("the-walking-dead,256227", Extended2.DEFAULT);
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+        assertThat(shows.get(0).title).isEqualTo("The Walking Dead");
+
+        // full
+        shows = getManager().showService()
+                .summaries("the-walking-dead,256227", Extended2.FULL);
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+        assertThat(shows.get(0).title).isEqualTo("The Walking Dead");
     }
 
     @Test
