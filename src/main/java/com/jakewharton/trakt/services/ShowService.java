@@ -1,20 +1,13 @@
 package com.jakewharton.trakt.services;
 
-import com.jakewharton.trakt.entities.CheckinResponse;
-import com.jakewharton.trakt.entities.Comment;
-import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.entities.Share;
-import com.jakewharton.trakt.entities.Stats;
-import com.jakewharton.trakt.entities.TvEntity;
-import com.jakewharton.trakt.entities.TvShow;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.jakewharton.trakt.entities.*;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Endpoints for Show.
@@ -268,6 +261,16 @@ public interface ShowService {
     @GET("/show/summary.json/{apikey}/{title}/extended")
     TvShow summaryExtended(
             @Path("title") String slug
+    );
+
+    @GET("/show/summaries.json/{apikey}/{title}")
+    List<TvShow> summaries(
+            @Path("title") String slugs
+    );
+
+    @GET("/show/summaries.json/{apikey}/{title}/extended")
+    List<TvShow> summariesExtended(
+            @Path("title") String slugs
     );
 
     @GET("/shows/trending.json/{apikey}")
