@@ -7,6 +7,7 @@ import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Extended2;
 
 import java.util.ArrayList;
@@ -252,24 +253,31 @@ public interface ShowService {
             @Path("title") String slug
     );
 
-    @GET("/show/summary.json/{apikey}/{title}")
+    /**
+     * Returns information for a TV show including ratings, top watchers, and most watched
+     * episodes.
+     *
+     * @param extended Returns complete season and episode info if set to EXTENDED. Only send this
+     *                 if you really need the full dump. Use the show/seasons and show/season
+     *                 methods if you only need some of the season or episode info.
+     */
+    @GET("/show/summary.json/{apikey}/{title}/{extended}")
     TvShow summary(
-            @Path("title") int tvdbId
+            @Path("title") int tvdbId,
+            @Path("extended") Extended extended
     );
 
-    @GET("/show/summary.json/{apikey}/{title}")
+    /**
+     * Returns information for a TV show including ratings, top watchers, and most watched episodes
+     *
+     * @param extended Returns complete season and episode info if set to EXTENDED. Only send this
+     *                 if you really need the full dump. Use the show/seasons and show/season
+     *                 methods if you only need some of the season or episode info.
+     */
+    @GET("/show/summary.json/{apikey}/{title}/{extended}")
     TvShow summary(
-            @Path("title") String slug
-    );
-
-    @GET("/show/summary.json/{apikey}/{title}/extended")
-    TvShow summaryExtended(
-            @Path("title") int tvdbId
-    );
-
-    @GET("/show/summary.json/{apikey}/{title}/extended")
-    TvShow summaryExtended(
-            @Path("title") String slug
+            @Path("title") String slug,
+            @Path("extended") Extended extended
     );
 
     /**

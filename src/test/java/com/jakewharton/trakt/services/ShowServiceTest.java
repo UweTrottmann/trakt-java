@@ -8,6 +8,7 @@ import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
+import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Extended2;
 import com.jakewharton.trakt.enumerations.Status;
 
@@ -224,7 +225,7 @@ public class ShowServiceTest extends BaseTestCase {
         cal.set(2010, 9, 31, 21, 0);
         Date firstAired = cal.getTime();
 
-        TvShow show = getManager().showService().summaryExtended("the-walking-dead");
+        TvShow show = getManager().showService().summary("the-walking-dead", Extended.EXTENDED);
         assertThat(show).isNotNull();
         assertThat(show.title).isEqualTo("The Walking Dead");
         assertThat(show.year).isNotNull();
