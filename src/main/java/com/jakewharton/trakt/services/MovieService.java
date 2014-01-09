@@ -1,21 +1,15 @@
 
 package com.jakewharton.trakt.services;
 
-import com.jakewharton.trakt.entities.ActionResponse;
-import com.jakewharton.trakt.entities.CheckinResponse;
-import com.jakewharton.trakt.entities.Comment;
-import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.entities.Share;
-import com.jakewharton.trakt.entities.Stats;
+import com.jakewharton.trakt.entities.*;
 import com.jakewharton.trakt.enumerations.HideWatched;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Endpoints for Movie.
@@ -141,6 +135,22 @@ public interface MovieService {
     @GET("/movie/summary.json/{apikey}/{title}")
     com.jakewharton.trakt.entities.Movie summary(
             @Path("title") String imdbIdOrSlug
+    );
+
+    /**
+     * Returns information for one or more movies.
+     */
+    @GET("/movie/summaries.json/{apikey}/{title}")
+    List<com.jakewharton.trakt.entities.Movie> summaries(
+            @Path("title") String imdbIdsOrSlugs
+    );
+
+    /**
+     * Returns information for one or more movies.
+     */
+    @GET("/movie/summaries.json/{apikey}/{title}/extended")
+    List<com.jakewharton.trakt.entities.Movie> summariesExtended(
+            @Path("title") String imdbIdsOrSlugs
     );
 
     /**
