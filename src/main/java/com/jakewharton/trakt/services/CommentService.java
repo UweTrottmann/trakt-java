@@ -75,6 +75,11 @@ public interface CommentService {
             this.comment = comment;
         }
 
+        public MovieComment(int tmdbId, String comment) {
+            super(tmdbId);
+            this.comment = comment;
+        }
+
         /**
          * <em>Optional.</em> Set to true to indicate the shout is a spoiler. Defaults to false.
          */
