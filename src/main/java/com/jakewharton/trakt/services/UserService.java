@@ -1,6 +1,7 @@
 
 package com.jakewharton.trakt.services;
 
+import com.jakewharton.trakt.entities.CalendarDate;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
@@ -181,6 +182,27 @@ public interface UserService {
     @GET("/user/watchlist/shows.json/{apikey}/{username}")
     List<TvShow> watchlistShows(
             @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows airing in the next 7 days.
+     */
+    @GET("/user/calendar/shows.json/{apikey}/{username}")
+    List<CalendarDate> calendarShows(
+            @EncodedPath("username") String username
+    );
+
+    /**
+     * Returns all shows airing during the time period specified.
+     *
+     * @param date Start date for the calendar in the format Ymd (i.e. 20110421). If blank, defaults to today.
+     * @param days Number of days to display starting from the date. If blank, defaults to 7 days.
+     */
+    @GET("/user/calendar/shows.json/{apikey}/{username}/{date}/{days}")
+    List<CalendarDate> calendarShows(
+            @EncodedPath("username") String username,
+            @EncodedPath("date") String date,
+            @EncodedPath("days") int days
     );
 
 }
