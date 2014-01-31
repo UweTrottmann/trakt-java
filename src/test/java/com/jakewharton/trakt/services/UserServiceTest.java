@@ -1,10 +1,10 @@
 package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
+import com.jakewharton.trakt.entities.CalendarDate;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
-
 import org.junit.Test;
 
 import java.util.List;
@@ -108,6 +108,14 @@ public class UserServiceTest extends BaseTestCase {
     @Test
     public void test_watchlistShows() {
         List<TvShow> shows = getManager().userService().watchlistShows("justin");
+        assertThat(shows).isNotEmpty();
+        assertThat(shows.get(0)).isNotNull();
+    }
+
+
+    @Test
+    public void test_userCalendar() {
+        List<CalendarDate> shows = getManager().userService().calendarShows("JakeWharton", "2013-09-21", 7);
         assertThat(shows).isNotEmpty();
         assertThat(shows.get(0)).isNotNull();
     }
