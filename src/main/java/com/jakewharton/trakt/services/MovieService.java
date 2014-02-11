@@ -245,6 +245,17 @@ public interface MovieService {
             this(imdbId, appVersion, appDate);
             this.message = message;
         }
+
+        public MovieCheckin(int tmdbId, String appVersion, String appDate) {
+            super(tmdbId);
+            this.app_version = appVersion;
+            this.app_date = appDate;
+        }
+
+        public MovieCheckin(int tmdbId, String message, String appVersion, String appDate) {
+            this(tmdbId, appVersion, appDate);
+            this.message = message;
+        }
     }
 
     public static class Movies {
