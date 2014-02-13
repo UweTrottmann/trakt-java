@@ -43,14 +43,17 @@ Calling endpoints
     trakt.setAuthentication("username", "sha1_of_password");
     trakt.setApiKey("api_key");
     
+    // Create service instance
+    ShowService showService = trakt.showService();
+
     // Get trending shows on trakt
-    List<TvShow> shows = trakt.showService().trending();
+    List<TvShow> shows = showService.trending();
     for (TvShow show : shows) {
     	System.out.println("Title: " + show.title);
     }
     
     // Post an episode as seen
-    Response response = trakt.showService().episodeSeen(new ShowService.Episodes(
+    Response response = showService.episodeSeen(new ShowService.Episodes(
         153021 // TVDb id of show, 1 // season, 1 // episode
     ));
     if (response != null && response.status == Status.SUCCESS) {
@@ -67,7 +70,7 @@ Original Implementation
 License
 =======
 
-    Copyright 2013 Uwe Trottmann
+    Copyright 2013-2014 Uwe Trottmann
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
