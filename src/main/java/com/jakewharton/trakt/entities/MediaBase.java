@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
 
+import java.util.Date;
 import java.util.List;
 
 public abstract class MediaBase implements TraktEntity {
@@ -27,5 +28,6 @@ public abstract class MediaBase implements TraktEntity {
     public Rating rating;
     public Rating rating_advanced;
     @SerializedName("in_watchlist") public Boolean inWatchlist;
+    public Date last_updated;
 
 }

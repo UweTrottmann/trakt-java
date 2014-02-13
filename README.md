@@ -15,10 +15,25 @@ Dependencies
 ------------
 
 The [released jar][4] is built without dependencies, add these yourself as you see fit.
-For example in a gradle.build file:
+For example for Gradle:
 ```
-compile 'com.squareup.okhttp:okhttp:1.2.1' // not mandatory, but greatly recommended
-compile 'com.squareup.retrofit:retrofit:1.2.2'
+compile 'com.squareup.retrofit:retrofit:1.4.1'
+compile 'com.squareup.okhttp:okhttp:1.3.0' // not mandatory, but greatly recommended
+```
+
+Or for Maven:
+```
+<dependency>
+  <groupId>com.squareup.retrofit</groupId>
+  <artifactId>retrofit</artifactId>
+  <version>1.4.1</version>
+</dependency>
+<!-- not mandatory, but greatly recommended: -->
+<dependency>
+  <groupId>com.squareup.okhttp</groupId>
+  <artifactId>okhttp</artifactId>
+  <version>1.3.0</version>
+</dependency>
 ```
 
 Calling endpoints
