@@ -7,11 +7,14 @@ import com.jakewharton.trakt.entities.Share;
 import com.jakewharton.trakt.entities.Stats;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Extended;
+import com.jakewharton.trakt.enumerations.Extended2;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.http.Body;
+import retrofit.http.EncodedPath;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -250,24 +253,44 @@ public interface ShowService {
             @Path("title") String slug
     );
 
-    @GET("/show/summary.json/{apikey}/{title}")
+    /**
+     * Returns information for a TV show including ratings, top watchers, and most watched
+     * episodes.
+     *
+     * @param extended Returns complete season and episode info if set to EXTENDED. Only send this
+     *                 if you really need the full dump. Use the show/seasons and show/season
+     *                 methods if you only need some of the season or episode info.
+     */
+    @GET("/show/summary.json/{apikey}/{title}/{extended}")
     TvShow summary(
-            @Path("title") int tvdbId
+            @Path("title") int tvdbId,
+            @Path("extended") Extended extended
     );
 
-    @GET("/show/summary.json/{apikey}/{title}")
+    /**
+     * Returns information for a TV show including ratings, top watchers, and most watched episodes
+     *
+     * @param extended Returns complete season and episode info if set to EXTENDED. Only send this
+     *                 if you really need the full dump. Use the show/seasons and show/season
+     *                 methods if you only need some of the season or episode info.
+     */
+    @GET("/show/summary.json/{apikey}/{title}/{extended}")
     TvShow summary(
-            @Path("title") String slug
+            @Path("title") String slug,
+            @Path("extended") Extended extended
     );
 
-    @GET("/show/summary.json/{apikey}/{title}/extended")
-    TvShow summaryExtended(
-            @Path("title") int tvdbId
-    );
-
-    @GET("/show/summary.json/{apikey}/{title}/extended")
-    TvShow summaryExtended(
-            @Path("title") String slug
+    /**
+     * Returns information for one or more TV shows.
+     *
+     * @param extended2 By default, this returns the minimal info. Set to NORMAL for more info (url,
+     *                  images, genres). Set to FULL for full info. Only send this if you really
+     *                  need the full dump as it doubles the data size being sent back.
+     */
+    @GET("/show/summaries.json/{apikey}/{title}/{extended}")
+    List<TvShow> summaries(
+            @EncodedPath("title") String slugsOrTvdbIds,
+            @Path("extended") Extended2 extended2
     );
 
     @GET("/shows/trending.json/{apikey}")
