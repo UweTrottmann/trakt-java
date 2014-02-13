@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+3.0.0 *(2014-02-13)*
+------------------------
+
+ * `ExtendedParam` replaced with `Extended`, adds a `DEFAULT` value.
+ * `user/library/shows` endpoints add `Extended` param, `-Minimum` and `-Extended` versions are dropped.
+ * Added `user/library/movies/` endpoints.
+ * Added `movie/related` endpoint.
+ * Added `show/summaries` and `movie/summaries`.
+ * Added `user/calendar/shows` endpoint.
+ * Add `last_updated` field.
+ * Support `MovieComment` with TMDb id.
+ * Use retrofit 1.4.1.
+
+
 2.0.1 *(2013-11-03)*
 ------------------------
 
