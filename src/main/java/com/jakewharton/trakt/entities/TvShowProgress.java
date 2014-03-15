@@ -26,7 +26,7 @@ import java.util.Map;
 public class TvShowProgress implements TraktEntity {
     private static final long serialVersionUID = 5278238759952077403L;
     
-    public Show show;
+    public TvShow show;
     public Progress progress;
     public java.util.List<Season> seasons;
     public java.util.List<Integer> hidden_seasons;
@@ -54,14 +54,6 @@ public class TvShowProgress implements TraktEntity {
         public Integer scrobbles;
         public Integer checkins;
         public Integer seen;
-    }
-    
-    public static class Show {
-        public String imdb_id;
-        public Integer tvdb_id;
-        public Integer tvrage_id;
-        public String title;
-        public Integer year;
     }
     
     public static class NextEpisode {
