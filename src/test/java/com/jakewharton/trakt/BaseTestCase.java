@@ -10,7 +10,7 @@ public abstract class BaseTestCase {
 
     protected static final String API_KEY = "5abdaea0246b840cb7c709f8e1788fed";
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static final Trakt sTrakt = new Trakt();
 
