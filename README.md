@@ -18,7 +18,6 @@ The [released jar][4] is built without dependencies, add these yourself as you s
 For example for Gradle:
 ```
 compile 'com.squareup.retrofit:retrofit:1.4.1'
-compile 'com.squareup.okhttp:okhttp:1.3.0' // not mandatory, but greatly recommended
 ```
 
 Or for Maven:
@@ -28,13 +27,9 @@ Or for Maven:
   <artifactId>retrofit</artifactId>
   <version>1.4.1</version>
 </dependency>
-<!-- not mandatory, but greatly recommended: -->
-<dependency>
-  <groupId>com.squareup.okhttp</groupId>
-  <artifactId>okhttp</artifactId>
-  <version>1.3.0</version>
-</dependency>
 ```
+
+You also might want to use the [OkHttp][5] client, but it is not required.
 
 Calling endpoints
 -----------------
@@ -91,3 +86,4 @@ License
  [2]: https://github.com/square/retrofit
  [3]: https://github.com/JakeWharton/trakt-java/
  [4]: https://github.com/UweTrottmann/trakt-java/releases
+ [5]: https://github.com/square/okhttp
