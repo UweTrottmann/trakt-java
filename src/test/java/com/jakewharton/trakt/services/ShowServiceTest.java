@@ -235,7 +235,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.country).isEqualTo("United States");
         assertThat(show.overview).isNotNull();
         assertThat(show.runtime).isNotNull();
-        assertThat(show.runtime.intValue()).isEqualTo(60);
+        assertThat(show.runtime.intValue()).isEqualTo(45);
         assertThat(show.network).isEqualTo("AMC");
         assertThat(show.airDay).isEqualTo(DayOfTheWeek.Sunday);
         assertThat(show.airTime).isEqualTo("9:00pm");
