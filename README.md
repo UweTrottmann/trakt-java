@@ -10,11 +10,23 @@ credentials and API key.
 
 Usage
 =====
+Add the following dependency to your Gradle project:
+```
+compile 'com.uwetrottmann:trakt-java:3.1.0'
+```
+
+Or for Maven:
+```
+<dependency>
+  <groupId>com.uwetrottmann</groupId>
+  <artifactId>trakt-java</artifactId>
+  <version>3.1.0</version>
+</dependency>
+```
 
 Dependencies
 ------------
-
-The [released jar][4] is built without dependencies, add these yourself as you see fit.
+If you rather use the [released jar][3], add dependencies yourself as you see fit.
 For example for Gradle:
 ```
 compile 'com.squareup.retrofit:retrofit:1.4.1'
