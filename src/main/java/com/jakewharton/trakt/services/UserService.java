@@ -4,8 +4,11 @@ package com.jakewharton.trakt.services;
 import com.jakewharton.trakt.entities.CalendarDate;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowProgress;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.Extended;
+import com.jakewharton.trakt.enumerations.Extended2;
+import com.jakewharton.trakt.enumerations.SortType;
 
 import java.util.List;
 
@@ -158,6 +161,48 @@ public interface UserService {
     @GET("/user/profile.json/{apikey}/{username}")
     UserProfile profile(
             @EncodedPath("username") String username
+    );
+    
+    /**
+     * Get the progress of the shows that the user has watched
+     * @param username  You can get a username by browsing the website and looking at the URL when on
+     *                  a profile page.
+     * @param title     You can get a specific show using the slug e.g. the-walking-dead or TVDB id.
+     *                  All show progress can be returned using the title "all"
+     * @param sort      Sort the returned shows. See {@link SortType}
+     * @param extended  Return minimal show info (title, year, imdb_id, tvdb_id, tvrage_id) by default.
+     *                  Set to {@link Extended2#NORMAL} to also include images and show url.
+     *                  Set to {@link Extended2#FULL} for the complete show details.
+     *                  Only get extended info if you really need to since it adds a lot of data
+     * @return the progress of the shows that a user has watched
+     */
+    @GET("/user/progress/watched.json/{apikey}/{username}/{title}/{sort}/{extended}")
+    List<TvShowProgress> progressWatched(
+            @EncodedPath("username") String username,
+            @Path("title") String title,
+            @Path("sort") SortType sort,
+            @Path("extended") Extended2 extended
+    );
+    
+    /**
+     * Get the progress of the shows that the user has collected
+     * @param username  You can get a username by browsing the website and looking at the URL when on
+     *                  a profile page.
+     * @param title     You can get a specific show using the slug e.g. the-walking-dead or TVDB id.
+     *                  All shows can be returned using the title "all"
+     * @param sort      Sort the returned shows. See {@link SortType}
+     * @param extended  Return minimal show info (title, year, imdb_id, tvdb_id, tvrage_id) by default.
+     *                  Set to {@link Extended2#NORMAL} to also include images and show url.
+     *                  Set to {@link Extended2#FULL} for the complete show details.
+     *                  Only get extended info if you really need to since it adds a lot of data
+     * @return the progress of the shows that the user has collected
+     */
+    @GET("/user/progress/collected.json/{apikey}/{username}/{title}/{sort}/{extended}")
+    List<TvShowProgress> progressCollected(
+            @EncodedPath("username") String username,
+            @Path("title") String title,
+            @Path("sort") SortType sort,
+            @Path("extended") Extended2 extended
     );
 
     /**
