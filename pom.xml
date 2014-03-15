@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jakewharton</groupId>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <groupId>com.uwetrottmann</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
     <version>3.1.0</version>
 
-    <name>Trakt Java API Wrapper</name>
+    <name>trakt-java</name>
     <description>A Java wrapper around the trakt.tv API using retrofit.</description>
     <url>https://github.com/UweTrottmann/trakt-java/</url>
     <inceptionYear>2013</inceptionYear>
 
     <licenses>
         <license>
-            <name>Apache License Version 2.0</name>
+            <name>Apache 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
             <distribution>repo</distribution>
         </license>
@@ -29,6 +34,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+
+    <scm>
+        <url>https://github.com/UweTrottmann/trakt-java</url>
+        <connection>scm:git:git://github.com/UweTrottmann/trakt-java.git</connection>
+        <developerConnection>scm:git:git@github.com:UweTrottmann/trakt-java.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/UweTrottmann/trakt-java/issues</url>
+    </issueManagement>
 
     <dependencies>
         <dependency>
@@ -67,19 +83,6 @@
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
