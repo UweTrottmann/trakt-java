@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+3.1.0 *(2014-03-15)*
+--------------------
+
+ * Added `user/progress/watched` and `user/progress/collected` endpoints. Thanks @samicemalone!
+ * Added `search/movies`. Thanks @porzione!
+ * Change fest dependency scope to `test`.
+
 3.0.0 *(2014-02-13)*
 ------------------------
 There were some API breaking changes due to the introduction of a new `Extended` enum.
