@@ -24,12 +24,12 @@ public class Trakt {
     /**
      * trakt API URL.
      */
-    private static final String API_URL = "http://api.trakt.tv";
+    public static final String API_URL = "http://api.trakt.tv";
 
     /**
      * API key path parameter name.
      */
-    private static final String PARAM_API_KEY = "apikey";
+    public static final String PARAM_API_KEY = "apikey";
 
     /**
      * API key.
@@ -98,7 +98,7 @@ public class Trakt {
      * If no instance exists yet, builds a new {@link RestAdapter} using the currently set
      * authentication information, API key and debug flag.
      */
-    private RestAdapter buildRestAdapter() {
+    protected RestAdapter buildRestAdapter() {
         if (mRestAdapter == null) {
             RestAdapter.Builder builder = new RestAdapter.Builder()
                     .setEndpoint(API_URL)
