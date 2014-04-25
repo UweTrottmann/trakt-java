@@ -17,6 +17,13 @@ public class ActivityServiceTest extends BaseTestCase {
     }
 
     @Test
+    public void test_friends() {
+        Activity activity = getManager().activityService().friends("all", "all", (long) 0, null, null);
+        assertThat(activity).isNotNull();
+        assertThat(activity.activity).isNotEmpty();
+    }
+
+    @Test
     public void test_user() {
         Activity activity = getManager().activityService().user("JakeWharton");
         assertThat(activity).isNotNull();
