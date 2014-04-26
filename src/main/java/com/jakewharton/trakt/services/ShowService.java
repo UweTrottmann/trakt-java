@@ -25,14 +25,14 @@ import retrofit.http.Path;
 public interface ShowService {
 
     /**
-     * Notify trakt that a user wants to cancel their current check in. <br/> <br/>
+     * Notify trakt that a user wants to cancel their current check in. <p>
      * <em>Warning</em>: This method requires a developer API key.
      */
     @POST("/show/cancelcheckin/{apikey}")
     Response cancelcheckin();
 
     /**
-     * Notify trakt that a user has stopped watching a show.<br/> <br/> <em>Warning</em>: This
+     * Notify trakt that a user has stopped watching a show.<p> <em>Warning</em>: This
      * method requires a developer API key.
      */
     @POST("/show/cancelwatching/{apikey}")
@@ -41,7 +41,7 @@ public interface ShowService {
     /**
      * Check into a show on trakt. Think of this method as in between a seen and a scrobble. After
      * checking in, trakt will automatically display it as watching then switch over to watched
-     * status once the duration has elapsed.<br/> <br/> <em>Warning</em>: This method requires a
+     * status once the duration has elapsed.<p> <em>Warning</em>: This method requires a
      * developer API key.
      */
     @POST("/show/checkin/{apikey}")

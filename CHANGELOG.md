@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+3.2.0 *(2014-04-26)*
+--------------------
+
+ * Added `activity/friends`.
+ * Update to [retrofit][1] 1.5.0.
+
 3.1.0 *(2014-03-15)*
 --------------------
 
@@ -20,7 +26,7 @@ E.g. instead of calling `libraryShowsAllMinimum(username)` call `libraryShowsAll
  * Added `user/calendar/shows` endpoint.
  * Add `last_updated` field.
  * Support `MovieComment` with TMDb id.
- * Use retrofit 1.4.1.
+ * Use [retrofit][1] 1.4.1.
 
 
 2.0.1 *(2013-11-03)*
@@ -36,7 +42,7 @@ E.g. instead of calling `libraryShowsAllMinimum(username)` call `libraryShowsAll
  * `ServiceManager` is now just `Trakt`, endpoints do not require you to call `.fire()` anymore either.
  * For now this is NOT published to a Maven repository, let me know if there is demand.
  * Start testing with FEST.
- * Use retrofit 1.2.2.
+ * Use [retrofit][1] 1.2.2.
 
 
 1.3.0 *(2011-12-13)*
@@ -91,3 +97,5 @@ E.g. instead of calling `libraryShowsAllMinimum(username)` call `libraryShowsAll
 --------------------
 
 Initial version.
+
+[1]: https://github.com/square/retrofit/blob/master/CHANGELOG.md
