@@ -2,12 +2,14 @@ package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.Activity;
-
 import org.junit.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ActivityServiceTest extends BaseTestCase {
+
+    public static final long DAY_IN_SEC = 24 * 60 * 60;
+    public static final long WEEK_IN_SEC = DAY_IN_SEC * 7;
 
     @Test
     public void test_community() {
@@ -18,7 +20,12 @@ public class ActivityServiceTest extends BaseTestCase {
 
     @Test
     public void test_friends() {
-        Activity activity = getManager().activityService().friends("all", "all", (long) 0, null, null);
+        long sixWeeksAgo = (System.currentTimeMillis() / 1000) - 4 * WEEK_IN_SEC;
+        Activity activity = getManager().activityService().friends("all", "all", sixWeeksAgo, null, null);
+        assertThat(activity).isNotNull();
+        assertThat(activity.activity).isNotEmpty();
+
+        activity = getManager().activityService().friends("all", "all", sixWeeksAgo, 1, 1);
         assertThat(activity).isNotNull();
         assertThat(activity.activity).isNotEmpty();
     }
