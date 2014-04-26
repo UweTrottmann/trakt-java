@@ -7,6 +7,6 @@ package com.jakewharton.trakt;
  * <p>All implementing enumerations should override {@link Object#toString()}
  * in order to provide a string representation of their type.</p>
  *
- * @author Jake Wharton <jakewharton@gmail.com>
+ * @author Jake Wharton jakewharton@gmail.com
  */
 public interface TraktEnumeration {}

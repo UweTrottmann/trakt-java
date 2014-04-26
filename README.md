@@ -12,7 +12,7 @@ Usage
 =====
 Add the following dependency to your Gradle project:
 ```
-compile 'com.uwetrottmann:trakt-java:3.1.0'
+compile 'com.uwetrottmann:trakt-java:3.2.0'
 ```
 
 Or for Maven:
@@ -20,7 +20,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>3.1.0</version>
+  <version>3.2.0</version>
 </dependency>
 ```
 
@@ -29,7 +29,7 @@ Dependencies
 If you rather use the [released jar][3], add dependencies yourself as you see fit.
 For example for Gradle:
 ```
-compile 'com.squareup.retrofit:retrofit:1.4.1'
+compile 'com.squareup.retrofit:retrofit:1.5.0'
 ```
 
 Or for Maven:
@@ -37,7 +37,7 @@ Or for Maven:
 <dependency>
   <groupId>com.squareup.retrofit</groupId>
   <artifactId>retrofit</artifactId>
-  <version>1.4.1</version>
+  <version>1.5.0</version>
 </dependency>
 ```
 
