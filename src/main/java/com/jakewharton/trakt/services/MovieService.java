@@ -25,14 +25,14 @@ import retrofit.http.Path;
 public interface MovieService {
 
     /**
-     * Notify trakt that a user wants to cancel their current check in. <br/> <br/>
+     * Notify trakt that a user wants to cancel their current check in. <p>
      * <em>Warning</em>: This method requires a developer API key.
      */
     @POST("/movie/cancelcheckin/{apikey}")
     Response cancelcheckin();
 
     /**
-     * Notify Trakt that a user has stopped watching a movie. <br/> <br/> <em>Warning</em>: This
+     * Notify Trakt that a user has stopped watching a movie. <p> <em>Warning</em>: This
      * method requires a developer API key.
      */
     @POST("/movie/cancelwatching/{apikey}")
