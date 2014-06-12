@@ -239,7 +239,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.network).isEqualTo("AMC");
         assertThat(show.airDay).isEqualTo(DayOfTheWeek.Sunday);
         assertThat(show.airTime).isEqualTo("9:00pm");
-        assertThat(show.certification).isEqualTo("TV-14");
+        assertThat(show.certification).isEqualTo("TV-MA");
         assertThat(show.imdb_id).isEqualTo("tt1520211");
         assertThat(show.tvdb_id).isEqualTo(153021);
         assertThat(show.tvrage_id).isEqualTo(25056);
