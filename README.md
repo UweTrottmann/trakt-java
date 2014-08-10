@@ -12,7 +12,7 @@ Usage
 =====
 Add the following dependency to your Gradle project:
 ```
-compile 'com.uwetrottmann:trakt-java:3.2.0'
+compile 'com.uwetrottmann:trakt-java:3.2.1'
 ```
 
 Or for Maven:
@@ -20,7 +20,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>3.2.0</version>
+  <version>3.2.1</version>
 </dependency>
 ```
 
