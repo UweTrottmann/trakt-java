@@ -1,6 +1,7 @@
 package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
+import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Stats;
@@ -230,7 +231,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.title).isEqualTo("The Walking Dead");
         assertThat(show.year).isNotNull();
         assertThat(show.year.intValue()).isEqualTo(2010);
-        assertThat(show.url).isEqualTo("http://trakt.tv/show/the-walking-dead");
+        assertThat(show.url).isEqualTo("https://trakt.tv/show/the-walking-dead");
         assertThat(show.first_aired_utc).isEqualTo(1288573200);
         assertThat(show.country).isEqualTo("United States");
         assertThat(show.overview).isNotNull();
@@ -239,7 +240,7 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.network).isEqualTo("AMC");
         assertThat(show.airDay).isEqualTo(DayOfTheWeek.Sunday);
         assertThat(show.airTime).isEqualTo("9:00pm");
-        assertThat(show.certification).isEqualTo("TV-14");
+        assertThat(show.certification).isEqualTo("TV-MA");
         assertThat(show.imdb_id).isEqualTo("tt1520211");
         assertThat(show.tvdb_id).isEqualTo(153021);
         assertThat(show.tvrage_id).isEqualTo(25056);

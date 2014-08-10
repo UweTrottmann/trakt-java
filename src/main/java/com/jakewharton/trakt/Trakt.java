@@ -24,7 +24,7 @@ public class Trakt {
     /**
      * trakt API URL.
      */
-    public static final String API_URL = "http://api.trakt.tv";
+    public static final String API_URL = "https://api.trakt.tv";
 
     /**
      * API key path parameter name.

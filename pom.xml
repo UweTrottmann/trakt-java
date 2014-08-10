@@ -13,7 +13,7 @@
     <groupId>com.uwetrottmann</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
-    <version>3.2.0</version>
+    <version>3.2.1</version>
 
     <name>trakt-java</name>
     <description>A Java wrapper around the trakt.tv API using retrofit.</description>
@@ -50,7 +50,17 @@
         <dependency>
             <groupId>com.squareup.retrofit</groupId>
             <artifactId>retrofit</artifactId>
-            <version>1.5.0</version>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp-urlconnection</artifactId>
+            <version>1.6.0</version>
         </dependency>
 
         <dependency>
