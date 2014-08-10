@@ -41,7 +41,7 @@ Or for Maven:
 </dependency>
 ```
 
-You also might want to use the [OkHttp][5] client, but it is not required.
+It is also strongly recommended to use [OkHttp][5], but it is not required.
 
 Calling endpoints
 -----------------
