@@ -14,11 +14,23 @@ import com.jakewharton.trakt.services.SearchService;
 import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.UserService;
 import com.jakewharton.trakt.util.Base64;
-
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
+/**
+ * Helper class for easy usage of the trakt API using retrofit.
+ * <p>
+ * Create an instance of this class, {@link #setApiKey(String)} and then call any of the service methods. You may also
+ * want to {@link #setAuthentication(String, String)} to get user-related data or to access user-specific methods.
+ * <p>
+ * The service methods take care of constructing the required {@link retrofit.RestAdapter} and creating the service. You
+ * can customize the {@link retrofit.RestAdapter} by overriding {@link #newRestAdapterBuilder()} and setting e.g.
+ * your own HTTP client instance or thread executor.
+ * <p>
+ * Only one {@link retrofit.RestAdapter} instance is created upon the first and re-used for any consequent service
+ * method call.
+ */
 public class Trakt {
 
     /**
@@ -31,31 +43,14 @@ public class Trakt {
      */
     public static final String PARAM_API_KEY = "apikey";
 
+    private String apiKey;
+    private boolean isDebug;
     /**
-     * API key.
+     * User password SHA-1.
      */
-    private String mApiKey;
-
-    /**
-     * Whether to return more detailed log output.
-     */
-    private boolean mIsDebug;
-
-    /**
-     * User password.
-     */
-    private String mPasswordSha1;
-
-    /**
-     * User email.
-     */
-    private String mUsername;
-
-    /**
-     * Currently valid instance of RestAdapter.
-     */
-    private RestAdapter mRestAdapter;
-
+    private String userPasswordSha1;
+    private String userAccount;
+    private RestAdapter restAdapter;
 
     /**
      * Create a new manager instance.
@@ -64,118 +59,145 @@ public class Trakt {
     }
 
     /**
-     * POST API methods on trakt require basic setAuthentication. You must set your trakt username
+     * POST API methods on trakt require basic authentication. You must set your trakt username
      * and sha1 of the password. They will be sent in the HTTP header.
+     * <p>
+     * The next service method call will trigger a rebuild of the {@link retrofit.RestAdapter}. If
+     * you have cached any service instances, get a new one from its service method.
      *
-     * @param username     Username.
-     * @param passwordSha1 SHA1 of user password.
+     * @param username     trakt user account name.
+     * @param passwordSha1 SHA1 of trakt user account password.
      */
     public Trakt setAuthentication(String username, String passwordSha1) {
-        mUsername = username;
-        mPasswordSha1 = passwordSha1;
-        mRestAdapter = null;
+        userAccount = username;
+        userPasswordSha1 = passwordSha1;
+        restAdapter = null;
         return this;
     }
 
     /**
      * Set your trakt API key. All API methods require a valid API key.
+     * <p>
+     * The next service method call will trigger a rebuild of the {@link retrofit.RestAdapter}. If
+     * you have cached any service instances, get a new one from its service method.
      *
      * @param key trakt API key value.
      */
     public Trakt setApiKey(String key) {
-        mApiKey = key;
-        mRestAdapter = null;
-        return this;
-    }
-
-    public Trakt setIsDebug(boolean isDebug) {
-        mIsDebug = isDebug;
-        mRestAdapter = null;
+        apiKey = key;
+        restAdapter = null;
         return this;
     }
 
     /**
-     * If no instance exists yet, builds a new {@link RestAdapter} using the currently set
-     * authentication information, API key and debug flag.
+     * Set the {@link retrofit.RestAdapter} log level.
+     *
+     * @param isDebug If true, the log level is set to {@link retrofit.RestAdapter.LogLevel#FULL}.
+     *                Otherwise {@link retrofit.RestAdapter.LogLevel#NONE}.
      */
-    protected RestAdapter buildRestAdapter() {
-        if (mRestAdapter == null) {
-            RestAdapter.Builder builder = new RestAdapter.Builder()
-                    .setEndpoint(API_URL)
-                    .setConverter(new GsonConverter(TraktHelper.getGsonBuilder().create()));
+    public Trakt setIsDebug(boolean isDebug) {
+        this.isDebug = isDebug;
+        if (restAdapter != null) {
+            restAdapter.setLogLevel(isDebug ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
+        }
+        return this;
+    }
 
-            // if available, send mUsername and password in header
+    /**
+     * Create a new {@link retrofit.RestAdapter.Builder}. Override this to e.g. set your own client or executor.
+     *
+     * @return A {@link retrofit.RestAdapter.Builder} with no modifications.
+     */
+    protected RestAdapter.Builder newRestAdapterBuilder() {
+        return new RestAdapter.Builder();
+    }
+
+    /**
+     * Return the current {@link retrofit.RestAdapter} instance. If none exists (first call, API key changed),
+     * builds a new one.
+     * <p>
+     * When building, sets the endpoint, a custom converter ({@link TraktHelper#getGsonBuilder()})
+     * and a {@link retrofit.RequestInterceptor} which adds the API key as path param and if available adds
+     * authentication to the request header.
+     */
+    protected RestAdapter getRestAdapter() {
+        if (restAdapter == null) {
+            RestAdapter.Builder builder = newRestAdapterBuilder();
+
+            builder.setEndpoint(API_URL);
+            builder.setConverter(new GsonConverter(TraktHelper.getGsonBuilder().create()));
             builder.setRequestInterceptor(new RequestInterceptor() {
                 @Override
                 public void intercept(RequestFacade requestFacade) {
-                    requestFacade.addPathParam(PARAM_API_KEY, mApiKey);
-                    if ((mUsername != null) && (mPasswordSha1 != null)) {
-                        String source = mUsername + ":" + mPasswordSha1;
+                    requestFacade.addPathParam(PARAM_API_KEY, apiKey);
+                    // if available, send userAccount and password in header
+                    if ((userAccount != null) && (userPasswordSha1 != null)) {
+                        String source = userAccount + ":" + userPasswordSha1;
                         String authorization = "Basic " + Base64.encodeBytes(source.getBytes());
                         requestFacade.addHeader("Authorization", authorization);
                     }
                 }
             });
 
-            if (mIsDebug) {
+            if (isDebug) {
                 builder.setLogLevel(RestAdapter.LogLevel.FULL);
             }
 
-            mRestAdapter = builder.build();
+            restAdapter = builder.build();
         }
 
-        return mRestAdapter;
+        return restAdapter;
     }
 
     public AccountService accountService() {
-        return buildRestAdapter().create(AccountService.class);
+        return getRestAdapter().create(AccountService.class);
     }
 
     public ActivityService activityService() {
-        return buildRestAdapter().create(ActivityService.class);
+        return getRestAdapter().create(ActivityService.class);
     }
 
     public CalendarService calendarService() {
-        return buildRestAdapter().create(CalendarService.class);
+        return getRestAdapter().create(CalendarService.class);
     }
 
     public CommentService commentService() {
-        return buildRestAdapter().create(CommentService.class);
+        return getRestAdapter().create(CommentService.class);
     }
 
     public GenreService genreService() {
-        return buildRestAdapter().create(GenreService.class);
+        return getRestAdapter().create(GenreService.class);
     }
 
     public ListService listService() {
-        return buildRestAdapter().create(ListService.class);
+        return getRestAdapter().create(ListService.class);
     }
 
     public MovieService movieService() {
-        return buildRestAdapter().create(MovieService.class);
+        return getRestAdapter().create(MovieService.class);
     }
 
     public NetworkService networkService() {
-        return buildRestAdapter().create(NetworkService.class);
+        return getRestAdapter().create(NetworkService.class);
     }
 
     public RateService rateService() {
-        return buildRestAdapter().create(RateService.class);
+        return getRestAdapter().create(RateService.class);
     }
 
     public RecommendationsService recommendationsService() {
-        return buildRestAdapter().create(RecommendationsService.class);
+        return getRestAdapter().create(RecommendationsService.class);
     }
 
     public SearchService searchService() {
-        return buildRestAdapter().create(SearchService.class);
+        return getRestAdapter().create(SearchService.class);
     }
 
     public ShowService showService() {
-        return buildRestAdapter().create(ShowService.class);
+        return getRestAdapter().create(ShowService.class);
     }
 
     public UserService userService() {
-        return buildRestAdapter().create(UserService.class);
+        return getRestAdapter().create(UserService.class);
     }
 }
