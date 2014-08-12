@@ -62,10 +62,10 @@ public interface UserService {
      *                 unseen) required for media center syncing if set to MIN. This sends about
      *                 half the data.
      */
-    @GET("/user/library/movies/all.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/movies/all.json/{apikey}/{username}{extended}")
     List<Movie> libraryMoviesAll(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -79,10 +79,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tmdb_id) required for media center
      *                 syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/movies/collection.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/movies/collection.json/{apikey}/{username}{extended}")
     List<Movie> libraryMoviesCollection(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -96,10 +96,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tmdb_id, plays) required for media
      *                 center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/movies/watched.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/movies/watched.json/{apikey}/{username}{extended}")
     List<Movie> libraryMoviesWatched(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -113,10 +113,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, plays) required
      *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/all.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/shows/all.json/{apikey}/{username}{extended}")
     List<TvShow> libraryShowsAll(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -131,10 +131,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, seasons) required
      *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/collection.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/shows/collection.json/{apikey}/{username}{extended}")
     List<TvShow> libraryShowsCollection(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -148,10 +148,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, seasons) required
      *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/watched.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/shows/watched.json/{apikey}/{username}{extended}")
     List<TvShow> libraryShowsWatched(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**

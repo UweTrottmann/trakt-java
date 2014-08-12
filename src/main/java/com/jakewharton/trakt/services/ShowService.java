@@ -261,10 +261,10 @@ public interface ShowService {
      *                 if you really need the full dump. Use the show/seasons and show/season
      *                 methods if you only need some of the season or episode info.
      */
-    @GET("/show/summary.json/{apikey}/{title}/{extended}")
+    @GET("/show/summary.json/{apikey}/{title}{extended}")
     TvShow summary(
             @Path("title") int tvdbId,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -274,10 +274,10 @@ public interface ShowService {
      *                 if you really need the full dump. Use the show/seasons and show/season
      *                 methods if you only need some of the season or episode info.
      */
-    @GET("/show/summary.json/{apikey}/{title}/{extended}")
+    @GET("/show/summary.json/{apikey}/{title}{extended}")
     TvShow summary(
             @Path("title") String slug,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
