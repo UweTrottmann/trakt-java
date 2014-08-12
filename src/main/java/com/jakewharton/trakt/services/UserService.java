@@ -62,10 +62,10 @@ public interface UserService {
      *                 unseen) required for media center syncing if set to MIN. This sends about
      *                 half the data.
      */
-    @GET("/user/library/movies/all.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/movies/all.json/{apikey}/{username}{extended}")
     List<Movie> libraryMoviesAll(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -79,10 +79,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tmdb_id) required for media center
      *                 syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/movies/collection.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/movies/collection.json/{apikey}/{username}{extended}")
     List<Movie> libraryMoviesCollection(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -96,10 +96,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tmdb_id, plays) required for media
      *                 center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/movies/watched.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/movies/watched.json/{apikey}/{username}{extended}")
     List<Movie> libraryMoviesWatched(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -113,10 +113,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, plays) required
      *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/all.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/shows/all.json/{apikey}/{username}{extended}")
     List<TvShow> libraryShowsAll(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -131,10 +131,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, seasons) required
      *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/collection.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/shows/collection.json/{apikey}/{username}{extended}")
     List<TvShow> libraryShowsCollection(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -148,10 +148,10 @@ public interface UserService {
      *                 the minimal info (title, year, imdb_id, tvdb_id, tvrage_id, seasons) required
      *                 for media center syncing if set to MIN. This sends about half the data.
      */
-    @GET("/user/library/shows/watched.json/{apikey}/{username}/{extended}")
+    @GET("/user/library/shows/watched.json/{apikey}/{username}{extended}")
     List<TvShow> libraryShowsWatched(
             @EncodedPath("username") String username,
-            @Path("extended") Extended extended
+            @EncodedPath("extended") Extended extended
     );
 
     /**
@@ -176,12 +176,12 @@ public interface UserService {
      *                  Only get extended info if you really need to since it adds a lot of data
      * @return the progress of the shows that a user has watched
      */
-    @GET("/user/progress/watched.json/{apikey}/{username}/{title}/{sort}/{extended}")
+    @GET("/user/progress/watched.json/{apikey}/{username}/{title}/{sort}{extended}")
     List<TvShowProgress> progressWatched(
             @EncodedPath("username") String username,
             @Path("title") String title,
             @Path("sort") SortType sort,
-            @Path("extended") Extended2 extended
+            @EncodedPath("extended") Extended2 extended
     );
     
     /**
@@ -197,12 +197,12 @@ public interface UserService {
      *                  Only get extended info if you really need to since it adds a lot of data
      * @return the progress of the shows that the user has collected
      */
-    @GET("/user/progress/collected.json/{apikey}/{username}/{title}/{sort}/{extended}")
+    @GET("/user/progress/collected.json/{apikey}/{username}/{title}/{sort}{extended}")
     List<TvShowProgress> progressCollected(
             @EncodedPath("username") String username,
             @Path("title") String title,
             @Path("sort") SortType sort,
-            @Path("extended") Extended2 extended
+            @EncodedPath("extended") Extended2 extended
     );
 
     /**

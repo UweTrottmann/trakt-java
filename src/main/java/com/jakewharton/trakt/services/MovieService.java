@@ -152,10 +152,10 @@ public interface MovieService {
      *                  images, genres). Set to FULL for full info. Only send this if you really
      *                  need the full dump as it doubles the data size being sent back.
      */
-    @GET("/movie/summaries.json/{apikey}/{title}/{extended}")
+    @GET("/movie/summaries.json/{apikey}/{title}{extended}")
     List<com.jakewharton.trakt.entities.Movie> summaries(
             @EncodedPath("title") String imdbIdsOrSlugs,
-            @Path("extended") Extended2 extended2
+            @EncodedPath("extended") Extended2 extended2
     );
 
     /**

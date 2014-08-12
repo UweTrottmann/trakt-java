@@ -9,8 +9,8 @@ import java.util.Map;
  * A newer version of the extended path parameter.
  */
 public enum Extended2 implements TraktEnumeration {
-    NORMAL("normal"),
-    FULL("full"),
+    NORMAL("/normal"),
+    FULL("/full"),
     DEFAULT("");
 
     private static final Map<String, Extended2> STRING_MAPPING

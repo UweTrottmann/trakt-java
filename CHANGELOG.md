@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+3.3.1 *(2014-08-12)*
+--------------------
+
+ * Fix `show/summary` not returning user data with default extended flag
+   (URL had trailing `/`, causing redirect, stripping auth header).
+ * Remove trailing `/` on all other methods using either `Extended` or `Extended2` flag.
+
 3.3.0 *(2014-08-12)*
 --------------------
 

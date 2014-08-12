@@ -69,18 +69,26 @@ public class MovieServiceTest extends BaseTestCase {
         Movie movie = getManager().movieService().summary("tt1285016");
         assertThat(movie).isNotNull();
         assertThat(movie.title).isEqualTo("The Social Network");
+
+        // if auth worked correctly, user data should be returned
+        assertThat(movie.rating_advanced).isNotNull();
+        assertThat(movie.inCollection).isNotNull();
+        assertThat(movie.inWatchlist).isNotNull();
     }
 
     @Test
-    public void test_summaries() {
+    public void test_summaries_default() {
         // default
         List<Movie> movies = getManager().movieService()
                 .summaries("the-social-network-2010,tt1483013", Extended2.DEFAULT);
         assertThat(movies).isNotEmpty();
         assertThat(movies.get(0).title).isEqualTo("The Social Network");
+    }
 
+    @Test
+    public void test_summaries_full() {
         // full
-        movies = getManager().movieService()
+        List<Movie> movies = getManager().movieService()
                 .summaries("the-social-network-2010,tt1483013", Extended2.FULL);
         assertThat(movies).isNotEmpty();
         assertThat(movies.get(0).title).isEqualTo("The Social Network");
