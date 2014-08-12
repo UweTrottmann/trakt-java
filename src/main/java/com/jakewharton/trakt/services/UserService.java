@@ -176,12 +176,12 @@ public interface UserService {
      *                  Only get extended info if you really need to since it adds a lot of data
      * @return the progress of the shows that a user has watched
      */
-    @GET("/user/progress/watched.json/{apikey}/{username}/{title}/{sort}/{extended}")
+    @GET("/user/progress/watched.json/{apikey}/{username}/{title}/{sort}{extended}")
     List<TvShowProgress> progressWatched(
             @EncodedPath("username") String username,
             @Path("title") String title,
             @Path("sort") SortType sort,
-            @Path("extended") Extended2 extended
+            @EncodedPath("extended") Extended2 extended
     );
     
     /**
@@ -197,12 +197,12 @@ public interface UserService {
      *                  Only get extended info if you really need to since it adds a lot of data
      * @return the progress of the shows that the user has collected
      */
-    @GET("/user/progress/collected.json/{apikey}/{username}/{title}/{sort}/{extended}")
+    @GET("/user/progress/collected.json/{apikey}/{username}/{title}/{sort}{extended}")
     List<TvShowProgress> progressCollected(
             @EncodedPath("username") String username,
             @Path("title") String title,
             @Path("sort") SortType sort,
-            @Path("extended") Extended2 extended
+            @EncodedPath("extended") Extended2 extended
     );
 
     /**
