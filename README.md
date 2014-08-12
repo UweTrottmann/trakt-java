@@ -11,11 +11,13 @@ credentials and API key.
 Usage
 =====
 Add the following dependency to your Gradle project:
+
 ```
 compile 'com.uwetrottmann:trakt-java:3.3.0'
 ```
 
 Or for Maven:
+
 ```
 <dependency>
   <groupId>com.uwetrottmann</groupId>
@@ -28,11 +30,13 @@ Dependencies
 ------------
 If you rather use the [released jar][3], add dependencies yourself as you see fit.
 For example for Gradle:
+
 ```
 compile 'com.squareup.retrofit:retrofit:1.6.1'
 ```
 
 Or for Maven:
+
 ```
 <dependency>
   <groupId>com.squareup.retrofit</groupId>
