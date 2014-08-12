@@ -13,7 +13,7 @@
     <groupId>com.uwetrottmann</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
-    <version>3.2.1</version>
+    <version>3.3.0</version>
 
     <name>trakt-java</name>
     <description>A Java wrapper around the trakt.tv API using retrofit.</description>
