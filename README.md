@@ -33,19 +33,31 @@ For example for Gradle:
 
 ```
 compile 'com.squareup.retrofit:retrofit:1.6.1'
+compile 'com.squareup.okhttp:okhttp:2.0.0' // not mandatory, but greatly recommended
+compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0' // not mandatory, but greatly recommended
 ```
 
 Or for Maven:
 
 ```
 <dependency>
-  <groupId>com.squareup.retrofit</groupId>
-  <artifactId>retrofit</artifactId>
-  <version>1.6.1</version>
+    <groupId>com.squareup.retrofit</groupId>
+    <artifactId>retrofit</artifactId>
+    <version>1.6.1</version>
+</dependency>
+<!-- not mandatory, but greatly recommended: -->
+<dependency>
+  <groupId>com.squareup.okhttp</groupId>
+  <artifactId>okhttp</artifactId>
+  <version>2.0.0</version>
+</dependency>
+<!-- not mandatory, but greatly recommended: -->
+<dependency>
+  <groupId>com.squareup.okhttp</groupId>
+  <artifactId>okhttp-urlconnection</artifactId>
+  <version>2.0.0</version>
 </dependency>
 ```
-
-It is also strongly recommended to use [OkHttp][5], but it is not required.
 
 Calling endpoints
 -----------------
