@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+3.3.0 *(2014-08-12)*
+--------------------
+
+ * Easier customization of `RestAdapter`: set your own HTTP client or executor by overriding `newRestAdapterBuilder()`.
+ * Add `okhttp` and `okhttp-urlconnection` 2.0.0 as optional dependencies.
+ * Require Java 1.7.
+
+3.2.1 *(2014-08-10)*
+--------------------
+
+ * Use HTTPS.
+ * Use okhttp 1.6.0.
+ * Update to [retrofit][1] 1.6.1.
+
 3.2.0 *(2014-04-26)*
 --------------------
 
