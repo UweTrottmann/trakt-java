@@ -216,8 +216,18 @@ public class ShowServiceTest extends BaseTestCase {
     }
 
     @Test
-    public void test_summary() {
+    public void test_summary_default() {
+        TvShow show = getManager().showService().summary("the-walking-dead", Extended.DEFAULT);
+        assertTheWalkingDead(show);
+    }
+
+    @Test
+    public void test_summary_extended() {
         TvShow show = getManager().showService().summary("the-walking-dead", Extended.EXTENDED);
+        assertTheWalkingDead(show);
+    }
+
+    private void assertTheWalkingDead(TvShow show) {
         assertThat(show).isNotNull();
         assertThat(show.title).isEqualTo("The Walking Dead");
         assertThat(show.year).isNotNull();
