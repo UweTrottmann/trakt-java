@@ -1,7 +1,6 @@
 package com.jakewharton.trakt.services;
 
 import com.jakewharton.trakt.BaseTestCase;
-import com.jakewharton.trakt.Trakt;
 import com.jakewharton.trakt.entities.Comment;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.Stats;
@@ -12,14 +11,10 @@ import com.jakewharton.trakt.enumerations.DayOfTheWeek;
 import com.jakewharton.trakt.enumerations.Extended;
 import com.jakewharton.trakt.enumerations.Extended2;
 import com.jakewharton.trakt.enumerations.Status;
-
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -222,16 +217,12 @@ public class ShowServiceTest extends BaseTestCase {
 
     @Test
     public void test_summary() {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-        cal.set(2010, 9, 31, 21, 0);
-        Date firstAired = cal.getTime();
-
         TvShow show = getManager().showService().summary("the-walking-dead", Extended.EXTENDED);
         assertThat(show).isNotNull();
         assertThat(show.title).isEqualTo("The Walking Dead");
         assertThat(show.year).isNotNull();
         assertThat(show.year.intValue()).isEqualTo(2010);
-        assertThat(show.url).isEqualTo("https://trakt.tv/show/the-walking-dead");
+        assertThat(show.url).endsWith("://trakt.tv/show/the-walking-dead");
         assertThat(show.first_aired_utc).isEqualTo(1288573200);
         assertThat(show.country).isEqualTo("United States");
         assertThat(show.overview).isNotNull();
@@ -240,23 +231,30 @@ public class ShowServiceTest extends BaseTestCase {
         assertThat(show.network).isEqualTo("AMC");
         assertThat(show.airDay).isEqualTo(DayOfTheWeek.Sunday);
         assertThat(show.airTime).isEqualTo("9:00pm");
-        assertThat(show.certification).isEqualTo("TV-MA");
+        assertThat(show.certification).isNotEmpty(); // changes too often, so just check if it's there
         assertThat(show.imdb_id).isEqualTo("tt1520211");
         assertThat(show.tvdb_id).isEqualTo(153021);
         assertThat(show.tvrage_id).isEqualTo(25056);
+
+        // if auth worked correctly, user data should be returned
+        assertThat(show.rating_advanced).isNotNull();
+        assertThat(show.inWatchlist).isNotNull();
     }
 
     @Test
-    public void test_summaries() {
+    public void test_summaries_default() {
         // default
         List<TvShow> shows = getManager().showService()
                 .summaries("the-walking-dead,256227", Extended2.DEFAULT);
         assertThat(shows).isNotEmpty();
         assertThat(shows.get(0)).isNotNull();
         assertThat(shows.get(0).title).isEqualTo("The Walking Dead");
+    }
 
+    @Test
+    public void test_summaries_full() {
         // full
-        shows = getManager().showService()
+        List<TvShow> shows = getManager().showService()
                 .summaries("the-walking-dead,256227", Extended2.FULL);
         assertThat(shows).isNotEmpty();
         assertThat(shows.get(0)).isNotNull();
