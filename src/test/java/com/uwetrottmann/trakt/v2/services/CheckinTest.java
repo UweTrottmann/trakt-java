@@ -39,8 +39,7 @@ public class CheckinTest extends BaseTestCase {
         assertThat(response.episode.ids.trakt).isEqualTo(16);
         assertThat(response.show).isNotNull();
 
-        Response response1 = getTrakt().checkin().deleteActiveCheckin();
-        assertThat(response1.getStatus()).isEqualTo(204);
+        test_checkin_delete();
     }
 
     private static EpisodeCheckin buildEpisodeCheckin() {
@@ -66,8 +65,7 @@ public class CheckinTest extends BaseTestCase {
         assertThat(response.watched_at).isBefore(new Date(System.currentTimeMillis() + 3 * HOUR_IN_MILLIS));
         MoviesTest.assertTestMovie(response.movie);
 
-        Response response1 = getTrakt().checkin().deleteActiveCheckin();
-        assertThat(response1.getStatus()).isEqualTo(204);
+        test_checkin_delete();
     }
 
     private MovieCheckin buildMovieCheckin() {
@@ -99,6 +97,9 @@ public class CheckinTest extends BaseTestCase {
             CheckinError checkinError = (CheckinError) e.getBodyAs(CheckinError.class);
             assertThat(checkinError.expires_at).isBefore(new Date(System.currentTimeMillis() + HOUR_IN_MILLIS));
         }
+
+        // clean the check in
+        test_checkin_delete();
     }
 
 
