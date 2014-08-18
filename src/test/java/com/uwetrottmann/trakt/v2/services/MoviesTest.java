@@ -21,7 +21,7 @@ public class MoviesTest extends BaseTestCase {
         assertTestMovie(movie);
     }
 
-    private void assertTestMovie(Movie movie) {
+    public static void assertTestMovie(Movie movie) {
         assertThat(movie).isNotNull();
         assertThat(movie.ids).isNotNull();
         assertThat(movie.title).isEqualTo(TestData.MOVIE_TITLE);
