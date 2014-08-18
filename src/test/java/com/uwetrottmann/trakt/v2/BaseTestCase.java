@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 public class BaseTestCase {
 
     protected static final String TEST_API_KEY = "e683ed71dd4a4afe73ba73151a4645f511b8703464a7807045088c733ef8d634";
-    public static final String TEST_ACCESS_TOKEN = "c2930b671da7dfd9249ddf3e280ca0710a86eef3fd95a46cbacb043a86cb1b20"; // "uwe" on v2 test server
+    public static final String TEST_ACCESS_TOKEN = "441cb73d1c6387540ebe83af86e8bac5c209d402a66c429b9f4a3374359df9fc"; // "uwe" on v2 test server
 
     private static final boolean DEBUG = true;
 
