@@ -17,6 +17,7 @@
 
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Shows;
 import org.apache.oltu.oauth2.client.OAuthClient;
@@ -254,6 +255,15 @@ public class TraktV2 {
         }
 
         return restAdapterWithAuth;
+    }
+
+    /**
+     * Checking in is a manual process used by mobile apps. While not as effortless as scrobbling, checkins help fill in
+     * the gaps. You might be watching live tv, at a friend's house, or watching a movie in theaters. You can simply
+     * checkin from your phone or tablet in those situations.
+     */
+    public Checkin checkin() {
+        return getRestAdapterWithAuth().create(Checkin.class);
     }
 
     public Movies movies() {
