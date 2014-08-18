@@ -127,6 +127,8 @@ public class TraktV2 {
     /**
      * Set the trakt API key for this application.
      *
+     * <p> Call this before creating a new service.
+     *
      * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
      * @return This class, to enable the builder pattern.
      */
@@ -139,9 +141,9 @@ public class TraktV2 {
     /**
      * Sets the OAuth 2.0 access token to be appended to requests.
      *
-     * <p> If set, some endpoints will return user-specific data.
+     * <p> If set, some methods will return user-specific data.
      *
-     * <p> Call this before creating a new service endpoint.
+     * <p> Call this before creating a new service.
      *
      * @param accessToken A valid access token, obtained via e.g. {@link #getAccessToken(String, String, String,
      * String)}.
