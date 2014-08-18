@@ -26,7 +26,7 @@ public class CheckinTest extends BaseTestCase {
         checkin.app_version = "trakt-java-4";
         checkin.app_date = "2014";
 
-        Response response = getTraktWithAuth().checkin().checkin(checkin);
+        Response response = getTrakt().checkin().checkin(checkin);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class CheckinTest extends BaseTestCase {
         checkin.app_version = "trakt-java-4";
         checkin.app_date = "2014";
 
-        Response response = getTraktWithAuth().checkin().checkin(checkin);
+        Response response = getTrakt().checkin().checkin(checkin);
     }
 
 }

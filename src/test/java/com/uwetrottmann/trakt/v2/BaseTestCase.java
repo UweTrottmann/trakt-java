@@ -10,24 +10,16 @@ public class BaseTestCase {
     private static final boolean DEBUG = true;
 
     private static final TraktV2 trakt = new TraktV2();
-    private static final TraktV2 traktWithAuth = new TraktV2();
 
     @BeforeClass
     public static void setUpOnce() {
         trakt.setApiKey(TEST_API_KEY);
+        trakt.setAccessToken(TEST_ACCESS_TOKEN);
         trakt.setIsDebug(DEBUG);
-
-        traktWithAuth.setApiKey(TEST_API_KEY);
-        traktWithAuth.setAccessToken(TEST_ACCESS_TOKEN);
-        traktWithAuth.setIsDebug(DEBUG);
     }
 
     protected final TraktV2 getTrakt() {
         return trakt;
-    }
-
-    protected final TraktV2 getTraktWithAuth() {
-        return traktWithAuth;
     }
 
 }

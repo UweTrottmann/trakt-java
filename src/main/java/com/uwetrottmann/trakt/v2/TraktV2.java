@@ -122,7 +122,6 @@ public class TraktV2 {
     private String accessToken;
     private boolean isDebug;
     private RestAdapter restAdapter;
-    private RestAdapter restAdapterWithAuth;
 
     /**
      * Get a new API manager instance.
@@ -143,7 +142,6 @@ public class TraktV2 {
     public TraktV2 setApiKey(String apiKey) {
         this.apiKey = apiKey;
         restAdapter = null;
-        restAdapterWithAuth = null;
         return this;
     }
 
@@ -160,12 +158,12 @@ public class TraktV2 {
      */
     public TraktV2 setAccessToken(String accessToken) {
         this.accessToken = accessToken;
-        restAdapterWithAuth = null;
+        restAdapter = null;
         return this;
     }
 
     /**
-     * Set the {@link retrofit.RestAdapter} log levels.
+     * Set the {@link retrofit.RestAdapter} log level.
      *
      * @param isDebug If true, the log level is set to {@link retrofit.RestAdapter.LogLevel#FULL}. Otherwise {@link
      * retrofit.RestAdapter.LogLevel#NONE}.
@@ -175,9 +173,6 @@ public class TraktV2 {
 
         if (restAdapter != null) {
             restAdapter.setLogLevel(isDebug ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
-        }
-        if (restAdapterWithAuth != null) {
-            restAdapterWithAuth.setLogLevel(isDebug ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
         }
 
         return this;
@@ -208,6 +203,7 @@ public class TraktV2 {
             builder.setRequestInterceptor(new RequestInterceptor() {
                 @Override
                 public void intercept(RequestFacade request) {
+                    request.addHeader(HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
                     request.addHeader(HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_JSON);
                     request.addHeader(HEADER_TRAKT_API_KEY, apiKey);
                     request.addHeader(HEADER_TRAKT_API_VERSION, HEADER_TRAKT_API_VERSION_2);
@@ -225,45 +221,12 @@ public class TraktV2 {
     }
 
     /**
-     * Return the current {@link retrofit.RestAdapter} instance with added OAuth authorization. If none exists (first
-     * call, access token or API key changed), builds a new one.
-     *
-     * <p> When building, sets the endpoint, a {@link retrofit.RequestInterceptor} which adds the access token, API key
-     * and version headers and sets the log level.
-     */
-    protected RestAdapter getRestAdapterWithAuth() {
-        if (restAdapterWithAuth == null) {
-            RestAdapter.Builder builder = newRestAdapterBuilder();
-            builder.setEndpoint(API_URL);
-
-            // supply an OAuth 2.0 access token and the API key
-            builder.setRequestInterceptor(new RequestInterceptor() {
-                @Override
-                public void intercept(RequestFacade request) {
-                    request.addHeader(HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
-                    request.addHeader(HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_JSON);
-                    request.addHeader(HEADER_TRAKT_API_KEY, apiKey);
-                    request.addHeader(HEADER_TRAKT_API_VERSION, HEADER_TRAKT_API_VERSION_2);
-                }
-            });
-
-            if (isDebug) {
-                builder.setLogLevel(RestAdapter.LogLevel.FULL);
-            }
-
-            restAdapterWithAuth = builder.build();
-        }
-
-        return restAdapterWithAuth;
-    }
-
-    /**
      * Checking in is a manual process used by mobile apps. While not as effortless as scrobbling, checkins help fill in
      * the gaps. You might be watching live tv, at a friend's house, or watching a movie in theaters. You can simply
      * checkin from your phone or tablet in those situations.
      */
     public Checkin checkin() {
-        return getRestAdapterWithAuth().create(Checkin.class);
+        return getRestAdapter().create(Checkin.class);
     }
 
     public Movies movies() {
