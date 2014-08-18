@@ -1,9 +1,7 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-public class Show {
+public class Show extends BaseEntity {
 
-    public String title;
-    public int year;
     public ShowIds ids;
 
 }
