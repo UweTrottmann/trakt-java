@@ -17,6 +17,7 @@
 
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Shows;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -247,6 +248,10 @@ public class TraktV2 {
         }
 
         return restAdapterWithAuth;
+    }
+
+    public Movies movies() {
+        return getRestAdapter().create(Movies.class);
     }
 
     public Shows shows() {
