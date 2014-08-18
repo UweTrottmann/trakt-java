@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import retrofit.client.Response;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.POST;
 
 public interface Checkin {
@@ -37,5 +38,13 @@ public interface Checkin {
     Response checkin(
             @Body MovieCheckin movieCheckin
     );
+
+    /**
+     * Removes any active checkins, no need to provide a specific item.
+     *
+     * @return
+     */
+    @DELETE("/checkin")
+    Response deleteActiveCheckin();
 
 }
