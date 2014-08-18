@@ -16,7 +16,7 @@
     <version>3.3.1</version>
 
     <name>trakt-java</name>
-    <description>A Java wrapper around the trakt.tv API using retrofit.</description>
+    <description>A Java wrapper around the trakt.tv API v2 using retrofit.</description>
     <url>https://github.com/UweTrottmann/trakt-java/</url>
     <inceptionYear>2013</inceptionYear>
 
@@ -56,13 +56,11 @@
             <groupId>com.squareup.okhttp</groupId>
             <artifactId>okhttp</artifactId>
             <version>2.0.0</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp</groupId>
             <artifactId>okhttp-urlconnection</artifactId>
             <version>2.0.0</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
