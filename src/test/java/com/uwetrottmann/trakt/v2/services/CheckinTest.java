@@ -2,20 +2,48 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.CheckinError;
 import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
+import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
+import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.ShareSettings;
 import org.junit.Test;
+import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import java.util.Date;
+
+import static org.fest.assertions.api.Assertions.assertThat;
+
 
 public class CheckinTest extends BaseTestCase {
 
+    private static final long HOUR_IN_MILLIS = 3600000; // 1 hour
+
     @Test
     public void test_checkin_episode() {
+        EpisodeCheckin checkin = buildEpisodeCheckin();
+
+        EpisodeCheckinResponse response = getTrakt().checkin().checkin(checkin);
+        assertThat(response).isNotNull();
+        // episode should be over in less than an hour
+        assertThat(response.watched_at).isBefore(
+                new Date(System.currentTimeMillis() + HOUR_IN_MILLIS));
+        assertThat(response.episode).isNotNull();
+        assertThat(response.episode.ids).isNotNull();
+        assertThat(response.episode.ids.trakt).isEqualTo(16);
+        assertThat(response.show).isNotNull();
+
+        Response response1 = getTrakt().checkin().deleteActiveCheckin();
+        assertThat(response1.getStatus()).isEqualTo(204);
+    }
+
+    private static EpisodeCheckin buildEpisodeCheckin() {
         EpisodeCheckin checkin = new EpisodeCheckin();
         checkin.episode = new Episode();
         checkin.episode.ids = new EpisodeIds();
@@ -25,12 +53,24 @@ public class CheckinTest extends BaseTestCase {
         checkin.sharing.facebook = true;
         checkin.app_version = "trakt-java-4";
         checkin.app_date = "2014";
-
-        Response response = getTrakt().checkin().checkin(checkin);
+        return checkin;
     }
 
     @Test
     public void test_checkin_movie() {
+        MovieCheckin checkin = buildMovieCheckin();
+
+        MovieCheckinResponse response = getTrakt().checkin().checkin(checkin);
+        assertThat(response).isNotNull();
+        // movie should be over in less than 3 hours
+        assertThat(response.watched_at).isBefore(new Date(System.currentTimeMillis() + 3 * HOUR_IN_MILLIS));
+        MoviesTest.assertTestMovie(response.movie);
+
+        Response response1 = getTrakt().checkin().deleteActiveCheckin();
+        assertThat(response1.getStatus()).isEqualTo(204);
+    }
+
+    private MovieCheckin buildMovieCheckin() {
         MovieCheckin checkin = new MovieCheckin();
         checkin.movie = new Movie();
         checkin.movie.ids = new MovieIds();
@@ -40,8 +80,32 @@ public class CheckinTest extends BaseTestCase {
         checkin.sharing.facebook = true;
         checkin.app_version = "trakt-java-4";
         checkin.app_date = "2014";
-
-        Response response = getTrakt().checkin().checkin(checkin);
+        return checkin;
     }
 
+    @Test
+    public void test_checkin_blocked() {
+        Checkin checkin = getTrakt().checkin();
+
+        EpisodeCheckin episodeCheckin = buildEpisodeCheckin();
+        checkin.checkin(episodeCheckin);
+
+        MovieCheckin movieCheckin = buildMovieCheckin();
+        try {
+            checkin.checkin(movieCheckin);
+        } catch (RetrofitError e) {
+            assertThat(e.getResponse().getStatus()).isEqualTo(409);
+            // episode check in should block until episode duration has passed
+            CheckinError checkinError = (CheckinError) e.getBodyAs(CheckinError.class);
+            assertThat(checkinError.expires_at).isBefore(new Date(System.currentTimeMillis() + HOUR_IN_MILLIS));
+        }
+    }
+
+
+    @Test
+    public void test_checkin_delete() {
+        // tries to delete a check in even if none active
+        Response response1 = getTrakt().checkin().deleteActiveCheckin();
+        assertThat(response1.getStatus()).isEqualTo(204);
+    }
 }

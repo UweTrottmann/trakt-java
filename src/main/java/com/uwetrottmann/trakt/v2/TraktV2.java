@@ -27,8 +27,11 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
+import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.converter.GsonConverter;
 
 /**
  * Helper class for easy usage of the trakt v2 API using retrofit.
@@ -198,6 +201,7 @@ public class TraktV2 {
         if (restAdapter == null) {
             RestAdapter.Builder builder = newRestAdapterBuilder();
             builder.setEndpoint(API_URL);
+            builder.setConverter(new GsonConverter(TraktV2Helper.getGsonBuilder().create()));
 
             // supply the API key
             builder.setRequestInterceptor(new RequestInterceptor() {

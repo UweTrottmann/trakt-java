@@ -1,7 +1,9 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
+import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
+import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -20,7 +22,7 @@ public interface Checkin {
      * @return
      */
     @POST("/checkin")
-    Response checkin(
+    EpisodeCheckinResponse checkin(
             @Body EpisodeCheckin episodeCheckin
     );
 
@@ -35,7 +37,7 @@ public interface Checkin {
      * @return
      */
     @POST("/checkin")
-    Response checkin(
+    MovieCheckinResponse checkin(
             @Body MovieCheckin movieCheckin
     );
 
