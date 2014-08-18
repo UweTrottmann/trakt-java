@@ -38,10 +38,14 @@ public class TraktV2 {
      * trakt API v2 URL.
      */
     public static final String API_URL = "http://api.v2.trakt.tv";
+    public static final String HEADER_TRAKT_API_VERSION_2 = "2";
+    public static final String HEADER_CONTENT_TYPE_JSON = "application/json";
 
     public static final String OAUTH2_AUTHORIZATION_URL = "http://api.v2.trakt.tv/oauth/authorize";
     public static final String OAUTH2_TOKEN_URL = "http://api.v2.trakt.tv/oauth/token";
+
     public static final String HEADER_AUTHORIZATION = "Authorization";
+    public static final String HEADER_CONTENT_TYPE = "Content-Type";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
 
@@ -203,8 +207,9 @@ public class TraktV2 {
             builder.setRequestInterceptor(new RequestInterceptor() {
                 @Override
                 public void intercept(RequestFacade request) {
+                    request.addHeader(HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_JSON);
                     request.addHeader(HEADER_TRAKT_API_KEY, apiKey);
-                    request.addHeader(HEADER_TRAKT_API_VERSION, "2");
+                    request.addHeader(HEADER_TRAKT_API_VERSION, HEADER_TRAKT_API_VERSION_2);
                 }
             });
 
@@ -235,8 +240,9 @@ public class TraktV2 {
                 @Override
                 public void intercept(RequestFacade request) {
                     request.addHeader(HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
+                    request.addHeader(HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_JSON);
                     request.addHeader(HEADER_TRAKT_API_KEY, apiKey);
-                    request.addHeader(HEADER_TRAKT_API_VERSION, "2");
+                    request.addHeader(HEADER_TRAKT_API_VERSION, HEADER_TRAKT_API_VERSION_2);
                 }
             });
 
