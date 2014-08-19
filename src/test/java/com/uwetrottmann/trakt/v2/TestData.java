@@ -18,4 +18,11 @@ public interface TestData {
     public int SHOW_TVRAGE_ID = 24493;
     public int SHOW_YEAR = 2011;
 
+    public String EPISODE_TITLE = "Winter Is Coming";
+    public int EPISODE_SEASON = 1;
+    public int EPISODE_NUMBER = 1;
+    public int EPISODE_TVDB_ID = 3254641;
+    public String EPISODE_IMDB_ID = "tt1480055";
+    public int EPISODE_TMDB_ID = 63056;
+
 }
