@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,13 +15,25 @@ public class ShowsTest extends BaseTestCase {
     @Test
     public void test_popular() {
         List<Show> shows = getTrakt().shows().popular();
-        assertThat(shows).isNotEmpty();
+        for (Show show : shows) {
+            assertShowNotNull(show);
+        }
     }
 
     @Test
     public void test_trending() {
-        List<Show> shows = getTrakt().shows().trending();
-        assertThat(shows).isNotEmpty();
+        List<TrendingShow> shows = getTrakt().shows().trending();
+        for (TrendingShow show : shows) {
+            assertThat(show.watchers).isNotNull();
+            assertShowNotNull(show.show);
+        }
+    }
+
+    private void assertShowNotNull(Show show) {
+        assertThat(show.title).isNotEmpty();
+        assertThat(show.ids).isNotNull();
+        assertThat(show.ids.trakt).isNotNull();
+        assertThat(show.year).isNotNull();
     }
 
     @Test
