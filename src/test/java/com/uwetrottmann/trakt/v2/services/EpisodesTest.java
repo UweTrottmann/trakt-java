@@ -21,4 +21,9 @@ public class EpisodesTest extends BaseTestCase {
         assertThat(episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
     }
 
+    @Test
+    public void test_comments() {
+        getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER);
+    }
+
 }

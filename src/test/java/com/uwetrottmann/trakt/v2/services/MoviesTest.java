@@ -32,4 +32,9 @@ public class MoviesTest extends BaseTestCase {
         assertThat(movie.ids.tmdb).isEqualTo(TestData.MOVIE_TMDB_ID);
     }
 
+    @Test
+    public void test_comments() {
+        getTrakt().movies().comments(TestData.MOVIE_SLUG);
+    }
+
 }

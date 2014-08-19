@@ -26,4 +26,9 @@ public class SeasonsTest extends BaseTestCase {
             assertThat(episode.season).isEqualTo(TestData.EPISODE_SEASON);
         }
     }
+
+    @Test
+    public void test_comments() {
+        getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON);
+    }
 }

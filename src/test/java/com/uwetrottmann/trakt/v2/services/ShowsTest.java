@@ -48,4 +48,9 @@ public class ShowsTest extends BaseTestCase {
         assertThat(show.ids.tvrage).isEqualTo(TestData.SHOW_TVRAGE_ID);
     }
 
+    @Test
+    public void test_comments() {
+        getTrakt().shows().comments(TestData.SHOW_SLUG);
+    }
+
 }
