@@ -5,9 +5,23 @@ import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class ShowsTest extends BaseTestCase {
+
+    @Test
+    public void test_popular() {
+        List<Show> shows = getTrakt().shows().popular();
+        assertThat(shows).isNotEmpty();
+    }
+
+    @Test
+    public void test_trending() {
+        List<Show> shows = getTrakt().shows().trending();
+        assertThat(shows).isNotEmpty();
+    }
 
     @Test
     public void test_summary_slug() {
