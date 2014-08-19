@@ -25,4 +25,6 @@ public interface TestData {
     public String EPISODE_IMDB_ID = "tt1480055";
     public int EPISODE_TMDB_ID = 63056;
 
+    public String USERNAME = "sean";
+    public String USER_NAME = "Sean Rudford";
 }
