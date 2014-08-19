@@ -31,7 +31,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_summary_trakt_id() {
-        Show show = getTrakt().shows().summary(TestData.SHOW_TRAKT_ID);
+        Show show = getTrakt().shows().summary(String.valueOf(TestData.SHOW_TRAKT_ID));
         assertTestShow(show);
     }
 

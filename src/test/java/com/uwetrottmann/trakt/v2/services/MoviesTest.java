@@ -17,7 +17,7 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_summary_trakt_id() {
-        Movie movie = getTrakt().movies().summary(TestData.MOVIE_TRAKT_ID);
+        Movie movie = getTrakt().movies().summary(String.valueOf(TestData.MOVIE_TRAKT_ID));
         assertTestMovie(movie);
     }
 

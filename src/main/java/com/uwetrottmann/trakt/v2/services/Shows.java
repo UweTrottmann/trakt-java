@@ -23,21 +23,11 @@ public interface Shows {
     /**
      * Returns a single shows's details.
      *
-     * @param traktId A trakt id.
+     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}")
     Show summary(
-            @Path("id") int traktId
-    );
-
-    /**
-     * Returns a single shows's details.
-     *
-     * @param slugOrImdbId A trakt slug or an IMDB id.
-     */
-    @GET("/shows/{id}")
-    Show summary(
-            @Path("id") String slugOrImdbId
+            @Path("id") String showId
     );
 
 }

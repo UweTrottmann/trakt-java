@@ -6,14 +6,14 @@ import retrofit.http.Path;
 
 public interface Movies {
 
+    /**
+     * Returns a single movie's details.
+     *
+     * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
+     */
     @GET("/movies/{id}")
     Movie summary(
-            @Path("id") int traktId
-    );
-
-    @GET("/movies/{id}")
-    Movie summary(
-            @Path("id") String slugOrImdbId
+            @Path("id") String movieId
     );
 
 }
