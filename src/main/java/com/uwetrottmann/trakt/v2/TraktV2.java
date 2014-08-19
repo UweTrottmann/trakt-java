@@ -27,10 +27,8 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
-import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
-import retrofit.RetrofitError;
 import retrofit.converter.GsonConverter;
 
 /**
@@ -203,11 +201,13 @@ public class TraktV2 {
             builder.setEndpoint(API_URL);
             builder.setConverter(new GsonConverter(TraktV2Helper.getGsonBuilder().create()));
 
-            // supply the API key
+            // supply the API key and if available OAuth access token
             builder.setRequestInterceptor(new RequestInterceptor() {
                 @Override
                 public void intercept(RequestFacade request) {
-                    request.addHeader(HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
+                    if (accessToken != null && accessToken.length() != 0) {
+                        request.addHeader(HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
+                    }
                     request.addHeader(HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_JSON);
                     request.addHeader(HEADER_TRAKT_API_KEY, apiKey);
                     request.addHeader(HEADER_TRAKT_API_VERSION, HEADER_TRAKT_API_VERSION_2);
