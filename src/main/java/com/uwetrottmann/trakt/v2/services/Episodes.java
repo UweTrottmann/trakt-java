@@ -10,8 +10,8 @@ public interface Episodes {
      * Returns a single episode's details.
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
-     * @param season season number.
-     * @param episode episode number.
+     * @param season Season number.
+     * @param episode Episode number.
      */
     @GET("/shows/{id}/seasons/{season}/episodes/{episode}")
     Episode summary(
