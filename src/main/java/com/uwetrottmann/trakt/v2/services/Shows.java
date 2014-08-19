@@ -6,11 +6,21 @@ import retrofit.http.Path;
 
 public interface Shows {
 
+    /**
+     * Returns a single shows's details.
+     *
+     * @param traktId A trakt id.
+     */
     @GET("/shows/{id}")
     Show summary(
             @Path("id") int traktId
     );
 
+    /**
+     * Returns a single shows's details.
+     *
+     * @param slugOrImdbId A trakt slug or an IMDB id.
+     */
     @GET("/shows/{id}")
     Show summary(
             @Path("id") String slugOrImdbId
