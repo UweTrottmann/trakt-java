@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -19,7 +20,7 @@ public interface Shows {
      * Returns all shows being watched right now. Shows with the most users are returned first.
      */
     @GET("/shows/trending")
-    List<Show> trending();
+    List<TrendingShow> trending();
 
     /**
      * Returns a single shows's details.
