@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -27,6 +28,16 @@ public interface Shows {
      */
     @GET("/shows/{id}")
     Show summary(
+            @Path("id") String showId
+    );
+
+    /**
+     * Returns all top level comments for a show. Most recent comments returned first.
+     *
+     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     */
+    @GET("/shows/{id}/comments")
+    List<Comment> comments(
             @Path("id") String showId
     );
 

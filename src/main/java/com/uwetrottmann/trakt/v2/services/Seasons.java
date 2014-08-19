@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.Season;
 import retrofit.http.GET;
@@ -27,6 +28,18 @@ public interface Seasons {
      */
     @GET("/shows/{id}/seasons/{season}")
     List<Episode> season(
+            @Path("id") String showId,
+            @Path("season") int season
+    );
+
+    /**
+     * Returns all top level comments for a season. Most recent comments returned first.
+     *
+     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param season Season number.
+     */
+    @GET("/shows/{id}/seasons/{season}/comments")
+    List<Comment> comments(
             @Path("id") String showId,
             @Path("season") int season
     );
