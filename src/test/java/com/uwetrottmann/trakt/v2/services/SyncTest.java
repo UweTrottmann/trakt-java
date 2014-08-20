@@ -14,6 +14,10 @@ import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
+import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
+import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
+import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import org.junit.Test;
 
 import java.util.LinkedList;
@@ -117,6 +121,27 @@ public class SyncTest extends BaseTestCase {
         assertThat(response.existing).isNull();
         assertThat(response.not_found).isNotNull();
         assertThat(response.added).isNull();
+    }
+
+    @Test
+    public void test_getWatchedMovies() {
+        List<WatchedMovie> watchedMovies = getTrakt().sync().getWatchedMovies();
+        for (WatchedMovie movie : watchedMovies) {
+            assertThat(movie.plays).isPositive();
+        }
+    }
+
+    @Test
+    public void test_getWatchedShows() {
+        List<WatchedShow> watchedShows = getTrakt().sync().getWatchedShows();
+        for (WatchedShow show : watchedShows) {
+            assertThat(show.plays).isPositive();
+            for (WatchedSeason season : show.seasons) {
+                for (WatchedEpisode episode : season.episodes) {
+                    assertThat(episode.plays).isPositive();
+                }
+            }
+        }
     }
 
 }

@@ -5,6 +5,8 @@ import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncEntity;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
+import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
+import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -54,5 +56,21 @@ public interface Sync {
     SyncResponse deleteItemsFromCollection(
             @Body SyncEntity items
     );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all movies a user has watched.
+     */
+    @GET("/sync/watched/movies")
+    List<WatchedMovie> getWatchedMovies();
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all shows a user has watched.
+     */
+    @GET("/sync/watched/shows")
+    List<WatchedShow> getWatchedShows();
 
 }
