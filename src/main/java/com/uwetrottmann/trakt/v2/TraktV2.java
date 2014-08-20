@@ -22,6 +22,7 @@ import com.uwetrottmann.trakt.v2.services.Episodes;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Seasons;
 import com.uwetrottmann.trakt.v2.services.Shows;
+import com.uwetrottmann.trakt.v2.services.Sync;
 import com.uwetrottmann.trakt.v2.services.Users;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -250,6 +251,10 @@ public class TraktV2 {
 
     public Episodes episodes() {
         return getRestAdapter().create(Episodes.class);
+    }
+
+    public Sync sync() {
+        return getRestAdapter().create(Sync.class);
     }
 
     public Users users() {
