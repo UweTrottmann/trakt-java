@@ -14,8 +14,18 @@ import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
+import com.uwetrottmann.trakt.v2.entities.SyncWatched;
+import com.uwetrottmann.trakt.v2.entities.SyncWatchedEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncWatchedMovie;
+import com.uwetrottmann.trakt.v2.entities.SyncWatchedSeason;
+import com.uwetrottmann.trakt.v2.entities.SyncWatchedShow;
+import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
+import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
+import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -86,11 +96,22 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_deleteItemsFromCollection() {
+        SyncEntity items = buildItemsForDeletion();
+
+        SyncResponse response = getTrakt().sync().deleteItemsFromCollection(items);
+        assertThat(response.deleted.movies).isNotNull();
+        assertThat(response.deleted.episodes).isNotNull();
+        assertThat(response.existing).isNull();
+        assertThat(response.not_found).isNotNull();
+        assertThat(response.added).isNull();
+    }
+
+    private SyncEntity buildItemsForDeletion() {
         SyncEntity items = new SyncEntity();
 
         SyncMovie movie = new SyncMovie();
         movie.ids = new MovieIds();
-        movie.ids.tmdb = 118340;
+        movie.ids.tmdb = TestData.MOVIE_TMDB_ID;
         items.movies = new LinkedList<>();
         items.movies.add(movie);
 
@@ -110,13 +131,82 @@ public class SyncTest extends BaseTestCase {
         show.seasons.add(season);
         items.shows = new LinkedList<>();
         items.shows.add(show);
+        return items;
+    }
 
-        SyncResponse response = getTrakt().sync().deleteItemsFromCollection(items);
+    @Test
+    public void test_getWatchedMovies() {
+        List<WatchedMovie> watchedMovies = getTrakt().sync().getWatchedMovies();
+        for (WatchedMovie movie : watchedMovies) {
+            assertThat(movie.plays).isPositive();
+        }
+    }
+
+    @Test
+    public void test_getWatchedShows() {
+        List<WatchedShow> watchedShows = getTrakt().sync().getWatchedShows();
+        for (WatchedShow show : watchedShows) {
+            assertThat(show.plays).isPositive();
+            for (WatchedSeason season : show.seasons) {
+                for (WatchedEpisode episode : season.episodes) {
+                    assertThat(episode.plays).isPositive();
+                }
+            }
+        }
+    }
+
+    @Test
+    public void test_addItemsToWatchedHistory() {
+        SyncWatched items = new SyncWatched();
+
+        SyncWatchedMovie movie = new SyncWatchedMovie();
+        movie.watched_at = new Date(System.currentTimeMillis() - 3600000);
+        movie.ids = new MovieIds();
+        movie.ids.tmdb = TestData.MOVIE_TMDB_ID;
+        items.movies = new LinkedList<>();
+        items.movies.add(movie);
+
+
+        // episode
+        SyncWatchedEpisode episode = new SyncWatchedEpisode();
+        episode.number = TestData.EPISODE_NUMBER;
+        episode.watched_at = new Date(System.currentTimeMillis() - 3600000);
+        SyncWatchedEpisode episode2 = new SyncWatchedEpisode();
+        episode2.number = 2;
+        episode2.watched_at = new Date(System.currentTimeMillis() - 1800000);
+        // season
+        SyncWatchedSeason season = new SyncWatchedSeason();
+        season.number = TestData.EPISODE_SEASON;
+        season.episodes = new LinkedList<>();
+        season.episodes.add(episode);
+        season.episodes.add(episode2);
+        // show
+        SyncWatchedShow show = new SyncWatchedShow();
+        show.ids = new ShowIds();
+        show.ids.tvdb = TestData.SHOW_TVDB_ID;
+        show.seasons = new LinkedList<>();
+        show.seasons.add(season);
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+
+        SyncResponse response = getTrakt().sync().addItemsToWatchedHistory(items);
+        assertThat(response.added.movies).isNotNull();
+        assertThat(response.added.episodes).isNotNull();
+        assertThat(response.existing).isNull();
+        assertThat(response.deleted).isNull();
+        assertThat(response.not_found).isNotNull();
+    }
+
+    @Test
+    public void test_deleteItemsFromWatchedHistory() {
+        SyncEntity items = buildItemsForDeletion();
+
+        SyncResponse response = getTrakt().sync().deleteItemsFromWatchedHistory(items);
         assertThat(response.deleted.movies).isNotNull();
         assertThat(response.deleted.episodes).isNotNull();
+        assertThat(response.added).isNull();
         assertThat(response.existing).isNull();
         assertThat(response.not_found).isNotNull();
-        assertThat(response.added).isNull();
     }
 
 }
