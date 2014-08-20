@@ -2,6 +2,10 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
+import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
+import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
+import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEntity;
@@ -13,6 +17,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import org.junit.Test;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -20,12 +25,23 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_getCollectionMovies() {
-        getTrakt().sync().getCollectionMovies();
+        List<CollectedMovie> movies = getTrakt().sync().getCollectionMovies();
+        for (CollectedMovie movie : movies) {
+            assertThat(movie.collected_at).isNotNull();
+        }
     }
 
     @Test
     public void test_getCollectionShows() {
-        getTrakt().sync().getCollectionShows();
+        List<CollectedShow> shows = getTrakt().sync().getCollectionShows();
+        for (CollectedShow show : shows) {
+            assertThat(show.collected_at).isNotNull();
+            for (CollectedSeason season : show.seasons) {
+                for (CollectedEpisode episode : season.episodes) {
+                    assertThat(episode.collected_at).isNotNull();
+                }
+            }
+        }
     }
 
     @Test
