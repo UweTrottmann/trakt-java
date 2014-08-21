@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -47,6 +48,20 @@ public class TraktV2Helper {
                     return null;
                 }
                 return new JsonPrimitive(ISO_8601_WITH_MILLIS.format(date));
+            }
+        });
+
+        builder.registerTypeAdapter(Rating.class, new JsonDeserializer<Rating>() {
+            @Override
+            public Rating deserialize(JsonElement json, Type typeOfT,
+                    JsonDeserializationContext context) throws JsonParseException {
+                return Rating.fromValue(json.getAsInt());
+            }
+        });
+        builder.registerTypeAdapter(Rating.class, new JsonSerializer<Rating>() {
+            @Override
+            public JsonElement serialize(Rating src, Type typeOfSrc, JsonSerializationContext context) {
+                return new JsonPrimitive(src.value);
             }
         });
 
