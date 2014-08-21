@@ -3,9 +3,9 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.annotations.DELETE;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
-import com.uwetrottmann.trakt.v2.entities.SyncEntity;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.entities.SyncWatched;
+import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import retrofit.http.Body;
@@ -43,7 +43,7 @@ public interface Sync {
      */
     @POST("/sync/collection")
     SyncResponse addItemsToCollection(
-            @Body SyncEntity items
+            @Body SyncItems items
     );
 
     /**
@@ -55,7 +55,7 @@ public interface Sync {
      */
     @DELETE("/sync/collection")
     SyncResponse deleteItemsFromCollection(
-            @Body SyncEntity items
+            @Body SyncItems items
     );
 
     /**
@@ -85,7 +85,7 @@ public interface Sync {
      */
     @POST("/sync/history")
     SyncResponse addItemsToWatchedHistory(
-            @Body SyncWatched items
+            @Body SyncWatchedItems items
     );
 
     /**
@@ -99,7 +99,7 @@ public interface Sync {
      */
     @DELETE("/sync/history")
     SyncResponse deleteItemsFromWatchedHistory(
-            @Body SyncEntity items
+            @Body SyncItems items
     );
 
 }

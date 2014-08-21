@@ -8,13 +8,13 @@ import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
-import com.uwetrottmann.trakt.v2.entities.SyncEntity;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
-import com.uwetrottmann.trakt.v2.entities.SyncWatched;
+import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedSeason;
@@ -56,7 +56,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToCollection() {
-        SyncEntity items = new SyncEntity();
+        SyncItems items = new SyncItems();
 
         SyncMovie movie = new SyncMovie();
         movie.ids = new MovieIds();
@@ -96,7 +96,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_deleteItemsFromCollection() {
-        SyncEntity items = buildItemsForDeletion();
+        SyncItems items = buildItemsForDeletion();
 
         SyncResponse response = getTrakt().sync().deleteItemsFromCollection(items);
         assertThat(response.deleted.movies).isNotNull();
@@ -106,8 +106,8 @@ public class SyncTest extends BaseTestCase {
         assertThat(response.added).isNull();
     }
 
-    private SyncEntity buildItemsForDeletion() {
-        SyncEntity items = new SyncEntity();
+    private SyncItems buildItemsForDeletion() {
+        SyncItems items = new SyncItems();
 
         SyncMovie movie = new SyncMovie();
         movie.ids = new MovieIds();
@@ -157,7 +157,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToWatchedHistory() {
-        SyncWatched items = new SyncWatched();
+        SyncWatchedItems items = new SyncWatchedItems();
 
         SyncWatchedMovie movie = new SyncWatchedMovie();
         movie.watched_at = new Date(System.currentTimeMillis() - 3600000);
@@ -199,7 +199,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_deleteItemsFromWatchedHistory() {
-        SyncEntity items = buildItemsForDeletion();
+        SyncItems items = buildItemsForDeletion();
 
         SyncResponse response = getTrakt().sync().deleteItemsFromWatchedHistory(items);
         assertThat(response.deleted.movies).isNotNull();
