@@ -15,6 +15,11 @@ import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
+import com.uwetrottmann.trakt.v2.entities.SyncRatedEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
+import com.uwetrottmann.trakt.v2.entities.SyncRatedMovie;
+import com.uwetrottmann.trakt.v2.entities.SyncRatedSeason;
+import com.uwetrottmann.trakt.v2.entities.SyncRatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
@@ -27,6 +32,7 @@ import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import org.junit.Test;
 
@@ -303,6 +309,95 @@ public class SyncTest extends BaseTestCase {
             assertThat(episode.rated_at).isNotNull();
             assertThat(episode.rating).isNotNull();
         }
+    }
+
+    @Test
+    public void test_addRatings_movie() {
+        SyncRatedItems items = new SyncRatedItems();
+
+        SyncRatedMovie movie = new SyncRatedMovie();
+        movie.rating = Rating.TOTALLYNINJA;
+        movie.ids = new MovieIds();
+        movie.ids.slug = TestData.MOVIE_SLUG;
+
+        items.movies = new LinkedList<>();
+        items.movies.add(movie);
+
+        getTrakt().sync().addRatings(items);
+    }
+
+    @Test
+    public void test_addRatings_show() {
+        SyncRatedItems items = new SyncRatedItems();
+
+        SyncRatedShow show = new SyncRatedShow();
+        show.rating = Rating.TOTALLYNINJA;
+        show.ids = new ShowIds();
+        show.ids.slug = TestData.SHOW_SLUG;
+
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+
+        getTrakt().sync().addRatings(items);
+    }
+
+    @Test
+    public void test_addRatings_season() {
+        SyncRatedItems items = new SyncRatedItems();
+
+        SyncRatedSeason season = new SyncRatedSeason();
+        season.rating = Rating.TOTALLYNINJA;
+        season.number = TestData.EPISODE_SEASON;
+
+        SyncRatedShow show = new SyncRatedShow();
+        show.ids = new ShowIds();
+        show.ids.slug = TestData.SHOW_SLUG;
+        show.seasons = new LinkedList<>();
+        show.seasons.add(season);
+
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+
+        getTrakt().sync().addRatings(items);
+    }
+
+    @Test
+    public void test_addRatings_episode() {
+        SyncRatedItems items = new SyncRatedItems();
+
+        SyncRatedEpisode episode  = new SyncRatedEpisode();
+        episode.rating = Rating.TOTALLYNINJA;
+        episode.number = TestData.EPISODE_NUMBER;
+
+        SyncRatedSeason season = new SyncRatedSeason();
+        season.number = TestData.EPISODE_SEASON;
+        season.episodes = new LinkedList<>();
+        season.episodes.add(episode);
+
+        SyncRatedShow show = new SyncRatedShow();
+        show.ids = new ShowIds();
+        show.ids.slug = TestData.SHOW_SLUG;
+        show.seasons = new LinkedList<>();
+        show.seasons.add(season);
+
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+
+        getTrakt().sync().addRatings(items);
+    }
+
+    @Test
+    public void test_deleteRatings() {
+        SyncItems items = buildItemsForDeletion();
+
+        SyncResponse response = getTrakt().sync().deleteRatings(items);
+        assertThat(response.deleted.movies).isNotNull();
+        assertThat(response.deleted.shows).isNotNull();
+        assertThat(response.deleted.seasons).isNotNull();
+        assertThat(response.deleted.episodes).isNotNull();
+        assertThat(response.added).isNull();
+        assertThat(response.existing).isNull();
+        assertThat(response.not_found).isNotNull();
     }
 
 }

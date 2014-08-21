@@ -8,6 +8,7 @@ import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
@@ -154,6 +155,30 @@ public interface Sync {
     @GET("/sync/ratings/episodes{rating}")
     List<RatedEpisode> getRatingsEpisodes(
             @EncodedPath("rating") RatingsFilter filter
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Rate one or more items.
+     *
+     * @param items A list of movies, shows, seasons or episodes.
+     */
+    @POST("/sync/ratings")
+    SyncResponse addRatings(
+            @Body SyncRatedItems items
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Delete ratings for one or more items.
+     *
+     * @param items A list of movies, shows, seasons or episodes.
+     */
+    @DELETE("/sync/ratings")
+    SyncResponse deleteRatings(
+            @Body SyncItems items
     );
 
 }
