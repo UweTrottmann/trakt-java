@@ -55,7 +55,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToCollection() {
+    public void test_addItemsToCollection_movie() {
         SyncItems items = new SyncItems();
 
         SyncMovie movie = new SyncMovie();
@@ -64,17 +64,59 @@ public class SyncTest extends BaseTestCase {
         items.movies = new LinkedList<>();
         items.movies.add(movie);
 
+        SyncResponse response = getTrakt().sync().addItemsToCollection(items);
+        assertSyncResponse(response);
+    }
+
+    @Test
+    public void test_addItemsToCollection_show() {
+        SyncItems items = new SyncItems();
+
+        // show
+        SyncShow show = new SyncShow();
+        show.ids = new ShowIds();
+        show.ids.slug = "the-walking-dead";
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+
+        SyncResponse response = getTrakt().sync().addItemsToCollection(items);
+        assertSyncResponse(response);
+    }
+
+    @Test
+    public void test_addItemsToCollection_season() {
+        SyncItems items = new SyncItems();
+
+        // season
+        SyncSeason season = new SyncSeason();
+        season.number = 1;
+        // show
+        SyncShow show = new SyncShow();
+        show.ids = new ShowIds();
+        show.ids.slug = "community";
+        show.seasons = new LinkedList<>();
+        show.seasons.add(season);
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+
+        SyncResponse response = getTrakt().sync().addItemsToCollection(items);
+        assertSyncResponse(response);
+    }
+
+    @Test
+    public void test_addItemsToCollection_episode() {
+        SyncItems items = new SyncItems();
 
         // episode
-        SyncEpisode episode = new SyncEpisode();
-        episode.number = TestData.EPISODE_NUMBER;
+        SyncEpisode episode1 = new SyncEpisode();
+        episode1.number = 1;
         SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
         // season
         SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;
         season.episodes = new LinkedList<>();
-        season.episodes.add(episode);
+        season.episodes.add(episode1);
         season.episodes.add(episode2);
         // show
         SyncShow show = new SyncShow();
@@ -86,6 +128,10 @@ public class SyncTest extends BaseTestCase {
         items.shows.add(show);
 
         SyncResponse response = getTrakt().sync().addItemsToCollection(items);
+        assertSyncResponse(response);
+    }
+
+    private void assertSyncResponse(SyncResponse response) {
         assertThat(response.added.movies).isNotNull();
         assertThat(response.added.episodes).isNotNull();
         assertThat(response.existing.movies).isNotNull();
