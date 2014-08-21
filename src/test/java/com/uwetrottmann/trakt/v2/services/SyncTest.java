@@ -7,6 +7,10 @@ import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
+import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
+import com.uwetrottmann.trakt.v2.entities.RatedMovie;
+import com.uwetrottmann.trakt.v2.entities.RatedSeason;
+import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
@@ -23,6 +27,7 @@ import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import org.junit.Test;
 
 import java.util.Date;
@@ -253,6 +258,51 @@ public class SyncTest extends BaseTestCase {
         assertThat(response.added).isNull();
         assertThat(response.existing).isNull();
         assertThat(response.not_found).isNotNull();
+    }
+
+    @Test
+    public void test_getRatingsMovies() {
+        List<RatedMovie> ratedMovies = getTrakt().sync().getRatingsMovies(RatingsFilter.ALL);
+        for (RatedMovie movie : ratedMovies) {
+            assertThat(movie.rated_at).isNotNull();
+            assertThat(movie.rating).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getRatingsMovies_filtered() {
+        List<RatedMovie> ratedMovies = getTrakt().sync().getRatingsMovies(RatingsFilter.TOTALLYNINJA);
+        for (RatedMovie movie : ratedMovies) {
+            assertThat(movie.rated_at).isNotNull();
+            assertThat(movie.rating).isEqualTo(10);
+        }
+    }
+
+    @Test
+    public void test_getRatingsShows() {
+        List<RatedShow> ratedShows = getTrakt().sync().getRatingsShows(RatingsFilter.ALL);
+        for (RatedShow show : ratedShows) {
+            assertThat(show.rated_at).isNotNull();
+            assertThat(show.rating).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getRatingsSeasons() {
+        List<RatedSeason> ratedSeasons = getTrakt().sync().getRatingsSeasons(RatingsFilter.ALL);
+        for (RatedSeason season : ratedSeasons) {
+            assertThat(season.rated_at).isNotNull();
+            assertThat(season.rating).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getRatingsEpisodes() {
+        List<RatedEpisode> ratedEpisodes = getTrakt().sync().getRatingsEpisodes(RatingsFilter.ALL);
+        for (RatedEpisode episode : ratedEpisodes) {
+            assertThat(episode.rated_at).isNotNull();
+            assertThat(episode.rating).isNotNull();
+        }
     }
 
 }

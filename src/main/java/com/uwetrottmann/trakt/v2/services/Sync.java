@@ -3,12 +3,18 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.annotations.DELETE;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
+import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
+import com.uwetrottmann.trakt.v2.entities.RatedMovie;
+import com.uwetrottmann.trakt.v2.entities.RatedSeason;
+import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import retrofit.http.Body;
+import retrofit.http.EncodedPath;
 import retrofit.http.GET;
 import retrofit.http.POST;
 
@@ -100,6 +106,54 @@ public interface Sync {
     @DELETE("/sync/history")
     SyncResponse deleteItemsFromWatchedHistory(
             @Body SyncItems items
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
+     *
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/sync/ratings/movies{rating}")
+    List<RatedMovie> getRatingsMovies(
+            @EncodedPath("rating") RatingsFilter filter
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
+     *
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/sync/ratings/shows{rating}")
+    List<RatedShow> getRatingsShows(
+            @EncodedPath("rating") RatingsFilter filter
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
+     *
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/sync/ratings/seasons{rating}")
+    List<RatedSeason> getRatingsSeasons(
+            @EncodedPath("rating") RatingsFilter filter
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
+     *
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/sync/ratings/episodes{rating}")
+    List<RatedEpisode> getRatingsEpisodes(
+            @EncodedPath("rating") RatingsFilter filter
     );
 
 }
