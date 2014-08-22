@@ -13,6 +13,9 @@ import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import retrofit.http.Body;
 import retrofit.http.EncodedPath;
@@ -178,6 +181,58 @@ public interface Sync {
      */
     @DELETE("/sync/ratings")
     SyncResponse deleteRatings(
+            @Body SyncItems items
+    );
+
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/sync/watchlist/movies")
+    List<WatchlistedMovie> getWatchlistMovies();
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/sync/watchlist/shows")
+    List<WatchlistedShow> getWatchlistShows();
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/sync/watchlist/episodes")
+    List<WatchlistedEpisode> getWatchlistEpisodes();
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Add one of more items to a user's watchlist.
+     *
+     * @param items A list of movies, shows, seasons or episodes.
+     */
+    @POST("/sync/watchlist")
+    SyncResponse addItemsToWatchlist(
+            @Body SyncItems items
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Delete one or more items from a user's watchlist.
+     *
+     * @param items A list of movies, shows, seasons or episodes.
+     */
+    @DELETE("/sync/watchlist")
+    SyncResponse deleteItemsFromWatchlist(
             @Body SyncItems items
     );
 
