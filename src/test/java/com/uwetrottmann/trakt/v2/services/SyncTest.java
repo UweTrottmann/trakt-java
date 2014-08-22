@@ -365,14 +365,18 @@ public class SyncTest extends BaseTestCase {
     public void test_addRatings_episode() {
         SyncRatedItems items = new SyncRatedItems();
 
-        SyncRatedEpisode episode  = new SyncRatedEpisode();
-        episode.rating = Rating.TOTALLYNINJA;
-        episode.number = TestData.EPISODE_NUMBER;
+        SyncRatedEpisode episode1  = new SyncRatedEpisode();
+        episode1.rating = Rating.TOTALLYNINJA;
+        episode1.number = TestData.EPISODE_NUMBER;
+        SyncRatedEpisode episode2 = new SyncRatedEpisode();
+        episode2.rating = Rating.GREAT;
+        episode2.number = 2;
 
         SyncRatedSeason season = new SyncRatedSeason();
         season.number = TestData.EPISODE_SEASON;
         season.episodes = new LinkedList<>();
-        season.episodes.add(episode);
+        season.episodes.add(episode1);
+        season.episodes.add(episode2);
 
         SyncRatedShow show = new SyncRatedShow();
         show.ids = new ShowIds();
