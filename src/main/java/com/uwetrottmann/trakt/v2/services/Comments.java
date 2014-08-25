@@ -7,6 +7,8 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 
+import java.util.List;
+
 public interface Comments {
 
     /**
@@ -62,6 +64,34 @@ public interface Comments {
     @DELETE("/comments/{id}")
     Comment delete(
             @Path("id") int id
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all replies for a comment. It is possible these replies could have replies themselves, so in that
+     * case you would just call GET /comment/:id/replies again with the new comment_id.
+     *
+     * @param id A specific comment ID. Example: 417.
+     */
+    @GET("/comments/{id}/replies")
+    List<Comment> getReplies(
+            @Path("id") int id
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Add a new reply to an existing comment. Also make sure to allow and encourage spoilers to be indicated in
+     * your app.
+     *
+     * @param id A specific comment ID. Example: 417.
+     * @param comment A {@link com.uwetrottmann.trakt.v2.entities.Comment} with comment and spoiler or review flags.
+     */
+    @POST("/comments/{id}/replies")
+    Comment postReply(
+            @Path("id") int id,
+            @Body Comment comment
     );
 
 }
