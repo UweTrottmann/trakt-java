@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.TrendingMovie;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import org.junit.Test;
 
 import java.util.List;
@@ -38,13 +39,13 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_summary_slug() {
-        Movie movie = getTrakt().movies().summary(TestData.MOVIE_SLUG);
+        Movie movie = getTrakt().movies().summary(TestData.MOVIE_SLUG, Extended.FULLIMAGES);
         assertTestMovie(movie);
     }
 
     @Test
     public void test_summary_trakt_id() {
-        Movie movie = getTrakt().movies().summary(String.valueOf(TestData.MOVIE_TRAKT_ID));
+        Movie movie = getTrakt().movies().summary(String.valueOf(TestData.MOVIE_TRAKT_ID), Extended.FULLIMAGES);
         assertTestMovie(movie);
     }
 

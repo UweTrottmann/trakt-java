@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import org.junit.Test;
 
 import java.util.List;
@@ -38,13 +39,13 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_summary_slug() {
-        Show show = getTrakt().shows().summary(TestData.SHOW_SLUG);
+        Show show = getTrakt().shows().summary(TestData.SHOW_SLUG, Extended.FULLIMAGES);
         assertTestShow(show);
     }
 
     @Test
     public void test_summary_trakt_id() {
-        Show show = getTrakt().shows().summary(String.valueOf(TestData.SHOW_TRAKT_ID));
+        Show show = getTrakt().shows().summary(String.valueOf(TestData.SHOW_TRAKT_ID), Extended.FULLIMAGES);
         assertTestShow(show);
     }
 

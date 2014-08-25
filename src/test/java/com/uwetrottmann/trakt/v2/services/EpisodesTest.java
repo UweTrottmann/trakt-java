@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Episode;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import org.junit.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -12,7 +13,7 @@ public class EpisodesTest extends BaseTestCase {
     @Test
     public void test_summary() {
         Episode episode = getTrakt().episodes().summary(String.valueOf(TestData.SHOW_TRAKT_ID), TestData.EPISODE_SEASON,
-                TestData.EPISODE_NUMBER);
+                TestData.EPISODE_NUMBER, Extended.FULLIMAGES);
         assertThat(episode.title).isEqualTo(TestData.EPISODE_TITLE);
         assertThat(episode.season).isEqualTo(TestData.EPISODE_SEASON);
         assertThat(episode.number).isEqualTo(TestData.EPISODE_NUMBER);
