@@ -2,6 +2,8 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Episode;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -20,7 +22,8 @@ public interface Episodes {
     Episode summary(
             @Path("id") String showId,
             @Path("season") int season,
-            @Path("episode") int episode
+            @Path("episode") int episode,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**

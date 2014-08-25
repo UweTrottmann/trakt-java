@@ -3,6 +3,8 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.TrendingMovie;
+import com.uwetrottmann.trakt.v2.enums.Extended;
+import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -29,7 +31,8 @@ public interface Movies {
      */
     @GET("/movies/{id}")
     Movie summary(
-            @Path("id") String movieId
+            @Path("id") String movieId,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**
