@@ -18,6 +18,7 @@
 package com.uwetrottmann.trakt.v2;
 
 import com.uwetrottmann.trakt.v2.services.Checkin;
+import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Episodes;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Seasons;
@@ -235,6 +236,15 @@ public class TraktV2 {
      */
     public Checkin checkin() {
         return getRestAdapter().create(Checkin.class);
+    }
+
+    /**
+     * Comments are attached to any movie, show, season, episode, or list and can be shorter shouts or more in depth
+     * reviews. Each comment can have replies and can be voted up or down. These votes are used to determine popular
+     * comments.
+     */
+    public Comments comments() {
+        return getRestAdapter().create(Comments.class);
     }
 
     public Movies movies() {
