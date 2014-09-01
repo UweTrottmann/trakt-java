@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Episodes;
 import com.uwetrottmann.trakt.v2.services.Movies;
+import com.uwetrottmann.trakt.v2.services.Recommendations;
 import com.uwetrottmann.trakt.v2.services.Seasons;
 import com.uwetrottmann.trakt.v2.services.Shows;
 import com.uwetrottmann.trakt.v2.services.Sync;
@@ -249,6 +250,14 @@ public class TraktV2 {
 
     public Movies movies() {
         return getRestAdapter().create(Movies.class);
+    }
+
+    /**
+     * Recommendations are based on the watched history for a user and their friends. There are other factors that go
+     * into the algorithm as well to further personalize what gets recommended.
+     */
+    public Recommendations recommendations() {
+        return getRestAdapter().create(Recommendations.class);
     }
 
     public Shows shows() {
