@@ -1,6 +1,5 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.annotations.DELETE;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -63,7 +62,7 @@ public interface Sync {
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
-    @DELETE("/sync/collection")
+    @POST("/sync/collection/remove")
     SyncResponse deleteItemsFromCollection(
             @Body SyncItems items
     );
@@ -107,7 +106,7 @@ public interface Sync {
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
-    @DELETE("/sync/history")
+    @POST("/sync/history/remove")
     SyncResponse deleteItemsFromWatchedHistory(
             @Body SyncItems items
     );
@@ -179,7 +178,7 @@ public interface Sync {
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
-    @DELETE("/sync/ratings")
+    @POST("/sync/ratings/remove")
     SyncResponse deleteRatings(
             @Body SyncItems items
     );
@@ -231,7 +230,7 @@ public interface Sync {
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
-    @DELETE("/sync/watchlist")
+    @POST("/sync/watchlist/remove")
     SyncResponse deleteItemsFromWatchlist(
             @Body SyncItems items
     );

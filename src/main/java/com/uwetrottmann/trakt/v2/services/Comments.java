@@ -1,8 +1,9 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.annotations.DELETE;
 import com.uwetrottmann.trakt.v2.entities.Comment;
+import retrofit.client.Response;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
@@ -62,7 +63,7 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      */
     @DELETE("/comments/{id}")
-    Comment delete(
+    Response delete(
             @Path("id") int id
     );
 
