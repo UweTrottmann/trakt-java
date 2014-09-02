@@ -10,6 +10,9 @@ import java.net.URISyntaxException;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
+/**
+ * This test should NOT be run with the regular test suite. It requires a valid, temporary (!) auth code to be set.
+ */
 public class AuthTest extends BaseTestCase {
 
     public static final String TEST_CLIENT_ID = "e683ed71dd4a4afe73ba73151a4645f511b8703464a7807045088c733ef8d634";
@@ -34,7 +37,12 @@ public class AuthTest extends BaseTestCase {
         }
         OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                 TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI, AUTH_CODE);
+        assertThat(response.getAccessToken()).isNotEmpty();
+        assertThat(response.getRefreshToken()).isNull(); // trakt does not supply refresh tokens
         System.out.println("Retrieved access token: " + response.getAccessToken());
+        System.out.println("Retrieved refresh token: " + response.getRefreshToken());
+        System.out.println("Retrieved scope: " + response.getScope());
+        System.out.println("Retrieved expires in: " + response.getExpiresIn());
     }
 
     @Test
@@ -44,7 +52,7 @@ public class AuthTest extends BaseTestCase {
         assertThat(request.getLocationUri()).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
         // trakt does not support scopes, so don't send one (server sets default scope)
         assertThat(request.getLocationUri()).doesNotContain("scope");
-        System.out.println("Generated Auth Request URI: " + request.getLocationUri());
+        System.out.println("Get an auth code at the following URI: " + request.getLocationUri());
     }
 
 }
