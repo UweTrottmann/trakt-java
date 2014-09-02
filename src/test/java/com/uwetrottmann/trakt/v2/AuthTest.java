@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.net.URISyntaxException;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test should NOT be run with the regular test suite. It requires a valid, temporary (!) auth code to be set.

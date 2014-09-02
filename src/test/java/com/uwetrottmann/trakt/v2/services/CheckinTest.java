@@ -18,7 +18,7 @@ import retrofit.client.Response;
 
 import java.util.Date;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class CheckinTest extends BaseTestCase {

@@ -10,7 +10,7 @@ import retrofit.client.Response;
 
 import java.net.HttpURLConnection;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CommentsTest extends BaseTestCase {
 

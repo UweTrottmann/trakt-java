@@ -43,7 +43,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SyncTest extends BaseTestCase {
 
