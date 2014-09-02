@@ -6,6 +6,7 @@ import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      * @param comment A {@link com.uwetrottmann.trakt.v2.entities.Comment} with comment and spoiler or review flags.
      */
-    @POST("/comments/{id}")
+    @PUT("/comments/{id}")
     Comment update(
             @Path("id") int id,
             @Body Comment comment
