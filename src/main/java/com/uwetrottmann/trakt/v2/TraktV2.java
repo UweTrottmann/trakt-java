@@ -61,24 +61,31 @@ public class TraktV2 {
      * Build an OAuth 2.0 authorization request to obtain an authorization code.
      *
      * <p> Send the user to the location URI of this request. Once the user authorized your app, the server will
-     * redirect to {@code redirectUri} with the authorization code in the query parameter {@code code}.
+     * redirect to {@code redirectUri} with the authorization code and the sent state in the query parameter {@code
+     * code}.
      *
-     * <p> Supply the authorization code to {@link #getAccessToken(String, String, String, String)} to get an access
-     * token.
+     * <p> Ensure the state matches, then supply the authorization code to {@link #getAccessToken(String, String,
+     * String, String)} to get an access token.
      *
      * @param clientId The OAuth client id obtained from trakt.
-     * @param redirectUri The URI to redirect to with appended auth code query parameter.
+     * @param redirectUri The URI to redirect to with appended auth code and state query parameters.
+     * @param state State variable to prevent request forgery attacks.
+     * @param username Pre-fill the username field.
      * @return A trakt OAuth authorization request.
      * @throws OAuthSystemException
      */
-    public static OAuthClientRequest getAuthorizationRequest(String clientId,
-            String redirectUri) throws OAuthSystemException {
-        return OAuthClientRequest
+    public static OAuthClientRequest getAuthorizationRequest(String clientId, String redirectUri, String state,
+            String username) throws OAuthSystemException {
+        OAuthClientRequest.AuthenticationRequestBuilder builder = OAuthClientRequest
                 .authorizationLocation(OAUTH2_AUTHORIZATION_URL)
                 .setResponseType(ResponseType.CODE.toString())
                 .setClientId(clientId)
                 .setRedirectURI(redirectUri)
-                .buildQueryMessage();
+                .setState(state);
+        if (username != null && username.length() != 0) {
+            builder.setParameter("username", username);
+        }
+        return builder.buildQueryMessage();
     }
 
     /**
@@ -109,17 +116,18 @@ public class TraktV2 {
      *
      * <p> Supply the received access token to {@link #setAccessToken(String)}.
      *
-     * <p> On failure re-authorization of your app is required (see {@link #getAuthorizationRequest(String, String)}).
+     * <p> On failure re-authorization of your app is required (see {@link #getAuthorizationRequest(String, String,
+     * String, String)}).
      *
      * @param clientId The OAuth client id obtained from trakt.
      * @param clientSecret The OAuth client secret obtained from trakt.
      * @param redirectUri The redirect URI previously used for obtaining the auth code.
-     * @param authCode A valid authorization code (see {@link #getAuthorizationRequest(String, String)}).
+     * @param authCode A valid authorization code (see {@link #getAuthorizationRequest(String, String, String,
+     * String)}).
      */
     public static OAuthAccessTokenResponse getAccessToken(String clientId, String clientSecret, String redirectUri,
             String authCode) throws OAuthSystemException, OAuthProblemException {
-        OAuthClientRequest request = getAccessTokenRequest(clientId, clientSecret, redirectUri,
-                authCode);
+        OAuthClientRequest request = getAccessTokenRequest(clientId, clientSecret, redirectUri, authCode);
 
         OAuthClient client = new OAuthClient(new TraktHttpClient());
         return client.accessToken(request);
