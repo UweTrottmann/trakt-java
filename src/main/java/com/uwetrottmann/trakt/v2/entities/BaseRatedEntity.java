@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class BaseRatedEntity {
 
-    public Date rated_at;
+    public DateTime rated_at;
     public Integer rating;
 
 }

@@ -9,45 +9,36 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.uwetrottmann.trakt.v2.enums.Rating;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class TraktV2Helper {
 
-    private static final SimpleDateFormat ISO_8601_WITH_MILLIS;
+    private static final DateTimeFormatter ISO_8601_WITH_MILLIS;
 
     static {
-        ISO_8601_WITH_MILLIS = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-        ISO_8601_WITH_MILLIS.setTimeZone(TimeZone.getTimeZone("UTC"));
+        ISO_8601_WITH_MILLIS = ISODateTimeFormat.dateTimeParser().withZoneUTC();
     }
 
     public static GsonBuilder getGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
 
         // trakt exclusively uses ISO 8601 dates with milliseconds in Zulu time (UTC)
-        builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
+        builder.registerTypeAdapter(DateTime.class, new JsonDeserializer<DateTime>() {
             @Override
-            public Date deserialize(JsonElement json, Type typeOfT,
+            public DateTime deserialize(JsonElement json, Type typeOfT,
                     JsonDeserializationContext context) throws JsonParseException {
-                String value = json.getAsString();
-                try {
-                    return ISO_8601_WITH_MILLIS.parse(value);
-                } catch (ParseException e) {
-                    return null;
-                }
+                // using the correct parser right away should save init time compared to new DateTime(<string>)
+                return ISO_8601_WITH_MILLIS.parseDateTime(json.getAsString());
             }
         });
-        builder.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
+        builder.registerTypeAdapter(DateTime.class, new JsonSerializer<DateTime>() {
             @Override
-            public JsonElement serialize(Date date, Type type, JsonSerializationContext jsonSerializationContext) {
-                if (date == null) {
-                    return null;
-                }
-                return new JsonPrimitive(ISO_8601_WITH_MILLIS.format(date));
+            public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                return new JsonPrimitive(src.toString());
             }
         });
 

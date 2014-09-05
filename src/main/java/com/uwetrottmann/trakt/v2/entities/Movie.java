@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Movie extends BaseEntity {
 
@@ -10,7 +10,7 @@ public class Movie extends BaseEntity {
     // extended info
     public String tagline;
     public String overview;
-    public Date released;
+    public DateTime released;
     public Integer runtime;
     public String language;
 

@@ -37,9 +37,9 @@ import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
+import org.joda.time.DateTime;
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -235,7 +235,7 @@ public class SyncTest extends BaseTestCase {
         SyncWatchedItems items = new SyncWatchedItems();
 
         SyncWatchedMovie movie = new SyncWatchedMovie();
-        movie.watched_at = new Date(System.currentTimeMillis() - 3600000);
+        movie.watched_at = new DateTime().minusHours(1);
         movie.ids = new MovieIds();
         movie.ids.tmdb = TestData.MOVIE_TMDB_ID;
         items.movies = new LinkedList<>();
@@ -245,10 +245,10 @@ public class SyncTest extends BaseTestCase {
         // episode
         SyncWatchedEpisode episode = new SyncWatchedEpisode();
         episode.number = TestData.EPISODE_NUMBER;
-        episode.watched_at = new Date(System.currentTimeMillis() - 3600000);
+        episode.watched_at = new DateTime().minusHours(1);
         SyncWatchedEpisode episode2 = new SyncWatchedEpisode();
         episode2.number = 2;
-        episode2.watched_at = new Date(System.currentTimeMillis() - 1800000);
+        episode2.watched_at = new DateTime().minusMinutes(30);
         // season
         SyncWatchedSeason season = new SyncWatchedSeason();
         season.number = TestData.EPISODE_SEASON;
