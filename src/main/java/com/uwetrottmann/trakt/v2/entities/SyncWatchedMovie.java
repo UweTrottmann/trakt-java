@@ -1,9 +1,9 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class SyncWatchedMovie extends SyncMovie {
 
-    public Date watched_at;
+    public DateTime watched_at;
 
 }

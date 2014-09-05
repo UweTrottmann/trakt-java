@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class Show extends BaseEntity {
 
@@ -9,9 +9,9 @@ public class Show extends BaseEntity {
 
     // extended info
     public String overview;
-    public Date first_aired;
+    public DateTime first_aired;
     public String air_day;
-    public Date air_time;
+    public DateTime air_time;
     public Integer runtime;
     public String certification;
     public String network;

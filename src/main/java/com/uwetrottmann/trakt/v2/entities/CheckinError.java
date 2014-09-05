@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * Type to use for parsing check in error response (call {@link retrofit.RetrofitError#getBodyAs(java.lang.reflect.Type)}
@@ -9,6 +9,6 @@ import java.util.Date;
 public class CheckinError {
 
     /** Timestamp which is when the user can check in again. */
-    public Date expires_at;
+    public DateTime expires_at;
 
 }

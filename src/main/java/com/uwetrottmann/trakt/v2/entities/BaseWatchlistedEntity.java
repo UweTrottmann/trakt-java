@@ -1,9 +1,9 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class BaseWatchlistedEntity {
 
-    public Date listed_at;
+    public DateTime listed_at;
 
 }
