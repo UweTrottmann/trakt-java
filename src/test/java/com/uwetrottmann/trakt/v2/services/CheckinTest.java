@@ -1,6 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
+import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.CheckinError;
 import com.uwetrottmann.trakt.v2.entities.Episode;
@@ -24,7 +25,7 @@ import static org.assertj.jodatime.api.Assertions.assertThat;
 public class CheckinTest extends BaseTestCase {
 
     @Test
-    public void test_checkin_episode() {
+    public void test_checkin_episode() throws OAuthUnauthorizedException {
         EpisodeCheckin checkin = buildEpisodeCheckin();
 
         EpisodeCheckinResponse response = getTrakt().checkin().checkin(checkin);
@@ -53,7 +54,7 @@ public class CheckinTest extends BaseTestCase {
     }
 
     @Test
-    public void test_checkin_movie() {
+    public void test_checkin_movie() throws OAuthUnauthorizedException {
         MovieCheckin checkin = buildMovieCheckin();
 
         MovieCheckinResponse response = getTrakt().checkin().checkin(checkin);
@@ -79,7 +80,7 @@ public class CheckinTest extends BaseTestCase {
     }
 
     @Test
-    public void test_checkin_blocked() {
+    public void test_checkin_blocked() throws OAuthUnauthorizedException {
         Checkin checkin = getTrakt().checkin();
 
         EpisodeCheckin episodeCheckin = buildEpisodeCheckin();
@@ -101,7 +102,7 @@ public class CheckinTest extends BaseTestCase {
 
 
     @Test
-    public void test_checkin_delete() {
+    public void test_checkin_delete() throws OAuthUnauthorizedException {
         // tries to delete a check in even if none active
         Response response1 = getTrakt().checkin().deleteActiveCheckin();
         assertThat(response1.getStatus()).isEqualTo(204);

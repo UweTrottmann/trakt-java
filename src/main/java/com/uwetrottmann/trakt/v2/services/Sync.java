@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -32,7 +33,7 @@ public interface Sync {
      * or on physical media.
      */
     @GET("/sync/collection/movies")
-    List<CollectedMovie> getCollectionMovies();
+    List<CollectedMovie> getCollectionMovies() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -41,7 +42,7 @@ public interface Sync {
      * on physical media.
      */
     @GET("/sync/collection/shows")
-    List<CollectedShow> getCollectionShows();
+    List<CollectedShow> getCollectionShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -53,7 +54,7 @@ public interface Sync {
     @POST("/sync/collection")
     SyncResponse addItemsToCollection(
             @Body SyncItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -65,7 +66,7 @@ public interface Sync {
     @POST("/sync/collection/remove")
     SyncResponse deleteItemsFromCollection(
             @Body SyncItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -73,7 +74,7 @@ public interface Sync {
      * <p> Returns all movies a user has watched.
      */
     @GET("/sync/watched/movies")
-    List<WatchedMovie> getWatchedMovies();
+    List<WatchedMovie> getWatchedMovies() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -81,7 +82,7 @@ public interface Sync {
      * <p> Returns all shows a user has watched.
      */
     @GET("/sync/watched/shows")
-    List<WatchedShow> getWatchedShows();
+    List<WatchedShow> getWatchedShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -95,7 +96,7 @@ public interface Sync {
     @POST("/sync/history")
     SyncResponse addItemsToWatchedHistory(
             @Body SyncWatchedItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -109,7 +110,7 @@ public interface Sync {
     @POST("/sync/history/remove")
     SyncResponse deleteItemsFromWatchedHistory(
             @Body SyncItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -121,7 +122,7 @@ public interface Sync {
     @GET("/sync/ratings/movies{rating}")
     List<RatedMovie> getRatingsMovies(
             @EncodedPath("rating") RatingsFilter filter
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -133,7 +134,7 @@ public interface Sync {
     @GET("/sync/ratings/shows{rating}")
     List<RatedShow> getRatingsShows(
             @EncodedPath("rating") RatingsFilter filter
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -145,7 +146,7 @@ public interface Sync {
     @GET("/sync/ratings/seasons{rating}")
     List<RatedSeason> getRatingsSeasons(
             @EncodedPath("rating") RatingsFilter filter
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -157,7 +158,7 @@ public interface Sync {
     @GET("/sync/ratings/episodes{rating}")
     List<RatedEpisode> getRatingsEpisodes(
             @EncodedPath("rating") RatingsFilter filter
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -169,7 +170,7 @@ public interface Sync {
     @POST("/sync/ratings")
     SyncResponse addRatings(
             @Body SyncRatedItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -181,7 +182,7 @@ public interface Sync {
     @POST("/sync/ratings/remove")
     SyncResponse deleteRatings(
             @Body SyncItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
 
     /**
@@ -191,7 +192,7 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/movies")
-    List<WatchlistedMovie> getWatchlistMovies();
+    List<WatchlistedMovie> getWatchlistMovies() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -200,16 +201,16 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/shows")
-    List<WatchlistedShow> getWatchlistShows();
+    List<WatchlistedShow> getWatchlistShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
      *
-     * <p> Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * <p> Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be
+     * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/episodes")
-    List<WatchlistedEpisode> getWatchlistEpisodes();
+    List<WatchlistedEpisode> getWatchlistEpisodes() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -221,7 +222,7 @@ public interface Sync {
     @POST("/sync/watchlist")
     SyncResponse addItemsToWatchlist(
             @Body SyncItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -233,6 +234,6 @@ public interface Sync {
     @POST("/sync/watchlist/remove")
     SyncResponse deleteItemsFromWatchlist(
             @Body SyncItems items
-    );
+    ) throws OAuthUnauthorizedException;
 
 }

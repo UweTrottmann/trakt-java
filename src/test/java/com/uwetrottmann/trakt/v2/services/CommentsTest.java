@@ -1,6 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
+import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Episode;
@@ -15,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CommentsTest extends BaseTestCase {
 
     @Test
-    public void test_post() {
+    public void test_post() throws OAuthUnauthorizedException {
         Comment comment = new Comment(buildTestEpisode(), "This is toasty!", true, false);
 
         Comment commentResponse = getTrakt().comments().post(comment);
@@ -23,7 +24,7 @@ public class CommentsTest extends BaseTestCase {
     }
 
     @Test
-    public void test_update() throws InterruptedException {
+    public void test_update() throws InterruptedException, OAuthUnauthorizedException {
         // first post a new comment
         Comment comment = new Comment(buildTestEpisode(), "This is toasty!", true, false);
         Comment commentResponse = getTrakt().comments().post(comment);
@@ -51,7 +52,7 @@ public class CommentsTest extends BaseTestCase {
     }
 
     @Test
-    public void test_delete() throws InterruptedException {
+    public void test_delete() throws InterruptedException, OAuthUnauthorizedException {
         // first post a new comment
         Comment comment = new Comment(buildTestEpisode(), "This is toasty! I should be deleted soon.", true, false);
         Comment commentResponse = getTrakt().comments().post(comment);

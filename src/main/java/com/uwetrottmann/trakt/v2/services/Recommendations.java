@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -21,7 +22,7 @@ public interface Recommendations {
     @GET("/recommendations/movies")
     List<Movie> movies(
             @EncodedQuery("extended") Extended extended
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -33,7 +34,7 @@ public interface Recommendations {
     @DELETE("recommendations/movies/{id}")
     Response dismissMovie(
             @Path("id") String movieId
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -43,7 +44,7 @@ public interface Recommendations {
     @GET("/recommendations/shows")
     List<Show> shows(
             @EncodedQuery("extended") Extended extended
-    );
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -55,6 +56,6 @@ public interface Recommendations {
     @DELETE("recommendations/shows/{id}")
     Response dismissShow(
             @Path("id") String showId
-    );
+    ) throws OAuthUnauthorizedException;
 
 }
