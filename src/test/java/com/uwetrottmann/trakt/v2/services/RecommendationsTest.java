@@ -1,6 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
+import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -13,13 +14,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RecommendationsTest extends BaseTestCase {
 
     @Test
-    public void test_movies() {
+    public void test_movies() throws OAuthUnauthorizedException {
         List<Movie> movies = getTrakt().recommendations().movies(Extended.FULLIMAGES);
         assertThat(movies).isNotEmpty();
     }
 
     @Test
-    public void test_shows() {
+    public void test_shows() throws OAuthUnauthorizedException {
         List<Show> shows = getTrakt().recommendations().shows(Extended.FULLIMAGES);
         assertThat(shows).isNotEmpty();
     }

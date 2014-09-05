@@ -220,6 +220,9 @@ public class TraktV2 {
                 }
             });
 
+            // add custom error handling to intercept OAuth errors
+            builder.setErrorHandler(new TraktErrorHandler());
+
             if (isDebug) {
                 builder.setLogLevel(RestAdapter.LogLevel.FULL);
             }

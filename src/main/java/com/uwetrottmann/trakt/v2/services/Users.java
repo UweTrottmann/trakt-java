@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
 import retrofit.http.GET;
@@ -14,7 +15,7 @@ public interface Users {
      * website.
      */
     @GET("/users/settings")
-    Settings settings();
+    Settings settings() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Optional</b>
@@ -27,6 +28,6 @@ public interface Users {
     @GET("/users/{username}")
     User profile(
             @Path("username") String username
-    );
+    ) throws OAuthUnauthorizedException;
 
 }
