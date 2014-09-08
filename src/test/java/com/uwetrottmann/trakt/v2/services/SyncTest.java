@@ -1,7 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;

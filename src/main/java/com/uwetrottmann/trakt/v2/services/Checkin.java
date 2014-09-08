@@ -1,10 +1,11 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
+import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -18,14 +19,11 @@ public interface Checkin {
      * <p> Check into an episode. This should be tied to a user action to manually indicate they are watching something.
      * The item will display as watching on the site, then automatically switch to watched status once the duration has
      * elapsed.
-     *
-     * <p> <b>Note:</b> If a checkin is already in progress, a 409 HTTP status code will returned. The response will
-     * contain an expires_at timestamp which is when the user can check in again.
      */
     @POST("/checkin")
     EpisodeCheckinResponse checkin(
             @Body EpisodeCheckin episodeCheckin
-    ) throws OAuthUnauthorizedException;
+    ) throws OAuthUnauthorizedException, CheckinInProgressException;
 
     /**
      * <b>OAuth Required</b>
@@ -33,14 +31,11 @@ public interface Checkin {
      * <p> Check into a movie. This should be tied to a user action to manually indicate they are watching something.
      * The item will display as watching on the site, then automatically switch to watched status once the duration has
      * elapsed.
-     *
-     * <p> <b>Note:</b> If a checkin is already in progress, a 409 HTTP status code will returned. The response will
-     * contain an expires_at timestamp which is when the user can check in again.
      */
     @POST("/checkin")
     MovieCheckinResponse checkin(
             @Body MovieCheckin movieCheckin
-    ) throws OAuthUnauthorizedException;
+    ) throws OAuthUnauthorizedException, CheckinInProgressException;
 
     /**
      * <b>OAuth Required</b>

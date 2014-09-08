@@ -1,9 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
-import com.uwetrottmann.trakt.v2.entities.CheckinError;
 import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
@@ -13,12 +11,14 @@ import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.ShareSettings;
+import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
 import org.junit.Test;
-import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.jodatime.api.Assertions.assertThat;
 
 
@@ -28,7 +28,12 @@ public class CheckinTest extends BaseTestCase {
     public void test_checkin_episode() throws OAuthUnauthorizedException {
         EpisodeCheckin checkin = buildEpisodeCheckin();
 
-        EpisodeCheckinResponse response = getTrakt().checkin().checkin(checkin);
+        EpisodeCheckinResponse response = null;
+        try {
+            response = getTrakt().checkin().checkin(checkin);
+        } catch (CheckinInProgressException e) {
+            fail("Check-in still in progress, may be left over from failed test");
+        }
         assertThat(response).isNotNull();
         // episode should be over in less than an hour
         assertThat(response.watched_at).isBefore(new DateTime().plusHours(1));
@@ -57,7 +62,12 @@ public class CheckinTest extends BaseTestCase {
     public void test_checkin_movie() throws OAuthUnauthorizedException {
         MovieCheckin checkin = buildMovieCheckin();
 
-        MovieCheckinResponse response = getTrakt().checkin().checkin(checkin);
+        MovieCheckinResponse response = null;
+        try {
+            response = getTrakt().checkin().checkin(checkin);
+        } catch (CheckinInProgressException e) {
+            fail("Check-in still in progress, may be left over from failed test");
+        }
         assertThat(response).isNotNull();
         // movie should be over in less than 3 hours
         assertThat(response.watched_at).isBefore(new DateTime().plusHours(3));
@@ -84,16 +94,18 @@ public class CheckinTest extends BaseTestCase {
         Checkin checkin = getTrakt().checkin();
 
         EpisodeCheckin episodeCheckin = buildEpisodeCheckin();
-        checkin.checkin(episodeCheckin);
+        try {
+            checkin.checkin(episodeCheckin);
+        } catch (CheckinInProgressException e) {
+            fail("Check-in still in progress, may be left over from failed test");
+        }
 
         MovieCheckin movieCheckin = buildMovieCheckin();
         try {
             checkin.checkin(movieCheckin);
-        } catch (RetrofitError e) {
-            assertThat(e.getResponse().getStatus()).isEqualTo(409);
+        } catch (CheckinInProgressException e) {
             // episode check in should block until episode duration has passed
-            CheckinError checkinError = (CheckinError) e.getBodyAs(CheckinError.class);
-            assertThat(checkinError.expires_at).isBefore(new DateTime().plusHours(1));
+            assertThat(e.getExpiresAt()).isBefore(new DateTime().plusHours(1));
         }
 
         // clean the check in

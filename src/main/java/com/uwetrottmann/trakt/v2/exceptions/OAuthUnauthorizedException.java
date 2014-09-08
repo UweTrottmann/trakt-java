@@ -1,4 +1,4 @@
-package com.uwetrottmann.trakt.v2;
+package com.uwetrottmann.trakt.v2.exceptions;
 
 import retrofit.RetrofitError;
 
