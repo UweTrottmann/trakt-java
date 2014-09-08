@@ -22,6 +22,7 @@ import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Episodes;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Recommendations;
+import com.uwetrottmann.trakt.v2.services.Search;
 import com.uwetrottmann.trakt.v2.services.Seasons;
 import com.uwetrottmann.trakt.v2.services.Shows;
 import com.uwetrottmann.trakt.v2.services.Sync;
@@ -269,6 +270,15 @@ public class TraktV2 {
      */
     public Recommendations recommendations() {
         return getRestAdapter().create(Recommendations.class);
+    }
+
+    /**
+     * Searches can use queries or ID lookups. Queries will search fields like the title and description. ID lookups are
+     * helpful if you have an external ID and want to get the trakt ID and info. This method will search for movies,
+     * shows, episodes, people, users, and lists.
+     */
+    public Search search() {
+        return getRestAdapter().create(Search.class);
     }
 
     public Shows shows() {
