@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import org.junit.Test;
@@ -60,6 +61,22 @@ public class ShowsTest extends BaseTestCase {
         assertThat(show.ids.tmdb).isEqualTo(TestData.SHOW_TMDB_ID);
         assertThat(show.ids.tvdb).isEqualTo(TestData.SHOW_TVDB_ID);
         assertThat(show.ids.tvrage).isEqualTo(TestData.SHOW_TVRAGE_ID);
+    }
+
+    @Test
+    public void test_translations() {
+        List<Translation> translations = getTrakt().shows().translations("breaking-bad");
+        for (Translation translation : translations) {
+            assertThat(translation.language).isNotEmpty();
+        }
+    }
+
+    @Test
+    public void test_translation() {
+        List<Translation> translations = getTrakt().shows().translation("breaking-bad", "de");
+        // we know that Breaking Bad has a German translation, otherwise this test would fail
+        assertThat(translations).hasSize(1);
+        assertThat(translations.get(0).language).isEqualTo("de");
     }
 
     @Test
