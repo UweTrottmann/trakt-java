@@ -8,6 +8,7 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 import java.util.List;
 
@@ -15,15 +16,27 @@ public interface Shows {
 
     /**
      * Returns the most popular shows. Popularity is calculated using the rating percentage and the number of ratings.
+     *
+     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/shows/popular")
-    List<Show> popular();
+    List<Show> popular(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
+    );
 
     /**
      * Returns all shows being watched right now. Shows with the most users are returned first.
+     *
+     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/shows/trending")
-    List<TrendingShow> trending();
+    List<TrendingShow> trending(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
+    );
 
     /**
      * Returns a single shows's details.
@@ -62,10 +75,14 @@ public interface Shows {
      * Returns all top level comments for a show. Most recent comments returned first.
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/shows/{id}/comments")
     List<Comment> comments(
-            @Path("id") String showId
+            @Path("id") String showId,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
 }
