@@ -10,6 +10,7 @@ public class BaseTestCase {
     private static final boolean DEBUG = true;
 
     private static final TraktV2 trakt = new TraktV2();
+    protected static final Integer DEFAULT_PAGE_SIZE = 10;
 
     @BeforeClass
     public static void setUpOnce() {

@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
@@ -16,7 +17,8 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_popular() {
-        List<Show> shows = getTrakt().shows().popular();
+        List<Show> shows = getTrakt().shows().popular(2, null);
+        assertThat(shows.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (Show show : shows) {
             assertShowNotNull(show);
         }
@@ -24,7 +26,8 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_trending() {
-        List<TrendingShow> shows = getTrakt().shows().trending();
+        List<TrendingShow> shows = getTrakt().shows().trending(1, null);
+        assertThat(shows.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingShow show : shows) {
             assertThat(show.watchers).isNotNull();
             assertShowNotNull(show.show);
@@ -81,7 +84,8 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_comments() {
-        getTrakt().shows().comments(TestData.SHOW_SLUG);
+        List<Comment> comments = getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null);
+        assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
     }
 
 }
