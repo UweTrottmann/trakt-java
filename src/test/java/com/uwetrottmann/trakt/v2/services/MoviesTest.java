@@ -27,7 +27,7 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_trending() {
-        List<TrendingMovie> movies = getTrakt().movies().trending(2, null);
+        List<TrendingMovie> movies = getTrakt().movies().trending(1, null);
         assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingMovie movie : movies) {
             assertThat(movie.watchers).isNotNull();
