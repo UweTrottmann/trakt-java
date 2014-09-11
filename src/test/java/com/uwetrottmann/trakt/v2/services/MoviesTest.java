@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieTranslation;
 import com.uwetrottmann.trakt.v2.entities.Translation;
@@ -17,7 +18,8 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_popular() {
-        List<Movie> movies = getTrakt().movies().popular();
+        List<Movie> movies = getTrakt().movies().popular(2, null);
+        assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (Movie movie : movies) {
             assertMovieNotNull(movie);
         }
@@ -25,7 +27,8 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_trending() {
-        List<TrendingMovie> movies = getTrakt().movies().trending();
+        List<TrendingMovie> movies = getTrakt().movies().trending(2, null);
+        assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingMovie movie : movies) {
             assertThat(movie.watchers).isNotNull();
             assertMovieNotNull(movie.movie);
@@ -80,7 +83,8 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_comments() {
-        getTrakt().movies().comments(TestData.MOVIE_SLUG);
+        List<Comment> comments = getTrakt().movies().comments(TestData.MOVIE_SLUG, 1, null);
+        assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
     }
 
 }
