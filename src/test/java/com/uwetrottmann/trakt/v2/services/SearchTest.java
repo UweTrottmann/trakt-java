@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.SearchResult;
 import com.uwetrottmann.trakt.v2.enums.IdType;
+import com.uwetrottmann.trakt.v2.enums.Type;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery() {
-        List<SearchResult> results = getTrakt().search().textQuery("House");
+        List<SearchResult> results = getTrakt().search().textQuery("House", Type.SHOW);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
