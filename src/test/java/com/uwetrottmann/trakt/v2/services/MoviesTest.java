@@ -5,6 +5,7 @@ import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieTranslation;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingMovie;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -85,6 +86,12 @@ public class MoviesTest extends BaseTestCase {
     public void test_comments() {
         List<Comment> comments = getTrakt().movies().comments(TestData.MOVIE_SLUG, 1, null);
         assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+    }
+
+    @Test
+    public void test_ratings() {
+        Ratings ratings = getTrakt().movies().ratings(TestData.MOVIE_SLUG);
+        assertRatings(ratings);
     }
 
 }

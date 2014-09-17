@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Episode;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.Season;
 import org.junit.Test;
 
@@ -31,4 +32,11 @@ public class SeasonsTest extends BaseTestCase {
     public void test_comments() {
         getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON);
     }
+
+    @Test
+    public void test_ratings() {
+        Ratings ratings = getTrakt().seasons().ratings(TestData.SHOW_SLUG, TestData.EPISODE_SEASON);
+        assertRatings(ratings);
+    }
+
 }
