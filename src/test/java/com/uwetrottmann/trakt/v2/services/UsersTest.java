@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,4 +28,15 @@ public class UsersTest extends BaseTestCase {
         assertThat(user.name).isEqualTo(TestData.USER_NAME);
         assertThat(user.vip).isEqualTo(true);
     }
+
+    @Test
+    public void test_activities() throws OAuthUnauthorizedException {
+        getTrakt().users().activities(TestData.USERNAME);
+    }
+
+    @Test
+    public void test_friendActivities() throws OAuthUnauthorizedException {
+        getTrakt().users().friendActivities(TestData.USERNAME);
+    }
+
 }

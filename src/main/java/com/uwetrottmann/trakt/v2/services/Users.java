@@ -1,8 +1,9 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
@@ -27,6 +28,32 @@ public interface Users {
      */
     @GET("/users/{username}")
     User profile(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get a list of recent activity for a user. Activities returned include: checkins, scrobbles, ratings,
+     * collections, new lists and comments.
+     *
+     * @param username Example: "sean".
+     */
+    @GET("/users/{username}/activities")
+    Response activities(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get a list of recent activity for your friends. Activities returned include: checkins, scrobbles, ratings,
+     * collections, new lists and comments.
+     *
+     * @param username Example: "sean".
+     */
+    @GET("/users/{username}/activities/friends")
+    Response friendActivities(
             @Path("username") String username
     ) throws OAuthUnauthorizedException;
 
