@@ -1,6 +1,5 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -17,6 +16,8 @@ import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
@@ -25,6 +26,16 @@ import retrofit.http.POST;
 import java.util.List;
 
 public interface Sync {
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> This method is a useful first step in the syncing process. We recommended caching these dates locally, then
+     * you can compare to know exactly what data has changed recently. This can greatly optimize your syncs so you don't
+     * pull down a ton of data only to see nothing has actually changed.
+     */
+    @GET("/sync/lastactivities")
+    Response lastActivities() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>

@@ -1,7 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
@@ -38,6 +37,7 @@ import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
@@ -47,6 +47,11 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SyncTest extends BaseTestCase {
+
+    @Test
+    public void test_lastActivities() {
+        getTrakt().sync().lastActivities();
+    }
 
     @Test
     public void test_getCollectionMovies() throws OAuthUnauthorizedException {
