@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Episode;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import org.junit.Test;
 
@@ -25,6 +26,15 @@ public class EpisodesTest extends BaseTestCase {
     @Test
     public void test_comments() {
         getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER);
+    }
+
+    @Test
+    public void test_ratings() {
+        Ratings ratings = getTrakt().episodes().ratings(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
+                TestData.EPISODE_NUMBER);
+        assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
+        assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
+        assertThat(ratings.distribution).hasSize(10);
     }
 
 }
