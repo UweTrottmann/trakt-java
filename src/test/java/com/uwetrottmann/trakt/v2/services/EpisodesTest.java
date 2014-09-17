@@ -32,9 +32,7 @@ public class EpisodesTest extends BaseTestCase {
     public void test_ratings() {
         Ratings ratings = getTrakt().episodes().ratings(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
                 TestData.EPISODE_NUMBER);
-        assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
-        assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
-        assertThat(ratings.distribution).hasSize(10);
+        assertRatings(ratings);
     }
 
 }

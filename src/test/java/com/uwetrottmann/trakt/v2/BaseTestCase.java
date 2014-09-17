@@ -1,6 +1,9 @@
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.entities.Ratings;
 import org.junit.BeforeClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BaseTestCase {
 
@@ -21,6 +24,12 @@ public class BaseTestCase {
 
     protected final TraktV2 getTrakt() {
         return trakt;
+    }
+
+    public void assertRatings(Ratings ratings) {
+        assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
+        assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
+        assertThat(ratings.distribution).hasSize(10);
     }
 
 }

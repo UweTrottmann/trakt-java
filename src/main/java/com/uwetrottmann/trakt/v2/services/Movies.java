@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieTranslation;
+import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.TrendingMovie;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import retrofit.http.EncodedQuery;
@@ -83,6 +84,16 @@ public interface Movies {
             @Path("id") String movieId,
             @Query("page") Integer page,
             @Query("limit") Integer limit
+    );
+
+    /**
+     * Returns rating (between 0 and 10) and distribution for a movie.
+     *
+     * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
+     */
+    @GET("/movies/{id}/ratings")
+    Ratings ratings(
+            @Path("id") String movieId
     );
 
 }
