@@ -1,7 +1,13 @@
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.entities.CastMember;
+import com.uwetrottmann.trakt.v2.entities.Credits;
+import com.uwetrottmann.trakt.v2.entities.CrewMember;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt.v2.enums.Type;
 import org.junit.BeforeClass;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,6 +37,59 @@ public class BaseTestCase {
         assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
         assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
         assertThat(ratings.distribution).hasSize(10);
+    }
+
+    public void assertCast(Credits credits, Type type) {
+        for (CastMember castMember : credits.cast) {
+            assertThat(castMember.character).isNotEmpty();
+            if (type == Type.SHOW) {
+                assertThat(castMember.movie).isNull();
+                assertThat(castMember.show).isNotNull();
+                assertThat(castMember.person).isNull();
+            } else if (type == Type.MOVIE) {
+                assertThat(castMember.movie).isNotNull();
+                assertThat(castMember.show).isNull();
+                assertThat(castMember.person).isNull();
+            } else if (type == Type.PERSON) {
+                assertThat(castMember.movie).isNull();
+                assertThat(castMember.show).isNull();
+                assertThat(castMember.person).isNotNull();
+            }
+        }
+    }
+
+    public void assertCrew(Credits credits, Type type) {
+        if (credits.crew != null) {
+            assertCrewMembers(credits.crew.production, type);
+            assertCrewMembers(credits.crew.writing, type);
+            assertCrewMembers(credits.crew.directing, type);
+            assertCrewMembers(credits.crew.costumeAndMakeUp, type);
+            assertCrewMembers(credits.crew.sound, type);
+            assertCrewMembers(credits.crew.art, type);
+            assertCrewMembers(credits.crew.camera, type);
+        }
+    }
+
+    public void assertCrewMembers(List<CrewMember> crew, Type type) {
+        if (crew == null) {
+            return;
+        }
+        for (CrewMember crewMember : crew) {
+            assertThat(crewMember.job).isNotNull(); // may be empty, so not checking for now
+            if (type == Type.SHOW) {
+                assertThat(crewMember.movie).isNull();
+                assertThat(crewMember.show).isNotNull();
+                assertThat(crewMember.person).isNull();
+            } else if (type == Type.MOVIE) {
+                assertThat(crewMember.movie).isNotNull();
+                assertThat(crewMember.show).isNull();
+                assertThat(crewMember.person).isNull();
+            } else if (type == Type.PERSON) {
+                assertThat(crewMember.movie).isNull();
+                assertThat(crewMember.show).isNull();
+                assertThat(crewMember.person).isNotNull();
+            }
+        }
     }
 
 }

@@ -3,11 +3,13 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Comment;
+import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.Type;
 import org.junit.Test;
 
 import java.util.List;
@@ -87,6 +89,13 @@ public class ShowsTest extends BaseTestCase {
     public void test_comments() {
         List<Comment> comments = getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null);
         assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+    }
+
+    @Test
+    public void test_people() {
+        Credits credits = getTrakt().shows().people(TestData.SHOW_SLUG);
+        assertCast(credits, Type.PERSON);
+        assertCrew(credits, Type.PERSON);
     }
 
     @Test
