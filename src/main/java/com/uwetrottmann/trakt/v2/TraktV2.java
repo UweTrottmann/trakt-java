@@ -23,6 +23,7 @@ import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Episodes;
 import com.uwetrottmann.trakt.v2.services.Genres;
 import com.uwetrottmann.trakt.v2.services.Movies;
+import com.uwetrottmann.trakt.v2.services.People;
 import com.uwetrottmann.trakt.v2.services.Recommendations;
 import com.uwetrottmann.trakt.v2.services.Search;
 import com.uwetrottmann.trakt.v2.services.Seasons;
@@ -281,6 +282,10 @@ public class TraktV2 {
 
     public Movies movies() {
         return getRestAdapter().create(Movies.class);
+    }
+
+    public People people() {
+        return getRestAdapter().create(People.class);
     }
 
     /**
