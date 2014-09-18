@@ -14,11 +14,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SearchTest extends BaseTestCase {
 
     @Test
-    public void test_textQuery() {
+    public void test_textQuery_show() {
         List<SearchResult> results = getTrakt().search().textQuery("House", Type.SHOW);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
+            assertThat(result.show).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_textQuery_movie() {
+        List<SearchResult> results = getTrakt().search().textQuery("Tron", Type.MOVIE);
+        assertThat(results).isNotEmpty();
+        for (SearchResult result : results) {
+            assertThat(result.score).isPositive();
+            assertThat(result.movie).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_textQuery_person() {
+        List<SearchResult> results = getTrakt().search().textQuery("Bryan Cranston", Type.PERSON);
+        assertThat(results).isNotEmpty();
+        for (SearchResult result : results) {
+            assertThat(result.score).isPositive();
+            assertThat(result.person).isNotNull();
         }
     }
 

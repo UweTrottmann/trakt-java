@@ -1,6 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.entities.Comment;
+import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.Translation;
@@ -84,6 +85,16 @@ public interface Shows {
             @Path("id") String showId,
             @Query("page") Integer page,
             @Query("limit") Integer limit
+    );
+
+    /**
+     * Returns all actors, directors, writers, and producers for a show.
+     *
+     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     */
+    @GET("/shows/{id}/people")
+    Credits people(
+            @Path("id") String showId
     );
 
     /**

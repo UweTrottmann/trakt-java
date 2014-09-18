@@ -1,11 +1,10 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-public class SearchResult {
+public class CastMember {
 
-    public Double score;
+    public String character;
     public Movie movie;
     public Show show;
-    public Episode episode;
     public Person person;
 
 }
