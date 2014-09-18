@@ -6,5 +6,6 @@ public class SearchResult {
     public Movie movie;
     public Show show;
     public Episode episode;
+    public Person person;
 
 }
