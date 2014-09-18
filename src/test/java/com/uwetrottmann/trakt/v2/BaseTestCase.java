@@ -27,6 +27,7 @@ public class BaseTestCase {
     }
 
     public void assertRatings(Ratings ratings) {
+        // rating can be null, but we use a show where we can be sure it's rated
         assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
         assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
         assertThat(ratings.distribution).hasSize(10);
