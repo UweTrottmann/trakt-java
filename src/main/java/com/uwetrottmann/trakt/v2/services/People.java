@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.Person;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import retrofit.http.GET;
@@ -16,7 +17,17 @@ public interface People {
     @GET("/people/{id}")
     Person summary(
             @Path("id") String personId,
-            @Query("extended")Extended extended
+            @Query("extended") Extended extended
+    );
+
+    @GET("/people/{id}/movies")
+    Credits movieCredits(
+            @Path("id") String personId
+    );
+
+    @GET("/people/{id}/shows")
+    Credits showCredits(
+            @Path("id") String personId
     );
 
 }
