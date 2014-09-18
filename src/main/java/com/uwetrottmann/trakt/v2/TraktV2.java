@@ -17,6 +17,7 @@
 
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.services.Calendars;
 import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Episodes;
@@ -240,6 +241,15 @@ public class TraktV2 {
         }
 
         return restAdapter;
+    }
+
+    /**
+     * By default, the calendar will return all shows or movies for the specified time period. If OAuth is sent, the
+     * items returned will be limited to what the user has watched, collected, or added to their watchlist. You'll most
+     * likely want to send OAuth to make the calendar more relevant to the user.
+     */
+    public Calendars calendars() {
+        return getRestAdapter().create(Calendars.class);
     }
 
     /**
