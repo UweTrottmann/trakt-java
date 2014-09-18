@@ -1,11 +1,15 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,4 +32,26 @@ public class UsersTest extends BaseTestCase {
         assertThat(user.name).isEqualTo(TestData.USER_NAME);
         assertThat(user.vip).isEqualTo(true);
     }
+
+    @Test
+    public void test_historyEpisodes() throws OAuthUnauthorizedException {
+        List<EpisodeHistoryEntry> history = getTrakt().users().historyEpisodes(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE);
+        for (EpisodeHistoryEntry entry : history) {
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.episode).isNotNull();
+            assertThat(entry.show).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_historyMovies() throws OAuthUnauthorizedException {
+        List<MovieHistoryEntry> history = getTrakt().users().historyMovies(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE);
+        for (MovieHistoryEntry entry : history) {
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.movie).isNotNull();
+        }
+    }
+
 }
