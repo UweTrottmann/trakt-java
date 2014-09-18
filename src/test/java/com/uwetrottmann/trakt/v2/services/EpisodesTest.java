@@ -28,7 +28,7 @@ public class EpisodesTest extends BaseTestCase {
 
     @Test
     public void test_translations() {
-        List<Translation> translations = getTrakt().episodes().translations("breaking-bad", 1, 1);
+        List<Translation> translations = getTrakt().episodes().translations(TestData.SHOW_SLUG, 1, 1);
         for (Translation translation : translations) {
             assertThat(translation.language).isNotEmpty();
         }
