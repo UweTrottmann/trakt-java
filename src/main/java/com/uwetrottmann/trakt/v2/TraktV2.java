@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt.v2.services.Calendars;
 import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Comments;
 import com.uwetrottmann.trakt.v2.services.Episodes;
+import com.uwetrottmann.trakt.v2.services.Genres;
 import com.uwetrottmann.trakt.v2.services.Movies;
 import com.uwetrottmann.trakt.v2.services.Recommendations;
 import com.uwetrottmann.trakt.v2.services.Search;
@@ -268,6 +269,14 @@ public class TraktV2 {
      */
     public Comments comments() {
         return getRestAdapter().create(Comments.class);
+    }
+
+    /**
+     * One or more genres are attached to all movies and shows. Some API methods allow filtering by genre, so it's good
+     * to cache this list in your app.
+     */
+    public Genres genres() {
+        return getRestAdapter().create(Genres.class);
     }
 
     public Movies movies() {
