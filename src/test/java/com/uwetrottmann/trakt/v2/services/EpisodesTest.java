@@ -4,8 +4,11 @@ import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +24,22 @@ public class EpisodesTest extends BaseTestCase {
         assertThat(episode.ids.imdb).isEqualTo(TestData.EPISODE_IMDB_ID);
         assertThat(episode.ids.tmdb).isEqualTo(TestData.EPISODE_TMDB_ID);
         assertThat(episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
+    }
+
+    @Test
+    public void test_translations() {
+        List<Translation> translations = getTrakt().episodes().translations(TestData.SHOW_SLUG, 1, 1);
+        for (Translation translation : translations) {
+            assertThat(translation.language).isNotEmpty();
+        }
+    }
+
+    @Test
+    public void test_translation() {
+        List<Translation> translations = getTrakt().episodes().translation("breaking-bad", 1, 1, "de");
+        // we know that Breaking Bad has a German translation, otherwise this test would fail
+        assertThat(translations).hasSize(1);
+        assertThat(translations.get(0).language).isEqualTo("de");
     }
 
     @Test
