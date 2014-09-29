@@ -38,7 +38,7 @@ public class UsersTest extends BaseTestCase {
         User user = getTrakt().users().profile(TestData.USERNAME);
         assertThat(user.username).isEqualTo(TestData.USERNAME);
         assertThat(user.isPrivate).isEqualTo(false);
-        assertThat(user.name).isEqualTo(TestData.USER_NAME);
+        assertThat(user.name).isEqualTo(TestData.USER_REAL_NAME);
         assertThat(user.vip).isEqualTo(true);
     }
 
