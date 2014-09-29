@@ -346,8 +346,7 @@ public class SyncTest extends BaseTestCase {
         season.number = TestData.EPISODE_SEASON;
 
         SyncRatedShow show = new SyncRatedShow();
-        show.ids = new ShowIds();
-        show.ids.slug = TestData.SHOW_SLUG;
+        show.ids = ShowIds.slug("community");
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
