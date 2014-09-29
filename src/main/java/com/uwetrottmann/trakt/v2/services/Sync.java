@@ -34,7 +34,7 @@ public interface Sync {
      * or on physical media.
      */
     @GET("/sync/collection/movies")
-    List<CollectedMovie> getCollectionMovies() throws OAuthUnauthorizedException;
+    List<CollectedMovie> collectionMovies() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -43,7 +43,7 @@ public interface Sync {
      * on physical media.
      */
     @GET("/sync/collection/shows")
-    List<CollectedShow> getCollectionShows() throws OAuthUnauthorizedException;
+    List<CollectedShow> collectionShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -75,7 +75,7 @@ public interface Sync {
      * <p> Returns all movies a user has watched.
      */
     @GET("/sync/watched/movies")
-    List<WatchedMovie> getWatchedMovies() throws OAuthUnauthorizedException;
+    List<WatchedMovie> watchedMovies() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -83,7 +83,7 @@ public interface Sync {
      * <p> Returns all shows a user has watched.
      */
     @GET("/sync/watched/shows")
-    List<WatchedShow> getWatchedShows() throws OAuthUnauthorizedException;
+    List<WatchedShow> watchedShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -121,7 +121,7 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/movies{rating}")
-    List<RatedMovie> getRatingsMovies(
+    List<RatedMovie> ratingsMovies(
             @EncodedPath("rating") RatingsFilter filter
     ) throws OAuthUnauthorizedException;
 
@@ -133,7 +133,7 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/shows{rating}")
-    List<RatedShow> getRatingsShows(
+    List<RatedShow> ratingsShows(
             @EncodedPath("rating") RatingsFilter filter
     ) throws OAuthUnauthorizedException;
 
@@ -145,7 +145,7 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/seasons{rating}")
-    List<RatedSeason> getRatingsSeasons(
+    List<RatedSeason> ratingsSeasons(
             @EncodedPath("rating") RatingsFilter filter
     ) throws OAuthUnauthorizedException;
 
@@ -157,7 +157,7 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/episodes{rating}")
-    List<RatedEpisode> getRatingsEpisodes(
+    List<RatedEpisode> ratingsEpisodes(
             @EncodedPath("rating") RatingsFilter filter
     ) throws OAuthUnauthorizedException;
 
@@ -193,7 +193,7 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/movies")
-    List<WatchlistedMovie> getWatchlistMovies() throws OAuthUnauthorizedException;
+    List<WatchlistedMovie> watchlistMovies() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -202,7 +202,7 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/shows")
-    List<WatchlistedShow> getWatchlistShows() throws OAuthUnauthorizedException;
+    List<WatchlistedShow> watchlistShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -211,7 +211,7 @@ public interface Sync {
      * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/episodes")
-    List<WatchlistedEpisode> getWatchlistEpisodes() throws OAuthUnauthorizedException;
+    List<WatchlistedEpisode> watchlistEpisodes() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>

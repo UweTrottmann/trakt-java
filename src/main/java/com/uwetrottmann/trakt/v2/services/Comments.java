@@ -78,7 +78,7 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      */
     @GET("/comments/{id}/replies")
-    List<Comment> getReplies(
+    List<Comment> replies(
             @Path("id") int id
     ) throws OAuthUnauthorizedException;
 
