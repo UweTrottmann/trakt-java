@@ -4,9 +4,15 @@ import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
+import com.uwetrottmann.trakt.v2.entities.RatedMovie;
+import com.uwetrottmann.trakt.v2.entities.RatedSeason;
+import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import retrofit.http.EncodedPath;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -42,6 +48,8 @@ public interface Users {
      *
      * <p> Get all collected movies in a user's collection. A collected item indicates availability to watch digitally
      * or on physical media.
+     *
+     * @param username Example: "sean".
      */
     @GET("/users/{username}/collection/movies")
     List<CollectedMovie> collectionMovies(
@@ -53,6 +61,8 @@ public interface Users {
      *
      * <p> Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or
      * on physical media.
+     *
+     * @param username Example: "sean".
      */
     @GET("/users/{username}/collection/shows")
     List<CollectedShow> collectionShows(
@@ -89,6 +99,62 @@ public interface Users {
             @Path("username") String username,
             @Query("page") Integer page,
             @Query("limit") Integer limit
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
+     *
+     * @param username Example: "sean".
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/users/{username}/ratings/movies{rating}")
+    List<RatedMovie> ratingsMovies(
+            @Path("username") String username,
+            @EncodedPath("rating") RatingsFilter filter
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
+     *
+     * @param username Example: "sean".
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/users/{username}/ratings/shows{rating}")
+    List<RatedShow> ratingsShows(
+            @Path("username") String username,
+            @EncodedPath("rating") RatingsFilter filter
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
+     *
+     * @param username Example: "sean".
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/users/{username}/ratings/seasons{rating}")
+    List<RatedSeason> ratingsSeasons(
+            @Path("username") String username,
+            @EncodedPath("rating") RatingsFilter filter
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
+     *
+     * @param username Example: "sean".
+     * @param filter Filter for a specific rating.
+     */
+    @GET("/users/{username}/ratings/episodes{rating}")
+    List<RatedEpisode> ratingsEpisodes(
+            @Path("username") String username,
+            @EncodedPath("rating") RatingsFilter filter
     ) throws OAuthUnauthorizedException;
 
 }

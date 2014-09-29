@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.entities.BaseRatedEntity;
 import com.uwetrottmann.trakt.v2.entities.CastMember;
 import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
@@ -50,6 +51,13 @@ public class BaseTestCase {
                     assertThat(episode.collected_at).isNotNull();
                 }
             }
+        }
+    }
+
+    protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedMovies) {
+        for (BaseRatedEntity movie : ratedMovies) {
+            assertThat(movie.rated_at).isNotNull();
+            assertThat(movie.rating).isNotNull();
         }
     }
 

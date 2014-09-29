@@ -6,8 +6,13 @@ import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
+import com.uwetrottmann.trakt.v2.entities.RatedMovie;
+import com.uwetrottmann.trakt.v2.entities.RatedSeason;
+import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.junit.Test;
 
@@ -66,6 +71,39 @@ public class UsersTest extends BaseTestCase {
             assertThat(entry.action).isNotEmpty();
             assertThat(entry.movie).isNotNull();
         }
+    }
+
+    @Test
+    public void test_ratingsMovies() throws OAuthUnauthorizedException {
+        List<RatedMovie> ratedMovies = getTrakt().users().ratingsMovies(TestData.USERNAME, RatingsFilter.ALL);
+        assertRatedEntities(ratedMovies);
+    }
+
+    @Test
+    public void test_ratingsMovies_filtered() throws OAuthUnauthorizedException {
+        List<RatedMovie> ratedMovies = getTrakt().users().ratingsMovies(TestData.USERNAME, RatingsFilter.TOTALLYNINJA);
+        for (RatedMovie movie : ratedMovies) {
+            assertThat(movie.rated_at).isNotNull();
+            assertThat(movie.rating).isEqualTo(10);
+        }
+    }
+
+    @Test
+    public void test_ratingsShows() throws OAuthUnauthorizedException {
+        List<RatedShow> ratedShows = getTrakt().users().ratingsShows(TestData.USERNAME, RatingsFilter.ALL);
+        assertRatedEntities(ratedShows);
+    }
+
+    @Test
+    public void test_ratingsSeasons() throws OAuthUnauthorizedException {
+        List<RatedSeason> ratedSeasons = getTrakt().users().ratingsSeasons(TestData.USERNAME, RatingsFilter.ALL);
+        assertRatedEntities(ratedSeasons);
+    }
+
+    @Test
+    public void test_ratingsEpisodes() throws OAuthUnauthorizedException {
+        List<RatedEpisode> ratedEpisodes = getTrakt().users().ratingsEpisodes(TestData.USERNAME, RatingsFilter.ALL);
+        assertRatedEntities(ratedEpisodes);
     }
 
 }

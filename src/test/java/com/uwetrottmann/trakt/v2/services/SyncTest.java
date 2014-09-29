@@ -244,10 +244,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getRatingsMovies() throws OAuthUnauthorizedException {
         List<RatedMovie> ratedMovies = getTrakt().sync().getRatingsMovies(RatingsFilter.ALL);
-        for (RatedMovie movie : ratedMovies) {
-            assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isNotNull();
-        }
+        assertRatedEntities(ratedMovies);
     }
 
     @Test
@@ -255,35 +252,26 @@ public class SyncTest extends BaseTestCase {
         List<RatedMovie> ratedMovies = getTrakt().sync().getRatingsMovies(RatingsFilter.TOTALLYNINJA);
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isEqualTo(10);
+            assertThat(movie.rating).isEqualTo(Rating.TOTALLYNINJA);
         }
     }
 
     @Test
     public void test_getRatingsShows() throws OAuthUnauthorizedException {
         List<RatedShow> ratedShows = getTrakt().sync().getRatingsShows(RatingsFilter.ALL);
-        for (RatedShow show : ratedShows) {
-            assertThat(show.rated_at).isNotNull();
-            assertThat(show.rating).isNotNull();
-        }
+        assertRatedEntities(ratedShows);
     }
 
     @Test
     public void test_getRatingsSeasons() throws OAuthUnauthorizedException {
         List<RatedSeason> ratedSeasons = getTrakt().sync().getRatingsSeasons(RatingsFilter.ALL);
-        for (RatedSeason season : ratedSeasons) {
-            assertThat(season.rated_at).isNotNull();
-            assertThat(season.rating).isNotNull();
-        }
+        assertRatedEntities(ratedSeasons);
     }
 
     @Test
     public void test_getRatingsEpisodes() throws OAuthUnauthorizedException {
         List<RatedEpisode> ratedEpisodes = getTrakt().sync().getRatingsEpisodes(RatingsFilter.ALL);
-        for (RatedEpisode episode : ratedEpisodes) {
-            assertThat(episode.rated_at).isNotNull();
-            assertThat(episode.rating).isNotNull();
-        }
+        assertRatedEntities(ratedEpisodes);
     }
 
     @Test
