@@ -1,7 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
@@ -13,6 +12,9 @@ import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
+import com.uwetrottmann.trakt.v2.entities.SyncCollectedItems;
+import com.uwetrottmann.trakt.v2.entities.SyncCollectedMovie;
+import com.uwetrottmann.trakt.v2.entities.SyncCollectedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
@@ -38,6 +40,7 @@ import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
@@ -71,90 +74,61 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToCollection_movie() throws OAuthUnauthorizedException {
-        addItemsToCollection(buildSyncItemsMovie());
-    }
+        SyncCollectedMovie movie = new SyncCollectedMovie();
+        movie.ids = buildMovieIds();
 
-    private SyncItems buildSyncItemsMovie() {
-        SyncItems items = new SyncItems();
-
-        SyncMovie movie = new SyncMovie();
-        movie.ids = new MovieIds();
-        movie.ids.tmdb = TestData.MOVIE_TMDB_ID;
-        items.movies = new LinkedList<>();
-        items.movies.add(movie);
-        return items;
+        SyncCollectedItems items = new SyncCollectedItems().movies(movie);
+        addItemsToCollection(items);
     }
 
     @Test
     public void test_addItemsToCollection_show() throws OAuthUnauthorizedException {
-        addItemsToCollection(buildSyncItemsShow());
-    }
+        SyncCollectedShow show = new SyncCollectedShow(buildShowIds());
 
-    private SyncItems buildSyncItemsShow() {
-        SyncItems items = new SyncItems();
-
-        // show
-        SyncShow show = new SyncShow();
-        show.ids = new ShowIds();
-        show.ids.slug = "the-walking-dead";
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-        return items;
+        SyncCollectedItems items = new SyncCollectedItems().shows(show);
+        addItemsToCollection(items);
     }
 
     @Test
     public void test_addItemsToCollection_season() throws OAuthUnauthorizedException {
-        addItemsToCollection(buildSyncItemsSeason());
-    }
-
-    private SyncItems buildSyncItemsSeason() {
-        SyncItems items = new SyncItems();
-
         // season
-        SyncSeason season = new SyncSeason();
-        season.number = 1;
+        CollectedSeason season = new CollectedSeason(1);
+
         // show
-        SyncShow show = new SyncShow();
-        show.ids = new ShowIds();
-        show.ids.slug = "community";
+        ShowIds ids = new ShowIds();
+        ids.slug = "community";
+        SyncCollectedShow show = new SyncCollectedShow(ids);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-        return items;
+
+        SyncCollectedItems items = new SyncCollectedItems().shows(show);
+        addItemsToCollection(items);
     }
 
     @Test
     public void test_addItemsToCollection_episode() throws OAuthUnauthorizedException {
-        addItemsToCollection(buildSyncItemsEpisodes());
-    }
+        // episodes
+        CollectedEpisode episode1 = new CollectedEpisode(1);
+        CollectedEpisode episode2 = new CollectedEpisode(2);
 
-    private SyncItems buildSyncItemsEpisodes() {
-        SyncItems items = new SyncItems();
-
-        // episode
-        SyncEpisode episode1 = new SyncEpisode();
-        episode1.number = 1;
-        SyncEpisode episode2 = new SyncEpisode();
-        episode2.number = 2;
         // season
-        SyncSeason season = new SyncSeason();
-        season.number = TestData.EPISODE_SEASON;
+        CollectedSeason season = new CollectedSeason(TestData.EPISODE_SEASON);
         season.episodes = new LinkedList<>();
         season.episodes.add(episode1);
         season.episodes.add(episode2);
+
         // show
-        SyncShow show = new SyncShow();
-        show.ids = new ShowIds();
-        show.ids.tvdb = TestData.SHOW_TVDB_ID;
+        ShowIds ids = new ShowIds();
+        ids.tvdb = TestData.SHOW_TVDB_ID;
+        SyncCollectedShow show = new SyncCollectedShow(ids);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-        return items;
+
+        SyncCollectedItems items = new SyncCollectedItems().shows(show);
+        addItemsToCollection(items);
     }
 
-    private void addItemsToCollection(SyncItems items) throws OAuthUnauthorizedException {
+    private void addItemsToCollection(SyncCollectedItems items) throws OAuthUnauthorizedException {
         SyncResponse response = getTrakt().sync().addItemsToCollection(items);
         assertSyncResponse(response);
     }
@@ -449,12 +423,20 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToWatchlist_movie() throws OAuthUnauthorizedException {
-        addItemsToWatchlist(buildSyncItemsMovie());
+        SyncMovie movie = new SyncMovie();
+        movie.ids = buildMovieIds();
+
+        SyncItems items = new SyncItems().movies(movie);
+        addItemsToWatchlist(items);
     }
 
     @Test
     public void test_addItemsToWatchlist_show() throws OAuthUnauthorizedException {
-        addItemsToWatchlist(buildSyncItemsShow());
+        SyncShow show = new SyncShow();
+        show.ids = buildShowIds();
+
+        SyncItems items = new SyncItems().shows(show);
+        addItemsToWatchlist(items);
     }
 
     @Test
@@ -462,9 +444,51 @@ public class SyncTest extends BaseTestCase {
         addItemsToWatchlist(buildSyncItemsSeason());
     }
 
+    private SyncItems buildSyncItemsSeason() {
+        SyncItems items = new SyncItems();
+
+        // season
+        SyncSeason season = new SyncSeason();
+        season.number = 1;
+        // show
+        SyncShow show = new SyncShow();
+        show.ids = new ShowIds();
+        show.ids.slug = "community";
+        show.seasons = new LinkedList<>();
+        show.seasons.add(season);
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+        return items;
+    }
+
     @Test
     public void test_addItemsToWatchlist_episodes() throws OAuthUnauthorizedException {
         addItemsToWatchlist(buildSyncItemsEpisodes());
+    }
+
+    private SyncItems buildSyncItemsEpisodes() {
+        SyncItems items = new SyncItems();
+
+        // episode
+        SyncEpisode episode1 = new SyncEpisode();
+        episode1.number = 1;
+        SyncEpisode episode2 = new SyncEpisode();
+        episode2.number = 2;
+        // season
+        SyncSeason season = new SyncSeason();
+        season.number = TestData.EPISODE_SEASON;
+        season.episodes = new LinkedList<>();
+        season.episodes.add(episode1);
+        season.episodes.add(episode2);
+        // show
+        SyncShow show = new SyncShow();
+        show.ids = new ShowIds();
+        show.ids.tvdb = TestData.SHOW_TVDB_ID;
+        show.seasons = new LinkedList<>();
+        show.seasons.add(season);
+        items.shows = new LinkedList<>();
+        items.shows.add(show);
+        return items;
     }
 
     private void addItemsToWatchlist(SyncItems items) throws OAuthUnauthorizedException {
@@ -476,6 +500,19 @@ public class SyncTest extends BaseTestCase {
     public void test_deleteItemsFromWatchlist() throws OAuthUnauthorizedException {
         SyncResponse response = getTrakt().sync().deleteItemsFromWatchlist(buildItemsForDeletion());
         assertSyncResponseDelete(response);
+    }
+
+
+    private MovieIds buildMovieIds() {
+        MovieIds ids = new MovieIds();
+        ids.tmdb = TestData.MOVIE_TMDB_ID;
+        return ids;
+    }
+
+    private ShowIds buildShowIds() {
+        ShowIds ids = new ShowIds();
+        ids.slug = "the-walking-dead";
+        return ids;
     }
 
 }

@@ -7,4 +7,8 @@ public class CollectedSeason {
     public Integer number;
     public List<CollectedEpisode> episodes;
 
+    public CollectedSeason(int number) {
+        this.number = number;
+    }
+
 }
