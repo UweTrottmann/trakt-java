@@ -1,5 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
+import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.Settings;
@@ -32,6 +34,28 @@ public interface Users {
      */
     @GET("/users/{username}")
     User profile(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get all collected movies in a user's collection. A collected item indicates availability to watch digitally
+     * or on physical media.
+     */
+    @GET("/users/{username}/collection/movies")
+    List<CollectedMovie> collectionMovies(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or
+     * on physical media.
+     */
+    @GET("/users/{username}/collection/shows")
+    List<CollectedShow> collectionShows(
             @Path("username") String username
     ) throws OAuthUnauthorizedException;
 

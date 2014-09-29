@@ -54,22 +54,13 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getCollectionMovies() throws OAuthUnauthorizedException {
         List<CollectedMovie> movies = getTrakt().sync().getCollectionMovies();
-        for (CollectedMovie movie : movies) {
-            assertThat(movie.collected_at).isNotNull();
-        }
+        assertCollectedMovies(movies);
     }
 
     @Test
     public void test_getCollectionShows() throws OAuthUnauthorizedException {
         List<CollectedShow> shows = getTrakt().sync().getCollectionShows();
-        for (CollectedShow show : shows) {
-            assertThat(show.collected_at).isNotNull();
-            for (CollectedSeason season : show.seasons) {
-                for (CollectedEpisode episode : season.episodes) {
-                    assertThat(episode.collected_at).isNotNull();
-                }
-            }
-        }
+        assertCollectedShows(shows);
     }
 
     @Test

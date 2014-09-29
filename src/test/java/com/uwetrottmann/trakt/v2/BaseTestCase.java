@@ -1,6 +1,10 @@
 package com.uwetrottmann.trakt.v2;
 
 import com.uwetrottmann.trakt.v2.entities.CastMember;
+import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
+import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
+import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
+import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.CrewMember;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
@@ -30,6 +34,23 @@ public class BaseTestCase {
 
     protected final TraktV2 getTrakt() {
         return trakt;
+    }
+
+    protected static void assertCollectedMovies(List<CollectedMovie> movies) {
+        for (CollectedMovie movie : movies) {
+            assertThat(movie.collected_at).isNotNull();
+        }
+    }
+
+    protected static void assertCollectedShows(List<CollectedShow> shows) {
+        for (CollectedShow show : shows) {
+            assertThat(show.collected_at).isNotNull();
+            for (CollectedSeason season : show.seasons) {
+                for (CollectedEpisode episode : season.episodes) {
+                    assertThat(episode.collected_at).isNotNull();
+                }
+            }
+        }
     }
 
     public void assertRatings(Ratings ratings) {
