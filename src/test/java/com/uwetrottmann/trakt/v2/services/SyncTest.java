@@ -31,9 +31,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedShow;
-import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
-import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
@@ -54,22 +52,13 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getCollectionMovies() throws OAuthUnauthorizedException {
         List<CollectedMovie> movies = getTrakt().sync().getCollectionMovies();
-        for (CollectedMovie movie : movies) {
-            assertThat(movie.collected_at).isNotNull();
-        }
+        assertCollectedMovies(movies);
     }
 
     @Test
     public void test_getCollectionShows() throws OAuthUnauthorizedException {
         List<CollectedShow> shows = getTrakt().sync().getCollectionShows();
-        for (CollectedShow show : shows) {
-            assertThat(show.collected_at).isNotNull();
-            for (CollectedSeason season : show.seasons) {
-                for (CollectedEpisode episode : season.episodes) {
-                    assertThat(episode.collected_at).isNotNull();
-                }
-            }
-        }
+        assertCollectedShows(shows);
     }
 
     @Test
@@ -184,22 +173,13 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getWatchedMovies() throws OAuthUnauthorizedException {
         List<WatchedMovie> watchedMovies = getTrakt().sync().getWatchedMovies();
-        for (WatchedMovie movie : watchedMovies) {
-            assertThat(movie.plays).isPositive();
-        }
+        assertWatchedMovies(watchedMovies);
     }
 
     @Test
     public void test_getWatchedShows() throws OAuthUnauthorizedException {
         List<WatchedShow> watchedShows = getTrakt().sync().getWatchedShows();
-        for (WatchedShow show : watchedShows) {
-            assertThat(show.plays).isPositive();
-            for (WatchedSeason season : show.seasons) {
-                for (WatchedEpisode episode : season.episodes) {
-                    assertThat(episode.plays).isPositive();
-                }
-            }
-        }
+        assertWatchedShows(watchedShows);
     }
 
     @Test
@@ -253,10 +233,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getRatingsMovies() throws OAuthUnauthorizedException {
         List<RatedMovie> ratedMovies = getTrakt().sync().getRatingsMovies(RatingsFilter.ALL);
-        for (RatedMovie movie : ratedMovies) {
-            assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isNotNull();
-        }
+        assertRatedEntities(ratedMovies);
     }
 
     @Test
@@ -264,35 +241,26 @@ public class SyncTest extends BaseTestCase {
         List<RatedMovie> ratedMovies = getTrakt().sync().getRatingsMovies(RatingsFilter.TOTALLYNINJA);
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isEqualTo(10);
+            assertThat(movie.rating).isEqualTo(Rating.TOTALLYNINJA);
         }
     }
 
     @Test
     public void test_getRatingsShows() throws OAuthUnauthorizedException {
         List<RatedShow> ratedShows = getTrakt().sync().getRatingsShows(RatingsFilter.ALL);
-        for (RatedShow show : ratedShows) {
-            assertThat(show.rated_at).isNotNull();
-            assertThat(show.rating).isNotNull();
-        }
+        assertRatedEntities(ratedShows);
     }
 
     @Test
     public void test_getRatingsSeasons() throws OAuthUnauthorizedException {
         List<RatedSeason> ratedSeasons = getTrakt().sync().getRatingsSeasons(RatingsFilter.ALL);
-        for (RatedSeason season : ratedSeasons) {
-            assertThat(season.rated_at).isNotNull();
-            assertThat(season.rating).isNotNull();
-        }
+        assertRatedEntities(ratedSeasons);
     }
 
     @Test
     public void test_getRatingsEpisodes() throws OAuthUnauthorizedException {
         List<RatedEpisode> ratedEpisodes = getTrakt().sync().getRatingsEpisodes(RatingsFilter.ALL);
-        for (RatedEpisode episode : ratedEpisodes) {
-            assertThat(episode.rated_at).isNotNull();
-            assertThat(episode.rating).isNotNull();
-        }
+        assertRatedEntities(ratedEpisodes);
     }
 
     @Test
