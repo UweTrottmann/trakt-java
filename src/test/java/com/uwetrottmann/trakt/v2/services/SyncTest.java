@@ -160,31 +160,25 @@ public class SyncTest extends BaseTestCase {
     }
 
     private SyncItems buildItemsForDeletion() {
-        SyncItems items = new SyncItems();
-
+        // movie
         SyncMovie movie = new SyncMovie();
-        movie.ids = new MovieIds();
-        movie.ids.tmdb = TestData.MOVIE_TMDB_ID;
-        items.movies = new LinkedList<>();
-        items.movies.add(movie);
+        movie.ids = buildMovieIds();
 
         // episode
         SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
-        // season
+
         SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;
         season.episodes = new LinkedList<>();
         season.episodes.add(episode2);
-        // show
+
         SyncShow show = new SyncShow();
-        show.ids = new ShowIds();
-        show.ids.tvdb = TestData.SHOW_TVDB_ID;
+        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-        return items;
+
+        return new SyncItems().movies(movie).shows(show);
     }
 
     @Test
@@ -210,15 +204,10 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToWatchedHistory() throws OAuthUnauthorizedException {
-        SyncWatchedItems items = new SyncWatchedItems();
-
+        // movie
         SyncWatchedMovie movie = new SyncWatchedMovie();
         movie.watched_at = new DateTime().minusHours(1);
-        movie.ids = new MovieIds();
-        movie.ids.tmdb = TestData.MOVIE_TMDB_ID;
-        items.movies = new LinkedList<>();
-        items.movies.add(movie);
-
+        movie.ids = buildMovieIds();
 
         // episode
         SyncWatchedEpisode episode = new SyncWatchedEpisode();
@@ -235,12 +224,11 @@ public class SyncTest extends BaseTestCase {
         season.episodes.add(episode2);
         // show
         SyncWatchedShow show = new SyncWatchedShow();
-        show.ids = new ShowIds();
-        show.ids.tvdb = TestData.SHOW_TVDB_ID;
+        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
+
+        SyncWatchedItems items = new SyncWatchedItems().movies(movie).shows(show);
 
         SyncResponse response = getTrakt().sync().addItemsToWatchedHistory(items);
         assertThat(response.added.movies).isNotNull();
@@ -309,38 +297,26 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addRatings_movie() throws OAuthUnauthorizedException {
-        SyncRatedItems items = new SyncRatedItems();
-
         SyncRatedMovie movie = new SyncRatedMovie();
         movie.rating = Rating.TOTALLYNINJA;
-        movie.ids = new MovieIds();
-        movie.ids.slug = TestData.MOVIE_SLUG;
+        movie.ids = MovieIds.slug(TestData.MOVIE_SLUG);
 
-        items.movies = new LinkedList<>();
-        items.movies.add(movie);
-
+        SyncRatedItems items = new SyncRatedItems().movies(movie);
         getTrakt().sync().addRatings(items);
     }
 
     @Test
     public void test_addRatings_show() throws OAuthUnauthorizedException {
-        SyncRatedItems items = new SyncRatedItems();
-
         SyncRatedShow show = new SyncRatedShow();
         show.rating = Rating.TOTALLYNINJA;
-        show.ids = new ShowIds();
-        show.ids.slug = TestData.SHOW_SLUG;
+        show.ids = ShowIds.slug(TestData.SHOW_SLUG);
 
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-
+        SyncRatedItems items = new SyncRatedItems().shows(show);
         getTrakt().sync().addRatings(items);
     }
 
     @Test
     public void test_addRatings_season() throws OAuthUnauthorizedException {
-        SyncRatedItems items = new SyncRatedItems();
-
         SyncRatedSeason season = new SyncRatedSeason();
         season.rating = Rating.TOTALLYNINJA;
         season.number = TestData.EPISODE_SEASON;
@@ -350,16 +326,12 @@ public class SyncTest extends BaseTestCase {
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-
+        SyncRatedItems items = new SyncRatedItems().shows(show);
         getTrakt().sync().addRatings(items);
     }
 
     @Test
     public void test_addRatings_episode() throws OAuthUnauthorizedException {
-        SyncRatedItems items = new SyncRatedItems();
-
         SyncRatedEpisode episode1 = new SyncRatedEpisode();
         episode1.rating = Rating.TOTALLYNINJA;
         episode1.number = TestData.EPISODE_NUMBER;
@@ -374,14 +346,11 @@ public class SyncTest extends BaseTestCase {
         season.episodes.add(episode2);
 
         SyncRatedShow show = new SyncRatedShow();
-        show.ids = new ShowIds();
-        show.ids.slug = TestData.SHOW_SLUG;
+        show.ids = ShowIds.slug(TestData.SHOW_SLUG);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-
+        SyncRatedItems items = new SyncRatedItems().shows(show);
         getTrakt().sync().addRatings(items);
     }
 
@@ -409,16 +378,16 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_getWatchlistShows() throws OAuthUnauthorizedException {
-        List<WatchlistedShow> movies = getTrakt().sync().getWatchlistShows();
-        for (WatchlistedShow show : movies) {
+        List<WatchlistedShow> shows = getTrakt().sync().getWatchlistShows();
+        for (WatchlistedShow show : shows) {
             assertThat(show.listed_at).isNotNull();
         }
     }
 
     @Test
     public void test_getWatchlistEpisodes() throws OAuthUnauthorizedException {
-        List<WatchlistedEpisode> movies = getTrakt().sync().getWatchlistEpisodes();
-        for (WatchlistedEpisode episode : movies) {
+        List<WatchlistedEpisode> episodes = getTrakt().sync().getWatchlistEpisodes();
+        for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.listed_at).isNotNull();
         }
     }
@@ -443,34 +412,22 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToWatchlist_season() throws OAuthUnauthorizedException {
-        addItemsToWatchlist(buildSyncItemsSeason());
-    }
-
-    private SyncItems buildSyncItemsSeason() {
-        SyncItems items = new SyncItems();
-
         // season
         SyncSeason season = new SyncSeason();
         season.number = 1;
+
         // show
         SyncShow show = new SyncShow();
-        show.ids = new ShowIds();
-        show.ids.slug = "community";
+        show.ids = ShowIds.slug("community");
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-        return items;
+
+        SyncItems items = new SyncItems().shows(show);
+        addItemsToWatchlist(items);
     }
 
     @Test
     public void test_addItemsToWatchlist_episodes() throws OAuthUnauthorizedException {
-        addItemsToWatchlist(buildSyncItemsEpisodes());
-    }
-
-    private SyncItems buildSyncItemsEpisodes() {
-        SyncItems items = new SyncItems();
-
         // episode
         SyncEpisode episode1 = new SyncEpisode();
         episode1.number = 1;
@@ -484,13 +441,12 @@ public class SyncTest extends BaseTestCase {
         season.episodes.add(episode2);
         // show
         SyncShow show = new SyncShow();
-        show.ids = new ShowIds();
-        show.ids.tvdb = TestData.SHOW_TVDB_ID;
+        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
-        items.shows = new LinkedList<>();
-        items.shows.add(show);
-        return items;
+
+        SyncItems items = new SyncItems().shows(show);
+        addItemsToWatchlist(items);
     }
 
     private void addItemsToWatchlist(SyncItems items) throws OAuthUnauthorizedException {
@@ -506,15 +462,11 @@ public class SyncTest extends BaseTestCase {
 
 
     private MovieIds buildMovieIds() {
-        MovieIds ids = new MovieIds();
-        ids.tmdb = TestData.MOVIE_TMDB_ID;
-        return ids;
+        return MovieIds.tmdb(TestData.MOVIE_TMDB_ID);
     }
 
     private ShowIds buildShowIds() {
-        ShowIds ids = new ShowIds();
-        ids.slug = "the-walking-dead";
-        return ids;
+        return ShowIds.slug("the-walking-dead");
     }
 
 }
