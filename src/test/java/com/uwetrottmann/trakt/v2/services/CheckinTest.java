@@ -48,8 +48,7 @@ public class CheckinTest extends BaseTestCase {
     private static EpisodeCheckin buildEpisodeCheckin() {
         EpisodeCheckin checkin = new EpisodeCheckin();
         checkin.episode = new Episode();
-        checkin.episode.ids = new EpisodeIds();
-        checkin.episode.ids.trakt = 16;
+        checkin.episode.ids = EpisodeIds.trakt(16);
         checkin.message = "This is a toasty episode!";
         checkin.sharing = new ShareSettings();
         checkin.sharing.facebook = true;

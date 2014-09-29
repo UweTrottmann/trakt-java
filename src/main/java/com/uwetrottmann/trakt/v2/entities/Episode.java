@@ -11,4 +11,5 @@ public class Episode extends BaseEntity {
     // extended info
     public String overview;
     public DateTime first_aired;
+
 }

@@ -4,8 +4,4 @@ public class CollectedEpisode extends BaseCollectedEntity {
 
     public Integer number;
 
-    public CollectedEpisode(int number) {
-        this.number = number;
-    }
-
 }

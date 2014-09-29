@@ -83,7 +83,8 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToCollection_show() throws OAuthUnauthorizedException {
-        SyncCollectedShow show = new SyncCollectedShow(buildShowIds());
+        SyncCollectedShow show = new SyncCollectedShow();
+        show.ids = buildShowIds();
 
         SyncCollectedItems items = new SyncCollectedItems().shows(show);
         addItemsToCollection(items);
@@ -92,12 +93,12 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_addItemsToCollection_season() throws OAuthUnauthorizedException {
         // season
-        CollectedSeason season = new CollectedSeason(1);
+        CollectedSeason season = new CollectedSeason();
+        season.number = 1;
 
         // show
-        ShowIds ids = new ShowIds();
-        ids.slug = "community";
-        SyncCollectedShow show = new SyncCollectedShow(ids);
+        SyncCollectedShow show = new SyncCollectedShow();
+        show.ids = ShowIds.slug("community");
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
@@ -108,19 +109,21 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_addItemsToCollection_episode() throws OAuthUnauthorizedException {
         // episodes
-        CollectedEpisode episode1 = new CollectedEpisode(1);
-        CollectedEpisode episode2 = new CollectedEpisode(2);
+        CollectedEpisode episode1 = new CollectedEpisode();
+        episode1.number = 1;
+        CollectedEpisode episode2 = new CollectedEpisode();
+        episode2.number = 2;
 
         // season
-        CollectedSeason season = new CollectedSeason(TestData.EPISODE_SEASON);
+        CollectedSeason season = new CollectedSeason();
+        season.number = TestData.EPISODE_SEASON;
         season.episodes = new LinkedList<>();
         season.episodes.add(episode1);
         season.episodes.add(episode2);
 
         // show
-        ShowIds ids = new ShowIds();
-        ids.tvdb = TestData.SHOW_TVDB_ID;
-        SyncCollectedShow show = new SyncCollectedShow(ids);
+        SyncCollectedShow show = new SyncCollectedShow();
+        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 

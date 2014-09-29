@@ -7,8 +7,4 @@ public class SyncCollectedShow extends BaseCollectedEntity {
     public ShowIds ids;
     public List<CollectedSeason> seasons;
 
-    public SyncCollectedShow(ShowIds ids) {
-        this.ids = ids;
-    }
-
 }

@@ -46,8 +46,7 @@ public class CommentsTest extends BaseTestCase {
 
     private Episode buildTestEpisode() {
         Episode episode = new Episode();
-        episode.ids = new EpisodeIds();
-        episode.ids.tvdb = TestData.EPISODE_TVDB_ID;
+        episode.ids = EpisodeIds.tvdb(TestData.EPISODE_TVDB_ID);
         return episode;
     }
 
