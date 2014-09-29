@@ -10,6 +10,8 @@ import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
+import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.http.EncodedPath;
@@ -155,6 +157,30 @@ public interface Users {
     List<RatedEpisode> ratingsEpisodes(
             @Path("username") String username,
             @EncodedPath("rating") RatingsFilter filter
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Returns all movies or shows a user has watched sorted by most plays.
+     *
+     * @param username Example: "sean".
+     */
+    @GET("/users/{username}/watched/movies")
+    List<WatchedMovie> watchedMovies(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Returns all movies or shows a user has watched sorted by most plays.
+     *
+     * @param username Example: "sean".
+     */
+    @GET("/users/{username}/watched/shows")
+    List<WatchedShow> watchedShows(
+            @Path("username") String username
     ) throws OAuthUnauthorizedException;
 
 }

@@ -9,6 +9,10 @@ import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.CrewMember;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
+import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
+import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.enums.Type;
 import org.junit.BeforeClass;
 
@@ -66,6 +70,23 @@ public class BaseTestCase {
         assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
         assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
         assertThat(ratings.distribution).hasSize(10);
+    }
+
+    protected static void assertWatchedMovies(List<WatchedMovie> watchedMovies) {
+        for (WatchedMovie movie : watchedMovies) {
+            assertThat(movie.plays).isPositive();
+        }
+    }
+
+    protected static void assertWatchedShows(List<WatchedShow> watchedShows) {
+        for (WatchedShow show : watchedShows) {
+            assertThat(show.plays).isPositive();
+            for (WatchedSeason season : show.seasons) {
+                for (WatchedEpisode episode : season.episodes) {
+                    assertThat(episode.plays).isPositive();
+                }
+            }
+        }
     }
 
     public void assertCast(Credits credits, Type type) {

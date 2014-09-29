@@ -31,9 +31,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedShow;
-import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
-import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
@@ -175,22 +173,13 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getWatchedMovies() throws OAuthUnauthorizedException {
         List<WatchedMovie> watchedMovies = getTrakt().sync().getWatchedMovies();
-        for (WatchedMovie movie : watchedMovies) {
-            assertThat(movie.plays).isPositive();
-        }
+        assertWatchedMovies(watchedMovies);
     }
 
     @Test
     public void test_getWatchedShows() throws OAuthUnauthorizedException {
         List<WatchedShow> watchedShows = getTrakt().sync().getWatchedShows();
-        for (WatchedShow show : watchedShows) {
-            assertThat(show.plays).isPositive();
-            for (WatchedSeason season : show.seasons) {
-                for (WatchedEpisode episode : season.episodes) {
-                    assertThat(episode.plays).isPositive();
-                }
-            }
-        }
+        assertWatchedShows(watchedShows);
     }
 
     @Test
