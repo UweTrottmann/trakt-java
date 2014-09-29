@@ -78,8 +78,7 @@ public class CheckinTest extends BaseTestCase {
     private MovieCheckin buildMovieCheckin() {
         MovieCheckin checkin = new MovieCheckin();
         checkin.movie = new Movie();
-        checkin.movie.ids = new MovieIds();
-        checkin.movie.ids.trakt = TestData.MOVIE_TRAKT_ID;
+        checkin.movie.ids = MovieIds.trakt(TestData.MOVIE_TRAKT_ID);
         checkin.message = "This is a toasty movie!";
         checkin.sharing = new ShareSettings();
         checkin.sharing.facebook = true;
