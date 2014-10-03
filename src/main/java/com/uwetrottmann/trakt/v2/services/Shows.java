@@ -25,7 +25,8 @@ public interface Shows {
     @GET("/shows/popular")
     List<Show> popular(
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**
@@ -37,7 +38,8 @@ public interface Shows {
     @GET("/shows/trending")
     List<TrendingShow> trending(
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**
