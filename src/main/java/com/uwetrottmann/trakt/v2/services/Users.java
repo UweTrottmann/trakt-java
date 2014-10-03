@@ -12,9 +12,11 @@ import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.http.EncodedPath;
+import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -168,7 +170,8 @@ public interface Users {
      */
     @GET("/users/{username}/watched/movies")
     List<WatchedMovie> watchedMovies(
-            @Path("username") String username
+            @Path("username") String username,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -180,7 +183,8 @@ public interface Users {
      */
     @GET("/users/{username}/watched/shows")
     List<WatchedShow> watchedShows(
-            @Path("username") String username
+            @Path("username") String username,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
 }

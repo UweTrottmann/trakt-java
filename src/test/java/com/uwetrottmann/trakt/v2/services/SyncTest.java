@@ -36,6 +36,7 @@ import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
@@ -172,13 +173,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchedMovies() throws OAuthUnauthorizedException {
-        List<WatchedMovie> watchedMovies = getTrakt().sync().watchedMovies();
+        List<WatchedMovie> watchedMovies = getTrakt().sync().watchedMovies(Extended.FULLIMAGES);
         assertWatchedMovies(watchedMovies);
     }
 
     @Test
     public void test_watchedShows() throws OAuthUnauthorizedException {
-        List<WatchedShow> watchedShows = getTrakt().sync().watchedShows();
+        List<WatchedShow> watchedShows = getTrakt().sync().watchedShows(Extended.FULLIMAGES);
         assertWatchedShows(watchedShows);
     }
 
@@ -338,7 +339,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistMovies() throws OAuthUnauthorizedException {
-        List<WatchlistedMovie> movies = getTrakt().sync().watchlistMovies();
+        List<WatchlistedMovie> movies = getTrakt().sync().watchlistMovies(Extended.FULLIMAGES);
         for (WatchlistedMovie movie : movies) {
             assertThat(movie.listed_at).isNotNull();
         }
@@ -346,7 +347,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistShows() throws OAuthUnauthorizedException {
-        List<WatchlistedShow> shows = getTrakt().sync().watchlistShows();
+        List<WatchlistedShow> shows = getTrakt().sync().watchlistShows(Extended.FULLIMAGES);
         for (WatchlistedShow show : shows) {
             assertThat(show.listed_at).isNotNull();
         }
@@ -354,7 +355,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistEpisodes() throws OAuthUnauthorizedException {
-        List<WatchlistedEpisode> episodes = getTrakt().sync().watchlistEpisodes();
+        List<WatchlistedEpisode> episodes = getTrakt().sync().watchlistEpisodes(Extended.FULLIMAGES);
         for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.listed_at).isNotNull();
         }

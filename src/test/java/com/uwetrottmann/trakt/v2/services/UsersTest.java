@@ -14,6 +14,7 @@ import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchedShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.junit.Test;
@@ -111,13 +112,13 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_watchedMovies() throws OAuthUnauthorizedException {
-        List<WatchedMovie> watchedMovies = getTrakt().users().watchedMovies(TestData.USERNAME);
+        List<WatchedMovie> watchedMovies = getTrakt().users().watchedMovies(TestData.USERNAME, Extended.DEFAULT_MIN);
         assertWatchedMovies(watchedMovies);
     }
 
     @Test
     public void test_watchedShows() throws OAuthUnauthorizedException {
-        List<WatchedShow> watchedShows = getTrakt().users().watchedShows(TestData.USERNAME);
+        List<WatchedShow> watchedShows = getTrakt().users().watchedShows(TestData.USERNAME, Extended.DEFAULT_MIN);
         assertWatchedShows(watchedShows);
     }
 

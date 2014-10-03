@@ -1,13 +1,12 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.entities.SyncCollectedItems;
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
+import com.uwetrottmann.trakt.v2.entities.SyncCollectedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
@@ -17,9 +16,12 @@ import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
+import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.http.Body;
 import retrofit.http.EncodedPath;
+import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.POST;
 
@@ -75,7 +77,9 @@ public interface Sync {
      * <p> Returns all movies a user has watched.
      */
     @GET("/sync/watched/movies")
-    List<WatchedMovie> watchedMovies() throws OAuthUnauthorizedException;
+    List<WatchedMovie> watchedMovies(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -83,7 +87,9 @@ public interface Sync {
      * <p> Returns all shows a user has watched.
      */
     @GET("/sync/watched/shows")
-    List<WatchedShow> watchedShows() throws OAuthUnauthorizedException;
+    List<WatchedShow> watchedShows(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -193,7 +199,9 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/movies")
-    List<WatchlistedMovie> watchlistMovies() throws OAuthUnauthorizedException;
+    List<WatchlistedMovie> watchlistMovies(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -202,7 +210,9 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/shows")
-    List<WatchlistedShow> watchlistShows() throws OAuthUnauthorizedException;
+    List<WatchlistedShow> watchlistShows(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -211,7 +221,9 @@ public interface Sync {
      * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/episodes")
-    List<WatchlistedEpisode> watchlistEpisodes() throws OAuthUnauthorizedException;
+    List<WatchlistedEpisode> watchlistEpisodes(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
