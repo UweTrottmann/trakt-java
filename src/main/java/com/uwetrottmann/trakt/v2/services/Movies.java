@@ -25,7 +25,8 @@ public interface Movies {
     @GET("/movies/popular")
     List<Movie> popular(
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**
@@ -37,7 +38,8 @@ public interface Movies {
     @GET("/movies/trending")
     List<TrendingMovie> trending(
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**
