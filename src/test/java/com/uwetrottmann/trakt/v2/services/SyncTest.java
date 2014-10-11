@@ -6,6 +6,7 @@ import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
 import com.uwetrottmann.trakt.v2.entities.CollectedShow;
+import com.uwetrottmann.trakt.v2.entities.LastActivities;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -49,6 +50,15 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SyncTest extends BaseTestCase {
+
+    @Test
+    public void test_lastActivites() throws OAuthUnauthorizedException {
+        LastActivities lastActivities = getTrakt().sync().lastActivities();
+        assertThat(lastActivities.movies).isNotNull();
+        assertThat(lastActivities.episodes).isNotNull();
+        assertThat(lastActivities.shows).isNotNull();
+        assertThat(lastActivities.seasons).isNotNull();
+    }
 
     @Test
     public void test_collectionMovies() throws OAuthUnauthorizedException {
