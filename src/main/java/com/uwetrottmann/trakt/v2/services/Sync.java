@@ -46,7 +46,9 @@ public interface Sync {
      * or on physical media.
      */
     @GET("/sync/collection/movies")
-    List<CollectedMovie> collectionMovies() throws OAuthUnauthorizedException;
+    List<CollectedMovie> collectionMovies(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -55,7 +57,9 @@ public interface Sync {
      * on physical media.
      */
     @GET("/sync/collection/shows")
-    List<BaseShow> collectionShows() throws OAuthUnauthorizedException;
+    List<BaseShow> collectionShows(
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -138,7 +142,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/movies{rating}")
     List<RatedMovie> ratingsMovies(
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -150,7 +155,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/shows{rating}")
     List<RatedShow> ratingsShows(
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -162,7 +168,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/seasons{rating}")
     List<RatedSeason> ratingsSeasons(
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -174,7 +181,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/episodes{rating}")
     List<RatedEpisode> ratingsEpisodes(
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**

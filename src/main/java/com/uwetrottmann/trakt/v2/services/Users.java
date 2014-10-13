@@ -56,7 +56,8 @@ public interface Users {
      */
     @GET("/users/{username}/collection/movies")
     List<CollectedMovie> collectionMovies(
-            @Path("username") String username
+            @Path("username") String username,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -69,7 +70,8 @@ public interface Users {
      */
     @GET("/users/{username}/collection/shows")
     List<BaseShow> collectionShows(
-            @Path("username") String username
+            @Path("username") String username,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -115,7 +117,8 @@ public interface Users {
     @GET("/users/{username}/ratings/movies{rating}")
     List<RatedMovie> ratingsMovies(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -129,7 +132,8 @@ public interface Users {
     @GET("/users/{username}/ratings/shows{rating}")
     List<RatedShow> ratingsShows(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -143,7 +147,8 @@ public interface Users {
     @GET("/users/{username}/ratings/seasons{rating}")
     List<RatedSeason> ratingsSeasons(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -157,7 +162,8 @@ public interface Users {
     @GET("/users/{username}/ratings/episodes{rating}")
     List<RatedEpisode> ratingsEpisodes(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter
+            @EncodedPath("rating") RatingsFilter filter,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**

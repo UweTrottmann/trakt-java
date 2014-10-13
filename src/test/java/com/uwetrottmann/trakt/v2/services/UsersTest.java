@@ -44,13 +44,13 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws OAuthUnauthorizedException {
-        List<CollectedMovie> movies = getTrakt().users().collectionMovies(TestData.USERNAME);
+        List<CollectedMovie> movies = getTrakt().users().collectionMovies(TestData.USERNAME, Extended.DEFAULT_MIN);
         assertCollectedMovies(movies);
     }
 
     @Test
     public void test_collectionShows() throws OAuthUnauthorizedException {
-        List<BaseShow> shows = getTrakt().users().collectionShows(TestData.USERNAME);
+        List<BaseShow> shows = getTrakt().users().collectionShows(TestData.USERNAME, Extended.DEFAULT_MIN);
         assertSyncShows(shows, "collection");
     }
 
@@ -77,13 +77,15 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_ratingsMovies() throws OAuthUnauthorizedException {
-        List<RatedMovie> ratedMovies = getTrakt().users().ratingsMovies(TestData.USERNAME, RatingsFilter.ALL);
+        List<RatedMovie> ratedMovies = getTrakt().users().ratingsMovies(TestData.USERNAME, RatingsFilter.ALL,
+                Extended.DEFAULT_MIN);
         assertRatedEntities(ratedMovies);
     }
 
     @Test
     public void test_ratingsMovies_filtered() throws OAuthUnauthorizedException {
-        List<RatedMovie> ratedMovies = getTrakt().users().ratingsMovies(TestData.USERNAME, RatingsFilter.TOTALLYNINJA);
+        List<RatedMovie> ratedMovies = getTrakt().users().ratingsMovies(TestData.USERNAME, RatingsFilter.TOTALLYNINJA,
+                Extended.DEFAULT_MIN);
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
             assertThat(movie.rating).isEqualTo(10);
@@ -92,19 +94,22 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_ratingsShows() throws OAuthUnauthorizedException {
-        List<RatedShow> ratedShows = getTrakt().users().ratingsShows(TestData.USERNAME, RatingsFilter.ALL);
+        List<RatedShow> ratedShows = getTrakt().users().ratingsShows(TestData.USERNAME, RatingsFilter.ALL,
+                Extended.DEFAULT_MIN);
         assertRatedEntities(ratedShows);
     }
 
     @Test
     public void test_ratingsSeasons() throws OAuthUnauthorizedException {
-        List<RatedSeason> ratedSeasons = getTrakt().users().ratingsSeasons(TestData.USERNAME, RatingsFilter.ALL);
+        List<RatedSeason> ratedSeasons = getTrakt().users().ratingsSeasons(TestData.USERNAME, RatingsFilter.ALL,
+                Extended.DEFAULT_MIN);
         assertRatedEntities(ratedSeasons);
     }
 
     @Test
     public void test_ratingsEpisodes() throws OAuthUnauthorizedException {
-        List<RatedEpisode> ratedEpisodes = getTrakt().users().ratingsEpisodes(TestData.USERNAME, RatingsFilter.ALL);
+        List<RatedEpisode> ratedEpisodes = getTrakt().users().ratingsEpisodes(TestData.USERNAME, RatingsFilter.ALL,
+                Extended.DEFAULT_MIN);
         assertRatedEntities(ratedEpisodes);
     }
 

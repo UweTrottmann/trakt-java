@@ -61,13 +61,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws OAuthUnauthorizedException {
-        List<CollectedMovie> movies = getTrakt().sync().collectionMovies();
+        List<CollectedMovie> movies = getTrakt().sync().collectionMovies(Extended.DEFAULT_MIN);
         assertCollectedMovies(movies);
     }
 
     @Test
     public void test_collectionShows() throws OAuthUnauthorizedException {
-        List<BaseShow> shows = getTrakt().sync().collectionShows();
+        List<BaseShow> shows = getTrakt().sync().collectionShows(Extended.DEFAULT_MIN);
         assertSyncShows(shows, "collection");
     }
 
@@ -182,13 +182,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchedMovies() throws OAuthUnauthorizedException {
-        List<WatchedMovie> watchedMovies = getTrakt().sync().watchedMovies(Extended.FULLIMAGES);
+        List<WatchedMovie> watchedMovies = getTrakt().sync().watchedMovies(Extended.DEFAULT_MIN);
         assertWatchedMovies(watchedMovies);
     }
 
     @Test
     public void test_watchedShows() throws OAuthUnauthorizedException {
-        List<BaseShow> watchedShows = getTrakt().sync().watchedShows(Extended.FULLIMAGES);
+        List<BaseShow> watchedShows = getTrakt().sync().watchedShows(Extended.DEFAULT_MIN);
         assertSyncShows(watchedShows, "watched");
     }
 
@@ -242,13 +242,14 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsMovies() throws OAuthUnauthorizedException {
-        List<RatedMovie> ratedMovies = getTrakt().sync().ratingsMovies(RatingsFilter.ALL);
+        List<RatedMovie> ratedMovies = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, Extended.DEFAULT_MIN);
         assertRatedEntities(ratedMovies);
     }
 
     @Test
     public void test_ratingsMovies_filtered() throws OAuthUnauthorizedException {
-        List<RatedMovie> ratedMovies = getTrakt().sync().ratingsMovies(RatingsFilter.TOTALLYNINJA);
+        List<RatedMovie> ratedMovies = getTrakt().sync().ratingsMovies(RatingsFilter.TOTALLYNINJA,
+                Extended.DEFAULT_MIN);
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
             assertThat(movie.rating).isEqualTo(Rating.TOTALLYNINJA);
@@ -257,19 +258,19 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsShows() throws OAuthUnauthorizedException {
-        List<RatedShow> ratedShows = getTrakt().sync().ratingsShows(RatingsFilter.ALL);
+        List<RatedShow> ratedShows = getTrakt().sync().ratingsShows(RatingsFilter.ALL, Extended.DEFAULT_MIN);
         assertRatedEntities(ratedShows);
     }
 
     @Test
     public void test_ratingsSeasons() throws OAuthUnauthorizedException {
-        List<RatedSeason> ratedSeasons = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL);
+        List<RatedSeason> ratedSeasons = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, Extended.DEFAULT_MIN);
         assertRatedEntities(ratedSeasons);
     }
 
     @Test
     public void test_ratingsEpisodes() throws OAuthUnauthorizedException {
-        List<RatedEpisode> ratedEpisodes = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL);
+        List<RatedEpisode> ratedEpisodes = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, Extended.DEFAULT_MIN);
         assertRatedEntities(ratedEpisodes);
     }
 
