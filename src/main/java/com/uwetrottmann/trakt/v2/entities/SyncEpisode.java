@@ -9,4 +9,19 @@ public class SyncEpisode {
     public DateTime collected_at;
     public DateTime watched_at;
 
+    public SyncEpisode number(int number) {
+        this.number = number;
+        return this;
+    }
+
+    public SyncEpisode collectedAt(DateTime collectedAt) {
+        this.collected_at = collectedAt;
+        return this;
+    }
+
+    public SyncEpisode watchedAt(DateTime watchedAt) {
+        this.watched_at = watchedAt;
+        return this;
+    }
+
 }
