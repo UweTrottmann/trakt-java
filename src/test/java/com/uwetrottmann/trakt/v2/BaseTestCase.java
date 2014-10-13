@@ -1,18 +1,15 @@
 package com.uwetrottmann.trakt.v2;
 
+import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
 import com.uwetrottmann.trakt.v2.entities.BaseRatedEntity;
+import com.uwetrottmann.trakt.v2.entities.BaseSeason;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.CastMember;
-import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
-import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
-import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.CrewMember;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.entities.WatchedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
-import com.uwetrottmann.trakt.v2.entities.WatchedSeason;
-import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.enums.Type;
 import org.junit.BeforeClass;
 
@@ -47,17 +44,6 @@ public class BaseTestCase {
         }
     }
 
-    protected static void assertCollectedShows(List<CollectedShow> shows) {
-        for (CollectedShow show : shows) {
-            assertThat(show.collected_at).isNotNull();
-            for (CollectedSeason season : show.seasons) {
-                for (CollectedEpisode episode : season.episodes) {
-                    assertThat(episode.collected_at).isNotNull();
-                }
-            }
-        }
-    }
-
     protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedMovies) {
         for (BaseRatedEntity movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
@@ -78,12 +64,25 @@ public class BaseTestCase {
         }
     }
 
-    protected static void assertWatchedShows(List<WatchedShow> watchedShows) {
-        for (WatchedShow show : watchedShows) {
-            assertThat(show.plays).isPositive();
-            for (WatchedSeason season : show.seasons) {
-                for (WatchedEpisode episode : season.episodes) {
-                    assertThat(episode.plays).isPositive();
+    protected static void assertSyncShows(List<BaseShow> shows, String type) {
+        for (BaseShow show : shows) {
+            assertThat(show.show).isNotNull();
+            if ("collection".equals(type)) {
+                assertThat(show.collected_at).isNotNull();
+            } else if ("watched".equals(type)) {
+                assertThat(show.plays).isGreaterThanOrEqualTo(0);
+            }
+
+            for (BaseSeason season : show.seasons) {
+                assertThat(season.number).isGreaterThanOrEqualTo(0);
+                for (BaseEpisode episode : season.episodes) {
+                    assertThat(episode.number).isGreaterThanOrEqualTo(0);
+
+                    if ("collection".equals(type)) {
+                        assertThat(episode.collected_at).isNotNull();
+                    } else if ("watched".equals(type)) {
+                        assertThat(episode.plays).isGreaterThanOrEqualTo(0);
+                    }
                 }
             }
         }

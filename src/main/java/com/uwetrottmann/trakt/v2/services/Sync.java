@@ -1,7 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
-import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -13,7 +13,6 @@ import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
-import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
@@ -56,7 +55,7 @@ public interface Sync {
      * on physical media.
      */
     @GET("/sync/collection/shows")
-    List<CollectedShow> collectionShows() throws OAuthUnauthorizedException;
+    List<BaseShow> collectionShows() throws OAuthUnauthorizedException;
 
     /**
      * <b>OAuth Required</b>
@@ -98,7 +97,7 @@ public interface Sync {
      * <p> Returns all shows a user has watched.
      */
     @GET("/sync/watched/shows")
-    List<WatchedShow> watchedShows(
+    List<BaseShow> watchedShows(
             @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 

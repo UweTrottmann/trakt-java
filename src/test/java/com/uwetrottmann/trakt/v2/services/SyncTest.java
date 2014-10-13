@@ -2,10 +2,10 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
-import com.uwetrottmann.trakt.v2.entities.CollectedShow;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -33,7 +33,6 @@ import com.uwetrottmann.trakt.v2.entities.SyncWatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncWatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
-import com.uwetrottmann.trakt.v2.entities.WatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
@@ -68,8 +67,8 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionShows() throws OAuthUnauthorizedException {
-        List<CollectedShow> shows = getTrakt().sync().collectionShows();
-        assertCollectedShows(shows);
+        List<BaseShow> shows = getTrakt().sync().collectionShows();
+        assertSyncShows(shows, "collection");
     }
 
     @Test
@@ -189,8 +188,8 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchedShows() throws OAuthUnauthorizedException {
-        List<WatchedShow> watchedShows = getTrakt().sync().watchedShows(Extended.FULLIMAGES);
-        assertWatchedShows(watchedShows);
+        List<BaseShow> watchedShows = getTrakt().sync().watchedShows(Extended.FULLIMAGES);
+        assertSyncShows(watchedShows, "watched");
     }
 
     @Test
