@@ -3,9 +3,7 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.entities.CollectedEpisode;
 import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
-import com.uwetrottmann.trakt.v2.entities.CollectedSeason;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -13,9 +11,6 @@ import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.ShowIds;
-import com.uwetrottmann.trakt.v2.entities.SyncCollectedItems;
-import com.uwetrottmann.trakt.v2.entities.SyncCollectedMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncCollectedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
@@ -27,11 +22,6 @@ import com.uwetrottmann.trakt.v2.entities.SyncRatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
-import com.uwetrottmann.trakt.v2.entities.SyncWatchedEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
-import com.uwetrottmann.trakt.v2.entities.SyncWatchedMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncWatchedSeason;
-import com.uwetrottmann.trakt.v2.entities.SyncWatchedShow;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
@@ -73,64 +63,64 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToCollection_movie() throws OAuthUnauthorizedException {
-        SyncCollectedMovie movie = new SyncCollectedMovie();
+        SyncMovie movie = new SyncMovie();
         movie.ids = buildMovieIds();
 
-        SyncCollectedItems items = new SyncCollectedItems().movies(movie);
+        SyncItems items = new SyncItems().movies(movie);
         addItemsToCollection(items);
     }
 
     @Test
     public void test_addItemsToCollection_show() throws OAuthUnauthorizedException {
-        SyncCollectedShow show = new SyncCollectedShow();
+        SyncShow show = new SyncShow();
         show.ids = buildShowIds();
 
-        SyncCollectedItems items = new SyncCollectedItems().shows(show);
+        SyncItems items = new SyncItems().shows(show);
         addItemsToCollection(items);
     }
 
     @Test
     public void test_addItemsToCollection_season() throws OAuthUnauthorizedException {
         // season
-        CollectedSeason season = new CollectedSeason();
+        SyncSeason season = new SyncSeason();
         season.number = 1;
 
         // show
-        SyncCollectedShow show = new SyncCollectedShow();
+        SyncShow show = new SyncShow();
         show.ids = ShowIds.slug("community");
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
-        SyncCollectedItems items = new SyncCollectedItems().shows(show);
+        SyncItems items = new SyncItems().shows(show);
         addItemsToCollection(items);
     }
 
     @Test
     public void test_addItemsToCollection_episode() throws OAuthUnauthorizedException {
         // episodes
-        CollectedEpisode episode1 = new CollectedEpisode();
+        SyncEpisode episode1 = new SyncEpisode();
         episode1.number = 1;
-        CollectedEpisode episode2 = new CollectedEpisode();
+        SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
 
         // season
-        CollectedSeason season = new CollectedSeason();
+        SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;
         season.episodes = new LinkedList<>();
         season.episodes.add(episode1);
         season.episodes.add(episode2);
 
         // show
-        SyncCollectedShow show = new SyncCollectedShow();
+        SyncShow show = new SyncShow();
         show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
-        SyncCollectedItems items = new SyncCollectedItems().shows(show);
+        SyncItems items = new SyncItems().shows(show);
         addItemsToCollection(items);
     }
 
-    private void addItemsToCollection(SyncCollectedItems items) throws OAuthUnauthorizedException {
+    private void addItemsToCollection(SyncItems items) throws OAuthUnauthorizedException {
         SyncResponse response = getTrakt().sync().addItemsToCollection(items);
         assertSyncResponse(response);
     }
@@ -195,30 +185,30 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_addItemsToWatchedHistory() throws OAuthUnauthorizedException {
         // movie
-        SyncWatchedMovie movie = new SyncWatchedMovie();
+        SyncMovie movie = new SyncMovie();
         movie.watched_at = new DateTime().minusHours(1);
         movie.ids = buildMovieIds();
 
         // episode
-        SyncWatchedEpisode episode = new SyncWatchedEpisode();
+        SyncEpisode episode = new SyncEpisode();
         episode.number = TestData.EPISODE_NUMBER;
         episode.watched_at = new DateTime().minusHours(1);
-        SyncWatchedEpisode episode2 = new SyncWatchedEpisode();
+        SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
         episode2.watched_at = new DateTime().minusMinutes(30);
         // season
-        SyncWatchedSeason season = new SyncWatchedSeason();
+        SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;
         season.episodes = new LinkedList<>();
         season.episodes.add(episode);
         season.episodes.add(episode2);
         // show
-        SyncWatchedShow show = new SyncWatchedShow();
+        SyncShow show = new SyncShow();
         show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
         show.seasons = new LinkedList<>();
         show.seasons.add(season);
 
-        SyncWatchedItems items = new SyncWatchedItems().movies(movie).shows(show);
+        SyncItems items = new SyncItems().movies(movie).shows(show);
 
         SyncResponse response = getTrakt().sync().addItemsToWatchedHistory(items);
         assertThat(response.added.movies).isNotNull();

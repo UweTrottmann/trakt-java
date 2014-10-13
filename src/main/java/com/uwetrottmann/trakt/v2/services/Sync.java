@@ -7,11 +7,9 @@ import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
-import com.uwetrottmann.trakt.v2.entities.SyncCollectedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.entities.SyncWatchedItems;
 import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
@@ -70,7 +68,7 @@ public interface Sync {
      */
     @POST("/sync/collection")
     SyncResponse addItemsToCollection(
-            @Body SyncCollectedItems items
+            @Body SyncItems items
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -116,7 +114,7 @@ public interface Sync {
      */
     @POST("/sync/history")
     SyncResponse addItemsToWatchedHistory(
-            @Body SyncWatchedItems items
+            @Body SyncItems items
     ) throws OAuthUnauthorizedException;
 
     /**
