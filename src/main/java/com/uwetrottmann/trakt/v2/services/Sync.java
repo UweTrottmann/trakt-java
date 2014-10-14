@@ -11,7 +11,6 @@ import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
-import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
@@ -224,7 +223,7 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/shows")
-    List<WatchlistedShow> watchlistShows(
+    List<BaseShow> watchlistShows(
             @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 

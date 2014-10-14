@@ -23,7 +23,6 @@ import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
-import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
@@ -343,8 +342,9 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistShows() throws OAuthUnauthorizedException {
-        List<WatchlistedShow> shows = getTrakt().sync().watchlistShows(Extended.DEFAULT_MIN);
-        for (WatchlistedShow show : shows) {
+        List<BaseShow> shows = getTrakt().sync().watchlistShows(Extended.DEFAULT_MIN);
+        for (BaseShow show : shows) {
+            assertThat(show.show).isNotNull();
             assertThat(show.listed_at).isNotNull();
         }
     }
@@ -353,6 +353,8 @@ public class SyncTest extends BaseTestCase {
     public void test_watchlistEpisodes() throws OAuthUnauthorizedException {
         List<WatchlistedEpisode> episodes = getTrakt().sync().watchlistEpisodes(Extended.DEFAULT_MIN);
         for (WatchlistedEpisode episode : episodes) {
+            assertThat(episode.episode).isNotNull();
+            assertThat(episode.show).isNotNull();
             assertThat(episode.listed_at).isNotNull();
         }
     }

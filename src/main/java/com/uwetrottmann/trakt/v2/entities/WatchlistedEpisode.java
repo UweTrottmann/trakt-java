@@ -1,7 +1,12 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-public class WatchlistedEpisode extends WatchlistedShow {
+import org.joda.time.DateTime;
+
+public class WatchlistedEpisode {
+
+    public DateTime listed_at;
 
     public Episode episode;
+    public Show show;
 
 }
