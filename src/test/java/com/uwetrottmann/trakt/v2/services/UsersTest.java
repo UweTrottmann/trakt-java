@@ -2,8 +2,8 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -12,7 +12,6 @@ import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.User;
-import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
@@ -44,8 +43,8 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws OAuthUnauthorizedException {
-        List<CollectedMovie> movies = getTrakt().users().collectionMovies(TestData.USERNAME, Extended.DEFAULT_MIN);
-        assertCollectedMovies(movies);
+        List<BaseMovie> movies = getTrakt().users().collectionMovies(TestData.USERNAME, Extended.DEFAULT_MIN);
+        assertSyncMovies(movies, "collection");
     }
 
     @Test
@@ -116,8 +115,8 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_watchedMovies() throws OAuthUnauthorizedException {
-        List<WatchedMovie> watchedMovies = getTrakt().users().watchedMovies(TestData.USERNAME, Extended.DEFAULT_MIN);
-        assertWatchedMovies(watchedMovies);
+        List<BaseMovie> watchedMovies = getTrakt().users().watchedMovies(TestData.USERNAME, Extended.DEFAULT_MIN);
+        assertSyncMovies(watchedMovies, "watched");
     }
 
     @Test

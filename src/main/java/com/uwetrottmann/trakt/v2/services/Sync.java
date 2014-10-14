@@ -1,7 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -10,9 +10,7 @@ import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
-import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
-import com.uwetrottmann.trakt.v2.entities.WatchlistedMovie;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
@@ -44,7 +42,7 @@ public interface Sync {
      * or on physical media.
      */
     @GET("/sync/collection/movies")
-    List<CollectedMovie> collectionMovies(
+    List<BaseMovie> collectionMovies(
             @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
@@ -89,7 +87,7 @@ public interface Sync {
      * <p> Returns all movies a user has watched.
      */
     @GET("/sync/watched/movies")
-    List<WatchedMovie> watchedMovies(
+    List<BaseMovie> watchedMovies(
             @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
@@ -215,7 +213,7 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/movies")
-    List<WatchlistedMovie> watchlistMovies(
+    List<BaseMovie> watchlistMovies(
             @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 

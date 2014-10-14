@@ -1,15 +1,14 @@
 package com.uwetrottmann.trakt.v2;
 
 import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
+import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseRatedEntity;
 import com.uwetrottmann.trakt.v2.entities.BaseSeason;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.CastMember;
-import com.uwetrottmann.trakt.v2.entities.CollectedMovie;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.CrewMember;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.entities.WatchedMovie;
 import com.uwetrottmann.trakt.v2.enums.Type;
 import org.junit.BeforeClass;
 
@@ -38,12 +37,6 @@ public class BaseTestCase {
         return trakt;
     }
 
-    protected static void assertCollectedMovies(List<CollectedMovie> movies) {
-        for (CollectedMovie movie : movies) {
-            assertThat(movie.collected_at).isNotNull();
-        }
-    }
-
     protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedMovies) {
         for (BaseRatedEntity movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
@@ -58,9 +51,20 @@ public class BaseTestCase {
         assertThat(ratings.distribution).hasSize(10);
     }
 
-    protected static void assertWatchedMovies(List<WatchedMovie> watchedMovies) {
-        for (WatchedMovie movie : watchedMovies) {
-            assertThat(movie.plays).isPositive();
+    protected static void assertSyncMovies(List<BaseMovie> movies, String type) {
+        for (BaseMovie movie : movies) {
+            assertThat(movie.movie).isNotNull();
+            switch (type) {
+                case "collection":
+                    assertThat(movie.collected_at).isNotNull();
+                    break;
+                case "watched":
+                    assertThat(movie.plays).isPositive();
+                    break;
+                case "watchlist":
+                    assertThat(movie.listed_at).isNotNull();
+                    break;
+            }
         }
     }
 
@@ -70,7 +74,7 @@ public class BaseTestCase {
             if ("collection".equals(type)) {
                 assertThat(show.collected_at).isNotNull();
             } else if ("watched".equals(type)) {
-                assertThat(show.plays).isGreaterThanOrEqualTo(0);
+                assertThat(show.plays).isPositive();
             }
 
             for (BaseSeason season : show.seasons) {
@@ -81,7 +85,7 @@ public class BaseTestCase {
                     if ("collection".equals(type)) {
                         assertThat(episode.collected_at).isNotNull();
                     } else if ("watched".equals(type)) {
-                        assertThat(episode.plays).isGreaterThanOrEqualTo(0);
+                        assertThat(episode.plays).isPositive();
                     }
                 }
             }
