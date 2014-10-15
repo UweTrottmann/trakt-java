@@ -100,6 +100,7 @@ public class CheckinTest extends BaseTestCase {
         MovieCheckin movieCheckin = buildMovieCheckin();
         try {
             checkin.checkin(movieCheckin);
+            fail("Check-in was not blocked");
         } catch (CheckinInProgressException e) {
             // episode check in should block until episode duration has passed
             assertThat(e.getExpiresAt()).isBefore(new DateTime().plusHours(1));
