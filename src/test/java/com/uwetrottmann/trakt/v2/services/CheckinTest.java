@@ -2,15 +2,15 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
-import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
-import com.uwetrottmann.trakt.v2.entities.Movie;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
 import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.ShareSettings;
+import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
@@ -23,6 +23,9 @@ import static org.assertj.jodatime.api.Assertions.assertThat;
 
 
 public class CheckinTest extends BaseTestCase {
+
+    private static final String APP_VERSION = "trakt-java-4";
+    private static final String APP_DATE = "2014-10-15";
 
     @Test
     public void test_checkin_episode() throws OAuthUnauthorizedException {
@@ -46,15 +49,13 @@ public class CheckinTest extends BaseTestCase {
     }
 
     private static EpisodeCheckin buildEpisodeCheckin() {
-        EpisodeCheckin checkin = new EpisodeCheckin();
-        checkin.episode = new Episode();
-        checkin.episode.ids = EpisodeIds.trakt(16);
-        checkin.message = "This is a toasty episode!";
-        checkin.sharing = new ShareSettings();
-        checkin.sharing.facebook = true;
-        checkin.app_version = "trakt-java-4";
-        checkin.app_date = "2014";
-        return checkin;
+        ShareSettings shareSettings = new ShareSettings();
+        shareSettings.facebook = true;
+
+        return new EpisodeCheckin.Builder(new SyncEpisode().id(EpisodeIds.trakt(16)), APP_VERSION, APP_DATE)
+                .message("This is a toasty episode!")
+                .sharing(shareSettings)
+                .build();
     }
 
     @Test
@@ -76,15 +77,13 @@ public class CheckinTest extends BaseTestCase {
     }
 
     private MovieCheckin buildMovieCheckin() {
-        MovieCheckin checkin = new MovieCheckin();
-        checkin.movie = new Movie();
-        checkin.movie.ids = MovieIds.trakt(TestData.MOVIE_TRAKT_ID);
-        checkin.message = "This is a toasty movie!";
-        checkin.sharing = new ShareSettings();
-        checkin.sharing.facebook = true;
-        checkin.app_version = "trakt-java-4";
-        checkin.app_date = "2014";
-        return checkin;
+        ShareSettings shareSettings = new ShareSettings();
+        shareSettings.facebook = true;
+        return new MovieCheckin.Builder(new SyncMovie().id(MovieIds.trakt(TestData.MOVIE_TRAKT_ID)), APP_VERSION,
+                APP_DATE)
+                .message("This is a toasty movie!")
+                .sharing(shareSettings)
+                .build();
     }
 
     @Test

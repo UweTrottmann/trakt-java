@@ -5,12 +5,18 @@ import org.joda.time.DateTime;
 public class SyncEpisode {
 
     public int number;
+    public EpisodeIds ids;
 
     public DateTime collected_at;
     public DateTime watched_at;
 
     public SyncEpisode number(int number) {
         this.number = number;
+        return this;
+    }
+
+    public SyncEpisode id(EpisodeIds id) {
+        this.ids = id;
         return this;
     }
 
