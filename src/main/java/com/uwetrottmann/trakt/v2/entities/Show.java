@@ -13,17 +13,16 @@ public class Show extends BaseEntity {
     // extended info
     public String overview;
     public DateTime first_aired;
-    public String air_day;
-    public String air_time;
+    public Airs airs;
     public Integer runtime;
     public String certification;
     public String network;
     public String country;
-    public String language;
     public String trailer;
     public String homepage;
     public Status status;
     public Double rating;
+    public String language;
     public List<String> genres;
 
 }
