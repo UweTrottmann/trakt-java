@@ -44,7 +44,8 @@ public class EpisodesTest extends BaseTestCase {
 
     @Test
     public void test_comments() {
-        getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER);
+        getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER,
+                Extended.IMAGES);
     }
 
     @Test

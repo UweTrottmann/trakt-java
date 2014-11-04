@@ -69,7 +69,8 @@ public interface Episodes {
     List<Comment> comments(
             @Path("id") String showId,
             @Path("season") int season,
-            @Path("episode") int episode
+            @Path("episode") int episode,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**

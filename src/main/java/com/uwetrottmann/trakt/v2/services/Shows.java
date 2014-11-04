@@ -86,7 +86,8 @@ public interface Shows {
     List<Comment> comments(
             @Path("id") String showId,
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**

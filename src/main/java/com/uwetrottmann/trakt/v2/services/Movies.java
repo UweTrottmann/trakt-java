@@ -86,7 +86,8 @@ public interface Movies {
     List<Comment> comments(
             @Path("id") String movieId,
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     );
 
     /**
