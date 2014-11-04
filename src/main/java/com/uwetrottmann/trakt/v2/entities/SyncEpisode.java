@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 public class SyncEpisode {
 
-    public int number;
+    public Integer number;
     public EpisodeIds ids;
 
     public DateTime collected_at;
