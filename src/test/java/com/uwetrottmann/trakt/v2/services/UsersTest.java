@@ -34,7 +34,7 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_profile() throws OAuthUnauthorizedException {
-        User user = getTrakt().users().profile(TestData.USERNAME);
+        User user = getTrakt().users().profile(TestData.USERNAME, Extended.FULLIMAGES);
         assertThat(user.username).isEqualTo(TestData.USERNAME);
         assertThat(user.isPrivate).isEqualTo(false);
         assertThat(user.name).isEqualTo(TestData.USER_REAL_NAME);

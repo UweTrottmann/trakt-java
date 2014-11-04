@@ -42,7 +42,8 @@ public interface Users {
      */
     @GET("/users/{username}")
     User profile(
-            @Path("username") String username
+            @Path("username") String username,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
