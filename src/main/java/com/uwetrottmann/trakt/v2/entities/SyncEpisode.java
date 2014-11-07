@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.entities;
 
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import org.joda.time.DateTime;
 
 public class SyncEpisode {
@@ -9,6 +10,8 @@ public class SyncEpisode {
 
     public DateTime collected_at;
     public DateTime watched_at;
+    public DateTime rated_at;
+    public Rating rating;
 
     public SyncEpisode number(int number) {
         this.number = number;
@@ -27,6 +30,16 @@ public class SyncEpisode {
 
     public SyncEpisode watchedAt(DateTime watchedAt) {
         this.watched_at = watchedAt;
+        return this;
+    }
+
+    public SyncEpisode ratedAt(DateTime ratedAt) {
+        this.rated_at = ratedAt;
+        return this;
+    }
+
+    public SyncEpisode rating(Rating rating) {
+        this.rating = rating;
         return this;
     }
 

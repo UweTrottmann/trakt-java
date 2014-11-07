@@ -8,7 +8,6 @@ import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
-import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -189,7 +188,7 @@ public interface Sync {
      */
     @POST("/sync/ratings")
     SyncResponse addRatings(
-            @Body SyncRatedItems items
+            @Body SyncItems items
     ) throws OAuthUnauthorizedException;
 
     /**

@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.entities;
 
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import org.joda.time.DateTime;
 
 import java.util.LinkedList;
@@ -12,6 +13,8 @@ public class SyncSeason {
 
     public DateTime collected_at;
     public DateTime watched_at;
+    public DateTime rated_at;
+    public Rating rating;
 
     public SyncSeason number(int number) {
         this.number = number;
@@ -36,6 +39,16 @@ public class SyncSeason {
 
     public SyncSeason watchedAt(DateTime watchedAt) {
         this.watched_at = watchedAt;
+        return this;
+    }
+
+    public SyncSeason ratedAt(DateTime ratedAt) {
+        this.rated_at = ratedAt;
+        return this;
+    }
+
+    public SyncSeason rating(Rating rating) {
+        this.rating = rating;
         return this;
     }
 

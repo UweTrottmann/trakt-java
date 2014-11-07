@@ -14,11 +14,6 @@ import com.uwetrottmann.trakt.v2.entities.ShowIds;
 import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncRatedEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncRatedItems;
-import com.uwetrottmann.trakt.v2.entities.SyncRatedMovie;
-import com.uwetrottmann.trakt.v2.entities.SyncRatedSeason;
-import com.uwetrottmann.trakt.v2.entities.SyncRatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncSeason;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
@@ -263,60 +258,60 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addRatings_movie() throws OAuthUnauthorizedException {
-        SyncRatedMovie movie = new SyncRatedMovie();
-        movie.rating = Rating.TOTALLYNINJA;
-        movie.ids = MovieIds.slug(TestData.MOVIE_SLUG);
+        SyncMovie movie = new SyncMovie()
+                .id(MovieIds.slug(TestData.MOVIE_SLUG))
+                .rating(Rating.MEH);
 
-        SyncRatedItems items = new SyncRatedItems().movies(movie);
+        SyncItems items = new SyncItems().movies(movie);
         getTrakt().sync().addRatings(items);
     }
 
     @Test
     public void test_addRatings_show() throws OAuthUnauthorizedException {
-        SyncRatedShow show = new SyncRatedShow();
-        show.rating = Rating.TOTALLYNINJA;
-        show.ids = ShowIds.slug(TestData.SHOW_SLUG);
+        SyncShow show = new SyncShow()
+                .id(ShowIds.slug(TestData.SHOW_SLUG))
+                .rating(Rating.TERRIBLE);
 
-        SyncRatedItems items = new SyncRatedItems().shows(show);
+        SyncItems items = new SyncItems().shows(show);
         getTrakt().sync().addRatings(items);
     }
 
     @Test
     public void test_addRatings_season() throws OAuthUnauthorizedException {
-        SyncRatedSeason season = new SyncRatedSeason();
-        season.rating = Rating.TOTALLYNINJA;
-        season.number = TestData.EPISODE_SEASON;
+        SyncSeason season = new SyncSeason()
+                .number(TestData.EPISODE_SEASON)
+                .rating(Rating.FAIR);
 
-        SyncRatedShow show = new SyncRatedShow();
-        show.ids = ShowIds.slug("community");
-        show.seasons = new LinkedList<>();
-        show.seasons.add(season);
+        SyncShow show = new SyncShow()
+                .id(ShowIds.slug("community"))
+                .seasons(season);
 
-        SyncRatedItems items = new SyncRatedItems().shows(show);
+        SyncItems items = new SyncItems().shows(show);
         getTrakt().sync().addRatings(items);
     }
 
     @Test
     public void test_addRatings_episode() throws OAuthUnauthorizedException {
-        SyncRatedEpisode episode1 = new SyncRatedEpisode();
-        episode1.rating = Rating.TOTALLYNINJA;
-        episode1.number = TestData.EPISODE_NUMBER;
-        SyncRatedEpisode episode2 = new SyncRatedEpisode();
-        episode2.rating = Rating.GREAT;
-        episode2.number = 2;
+        SyncEpisode episode1 = new SyncEpisode()
+                .number(1)
+                .rating(Rating.TOTALLYNINJA);
+        SyncEpisode episode2 = new SyncEpisode()
+                .number(2)
+                .rating(Rating.GREAT);
 
-        SyncRatedSeason season = new SyncRatedSeason();
-        season.number = TestData.EPISODE_SEASON;
-        season.episodes = new LinkedList<>();
-        season.episodes.add(episode1);
-        season.episodes.add(episode2);
+        LinkedList<SyncEpisode> episodes = new LinkedList<>();
+        episodes.add(episode1);
+        episodes.add(episode2);
 
-        SyncRatedShow show = new SyncRatedShow();
-        show.ids = ShowIds.slug(TestData.SHOW_SLUG);
-        show.seasons = new LinkedList<>();
-        show.seasons.add(season);
+        SyncSeason season = new SyncSeason()
+                .number(TestData.EPISODE_SEASON)
+                .episodes(episodes);
 
-        SyncRatedItems items = new SyncRatedItems().shows(show);
+        SyncShow show = new SyncShow()
+                .id(ShowIds.slug(TestData.SHOW_SLUG))
+                .seasons(season);
+
+        SyncItems items = new SyncItems().shows(show);
         getTrakt().sync().addRatings(items);
     }
 
