@@ -5,6 +5,8 @@ import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.LastActivities;
+import com.uwetrottmann.trakt.v2.entities.LastActivity;
+import com.uwetrottmann.trakt.v2.entities.LastActivityMore;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -35,10 +37,23 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_lastActivites() throws OAuthUnauthorizedException {
         LastActivities lastActivities = getTrakt().sync().lastActivities();
-        assertThat(lastActivities.movies).isNotNull();
-        assertThat(lastActivities.episodes).isNotNull();
-        assertThat(lastActivities.shows).isNotNull();
-        assertThat(lastActivities.seasons).isNotNull();
+        assertLastActivityMore(lastActivities.movies);
+        assertLastActivityMore(lastActivities.episodes);
+        assertLastActivity(lastActivities.shows);
+        assertLastActivity(lastActivities.seasons);
+    }
+
+    private void assertLastActivityMore(LastActivityMore activityMore) {
+        assertLastActivity(activityMore);
+        assertThat(activityMore.collected_at).isNotNull();
+        assertThat(activityMore.watched_at).isNotNull();
+    }
+
+    private void assertLastActivity(LastActivity activity) {
+        assertThat(activity).isNotNull();
+        assertThat(activity.commented_at).isNotNull();
+        assertThat(activity.rated_at).isNotNull();
+        assertThat(activity.watchlisted_at).isNotNull();
     }
 
     @Test

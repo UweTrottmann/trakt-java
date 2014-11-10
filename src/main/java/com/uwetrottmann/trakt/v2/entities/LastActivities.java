@@ -4,7 +4,7 @@ public class LastActivities {
 
     public LastActivityMore movies;
     public LastActivityMore episodes;
-    public LastActivityShow shows;
-    public LastActivitySeason seasons;
+    public LastActivity shows;
+    public LastActivity seasons;
 
 }
