@@ -30,7 +30,7 @@ public enum Status implements TraktEnum {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return value;
     }
 
 }

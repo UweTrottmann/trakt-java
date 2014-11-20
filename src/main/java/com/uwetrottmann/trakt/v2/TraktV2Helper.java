@@ -8,7 +8,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.uwetrottmann.trakt.v2.enums.ListPrivacy;
 import com.uwetrottmann.trakt.v2.enums.Rating;
+import com.uwetrottmann.trakt.v2.enums.Status;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -42,6 +44,16 @@ public class TraktV2Helper {
             }
         });
 
+        // privacy
+        builder.registerTypeAdapter(ListPrivacy.class, new JsonDeserializer<ListPrivacy>() {
+            @Override
+            public ListPrivacy deserialize(JsonElement json, Type typeOfT,
+                    JsonDeserializationContext context) throws JsonParseException {
+                return ListPrivacy.fromValue(json.getAsString());
+            }
+        });
+
+        // rating
         builder.registerTypeAdapter(Rating.class, new JsonDeserializer<Rating>() {
             @Override
             public Rating deserialize(JsonElement json, Type typeOfT,
@@ -53,6 +65,15 @@ public class TraktV2Helper {
             @Override
             public JsonElement serialize(Rating src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonPrimitive(src.value);
+            }
+        });
+
+        // status
+        builder.registerTypeAdapter(Status.class, new JsonDeserializer<Status>() {
+            @Override
+            public Status deserialize(JsonElement json, Type typeOfT,
+                    JsonDeserializationContext context) throws JsonParseException {
+                return Status.fromValue(json.getAsString());
             }
         });
 

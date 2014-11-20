@@ -13,9 +13,13 @@ import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import retrofit.client.Response;
+import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.EncodedPath;
 import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -72,6 +76,44 @@ public interface Users {
     List<BaseShow> collectionShows(
             @Path("username") String username,
             @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Returns all custom lists for a user.
+     *
+     * @param username Example: "sean".
+     */
+    @GET("/users/{username}/lists")
+    List<com.uwetrottmann.trakt.v2.entities.List> lists(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
+     *
+     * @param username Example: "sean".
+     */
+    @POST("/users/{username}/lists")
+    com.uwetrottmann.trakt.v2.entities.List createList(
+            @Path("username") String username,
+            @Body com.uwetrottmann.trakt.v2.entities.List list
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Remove a custom list and all items it contains.
+     *
+     * @param username Example: "sean".
+     */
+    @DELETE("/users/{username}/lists/{id}")
+    Response deleteList(
+            @Path("username") String username,
+            @Path("id") String id
     ) throws OAuthUnauthorizedException;
 
     /**
