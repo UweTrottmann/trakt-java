@@ -5,12 +5,19 @@ import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.ListEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.Settings;
+import com.uwetrottmann.trakt.v2.entities.ShowIds;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncMovie;
+import com.uwetrottmann.trakt.v2.entities.SyncResponse;
+import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.ListPrivacy;
@@ -25,6 +32,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsersTest extends BaseTestCase {
+
+    private static final int TEST_LIST_WITH_ITEMS_TRAKT_ID = 619;
 
     @Test
     public void test_getSettings() throws OAuthUnauthorizedException {
@@ -96,10 +105,40 @@ public class UsersTest extends BaseTestCase {
         list.name("trakt-java " + secondOfDay);
 
         // create list...
-        com.uwetrottmann.trakt.v2.entities.List updatedList = getTrakt().users().updateList("me", String.valueOf(619),
-                list);
-        assertThat(updatedList.ids.trakt).isEqualTo(619);
+        com.uwetrottmann.trakt.v2.entities.List updatedList = getTrakt().users().updateList("me", String.valueOf(
+                TEST_LIST_WITH_ITEMS_TRAKT_ID), list);
+        assertThat(updatedList.ids.trakt).isEqualTo(TEST_LIST_WITH_ITEMS_TRAKT_ID);
         assertThat(updatedList.name).isEqualTo(list.name);
+    }
+
+    @Test
+    public void test_listItems() throws OAuthUnauthorizedException {
+        List<ListEntry> entries = getTrakt().users().listItems("me", String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                Extended.DEFAULT_MIN);
+        for (ListEntry entry : entries) {
+            assertThat(entry.listed_at).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_addListItems() throws OAuthUnauthorizedException {
+        SyncShow show = new SyncShow().id(ShowIds.tvdb(256227));
+        SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(TestData.MOVIE_TMDB_ID));
+
+        SyncItems items = new SyncItems();
+        items.shows(show);
+        items.movies(movie);
+
+        // add items...
+        SyncResponse response = getTrakt().users().addListItems("me", String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                items);
+        assertThat(response.added.shows).isEqualTo(1);
+        assertThat(response.added.movies).isEqualTo(1);
+
+        // ...and remove them again
+        response = getTrakt().users().deleteListItems("me", String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), items);
+        assertThat(response.deleted.shows).isEqualTo(1);
+        assertThat(response.deleted.movies).isEqualTo(1);
     }
 
     @Test

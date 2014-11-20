@@ -3,12 +3,15 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
+import com.uwetrottmann.trakt.v2.entities.ListEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
 import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.Settings;
+import com.uwetrottmann.trakt.v2.entities.SyncItems;
+import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
@@ -83,8 +86,6 @@ public interface Users {
      * <b>OAuth Optional</b>
      *
      * <p> Returns all custom lists for a user.
-     *
-     * @param username Example: "sean".
      */
     @GET("/users/{username}/lists")
     List<com.uwetrottmann.trakt.v2.entities.List> lists(
@@ -95,8 +96,6 @@ public interface Users {
      * <b>OAuth Required</b>
      *
      * <p> Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
-     *
-     * @param username Example: "sean".
      */
     @POST("/users/{username}/lists")
     com.uwetrottmann.trakt.v2.entities.List createList(
@@ -109,8 +108,6 @@ public interface Users {
      *
      * <p> Update a custom list by sending 1 or more parameters. If you update the list name, the original slug will
      * still be retained so existing references to this list won't break.
-     *
-     * @param username Example: "sean".
      */
     @PUT("/users/{username}/lists/{id}")
     com.uwetrottmann.trakt.v2.entities.List updateList(
@@ -123,13 +120,47 @@ public interface Users {
      * <b>OAuth Required</b>
      *
      * <p> Remove a custom list and all items it contains.
-     *
-     * @param username Example: "sean".
      */
     @DELETE("/users/{username}/lists/{id}")
     Response deleteList(
             @Path("username") String username,
             @Path("id") String id
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
+     */
+    @GET("/users/{username}/lists/{id}/items")
+    List<ListEntry> listItems(
+            @Path("username") String username,
+            @Path("id") String id,
+            @EncodedQuery("extended") Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Add one or more items to a custom list. Items can be movies, shows, seasons, episodes, or people.
+     */
+    @POST("/users/{username}/lists/{id}/items")
+    SyncResponse addListItems(
+            @Path("username") String username,
+            @Path("id") String id,
+            @Body SyncItems items
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Remove one or more items from a custom list.
+     */
+    @POST("/users/{username}/lists/{id}/items/remove")
+    SyncResponse deleteListItems(
+            @Path("username") String username,
+            @Path("id") String id,
+            @Body SyncItems items
     ) throws OAuthUnauthorizedException;
 
     /**
