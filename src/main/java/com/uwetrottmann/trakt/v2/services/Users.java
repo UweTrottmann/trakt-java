@@ -20,6 +20,7 @@ import retrofit.http.EncodedPath;
 import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -91,7 +92,7 @@ public interface Users {
     ) throws OAuthUnauthorizedException;
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth Required</b>
      *
      * <p> Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
      *
@@ -104,7 +105,22 @@ public interface Users {
     ) throws OAuthUnauthorizedException;
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth Required</b>
+     *
+     * <p> Update a custom list by sending 1 or more parameters. If you update the list name, the original slug will
+     * still be retained so existing references to this list won't break.
+     *
+     * @param username Example: "sean".
+     */
+    @PUT("/users/{username}/lists/{id}")
+    com.uwetrottmann.trakt.v2.entities.List updateList(
+            @Path("username") String username,
+            @Path("id") String id,
+            @Body com.uwetrottmann.trakt.v2.entities.List list
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Required</b>
      *
      * <p> Remove a custom list and all items it contains.
      *

@@ -16,6 +16,7 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.ListPrivacy;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+import org.joda.time.DateTime;
 import org.junit.Test;
 import retrofit.client.Response;
 
@@ -84,6 +85,21 @@ public class UsersTest extends BaseTestCase {
         // ...and delete it again
         Response response = getTrakt().users().deleteList("me", String.valueOf(createdList.ids.trakt));
         assertThat(response.getStatus()).isEqualTo(204);
+    }
+
+
+    @Test
+    public void test_updateList() throws OAuthUnauthorizedException {
+        // change name (append a new suffix that changes frequently)
+        int secondOfDay = new DateTime().getSecondOfDay();
+        com.uwetrottmann.trakt.v2.entities.List list = new com.uwetrottmann.trakt.v2.entities.List();
+        list.name("trakt-java " + secondOfDay);
+
+        // create list...
+        com.uwetrottmann.trakt.v2.entities.List updatedList = getTrakt().users().updateList("me", String.valueOf(619),
+                list);
+        assertThat(updatedList.ids.trakt).isEqualTo(619);
+        assertThat(updatedList.name).isEqualTo(list.name);
     }
 
     @Test
