@@ -53,8 +53,8 @@ public class TraktV2 {
     public static final String HEADER_TRAKT_API_VERSION_2 = "2";
     public static final String HEADER_CONTENT_TYPE_JSON = "application/json";
 
-    public static final String OAUTH2_AUTHORIZATION_URL = "http://api.v2.trakt.tv/oauth/authorize";
-    public static final String OAUTH2_TOKEN_URL = "http://api.v2.trakt.tv/oauth/token";
+    public static final String OAUTH2_AUTHORIZATION_URL = "http://v2.trakt.tv/oauth/authorize";
+    public static final String OAUTH2_TOKEN_URL = "http://v2.trakt.tv/oauth/token";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
