@@ -143,7 +143,8 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_historyEpisodes() throws OAuthUnauthorizedException {
-        List<EpisodeHistoryEntry> history = getTrakt().users().historyEpisodes(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE);
+        List<EpisodeHistoryEntry> history = getTrakt().users().historyEpisodes(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
+                Extended.DEFAULT_MIN);
         for (EpisodeHistoryEntry entry : history) {
             assertThat(entry.watched_at).isNotNull();
             assertThat(entry.action).isNotEmpty();
@@ -154,7 +155,8 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_historyMovies() throws OAuthUnauthorizedException {
-        List<MovieHistoryEntry> history = getTrakt().users().historyMovies(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE);
+        List<MovieHistoryEntry> history = getTrakt().users().historyMovies(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
+                Extended.DEFAULT_MIN);
         for (MovieHistoryEntry entry : history) {
             assertThat(entry.watched_at).isNotNull();
             assertThat(entry.action).isNotEmpty();

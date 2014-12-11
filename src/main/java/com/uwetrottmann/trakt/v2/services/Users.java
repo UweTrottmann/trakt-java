@@ -176,7 +176,8 @@ public interface Users {
     List<EpisodeHistoryEntry> historyEpisodes(
             @Path("username") String username,
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -192,7 +193,8 @@ public interface Users {
     List<MovieHistoryEntry> historyMovies(
             @Path("username") String username,
             @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit,
+            @EncodedQuery("extended") Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
