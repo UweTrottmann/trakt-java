@@ -2,11 +2,10 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.ListEntry;
-import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -143,9 +142,9 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_historyEpisodes() throws OAuthUnauthorizedException {
-        List<EpisodeHistoryEntry> history = getTrakt().users().historyEpisodes(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
+        List<HistoryEntry> history = getTrakt().users().historyEpisodes(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
                 Extended.DEFAULT_MIN);
-        for (EpisodeHistoryEntry entry : history) {
+        for (HistoryEntry entry : history) {
             assertThat(entry.watched_at).isNotNull();
             assertThat(entry.action).isNotEmpty();
             assertThat(entry.episode).isNotNull();
@@ -155,9 +154,9 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_historyMovies() throws OAuthUnauthorizedException {
-        List<MovieHistoryEntry> history = getTrakt().users().historyMovies(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
+        List<HistoryEntry> history = getTrakt().users().historyMovies(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
                 Extended.DEFAULT_MIN);
-        for (MovieHistoryEntry entry : history) {
+        for (HistoryEntry entry : history) {
             assertThat(entry.watched_at).isNotNull();
             assertThat(entry.action).isNotEmpty();
             assertThat(entry.movie).isNotNull();

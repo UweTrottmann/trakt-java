@@ -1,10 +1,9 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
-import com.uwetrottmann.trakt.v2.entities.EpisodeHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.ListEntry;
-import com.uwetrottmann.trakt.v2.entities.MovieHistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
 import com.uwetrottmann.trakt.v2.entities.RatedSeason;
@@ -173,7 +172,7 @@ public interface Users {
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/users/{username}/history/episodes")
-    List<EpisodeHistoryEntry> historyEpisodes(
+    List<HistoryEntry> historyEpisodes(
             @Path("username") String username,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -190,7 +189,7 @@ public interface Users {
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/users/{username}/history/movies")
-    List<MovieHistoryEntry> historyMovies(
+    List<HistoryEntry> historyMovies(
             @Path("username") String username,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
