@@ -13,7 +13,7 @@ public class TraktLink {
     private static final String URL_SEASON = BASE_URL + "/seasons/";
     private static final String URL_EPISODE = BASE_URL + "/episodes/";
     private static final String URL_PERSON = BASE_URL + "/people/";
-    private static final String URL_COMMENT = BASE_URL + "/people/";
+    private static final String URL_COMMENT = BASE_URL + "/comments/";
     private static final String URL_IMDB = BASE_URL + "/search/imdb/";
     private static final String URL_TMDB = BASE_URL + "/search/tmdb/";
     private static final String URL_TVDB = BASE_URL + "/search/tvdb/";
@@ -39,7 +39,7 @@ public class TraktLink {
     /**
      * Creates a direct link to this season.
      */
-    public static String season(String id) {
+    public static String season(int id) {
         return URL_SEASON + id;
     }
 
@@ -74,7 +74,7 @@ public class TraktLink {
     /**
      * Creates a direct link to this comment.
      */
-    public static String comment(String id) {
+    public static String comment(int id) {
         return URL_COMMENT + id;
     }
 
