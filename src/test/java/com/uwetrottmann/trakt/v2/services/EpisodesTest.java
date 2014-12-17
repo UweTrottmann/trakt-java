@@ -27,14 +27,6 @@ public class EpisodesTest extends BaseTestCase {
     }
 
     @Test
-    public void test_translations() {
-        List<Translation> translations = getTrakt().episodes().translations(TestData.SHOW_SLUG, 1, 1);
-        for (Translation translation : translations) {
-            assertThat(translation.language).isNotEmpty();
-        }
-    }
-
-    @Test
     public void test_translation() {
         List<Translation> translations = getTrakt().episodes().translation("breaking-bad", 1, 1, "de");
         // we know that Breaking Bad has a German translation, otherwise this test would fail

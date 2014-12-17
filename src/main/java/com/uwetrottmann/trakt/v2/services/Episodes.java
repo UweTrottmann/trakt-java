@@ -29,20 +29,6 @@ public interface Episodes {
     );
 
     /**
-     * Returns all translations for an episode, including language and translated values for title and overview.
-     *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
-     * @param season Season number.
-     * @param episode Episode number.
-     */
-    @GET("/shows/{id}/seasons/{season}/episodes/{episode}/translations")
-    List<Translation> translations(
-            @Path("id") String showId,
-            @Path("season") int season,
-            @Path("episode") int episode
-    );
-
-    /**
      * Returns a single translation for a show. If the translation does not exist, the returned list will be empty.
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
