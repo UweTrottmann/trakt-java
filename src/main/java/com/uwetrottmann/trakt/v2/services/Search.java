@@ -20,7 +20,9 @@ public interface Search {
     @GET("/search")
     List<SearchResult> textQuery(
             @Query("query") String query,
-            @Query("type") Type type
+            @Query("type") Type type,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     /**
@@ -33,7 +35,9 @@ public interface Search {
     @GET("/search")
     List<SearchResult> idLookup(
             @EncodedQuery("id_type") IdType idType,
-            @EncodedQuery("id") String id
+            @EncodedQuery("id") String id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
 }

@@ -15,7 +15,7 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_show() {
-        List<SearchResult> results = getTrakt().search().textQuery("House", Type.SHOW);
+        List<SearchResult> results = getTrakt().search().textQuery("House", Type.SHOW, 1, DEFAULT_PAGE_SIZE);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
@@ -25,7 +25,7 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_movie() {
-        List<SearchResult> results = getTrakt().search().textQuery("Tron", Type.MOVIE);
+        List<SearchResult> results = getTrakt().search().textQuery("Tron", Type.MOVIE, 1, DEFAULT_PAGE_SIZE);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
@@ -35,7 +35,7 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_person() {
-        List<SearchResult> results = getTrakt().search().textQuery("Bryan Cranston", Type.PERSON);
+        List<SearchResult> results = getTrakt().search().textQuery("Bryan Cranston", Type.PERSON, 1, DEFAULT_PAGE_SIZE);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
@@ -45,11 +45,13 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_idLookup() {
-        List<SearchResult> results = getTrakt().search().idLookup(IdType.TVDB, String.valueOf(TestData.SHOW_TVDB_ID));
+        List<SearchResult> results = getTrakt().search().idLookup(IdType.TVDB, String.valueOf(TestData.SHOW_TVDB_ID), 1,
+                DEFAULT_PAGE_SIZE);
         assertThat(results).hasSize(1);
         assertThat(results.get(0).score).isNull();
 
-        results = getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.MOVIE_TMDB_ID));
+        results = getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.MOVIE_TMDB_ID), 1,
+                DEFAULT_PAGE_SIZE);
         assertThat(results).hasSize(1);
         assertThat(results.get(0).score).isNull();
     }

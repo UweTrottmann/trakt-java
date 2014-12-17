@@ -7,5 +7,6 @@ public class SearchResult {
     public Show show;
     public Episode episode;
     public Person person;
+    public List list;
 
 }
