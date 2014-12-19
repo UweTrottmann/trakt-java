@@ -8,6 +8,7 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 import java.util.List;
 
@@ -56,6 +57,8 @@ public interface Episodes {
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @EncodedQuery("extended") Extended extended
     );
 
