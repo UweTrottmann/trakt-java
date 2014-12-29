@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+3.4.0 *(2014-12-29)*
+--------------------
+
+ * Support the [trakt v2 API](http://docs.trakt.apiary.io/).
+ * This version includes the new v2 API (`TraktV2`) aside the old v1 API (`Trakt`), but marked deprecated. Use this for upgrading your code.
+
 3.3.1 *(2014-08-12)*
 --------------------
 
