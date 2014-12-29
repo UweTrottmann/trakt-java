@@ -4,7 +4,7 @@ import com.jakewharton.trakt.BaseTestCase;
 import com.jakewharton.trakt.entities.Activity;
 import org.junit.Test;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ActivityServiceTest extends BaseTestCase {
 

@@ -30,7 +30,10 @@ import retrofit.converter.GsonConverter;
  * <p>
  * Only one {@link retrofit.RestAdapter} instance is created upon the first and re-used for any consequent service
  * method call.
+ *
+ * @deprecated Use {@link com.uwetrottmann.trakt.v2.TraktV2}. Will be removed with next release.
  */
+@Deprecated
 public class Trakt {
 
     /**
@@ -54,7 +57,10 @@ public class Trakt {
 
     /**
      * Create a new manager instance.
+     *
+     * @deprecated Use {@link com.uwetrottmann.trakt.v2.TraktV2}. Will be removed with next release.
      */
+    @Deprecated
     public Trakt() {
     }
 
