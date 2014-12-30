@@ -8,7 +8,7 @@ import com.jakewharton.trakt.enumerations.Status;
 
 import org.junit.Test;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ListServiceTest extends BaseTestCase {
 
