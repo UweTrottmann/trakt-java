@@ -13,10 +13,10 @@
     <groupId>com.uwetrottmann</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0</version>
 
     <name>trakt-java</name>
-    <description>A Java wrapper around the trakt.tv API v2 using retrofit.</description>
+    <description>A Java wrapper around the trakt v2 API using retrofit.</description>
     <url>https://github.com/UweTrottmann/trakt-java/</url>
     <inceptionYear>2013</inceptionYear>
 
@@ -77,12 +77,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
             <scope>test</scope>
         </dependency>
         <dependency>
