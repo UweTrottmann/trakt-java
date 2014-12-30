@@ -24,6 +24,11 @@ public class AuthTest extends BaseTestCase {
 
     @Test
     public void test_getAccessTokenRequest() throws OAuthSystemException {
+        if (TEST_CLIENT_SECRET.isEmpty() || TEST_AUTH_CODE.isEmpty()) {
+            System.out.print("Skipping test_getAccessTokenRequest test, no valid auth data");
+            return;
+        }
+
         OAuthClientRequest request = TraktV2.getAccessTokenRequest(TEST_CLIENT_ID, TEST_CLIENT_SECRET,
                 TEST_REDIRECT_URI, TEST_AUTH_CODE);
         assertThat(request).isNotNull();
@@ -33,10 +38,11 @@ public class AuthTest extends BaseTestCase {
 
     @Test
     public void test_getAccessToken() throws OAuthProblemException, OAuthSystemException {
-        if (TEST_AUTH_CODE.length() == 0) {
-            throw new IllegalArgumentException(
-                    "Make sure you set a temporary auth code to exchange for an access token");
+        if (TEST_CLIENT_SECRET.isEmpty() || TEST_AUTH_CODE.isEmpty()) {
+            System.out.print("Skipping test_getAccessTokenRequest test, no valid auth data");
+            return;
         }
+
         OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                 TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI, TEST_AUTH_CODE);
         assertThat(response.getAccessToken()).isNotEmpty();
