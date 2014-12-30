@@ -17,10 +17,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class AuthTest extends BaseTestCase {
 
-    private static final String TEST_CLIENT_SECRET = "21da158feb52479c53936a48b13e4abe94b907908387d47b70710deb2f4a51fa";
+    private static final String TEST_CLIENT_SECRET = "";
     private static final String TEST_AUTH_CODE = "";
     private static final String TEST_REDIRECT_URI = "http://localhost";
-    private static final String TEST_USERNAME = "uwe";
+    private static final String TEST_USERNAME = "sgtest";
 
     @Test
     public void test_getAccessTokenRequest() throws OAuthSystemException {
