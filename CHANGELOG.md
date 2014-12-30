@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+4.0.0 *(2014-12-30)*
+--------------------
+
+ * Support [the v2 API](http://docs.trakt.apiary.io/) (`TraktV2`).
+ * Removed the v1 API (`Trakt`). For easy upgrading, use trakt-java 3.4.0 for development. Then switch to 4.0.0 once finished.
+
+3.4.0 *(2014-12-30)*
+--------------------
+
+ * Support the [trakt v2 API](http://docs.trakt.apiary.io/).
+ * This version includes the new v2 API (`TraktV2`) aside the old v1 API (`Trakt`), but marked deprecated. Use this for upgrading your code.
+
 3.3.1 *(2014-08-12)*
 --------------------
 

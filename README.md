@@ -13,7 +13,7 @@ Usage
 Add the following dependency to your Gradle project:
 
 ```
-compile 'com.uwetrottmann:trakt-java:3.3.1'
+compile 'com.uwetrottmann:trakt-java:4.0.0'
 ```
 
 Or for Maven:
@@ -22,7 +22,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>3.3.1</version>
+  <version>4.0.0</version>
 </dependency>
 ```
 
@@ -32,9 +32,9 @@ If you rather use the [released jar][3], add dependencies yourself as you see fi
 For example for Gradle:
 
 ```
-compile 'com.squareup.retrofit:retrofit:1.6.1'
-compile 'com.squareup.okhttp:okhttp:2.0.0' // not mandatory, but greatly recommended
-compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0' // not mandatory, but greatly recommended
+compile 'com.squareup.retrofit:retrofit:1.8.0'
+compile 'com.squareup.okhttp:okhttp:2.1.0'
+compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
 ```
 
 Or for Maven:
@@ -43,19 +43,17 @@ Or for Maven:
 <dependency>
     <groupId>com.squareup.retrofit</groupId>
     <artifactId>retrofit</artifactId>
-    <version>1.6.1</version>
+    <version>1.8.0</version>
 </dependency>
-<!-- not mandatory, but greatly recommended: -->
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp</artifactId>
-  <version>2.0.0</version>
+  <version>2.1.0</version>
 </dependency>
-<!-- not mandatory, but greatly recommended: -->
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp-urlconnection</artifactId>
-  <version>2.0.0</version>
+  <version>2.1.0</version>
 </dependency>
 ```
 
