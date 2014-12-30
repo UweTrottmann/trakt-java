@@ -47,12 +47,14 @@ public class SearchTest extends BaseTestCase {
     public void test_idLookup() {
         List<SearchResult> results = getTrakt().search().idLookup(IdType.TVDB, String.valueOf(TestData.SHOW_TVDB_ID), 1,
                 DEFAULT_PAGE_SIZE);
-        assertThat(results).hasSize(1);
+        // episode and show
+        assertThat(results).hasSize(2);
         assertThat(results.get(0).score).isNull();
 
         results = getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.MOVIE_TMDB_ID), 1,
                 DEFAULT_PAGE_SIZE);
-        assertThat(results).hasSize(1);
+        // episode, person and movie
+        assertThat(results).hasSize(3);
         assertThat(results.get(0).score).isNull();
     }
 
