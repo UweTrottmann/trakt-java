@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-3.4.0 *(2014-12-29)*
+3.4.0 *(2014-12-30)*
 --------------------
 
  * Support the [trakt v2 API](http://docs.trakt.apiary.io/).
