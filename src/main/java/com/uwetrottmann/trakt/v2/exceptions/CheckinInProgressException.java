@@ -15,7 +15,11 @@ public class CheckinInProgressException extends Exception {
     public CheckinInProgressException(RetrofitError cause) {
         super("A checkin is already in progress", cause);
 
-        Object body = cause.getBodyAs(CheckinError.class);
+        Object body = null;
+        try {
+            body = cause.getBodyAs(CheckinError.class);
+        } catch (RuntimeException ignored) {
+        }
         if (body != null) {
             CheckinError error = (CheckinError) body;
             expiresAt = error.expires_at;
