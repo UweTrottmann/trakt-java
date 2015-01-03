@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+4.0.2 *(2015-01-03)*
+--------------------
+
+ * Fix crash if check-in blocked error has broken body.
+
 4.0.1 *(2015-01-03)*
 --------------------
 
