@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+4.0.1 *(2015-01-03)*
+--------------------
+
+ * Use production URL for `TraktLink`.
+ * Add `type` property to `SearchResult`.
+
 4.0.0 *(2014-12-30)*
 --------------------
 
