@@ -5,19 +5,16 @@ package com.uwetrottmann.trakt.v2;
  */
 public class TraktLink {
 
-    // TODO Change to https for final release
-    private static final String BASE_URL = "http://v2.trakt.tv";
-
-    private static final String URL_MOVIE = BASE_URL + "/movies/";
-    private static final String URL_SHOW = BASE_URL + "/shows/";
-    private static final String URL_SEASON = BASE_URL + "/seasons/";
-    private static final String URL_EPISODE = BASE_URL + "/episodes/";
-    private static final String URL_PERSON = BASE_URL + "/people/";
-    private static final String URL_COMMENT = BASE_URL + "/comments/";
-    private static final String URL_IMDB = BASE_URL + "/search/imdb/";
-    private static final String URL_TMDB = BASE_URL + "/search/tmdb/";
-    private static final String URL_TVDB = BASE_URL + "/search/tvdb/";
-    private static final String URL_TVRAGE = BASE_URL + "/search/tvrage/";
+    private static final String URL_MOVIE = TraktV2.SITE_URL + "/movies/";
+    private static final String URL_SHOW = TraktV2.SITE_URL + "/shows/";
+    private static final String URL_SEASON = TraktV2.SITE_URL + "/seasons/";
+    private static final String URL_EPISODE = TraktV2.SITE_URL + "/episodes/";
+    private static final String URL_PERSON = TraktV2.SITE_URL + "/people/";
+    private static final String URL_COMMENT = TraktV2.SITE_URL + "/comments/";
+    private static final String URL_IMDB = TraktV2.SITE_URL + "/search/imdb/";
+    private static final String URL_TMDB = TraktV2.SITE_URL + "/search/tmdb/";
+    private static final String URL_TVDB = TraktV2.SITE_URL + "/search/tvdb/";
+    private static final String URL_TVRAGE = TraktV2.SITE_URL + "/search/tvrage/";
 
     private static final String PATH_SEASONS = "/seasons/";
     private static final String PATH_EPISODES = "/episodes/";
