@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+4.0.3 *(2015-01-04)*
+--------------------
+
+ * Only throw `CheckinInProgressException` if using a `checkin` method.
+
 4.0.2 *(2015-01-03)*
 --------------------
 
