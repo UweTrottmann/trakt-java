@@ -22,7 +22,7 @@ public class TraktErrorHandler implements ErrorHandler {
             if (r.getStatus() == 401) {
                 return new OAuthUnauthorizedException(cause);
             }
-            if (r.getStatus() == 409) {
+            if (r.getUrl().endsWith("/checkin") && r.getStatus() == 409) {
                 return new CheckinInProgressException(cause);
             }
         }
