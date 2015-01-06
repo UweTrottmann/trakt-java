@@ -1,37 +1,37 @@
 trakt-java
 ==========
 
-A Java wrapper around the [trakt API][1] using [retrofit][2].
+A Java wrapper around the [trakt v2 API][1] using [retrofit][2].
 
-Remote services are grouped into local service objects which can be centrally
-managed by a `Trakt` instance. It will act as a factory for
+Trakt methods are grouped into service objects which can be centrally
+managed by a `TraktV2` instance. It will act as a factory for
 all of the services and will automatically initialize them with your
-credentials and API key.
+API key (OAuth client id) and optionally a given user access token.
 
 Usage
 =====
 Add the following dependency to your Gradle project:
 
-```
-compile 'com.uwetrottmann:trakt-java:4.0.0'
+```groovy
+compile 'com.uwetrottmann:trakt-java:4.0.3'
 ```
 
 Or for Maven:
 
-```
+```xml
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.3</version>
 </dependency>
 ```
 
 Dependencies
 ------------
-If you rather use the [released jar][3], add dependencies yourself as you see fit.
+If you would rather use the [released jar][3], add dependencies as you see fit.
 For example for Gradle:
 
-```
+```groovy
 compile 'com.squareup.retrofit:retrofit:1.8.0'
 compile 'com.squareup.okhttp:okhttp:2.1.0'
 compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
@@ -39,7 +39,7 @@ compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
 
 Or for Maven:
 
-```
+```xml
 <dependency>
     <groupId>com.squareup.retrofit</groupId>
     <artifactId>retrofit</artifactId>
@@ -57,41 +57,48 @@ Or for Maven:
 </dependency>
 ```
 
-Calling endpoints
+Calling methods
 -----------------
 
-    Trakt trakt = new Trakt();
-    trakt.setAuthentication("username", "sha1_of_password");
-    trakt.setApiKey("api_key");
-    
-    // Create service instance
-    ShowService showService = trakt.showService();
+Calling methods is easy, but make sure to do it on a background thread
+(there will be network activity). When using methods that require authentication,
+make sure to set a valid [OAuth 2.0][4] access token obtained from trakt.
 
-    // Get trending shows on trakt
-    List<TvShow> shows = showService.trending();
-    for (TvShow show : shows) {
-    	System.out.println("Title: " + show.title);
+`TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
+
+You also might want to look at how [retrofit][2] works and can be customized.
+
+```java
+// Setup service manager
+TraktV2 trakt = new TraktV2();
+trakt.setApiKey("api_key");
+// trakt.setAccessToken("oauth_access_token"); // optional, see docs if required
+
+// Create service instance
+Shows traktShows = trakt.shows();
+
+try {
+    // Get trending shows
+    List<TrendingShow> shows = traktShows.trending(1, 10, Extended.FULLIMAGES);
+    for (TrendingShow trending : shows) {
+        System.out.println("Title: " + trending.show.title);
     }
-    
-    // Post an episode as seen
-    Response response = showService.episodeSeen(new ShowService.Episodes(
-        153021 // TVDb id of show, 1 // season, 1 // episode
-    ));
-    if (response != null && response.status == Status.SUCCESS) {
-        System.out.println("Successfully checked into show.");
-    }
+} catch (RetrofitError e) {
+    // TODO: handle
+}
+```
 
 See test cases in `src/test/` for more examples.
 
 Original Implementation
 =======================
 
-* [trakt-java][3] by Jake Wharton - @JakeWharton
+* [trakt-java][5] by Jake Wharton
 
 License
 =======
 
-    Copyright 2013-2014 Uwe Trottmann
+    Copyright 2013-2015 Uwe Trottmann
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -108,8 +115,8 @@ License
 
 
 
- [1]: http://trakt.tv/api-docs
- [2]: https://github.com/square/retrofit
- [3]: https://github.com/JakeWharton/trakt-java/
- [4]: https://github.com/UweTrottmann/trakt-java/releases
- [5]: https://github.com/square/okhttp
+ [1]: http://docs.trakt.apiary.io/
+ [2]: http://square.github.io/retrofit/
+ [3]: https://github.com/UweTrottmann/trakt-java/releases
+ [4]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
+ [5]: https://github.com/JakeWharton/trakt-java/
