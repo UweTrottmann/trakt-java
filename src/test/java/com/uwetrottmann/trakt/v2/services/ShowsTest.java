@@ -4,12 +4,16 @@ import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Credits;
+import com.uwetrottmann.trakt.v2.entities.EpisodeWatched;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
+import com.uwetrottmann.trakt.v2.entities.SeasonWatchedProgress;
 import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.ShowWatchedProgress;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.Type;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.junit.Test;
 
 import java.util.List;
@@ -102,6 +106,33 @@ public class ShowsTest extends BaseTestCase {
     public void test_ratings() {
         Ratings ratings = getTrakt().shows().ratings(TestData.SHOW_SLUG);
         assertRatings(ratings);
+    }
+
+    @Test
+    public void test_watched_progress() throws OAuthUnauthorizedException {
+        ShowWatchedProgress progress = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG);
+        assertWatchedProgress(progress);
+    }
+
+    private void assertWatchedProgress(ShowWatchedProgress progress) {
+        assertThat(progress).isNotNull();
+        assertThat(progress.aired).isGreaterThan(60);
+        assertThat(progress.completed).isGreaterThan(10);
+        assertThat(progress.next_episode).isNotNull();
+
+        assertThat(progress.seasons).isNotNull();
+        assertThat(progress.seasons.size()).isGreaterThan(4);
+
+        SeasonWatchedProgress season = progress.seasons.get(0);
+        assertThat(season.number).isEqualTo(1);
+        assertThat(season.aired).isGreaterThan(0);
+        assertThat(season.completed).isGreaterThan(0);
+        assertThat(season.episodes).isNotNull();
+
+        EpisodeWatched episode = season.episodes.get(0);
+        assertThat(episode.number).isGreaterThan(0);
+        assertThat(episode.completed).isTrue();
+
     }
 
 }
