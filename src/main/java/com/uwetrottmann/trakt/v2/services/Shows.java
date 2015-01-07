@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.entities.ShowWatchedProgress;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -95,15 +95,15 @@ public interface Shows {
     /**
      * <b>OAuth Required</b>
      *
-     * Returns watched progress for show including details on all seasons and episodes.
-     * The next_episode will be the next episode the user should watch,
-     * if there are no upcoming episodes it will be set to null.
+     * Returns watched progress for show including details on all seasons and episodes. The {@code next_episode} will be
+     * the next episode the user should watch, if there are no upcoming episodes it will be set to {@code null}.
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}/progress/watched")
-    ShowWatchedProgress watchedProgress(
-            @Path("id") String showId
+    BaseShow watchedProgress(
+            @Path("id") String showId,
+            @Query(value="extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**

@@ -16,6 +16,12 @@ public class BaseShow {
     /** watchlist */
     public DateTime listed_at;
     /** watched */
-    public int plays;
+    public Integer plays;
+    /** progress */
+    public Integer aired;
+    /** progress */
+    public Integer completed;
+    /** progress */
+    public Episode next_episode;
 
 }

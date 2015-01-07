@@ -2,13 +2,13 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
+import com.uwetrottmann.trakt.v2.entities.BaseSeason;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Credits;
-import com.uwetrottmann.trakt.v2.entities.EpisodeWatched;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
-import com.uwetrottmann.trakt.v2.entities.SeasonWatchedProgress;
 import com.uwetrottmann.trakt.v2.entities.Show;
-import com.uwetrottmann.trakt.v2.entities.ShowWatchedProgress;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
@@ -110,29 +110,30 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_watched_progress() throws OAuthUnauthorizedException {
-        ShowWatchedProgress progress = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG);
-        assertWatchedProgress(progress);
+        BaseShow show = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, Extended.DEFAULT_MIN);
+        assertWatchedProgress(show);
     }
 
-    private void assertWatchedProgress(ShowWatchedProgress progress) {
-        assertThat(progress).isNotNull();
-        assertThat(progress.aired).isGreaterThan(60);
-        assertThat(progress.completed).isGreaterThan(10);
-        assertThat(progress.next_episode).isNotNull();
+    private void assertWatchedProgress(BaseShow show) {
+        assertThat(show).isNotNull();
+        assertThat(show.aired).isGreaterThan(60);
+        assertThat(show.completed).isGreaterThan(10);
+        assertThat(show.next_episode).isNotNull();
 
-        assertThat(progress.seasons).isNotNull();
-        assertThat(progress.seasons.size()).isGreaterThan(4);
+        // Breaking Bad has 5 seasons
+        assertThat(show.seasons).hasSize(5);
 
-        SeasonWatchedProgress season = progress.seasons.get(0);
+        BaseSeason season = show.seasons.get(0);
         assertThat(season.number).isEqualTo(1);
-        assertThat(season.aired).isGreaterThan(0);
-        assertThat(season.completed).isGreaterThan(0);
-        assertThat(season.episodes).isNotNull();
+        // all aired
+        assertThat(season.aired).isEqualTo(7);
+        // always at least 1 watched
+        assertThat(season.completed).isGreaterThan(1);
 
-        EpisodeWatched episode = season.episodes.get(0);
-        assertThat(episode.number).isGreaterThan(0);
+        // episode 1 should always be watched
+        BaseEpisode episode = season.episodes.get(0);
+        assertThat(episode.number).isEqualTo(1);
         assertThat(episode.completed).isTrue();
-
     }
 
 }
