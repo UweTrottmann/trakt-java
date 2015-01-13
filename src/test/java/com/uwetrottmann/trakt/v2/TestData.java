@@ -21,6 +21,7 @@ public interface TestData {
     public String EPISODE_TITLE = "Pilot";
     public int EPISODE_SEASON = 1;
     public int EPISODE_NUMBER = 1;
+    public int EPISODE_TRAKT_ID = 73482;
     public int EPISODE_TVDB_ID = 349232;
     public String EPISODE_IMDB_ID = "tt0959621";
     public int EPISODE_TMDB_ID = 62085;

@@ -37,24 +37,24 @@ public class CheckinTest extends BaseTestCase {
         } catch (CheckinInProgressException e) {
             fail("Check-in still in progress, may be left over from failed test");
         }
+
+        // delete check-in first
+        test_checkin_delete();
+
         assertThat(response).isNotNull();
         // episode should be over in less than an hour
         assertThat(response.watched_at).isBefore(new DateTime().plusHours(1));
         assertThat(response.episode).isNotNull();
         assertThat(response.episode.ids).isNotNull();
-        assertThat(response.episode.ids.trakt).isEqualTo(16);
+        assertThat(response.episode.ids.trakt).isEqualTo(TestData.EPISODE_TRAKT_ID);
+        assertThat(response.episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
         assertThat(response.show).isNotNull();
-
-        test_checkin_delete();
     }
 
     private static EpisodeCheckin buildEpisodeCheckin() {
-        ShareSettings shareSettings = new ShareSettings();
-        shareSettings.facebook = true;
-
-        return new EpisodeCheckin.Builder(new SyncEpisode().id(EpisodeIds.trakt(16)), APP_VERSION, APP_DATE)
+        return new EpisodeCheckin.Builder(new SyncEpisode().id(EpisodeIds.tvdb(TestData.EPISODE_TVDB_ID)), APP_VERSION,
+                APP_DATE)
                 .message("This is a toasty episode!")
-                .sharing(shareSettings)
                 .build();
     }
 

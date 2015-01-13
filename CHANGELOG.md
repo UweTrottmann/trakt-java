@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+4.1.0 *(2015-01-13)*
+--------------------
+
+ * Add `last_watched_at` property to `BaseMovie` (e.g. for getting watched movies).
+ * Added [show watched progress](http://docs.trakt.apiary.io/#reference/shows/watched-progress/get-show-watched-progress) to the Shows service. Thanks @oprisnik!
+
 4.0.3 *(2015-01-04)*
 --------------------
 
