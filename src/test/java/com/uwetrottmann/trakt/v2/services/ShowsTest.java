@@ -2,6 +2,9 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.BaseEpisode;
+import com.uwetrottmann.trakt.v2.entities.BaseSeason;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
@@ -10,6 +13,7 @@ import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.Type;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.junit.Test;
 
 import java.util.List;
@@ -102,6 +106,34 @@ public class ShowsTest extends BaseTestCase {
     public void test_ratings() {
         Ratings ratings = getTrakt().shows().ratings(TestData.SHOW_SLUG);
         assertRatings(ratings);
+    }
+
+    @Test
+    public void test_watched_progress() throws OAuthUnauthorizedException {
+        BaseShow show = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, Extended.DEFAULT_MIN);
+        assertWatchedProgress(show);
+    }
+
+    private void assertWatchedProgress(BaseShow show) {
+        assertThat(show).isNotNull();
+        assertThat(show.aired).isGreaterThan(60);
+        assertThat(show.completed).isGreaterThan(10);
+        assertThat(show.next_episode).isNotNull();
+
+        // Breaking Bad has 5 seasons
+        assertThat(show.seasons).hasSize(5);
+
+        BaseSeason season = show.seasons.get(0);
+        assertThat(season.number).isEqualTo(1);
+        // all aired
+        assertThat(season.aired).isEqualTo(7);
+        // always at least 1 watched
+        assertThat(season.completed).isGreaterThan(1);
+
+        // episode 1 should always be watched
+        BaseEpisode episode = season.episodes.get(0);
+        assertThat(episode.number).isEqualTo(1);
+        assertThat(episode.completed).isTrue();
     }
 
 }

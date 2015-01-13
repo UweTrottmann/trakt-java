@@ -60,6 +60,7 @@ public class BaseTestCase {
                     break;
                 case "watched":
                     assertThat(movie.plays).isPositive();
+                    assertThat(movie.last_watched_at).isNotNull();
                     break;
                 case "watchlist":
                     assertThat(movie.listed_at).isNotNull();

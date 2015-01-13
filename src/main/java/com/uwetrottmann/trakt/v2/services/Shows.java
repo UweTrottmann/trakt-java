@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt.v2.services;
 
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Credits;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
@@ -7,6 +8,7 @@ import com.uwetrottmann.trakt.v2.entities.Show;
 import com.uwetrottmann.trakt.v2.entities.Translation;
 import com.uwetrottmann.trakt.v2.entities.TrendingShow;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -89,6 +91,20 @@ public interface Shows {
             @Query("limit") Integer limit,
             @EncodedQuery("extended") Extended extended
     );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * Returns watched progress for show including details on all seasons and episodes. The {@code next_episode} will be
+     * the next episode the user should watch, if there are no upcoming episodes it will be set to {@code null}.
+     *
+     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     */
+    @GET("/shows/{id}/progress/watched")
+    BaseShow watchedProgress(
+            @Path("id") String showId,
+            @Query(value="extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
 
     /**
      * Returns all actors, directors, writers, and producers for a show.
