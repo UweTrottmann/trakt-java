@@ -20,6 +20,7 @@ import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.ListPrivacy;
+import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
@@ -176,7 +177,7 @@ public class UsersTest extends BaseTestCase {
                 Extended.DEFAULT_MIN);
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isEqualTo(10);
+            assertThat(movie.rating).isEqualTo(Rating.TOTALLYNINJA);
         }
     }
 
