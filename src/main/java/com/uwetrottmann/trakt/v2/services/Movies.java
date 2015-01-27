@@ -7,7 +7,6 @@ import com.uwetrottmann.trakt.v2.entities.MovieTranslation;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.entities.TrendingMovie;
 import com.uwetrottmann.trakt.v2.enums.Extended;
-import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -26,7 +25,7 @@ public interface Movies {
     List<Movie> popular(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     );
 
     /**
@@ -39,7 +38,7 @@ public interface Movies {
     List<TrendingMovie> trending(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     );
 
     /**
@@ -50,7 +49,7 @@ public interface Movies {
     @GET("/movies/{id}")
     Movie summary(
             @Path("id") String movieId,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     );
 
     /**
@@ -87,7 +86,7 @@ public interface Movies {
             @Path("id") String movieId,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     );
 
     /**

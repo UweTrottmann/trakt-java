@@ -14,10 +14,10 @@ import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.http.Body;
-import retrofit.http.EncodedPath;
-import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public interface Sync {
      */
     @GET("/sync/collection/movies")
     List<BaseMovie> collectionMovies(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -52,7 +52,7 @@ public interface Sync {
      */
     @GET("/sync/collection/shows")
     List<BaseShow> collectionShows(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -86,7 +86,7 @@ public interface Sync {
      */
     @GET("/sync/watched/movies")
     List<BaseMovie> watchedMovies(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -96,7 +96,7 @@ public interface Sync {
      */
     @GET("/sync/watched/shows")
     List<BaseShow> watchedShows(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -136,8 +136,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/movies{rating}")
     List<RatedMovie> ratingsMovies(
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -149,8 +149,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/shows{rating}")
     List<RatedShow> ratingsShows(
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -162,8 +162,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/seasons{rating}")
     List<RatedSeason> ratingsSeasons(
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -175,8 +175,8 @@ public interface Sync {
      */
     @GET("/sync/ratings/episodes{rating}")
     List<RatedEpisode> ratingsEpisodes(
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -212,7 +212,7 @@ public interface Sync {
      */
     @GET("/sync/watchlist/movies")
     List<BaseMovie> watchlistMovies(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -223,7 +223,7 @@ public interface Sync {
      */
     @GET("/sync/watchlist/shows")
     List<BaseShow> watchlistShows(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -234,7 +234,7 @@ public interface Sync {
      */
     @GET("/sync/watchlist/episodes")
     List<WatchlistedEpisode> watchlistEpisodes(
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**

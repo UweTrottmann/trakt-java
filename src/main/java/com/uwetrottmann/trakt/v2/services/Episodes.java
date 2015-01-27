@@ -4,7 +4,6 @@ import com.uwetrottmann.trakt.v2.entities.Comment;
 import com.uwetrottmann.trakt.v2.entities.Episode;
 import com.uwetrottmann.trakt.v2.entities.Ratings;
 import com.uwetrottmann.trakt.v2.enums.Extended;
-import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -25,7 +24,7 @@ public interface Episodes {
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     );
 
     /**
@@ -42,7 +41,7 @@ public interface Episodes {
             @Path("episode") int episode,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     );
 
     /**

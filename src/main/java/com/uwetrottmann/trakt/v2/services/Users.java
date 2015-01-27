@@ -1,8 +1,8 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.ListEntry;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
 import com.uwetrottmann.trakt.v2.entities.RatedMovie;
@@ -18,8 +18,6 @@ import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
-import retrofit.http.EncodedPath;
-import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
@@ -50,7 +48,7 @@ public interface Users {
     @GET("/users/{username}")
     User profile(
             @Path("username") String username,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -64,7 +62,7 @@ public interface Users {
     @GET("/users/{username}/collection/movies")
     List<BaseMovie> collectionMovies(
             @Path("username") String username,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -78,7 +76,7 @@ public interface Users {
     @GET("/users/{username}/collection/shows")
     List<BaseShow> collectionShows(
             @Path("username") String username,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -135,7 +133,7 @@ public interface Users {
     List<ListEntry> listItems(
             @Path("username") String username,
             @Path("id") String id,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -176,7 +174,7 @@ public interface Users {
             @Path("username") String username,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -193,7 +191,7 @@ public interface Users {
             @Path("username") String username,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -207,8 +205,8 @@ public interface Users {
     @GET("/users/{username}/ratings/movies{rating}")
     List<RatedMovie> ratingsMovies(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -222,8 +220,8 @@ public interface Users {
     @GET("/users/{username}/ratings/shows{rating}")
     List<RatedShow> ratingsShows(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -237,8 +235,8 @@ public interface Users {
     @GET("/users/{username}/ratings/seasons{rating}")
     List<RatedSeason> ratingsSeasons(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -252,8 +250,8 @@ public interface Users {
     @GET("/users/{username}/ratings/episodes{rating}")
     List<RatedEpisode> ratingsEpisodes(
             @Path("username") String username,
-            @EncodedPath("rating") RatingsFilter filter,
-            @EncodedQuery("extended") Extended extended
+            @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -266,7 +264,7 @@ public interface Users {
     @GET("/users/{username}/watched/movies")
     List<BaseMovie> watchedMovies(
             @Path("username") String username,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
@@ -279,7 +277,7 @@ public interface Users {
     @GET("/users/{username}/watched/shows")
     List<BaseShow> watchedShows(
             @Path("username") String username,
-            @EncodedQuery("extended") Extended extended
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
 }

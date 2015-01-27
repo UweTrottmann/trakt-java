@@ -1,7 +1,7 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import com.uwetrottmann.trakt.v2.entities.Comment;
+import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
