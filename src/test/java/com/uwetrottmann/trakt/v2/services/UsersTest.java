@@ -2,6 +2,8 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.Follower;
+import com.uwetrottmann.trakt.v2.entities.Friend;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
@@ -139,6 +141,33 @@ public class UsersTest extends BaseTestCase {
         response = getTrakt().users().deleteListItems("me", String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), items);
         assertThat(response.deleted.shows).isEqualTo(1);
         assertThat(response.deleted.movies).isEqualTo(1);
+    }
+
+    @Test
+         public void test_followers() throws OAuthUnauthorizedException {
+        List<Follower> followers = getTrakt().users().followers(TestData.USERNAME, Extended.DEFAULT_MIN);
+        for (Follower follower : followers) {
+            assertThat(follower.followed_at).isNotNull();
+            assertThat(follower.user).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_following() throws OAuthUnauthorizedException {
+        List<Follower> following = getTrakt().users().following(TestData.USERNAME, Extended.DEFAULT_MIN);
+        for (Follower follower : following) {
+            assertThat(follower.followed_at).isNotNull();
+            assertThat(follower.user).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_friends() throws OAuthUnauthorizedException {
+        List<Friend> friends = getTrakt().users().friends(TestData.USERNAME, Extended.DEFAULT_MIN);
+        for (Friend friend : friends) {
+            assertThat(friend.friends_at).isNotNull();
+            assertThat(friend.user).isNotNull();
+        }
     }
 
     @Test

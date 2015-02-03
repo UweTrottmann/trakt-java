@@ -2,6 +2,8 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.entities.Follower;
+import com.uwetrottmann.trakt.v2.entities.Friend;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
 import com.uwetrottmann.trakt.v2.entities.ListEntry;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -158,6 +160,40 @@ public interface Users {
             @Path("username") String username,
             @Path("id") String id,
             @Body SyncItems items
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Returns all followers including when the relationship began.
+     */
+    @GET("/users/{username}/followers")
+    List<Follower> followers(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Returns all user's they follow including when the relationship began.
+     */
+    @GET("/users/{username}/following")
+    List<Follower> following(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p> Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship
+     * where each user follows the other.
+     */
+    @GET("/users/{username}/friends")
+    List<Friend> friends(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
     /**
