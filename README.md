@@ -32,9 +32,9 @@ If you would rather use the [released jar][3], add dependencies as you see fit.
 For example for Gradle:
 
 ```groovy
-compile 'com.squareup.retrofit:retrofit:1.8.0'
-compile 'com.squareup.okhttp:okhttp:2.1.0'
-compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+compile 'com.squareup.retrofit:retrofit:1.9.0'
+compile 'com.squareup.okhttp:okhttp:2.2.0'
+compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
 ```
 
 Or for Maven:
@@ -43,17 +43,17 @@ Or for Maven:
 <dependency>
     <groupId>com.squareup.retrofit</groupId>
     <artifactId>retrofit</artifactId>
-    <version>1.8.0</version>
+    <version>1.9.0</version>
 </dependency>
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp</artifactId>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
 </dependency>
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp-urlconnection</artifactId>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
 </dependency>
 ```
 
