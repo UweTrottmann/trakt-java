@@ -3,7 +3,6 @@ package com.uwetrottmann.trakt.v2.services;
 import com.uwetrottmann.trakt.v2.entities.SearchResult;
 import com.uwetrottmann.trakt.v2.enums.IdType;
 import com.uwetrottmann.trakt.v2.enums.Type;
-import retrofit.http.EncodedQuery;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
@@ -34,8 +33,8 @@ public interface Search {
      */
     @GET("/search")
     List<SearchResult> idLookup(
-            @EncodedQuery("id_type") IdType idType,
-            @EncodedQuery("id") String id,
+            @Query(value = "id_type", encodeValue = false) IdType idType,
+            @Query(value = "id", encodeValue = false) String id,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );
