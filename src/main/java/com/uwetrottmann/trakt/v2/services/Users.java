@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.entities.Followed;
 import com.uwetrottmann.trakt.v2.entities.Follower;
 import com.uwetrottmann.trakt.v2.entities.Friend;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
@@ -163,9 +164,32 @@ public interface Users {
     ) throws OAuthUnauthorizedException;
 
     /**
+     * <b>OAuth Required</b>
+     *
+     * <p>If the user has a private profile, the follow request will require approval (approved_at will be null). If a
+     * user is public, they will be followed immediately (approved_at will have a date).
+     *
+     * <p>Note: If this user is already being followed, a 409 HTTP status code will returned.
+     */
+    @POST("/users/{username}/follow")
+    Followed follow(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>Unfollow someone you already follow.
+     */
+    @DELETE("/users/{username}/follow")
+    Response unfollow(
+            @Path("username") String username
+    ) throws OAuthUnauthorizedException;
+
+    /**
      * <b>OAuth Optional</b>
      *
-     * <p> Returns all followers including when the relationship began.
+     * <p>Returns all followers including when the relationship began.
      */
     @GET("/users/{username}/followers")
     List<Follower> followers(
@@ -176,7 +200,7 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      *
-     * <p> Returns all user's they follow including when the relationship began.
+     * <p>Returns all user's they follow including when the relationship began.
      */
     @GET("/users/{username}/following")
     List<Follower> following(
@@ -187,8 +211,8 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      *
-     * <p> Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship
-     * where each user follows the other.
+     * <p>Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship where
+     * each user follows the other.
      */
     @GET("/users/{username}/friends")
     List<Friend> friends(
