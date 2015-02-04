@@ -35,6 +35,8 @@ For example for Gradle:
 compile 'com.squareup.retrofit:retrofit:1.9.0'
 compile 'com.squareup.okhttp:okhttp:2.2.0'
 compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0'
+compile 'joda-time:joda-time:2.7'
 ```
 
 Or for Maven:
@@ -54,6 +56,16 @@ Or for Maven:
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp-urlconnection</artifactId>
   <version>2.2.0</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.oltu.oauth2</groupId>
+    <artifactId>org.apache.oltu.oauth2.client</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>joda-time</groupId>
+    <artifactId>joda-time</artifactId>
+    <version>2.7</version>
 </dependency>
 ```
 
