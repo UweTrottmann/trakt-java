@@ -13,7 +13,7 @@ Usage
 Add the following dependency to your Gradle project:
 
 ```groovy
-compile 'com.uwetrottmann:trakt-java:4.1.0'
+compile 'com.uwetrottmann:trakt-java:4.2.0'
 ```
 
 Or for Maven:
@@ -22,7 +22,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>4.1.0</version>
+  <version>4.2.0</version>
 </dependency>
 ```
 
@@ -32,9 +32,11 @@ If you would rather use the [released jar][3], add dependencies as you see fit.
 For example for Gradle:
 
 ```groovy
-compile 'com.squareup.retrofit:retrofit:1.8.0'
-compile 'com.squareup.okhttp:okhttp:2.1.0'
-compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
+compile 'com.squareup.retrofit:retrofit:1.9.0'
+compile 'com.squareup.okhttp:okhttp:2.2.0'
+compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0'
+compile 'joda-time:joda-time:2.7'
 ```
 
 Or for Maven:
@@ -43,17 +45,27 @@ Or for Maven:
 <dependency>
     <groupId>com.squareup.retrofit</groupId>
     <artifactId>retrofit</artifactId>
-    <version>1.8.0</version>
+    <version>1.9.0</version>
 </dependency>
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp</artifactId>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
 </dependency>
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp-urlconnection</artifactId>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.oltu.oauth2</groupId>
+    <artifactId>org.apache.oltu.oauth2.client</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>joda-time</groupId>
+    <artifactId>joda-time</artifactId>
+    <version>2.7</version>
 </dependency>
 ```
 

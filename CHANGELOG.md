@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+4.2.0 *(2015-02-04)*
+--------------------
+
+ * Add [users/follow](http://docs.trakt.apiary.io/#reference/users/follow/follow-this-user),
+   [users/unfollow](http://docs.trakt.apiary.io/#reference/users/follow/unfollow-this-user),
+   [users/followers](http://docs.trakt.apiary.io/#reference/users/followers/get-followers),
+   [users/followed](http://docs.trakt.apiary.io/#reference/users/following/get-following),
+   [users/friends](http://docs.trakt.apiary.io/#reference/users/friends/get-friends).
+ * Use [new retrofit parameterized path and query annotations](https://github.com/UweTrottmann/trakt-java/issues/40).
+ * Update dependencies.
+
 4.1.0 *(2015-01-13)*
 --------------------
 
