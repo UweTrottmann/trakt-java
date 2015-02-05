@@ -15,13 +15,13 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_movies() throws OAuthUnauthorizedException {
-        List<Movie> movies = getTrakt().recommendations().movies(Extended.FULLIMAGES);
+        List<Movie> movies = getTrakt().recommendations().movies(Extended.DEFAULT_MIN);
         assertThat(movies).isNotEmpty();
     }
 
     @Test
     public void test_shows() throws OAuthUnauthorizedException {
-        List<Show> shows = getTrakt().recommendations().shows(Extended.FULLIMAGES);
+        List<Show> shows = getTrakt().recommendations().shows(Extended.DEFAULT_MIN);
         assertThat(shows).isNotEmpty();
     }
 

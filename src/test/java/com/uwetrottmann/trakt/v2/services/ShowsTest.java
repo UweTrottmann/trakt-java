@@ -24,7 +24,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_popular() {
-        List<Show> shows = getTrakt().shows().popular(2, null, Extended.FULLIMAGES);
+        List<Show> shows = getTrakt().shows().popular(2, null, Extended.DEFAULT_MIN);
         assertThat(shows.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (Show show : shows) {
             assertShowNotNull(show);
@@ -33,7 +33,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_trending() {
-        List<TrendingShow> shows = getTrakt().shows().trending(1, null, Extended.FULLIMAGES);
+        List<TrendingShow> shows = getTrakt().shows().trending(1, null, Extended.DEFAULT_MIN);
         assertThat(shows.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingShow show : shows) {
             assertThat(show.watchers).isNotNull();
