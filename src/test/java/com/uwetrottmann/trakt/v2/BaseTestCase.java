@@ -73,9 +73,10 @@ public class BaseTestCase {
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
             if ("collection".equals(type)) {
-                assertThat(show.collected_at).isNotNull();
+                assertThat(show.last_collected_at).isNotNull();
             } else if ("watched".equals(type)) {
                 assertThat(show.plays).isPositive();
+                assertThat(show.last_watched_at).isNotNull();
             }
 
             for (BaseSeason season : show.seasons) {

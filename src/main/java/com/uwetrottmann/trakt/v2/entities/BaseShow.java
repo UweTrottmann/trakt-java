@@ -12,11 +12,12 @@ public class BaseShow {
     public List<BaseSeason> seasons;
 
     /** collection */
-    public DateTime collected_at;
+    public DateTime last_collected_at;
     /** watchlist */
     public DateTime listed_at;
     /** watched */
     public Integer plays;
+    public DateTime last_watched_at;
     /** progress */
     public Integer aired;
     /** progress */
