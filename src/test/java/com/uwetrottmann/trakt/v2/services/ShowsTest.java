@@ -91,7 +91,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_comments() {
-        List<Comment> comments = getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null, Extended.IMAGES);
+        List<Comment> comments = getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null, Extended.DEFAULT_MIN);
         assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
     }
 
