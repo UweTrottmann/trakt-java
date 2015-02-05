@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+4.2.1 *(2015-02-05)*
+--------------------
+
+ * switch to [new API endpoint](http://docs.trakt.apiary.io/#introduction/api-url) `https://api-v2launch.trakt.tv` from `https://api.trakt.tv`
+ * For `BaseShow`, `collected_at` is now `last_collected_at`, added `last_watched_at`.
+ * Tests allow empty cast character name.
+
 4.2.0 *(2015-02-04)*
 --------------------
 
