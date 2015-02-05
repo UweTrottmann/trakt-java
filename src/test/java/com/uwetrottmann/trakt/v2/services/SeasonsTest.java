@@ -22,7 +22,7 @@ public class SeasonsTest extends BaseTestCase {
 
     @Test
     public void test_season() {
-        List<Episode> season = getTrakt().seasons().season(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, Extended.FULLIMAGES);
+        List<Episode> season = getTrakt().seasons().season(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, Extended.DEFAULT_MIN);
         assertThat(season).isNotEmpty();
         for (Episode episode : season) {
             assertThat(episode.season).isEqualTo(TestData.EPISODE_SEASON);
