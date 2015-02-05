@@ -73,9 +73,10 @@ public class BaseTestCase {
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
             if ("collection".equals(type)) {
-                assertThat(show.collected_at).isNotNull();
+                assertThat(show.last_collected_at).isNotNull();
             } else if ("watched".equals(type)) {
                 assertThat(show.plays).isPositive();
+                assertThat(show.last_watched_at).isNotNull();
             }
 
             for (BaseSeason season : show.seasons) {
@@ -95,7 +96,7 @@ public class BaseTestCase {
 
     public void assertCast(Credits credits, Type type) {
         for (CastMember castMember : credits.cast) {
-            assertThat(castMember.character).isNotEmpty();
+            assertThat(castMember.character).isNotNull();
             if (type == Type.SHOW) {
                 assertThat(castMember.movie).isNull();
                 assertThat(castMember.show).isNotNull();

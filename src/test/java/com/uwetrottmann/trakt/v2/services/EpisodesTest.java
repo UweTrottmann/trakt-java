@@ -26,7 +26,7 @@ public class EpisodesTest extends BaseTestCase {
     @Test
     public void test_comments() {
         getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER,
-                1, DEFAULT_PAGE_SIZE, Extended.IMAGES);
+                1, DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN);
     }
 
     @Test
