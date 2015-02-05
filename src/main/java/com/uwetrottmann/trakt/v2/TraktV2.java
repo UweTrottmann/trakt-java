@@ -50,7 +50,7 @@ public class TraktV2 {
      * trakt API v2 URL.
      */
     public static final String SITE_URL = "https://trakt.tv";
-    public static final String API_URL = "https://api.trakt.tv";
+    public static final String API_URL = "https://api-v2launch.trakt.tv";
     public static final String HEADER_TRAKT_API_VERSION_2 = "2";
     public static final String HEADER_CONTENT_TYPE_JSON = "application/json";
 
