@@ -1,11 +1,121 @@
 Change Log
 ==========
 
-1.4.0 *(In Development)*
+4.2.1 *(2015-02-05)*
+--------------------
+
+ * switch to [new API endpoint](http://docs.trakt.apiary.io/#introduction/api-url) `https://api-v2launch.trakt.tv` from `https://api.trakt.tv`
+ * For `BaseShow`, `collected_at` is now `last_collected_at`, added `last_watched_at`.
+ * Tests allow empty cast character name.
+
+4.2.0 *(2015-02-04)*
+--------------------
+
+ * Add [users/follow](http://docs.trakt.apiary.io/#reference/users/follow/follow-this-user),
+   [users/unfollow](http://docs.trakt.apiary.io/#reference/users/follow/unfollow-this-user),
+   [users/followers](http://docs.trakt.apiary.io/#reference/users/followers/get-followers),
+   [users/followed](http://docs.trakt.apiary.io/#reference/users/following/get-following),
+   [users/friends](http://docs.trakt.apiary.io/#reference/users/friends/get-friends).
+ * Use [new retrofit parameterized path and query annotations](https://github.com/UweTrottmann/trakt-java/issues/40).
+ * Update dependencies.
+
+4.1.0 *(2015-01-13)*
+--------------------
+
+ * Add `last_watched_at` property to `BaseMovie` (e.g. for getting watched movies).
+ * Added [show watched progress](http://docs.trakt.apiary.io/#reference/shows/watched-progress/get-show-watched-progress) to the Shows service. Thanks @oprisnik!
+
+4.0.3 *(2015-01-04)*
+--------------------
+
+ * Only throw `CheckinInProgressException` if using a `checkin` method.
+
+4.0.2 *(2015-01-03)*
+--------------------
+
+ * Fix crash if check-in blocked error has broken body.
+
+4.0.1 *(2015-01-03)*
+--------------------
+
+ * Use production URL for `TraktLink`.
+ * Add `type` property to `SearchResult`.
+
+4.0.0 *(2014-12-30)*
+--------------------
+
+ * Support [the v2 API](http://docs.trakt.apiary.io/) (`TraktV2`).
+ * Removed the v1 API (`Trakt`). For easy upgrading, use trakt-java 3.4.0 for development. Then switch to 4.0.0 once finished.
+
+3.4.0 *(2014-12-30)*
+--------------------
+
+ * Support the [trakt v2 API](http://docs.trakt.apiary.io/).
+ * This version includes the new v2 API (`TraktV2`) aside the old v1 API (`Trakt`), but marked deprecated. Use this for upgrading your code.
+
+3.3.1 *(2014-08-12)*
+--------------------
+
+ * Fix `show/summary` not returning user data with default extended flag
+   (URL had trailing `/`, causing redirect, stripping auth header).
+ * Remove trailing `/` on all other methods using either `Extended` or `Extended2` flag.
+
+3.3.0 *(2014-08-12)*
+--------------------
+
+ * Easier customization of `RestAdapter`: set your own HTTP client or executor by overriding `newRestAdapterBuilder()`.
+ * Add `okhttp` and `okhttp-urlconnection` 2.0.0 as optional dependencies.
+ * Require Java 1.7.
+
+3.2.1 *(2014-08-10)*
+--------------------
+
+ * Use HTTPS.
+ * Use okhttp 1.6.0.
+ * Update to [retrofit][1] 1.6.1.
+
+3.2.0 *(2014-04-26)*
+--------------------
+
+ * Added `activity/friends`.
+ * Update to [retrofit][1] 1.5.0.
+
+3.1.0 *(2014-03-15)*
+--------------------
+
+ * Added `user/progress/watched` and `user/progress/collected` endpoints. Thanks @samicemalone!
+ * Added `search/movies`. Thanks @porzione!
+ * Change fest dependency scope to `test`.
+
+3.0.0 *(2014-02-13)*
+------------------------
+There were some API breaking changes due to the introduction of a new `Extended` enum.
+E.g. instead of calling `libraryShowsAllMinimum(username)` call `libraryShowsAll(username, Extended.MIN)`.
+ * `ExtendedParam` replaced with `Extended`, adds a `DEFAULT` value.
+ * `user/library/shows` endpoints add `Extended` param, `-Minimum` and `-Extended` versions are dropped.
+ * Added `user/library/movies/` endpoints.
+ * Added `movie/related` endpoint.
+ * Added `show/summaries` and `movie/summaries`.
+ * Added `user/calendar/shows` endpoint.
+ * Add `last_updated` field.
+ * Support `MovieComment` with TMDb id.
+ * Use [retrofit][1] 1.4.1.
+
+
+2.0.1 *(2013-11-03)*
 ------------------------
 
- * Support 1-10 ratings.
- * Correct `MovieService#checking` to `MovieService#checkin`.
+ * Only create new `RestAdapter` instance when changing auth, API key or debug flag.
+ * Changed tests to use annotations, only setup trakt once per class.
+
+2.0.0 *(2013-10-31)*
+------------------------
+
+ * More or less complete rewrite for retrofit backend. Not all previously supported endpoints are available yet (pull request to add new ones, it's easy!), but there are also new ones previously unsupported.
+ * `ServiceManager` is now just `Trakt`, endpoints do not require you to call `.fire()` anymore either.
+ * For now this is NOT published to a Maven repository, let me know if there is demand.
+ * Start testing with FEST.
+ * Use [retrofit][1] 1.2.2.
 
 
 1.3.0 *(2011-12-13)*
@@ -60,3 +170,5 @@ Change Log
 --------------------
 
 Initial version.
+
+[1]: https://github.com/square/retrofit/blob/master/CHANGELOG.md

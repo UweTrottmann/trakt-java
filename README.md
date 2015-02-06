@@ -1,113 +1,116 @@
 trakt-java
-============
+==========
 
-A Java wrapper around the [Trakt RESTful API][1] and a simple DSL for easy
-interaction.
+A Java wrapper around the [trakt v2 API][1] using [retrofit][2].
 
-Remote services are grouped into local service objects which can be centrally
-managed by a `ServiceManager` instance. The manager will act as a factory for
+Trakt methods are grouped into service objects which can be centrally
+managed by a `TraktV2` instance. It will act as a factory for
 all of the services and will automatically initialize them with your
-credentials and API key.
-
-Each service contains methods which correspond to a remote method. Each of
-these methods instantiates a class that will allow for you to build the
-parameters using the Java builder pattern.
-
-Required remote method parameters will be arguments to the service method and
-all of the methods in the returned builder are optional.
-
-When fully assembled, you can trigger the remote execution by calling the
-`fire()` method. This will return a native object which represents the result
-of the execution. All returned objects are immutable and should be handled
-as such.
-
-
-**WARNING**: The Trakt API has **NO** versioning support so be sure to
-extensively test all API calls!
-
-
+API key (OAuth client id) and optionally a given user access token.
 
 Usage
 =====
+Add the following dependency to your Gradle project:
 
-Quick example:
+```groovy
+compile 'com.uwetrottmann:trakt-java:4.2.1'
+```
 
-    ServiceManager manager = new ServiceManager();
-    manager.setAuthentication("username", "sha1_of_password");
-    manager.setApiKey("api_key");
-    
-    //Recently watched
-    List<MediaEntity> watchedList =
-    	manager.userService().watched("justin").fire();
-    for (MediaEntity watched : watchedList) {
-    	System.out.println("Type: " + watched.getType());
-    	System.out.println("Date: " + watched.getWatched());
-    	
-    	switch (watched.getType()) {
-    		case Movie:
-    			System.out.println("Title: " + watched.getMovie().getTitle());
-    			break;
-    		case TvShow:
-    			System.out.println("Title: " + watched.getShow().getTitle());
-    			System.out.println("Ep.#: " + watched.getEpisode().getTitle());
-    			break;
-    	}
-    	System.out.println();
-    }
-    
-    //Upcoming show episodes
-    Date apocolypse = new Date(2012, 12, 21);
-    List<CalendarDate> calendarShows =
-    	manager.userService().calendarShows("justin").date(apocolypse).days(3).fire();
-    for (CalendarDate calendarDate : calendarShows) {
-    	System.out.println(calendarDate.getDate());
-    	System.out.println("-------------------------");
-    	for (CalendarTvShowEpisode episode : calendarDate.getEpisodes()) {
-    		System.out.print(episode.getShow().getTitle());
-    		System.out.print(" - ");
-    		System.out.print(episode.getEpisode().getSeason());
-    		System.out.print("x");
-    		System.out.print(episode.getEpisode().getNumber());
-    		System.out.print(" - ");
-    		System.out.println(episode.getEpisode().getTitle());
-    	}
-    	System.out.println();
-    }
+Or for Maven:
 
-See the test cases for more examples.
+```xml
+<dependency>
+  <groupId>com.uwetrottmann</groupId>
+  <artifactId>trakt-java</artifactId>
+  <version>4.2.1</version>
+</dependency>
+```
 
-
-Documentation
--------------
-
- * Javadocs are available at [jakewharton.github.com/trakt-java/][2].
- * Repository is hosted on [github.com/JakeWharton/trakt-java/][3].
- * Native API is documented on [trakt.tv/api-docs][1].
-
-Questions, comments, and suggestions should be posted on the [Google Group][5]
-for Jake Wharton's projects.
-
-
-
-Developed By
-============
-
-* Jake Wharton - <jakewharton@gmail.com>
-
-
-Contributors
+Dependencies
 ------------
+If you would rather use the [released jar][3], add dependencies as you see fit.
+For example for Gradle:
 
-The overall package and class layout as well as approximately 50% of the code
-in the `Trakt*` classes are based on [nabeelmukhtar's github-java-sdk
-library][4].
+```groovy
+compile 'com.squareup.retrofit:retrofit:1.9.0'
+compile 'com.squareup.okhttp:okhttp:2.2.0'
+compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0'
+compile 'joda-time:joda-time:2.7'
+```
 
+Or for Maven:
 
+```xml
+<dependency>
+    <groupId>com.squareup.retrofit</groupId>
+    <artifactId>retrofit</artifactId>
+    <version>1.9.0</version>
+</dependency>
+<dependency>
+  <groupId>com.squareup.okhttp</groupId>
+  <artifactId>okhttp</artifactId>
+  <version>2.2.0</version>
+</dependency>
+<dependency>
+  <groupId>com.squareup.okhttp</groupId>
+  <artifactId>okhttp-urlconnection</artifactId>
+  <version>2.2.0</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.oltu.oauth2</groupId>
+    <artifactId>org.apache.oltu.oauth2.client</artifactId>
+    <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>joda-time</groupId>
+    <artifactId>joda-time</artifactId>
+    <version>2.7</version>
+</dependency>
+```
+
+Calling methods
+-----------------
+
+Calling methods is easy, but make sure to do it on a background thread
+(there will be network activity). When using methods that require authentication,
+make sure to set a valid [OAuth 2.0][4] access token obtained from trakt.
+
+`TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
+
+You also might want to look at how [retrofit][2] works and can be customized.
+
+```java
+// Setup service manager
+TraktV2 trakt = new TraktV2();
+trakt.setApiKey("api_key");
+// trakt.setAccessToken("oauth_access_token"); // optional, see docs if required
+
+// Create service instance
+Shows traktShows = trakt.shows();
+
+try {
+    // Get trending shows
+    List<TrendingShow> shows = traktShows.trending(1, 10, Extended.FULLIMAGES);
+    for (TrendingShow trending : shows) {
+        System.out.println("Title: " + trending.show.title);
+    }
+} catch (RetrofitError e) {
+    // TODO: handle
+}
+```
+
+See test cases in `src/test/` for more examples.
+
+Original Implementation
+=======================
+
+* [trakt-java][5] by Jake Wharton
 
 License
 =======
 
-    Copyright 2011 Jake Wharton
+    Copyright 2013-2015 Uwe Trottmann
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -124,8 +127,8 @@ License
 
 
 
- [1]: http://trakt.tv/api-docs
- [2]: http://jakewharton.github.com/trakt-java/
- [3]: https://github.com/JakeWharton/trakt-java/
- [4]: https://github.com/nabeelmukhtar/github-java-sdk
- [5]: https://groups.google.com/forum/#!forum/jakewharton-projects
+ [1]: http://docs.trakt.apiary.io/
+ [2]: http://square.github.io/retrofit/
+ [3]: https://github.com/UweTrottmann/trakt-java/releases
+ [4]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
+ [5]: https://github.com/JakeWharton/trakt-java/
