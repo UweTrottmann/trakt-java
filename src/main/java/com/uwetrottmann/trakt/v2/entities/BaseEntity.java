@@ -13,7 +13,6 @@ public abstract class BaseEntity {
     public Double rating;
     public Integer votes;
     public DateTime updated_at;
-    public Integer votes;
     public Images images;
     public List<String> available_translations;
 
