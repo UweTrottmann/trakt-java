@@ -4,5 +4,7 @@ public class SeasonIds {
 
     public Integer tvdb;
     public Integer tmdb;
+    public Integer trakt;
+    public Integer tvrage;
 
 }

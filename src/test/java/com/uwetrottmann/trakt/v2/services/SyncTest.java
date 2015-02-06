@@ -37,6 +37,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_lastActivites() throws OAuthUnauthorizedException {
         LastActivities lastActivities = getTrakt().sync().lastActivities();
+        assertThat(lastActivities.all).isNotNull();
         assertLastActivityMore(lastActivities.movies);
         assertLastActivityMore(lastActivities.episodes);
         assertLastActivity(lastActivities.shows);
