@@ -10,6 +10,7 @@ public class Movie extends BaseEntity {
     public MovieIds ids;
 
     // extended info
+    public String certification;
     public String tagline;
     public DateTime released;
     public Integer runtime;
