@@ -10,16 +10,18 @@ import com.uwetrottmann.trakt.v2.entities.RatedShow;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
+
+import java.util.List;
+
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
-
-import java.util.List;
 
 public interface Sync {
 
@@ -223,6 +225,17 @@ public interface Sync {
      */
     @GET("/sync/watchlist/shows")
     List<BaseShow> watchlistShows(
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be
+     * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/sync/watchlist/seasons")
+    List<WatchlistedSeason> watchlistSeasons(
             @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
