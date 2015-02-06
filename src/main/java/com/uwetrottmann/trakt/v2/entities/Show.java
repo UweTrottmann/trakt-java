@@ -11,7 +11,6 @@ public class Show extends BaseEntity {
     public ShowIds ids;
 
     // extended info
-    public String overview;
     public DateTime first_aired;
     public Airs airs;
     public Integer runtime;
@@ -21,7 +20,6 @@ public class Show extends BaseEntity {
     public String trailer;
     public String homepage;
     public Status status;
-    public Double rating;
     public String language;
     public List<String> genres;
 

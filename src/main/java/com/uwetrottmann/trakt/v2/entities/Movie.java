@@ -11,12 +11,10 @@ public class Movie extends BaseEntity {
 
     // extended info
     public String tagline;
-    public String overview;
     public DateTime released;
     public Integer runtime;
     public String trailer;
     public String homepage;
-    public Double rating;
     public String language;
     public List<String> genres;
 
