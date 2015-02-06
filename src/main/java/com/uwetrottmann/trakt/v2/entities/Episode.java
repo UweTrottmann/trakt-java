@@ -9,9 +9,7 @@ public class Episode extends BaseEntity {
     public EpisodeIds ids;
 
     // extended info
-
     public Integer number_abs;
-    public String overview;
     public DateTime first_aired;
     public Double rating;
 
