@@ -11,6 +11,5 @@ public class Episode extends BaseEntity {
     // extended info
     public Integer number_abs;
     public DateTime first_aired;
-    public Double rating;
 
 }
