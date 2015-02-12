@@ -46,11 +46,11 @@ public class AuthTest extends BaseTestCase {
         OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                 TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI, TEST_AUTH_CODE);
         assertThat(response.getAccessToken()).isNotEmpty();
-        assertThat(response.getRefreshToken()).isNull(); // trakt does not supply refresh tokens
+        assertThat(response.getRefreshToken()).isNotEmpty();
         System.out.println("Retrieved access token: " + response.getAccessToken());
         System.out.println("Retrieved refresh token: " + response.getRefreshToken());
         System.out.println("Retrieved scope: " + response.getScope());
-        System.out.println("Retrieved expires in: " + response.getExpiresIn());
+        System.out.println("Retrieved expires in: " + response.getExpiresIn() + " seconds");
     }
 
     @Test
