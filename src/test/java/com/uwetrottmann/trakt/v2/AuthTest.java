@@ -19,8 +19,24 @@ public class AuthTest extends BaseTestCase {
 
     private static final String TEST_CLIENT_SECRET = "";
     private static final String TEST_AUTH_CODE = "";
+    private static final String TEST_REFRESH_TOKEN = "";
     private static final String TEST_REDIRECT_URI = "http://localhost";
     private static final String TEST_USERNAME = "sgtest";
+
+    @Test
+    public void test_getAuthorizationRequest() throws OAuthSystemException, URISyntaxException {
+        String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
+
+        OAuthClientRequest request = TraktV2.getAuthorizationRequest(TEST_CLIENT_ID, TEST_REDIRECT_URI, sampleState,
+                TEST_USERNAME);
+
+        assertThat(request).isNotNull();
+        assertThat(request.getLocationUri()).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
+        // trakt does not support scopes, so don't send one (server sets default scope)
+        assertThat(request.getLocationUri()).doesNotContain("scope");
+
+        System.out.println("Get an auth code at the following URI: " + request.getLocationUri());
+    }
 
     @Test
     public void test_getAccessTokenRequest() throws OAuthSystemException {
@@ -45,27 +61,31 @@ public class AuthTest extends BaseTestCase {
 
         OAuthAccessTokenResponse response = TraktV2.getAccessToken(
                 TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI, TEST_AUTH_CODE);
-        assertThat(response.getAccessToken()).isNotEmpty();
-        assertThat(response.getRefreshToken()).isNull(); // trakt does not supply refresh tokens
+        System.out.println(response.getBody());
         System.out.println("Retrieved access token: " + response.getAccessToken());
         System.out.println("Retrieved refresh token: " + response.getRefreshToken());
         System.out.println("Retrieved scope: " + response.getScope());
-        System.out.println("Retrieved expires in: " + response.getExpiresIn());
+        System.out.println("Retrieved expires in: " + response.getExpiresIn() + " seconds");
+        assertThat(response.getAccessToken()).isNotEmpty();
+        assertThat(response.getRefreshToken()).isNotEmpty();
     }
 
     @Test
-    public void test_getAuthorizationRequest() throws OAuthSystemException, URISyntaxException {
-        String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
+    public void test_refreshAccessToken() throws OAuthProblemException, OAuthSystemException {
+        if (TEST_CLIENT_SECRET.isEmpty() || TEST_REFRESH_TOKEN.isEmpty()) {
+            System.out.print("Skipping test_refreshAccessToken test, no valid auth data");
+            return;
+        }
 
-        OAuthClientRequest request = TraktV2.getAuthorizationRequest(TEST_CLIENT_ID, TEST_REDIRECT_URI, sampleState,
-                TEST_USERNAME);
-
-        assertThat(request).isNotNull();
-        assertThat(request.getLocationUri()).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
-        // trakt does not support scopes, so don't send one (server sets default scope)
-        assertThat(request.getLocationUri()).doesNotContain("scope");
-
-        System.out.println("Get an auth code at the following URI: " + request.getLocationUri());
+        OAuthAccessTokenResponse response = TraktV2.refreshAccessToken(
+                TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI, TEST_REFRESH_TOKEN);
+        System.out.println(response.getBody());
+        System.out.println("Retrieved access token: " + response.getAccessToken());
+        System.out.println("Retrieved refresh token: " + response.getRefreshToken());
+        System.out.println("Retrieved scope: " + response.getScope());
+        System.out.println("Retrieved expires in: " + response.getExpiresIn() + " seconds");
+        assertThat(response.getAccessToken()).isNotEmpty();
+        assertThat(response.getRefreshToken()).isNotEmpty();
     }
 
 }

@@ -1,10 +1,19 @@
 Change Log
 ==========
 
+4.3.0 *(2015-02-13)*
+--------------------
+
+ * Add helper methods to `TraktV2` to support trakt refresh tokens. Note: trakt access tokens expire after 90 days. Now
+   that refresh tokens are supplied together with your access token, you can use them to refresh the access token
+   without asking the user for authorization (if the user has not revoked authorization).
+ * Add missing properties to `LastActivities`, `Movie`, `Season`, `SeasonIds` and `Episode`. Thanks @florianmski!
+ * Support `/sync/watchlist/seasons`. Thanks @florianmski!
+
 4.2.1 *(2015-02-05)*
 --------------------
 
- * switch to [new API endpoint](http://docs.trakt.apiary.io/#introduction/api-url) `https://api-v2launch.trakt.tv` from `https://api.trakt.tv`
+ * Switch to [new API endpoint](http://docs.trakt.apiary.io/#introduction/api-url) `https://api-v2launch.trakt.tv` from `https://api.trakt.tv`
  * For `BaseShow`, `collected_at` is now `last_collected_at`, added `last_watched_at`.
  * Tests allow empty cast character name.
 
