@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+4.3.1 *(2015-03-10)*
+--------------------
+
+ * Add `comment_count` to lists.
+ * Add `aired_episodes` to season.
+ * Add year parameter to search.
+ * Allow `null` year for show.
+ * Fix some tests.
+
 4.3.0 *(2015-02-13)*
 --------------------
 

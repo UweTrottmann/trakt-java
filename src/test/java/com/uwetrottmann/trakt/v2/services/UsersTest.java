@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsersTest extends BaseTestCase {
 
-    private static final int TEST_LIST_WITH_ITEMS_TRAKT_ID = 619;
+    private static final int TEST_LIST_WITH_ITEMS_TRAKT_ID = 1012786;
 
     @Test
     public void test_getSettings() throws OAuthUnauthorizedException {
@@ -75,6 +75,10 @@ public class UsersTest extends BaseTestCase {
             assertThat(list.ids).isNotNull();
             assertThat(list.ids.trakt).isNotNull();
             assertThat(list.name).isNotEmpty();
+            assertThat(list.updated_at).isNotNull();
+            assertThat(list.item_count).isPositive();
+            assertThat(list.comment_count).isGreaterThanOrEqualTo(0);
+            assertThat(list.likes).isGreaterThanOrEqualTo(0);
         }
     }
 

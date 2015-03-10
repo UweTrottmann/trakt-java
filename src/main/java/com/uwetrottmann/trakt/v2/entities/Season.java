@@ -9,6 +9,7 @@ public class Season {
     public Double rating;
     public Integer votes;
     public Integer episode_count;
+    public Integer aired_episodes;
     public Images images;
 
 }

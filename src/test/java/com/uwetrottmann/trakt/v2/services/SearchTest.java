@@ -15,7 +15,17 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_show() {
-        List<SearchResult> results = getTrakt().search().textQuery("House", Type.SHOW, 1, DEFAULT_PAGE_SIZE);
+        List<SearchResult> results = getTrakt().search().textQuery("House", Type.SHOW, null, 1, DEFAULT_PAGE_SIZE);
+        assertThat(results).isNotEmpty();
+        for (SearchResult result : results) {
+            assertThat(result.score).isPositive();
+            assertThat(result.show).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_textQuery_show_withYear() {
+        List<SearchResult> results = getTrakt().search().textQuery("Empire", Type.SHOW, 2015, 1, DEFAULT_PAGE_SIZE);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
@@ -25,7 +35,7 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_movie() {
-        List<SearchResult> results = getTrakt().search().textQuery("Tron", Type.MOVIE, 1, DEFAULT_PAGE_SIZE);
+        List<SearchResult> results = getTrakt().search().textQuery("Tron", Type.MOVIE, null, 1, DEFAULT_PAGE_SIZE);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
@@ -35,7 +45,8 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_person() {
-        List<SearchResult> results = getTrakt().search().textQuery("Bryan Cranston", Type.PERSON, 1, DEFAULT_PAGE_SIZE);
+        List<SearchResult> results = getTrakt().search().textQuery("Bryan Cranston", Type.PERSON, null, 1,
+                DEFAULT_PAGE_SIZE);
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
             assertThat(result.score).isPositive();
