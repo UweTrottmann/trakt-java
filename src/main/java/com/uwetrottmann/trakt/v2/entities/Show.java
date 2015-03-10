@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Show extends BaseEntity {
 
-    public int year;
+    public Integer year;
     public ShowIds ids;
 
     // extended info

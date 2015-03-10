@@ -17,7 +17,7 @@ public class CommentsTest extends BaseTestCase {
 
     @Test
     public void test_post() throws OAuthUnauthorizedException {
-        Comment comment = new Comment(buildTestEpisode(), "This is toasty!", true, false);
+        Comment comment = new Comment(buildTestEpisode(), "This is a toasty comment!", true, false);
 
         Comment commentResponse = getTrakt().comments().post(comment);
         assertCommentResponse(comment, commentResponse);
@@ -26,7 +26,7 @@ public class CommentsTest extends BaseTestCase {
     @Test
     public void test_update() throws InterruptedException, OAuthUnauthorizedException {
         // first post a new comment
-        Comment comment = new Comment(buildTestEpisode(), "This is toasty!", true, false);
+        Comment comment = new Comment(buildTestEpisode(), "This is a toasty comment!", true, false);
         Comment commentResponse = getTrakt().comments().post(comment);
 
         // give the server some time to handle the data

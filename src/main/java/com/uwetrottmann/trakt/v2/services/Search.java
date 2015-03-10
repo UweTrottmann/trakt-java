@@ -20,6 +20,7 @@ public interface Search {
     List<SearchResult> textQuery(
             @Query("query") String query,
             @Query("type") Type type,
+            @Query("year") Integer year,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );
