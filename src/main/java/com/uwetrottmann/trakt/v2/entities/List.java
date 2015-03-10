@@ -13,6 +13,7 @@ public class List {
     public Boolean allow_comments;
     public DateTime updated_at;
     public Integer item_count;
+    public Integer comment_count;
     public Integer likes;
 
     public List name(String name) {
