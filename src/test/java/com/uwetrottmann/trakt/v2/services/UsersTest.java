@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsersTest extends BaseTestCase {
 
-    private static final int TEST_LIST_WITH_ITEMS_TRAKT_ID = 619;
+    private static final int TEST_LIST_WITH_ITEMS_TRAKT_ID = 1012786;
 
     @Test
     public void test_getSettings() throws OAuthUnauthorizedException {
