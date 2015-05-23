@@ -2,15 +2,7 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
-import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
-import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
-import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
-import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
-import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
-import com.uwetrottmann.trakt.v2.entities.MovieIds;
-import com.uwetrottmann.trakt.v2.entities.ShareSettings;
-import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
-import com.uwetrottmann.trakt.v2.entities.SyncMovie;
+import com.uwetrottmann.trakt.v2.entities.*;
 import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
@@ -51,9 +43,43 @@ public class CheckinTest extends BaseTestCase {
         assertThat(response.show).isNotNull();
     }
 
+    @Test
+    public void test_checkin_episode_without_ids() throws OAuthUnauthorizedException {
+        EpisodeCheckin checkin = buildEpisodeCheckinWithoutIds();
+
+        EpisodeCheckinResponse response = null;
+        try {
+            response = getTrakt().checkin().checkin(checkin);
+        } catch (CheckinInProgressException e) {
+            fail("Check-in still in progress, may be left over from failed test");
+        }
+
+        // delete check-in first
+        test_checkin_delete();
+
+        assertThat(response).isNotNull();
+        // episode should be over in less than an hour
+        assertThat(response.watched_at).isBefore(new DateTime().plusHours(1));
+        assertThat(response.episode).isNotNull();
+        assertThat(response.episode.ids).isNotNull();
+        assertThat(response.episode.ids.trakt).isEqualTo(TestData.EPISODE_TRAKT_ID);
+        assertThat(response.episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
+        assertThat(response.show).isNotNull();
+    }
+
     private static EpisodeCheckin buildEpisodeCheckin() {
         return new EpisodeCheckin.Builder(new SyncEpisode().id(EpisodeIds.tvdb(TestData.EPISODE_TVDB_ID)), APP_VERSION,
                 APP_DATE)
+                .message("This is a toasty episode!")
+                .build();
+    }
+
+    private static EpisodeCheckin buildEpisodeCheckinWithoutIds() {
+        Show show = new Show();
+        show.title = TestData.SHOW_TITLE;
+        return new EpisodeCheckin.Builder(new SyncEpisode().season(TestData.EPISODE_SEASON).number(TestData.EPISODE_NUMBER), APP_VERSION,
+                APP_DATE)
+                .show(show)
                 .message("This is a toasty episode!")
                 .build();
     }
