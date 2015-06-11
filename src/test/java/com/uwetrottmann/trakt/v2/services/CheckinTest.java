@@ -2,7 +2,16 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
-import com.uwetrottmann.trakt.v2.entities.*;
+import com.uwetrottmann.trakt.v2.entities.EpisodeCheckin;
+import com.uwetrottmann.trakt.v2.entities.EpisodeCheckinResponse;
+import com.uwetrottmann.trakt.v2.entities.EpisodeIds;
+import com.uwetrottmann.trakt.v2.entities.MovieCheckin;
+import com.uwetrottmann.trakt.v2.entities.MovieCheckinResponse;
+import com.uwetrottmann.trakt.v2.entities.MovieIds;
+import com.uwetrottmann.trakt.v2.entities.ShareSettings;
+import com.uwetrottmann.trakt.v2.entities.Show;
+import com.uwetrottmann.trakt.v2.entities.SyncEpisode;
+import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.exceptions.CheckinInProgressException;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
@@ -33,14 +42,7 @@ public class CheckinTest extends BaseTestCase {
         // delete check-in first
         test_checkin_delete();
 
-        assertThat(response).isNotNull();
-        // episode should be over in less than an hour
-        assertThat(response.watched_at).isBefore(new DateTime().plusHours(1));
-        assertThat(response.episode).isNotNull();
-        assertThat(response.episode.ids).isNotNull();
-        assertThat(response.episode.ids.trakt).isEqualTo(TestData.EPISODE_TRAKT_ID);
-        assertThat(response.episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
-        assertThat(response.show).isNotNull();
+        assertEpisodeCheckin(response);
     }
 
     @Test
@@ -57,6 +59,10 @@ public class CheckinTest extends BaseTestCase {
         // delete check-in first
         test_checkin_delete();
 
+        assertEpisodeCheckin(response);
+    }
+
+    private void assertEpisodeCheckin(EpisodeCheckinResponse response) {
         assertThat(response).isNotNull();
         // episode should be over in less than an hour
         assertThat(response.watched_at).isBefore(new DateTime().plusHours(1));
