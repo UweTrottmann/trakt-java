@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 
 public class SyncEpisode {
 
+    public Integer season;
     public Integer number;
     public EpisodeIds ids;
 
@@ -15,6 +16,11 @@ public class SyncEpisode {
 
     public SyncEpisode number(int number) {
         this.number = number;
+        return this;
+    }
+
+    public SyncEpisode season(int season) {
+        this.season = season;
         return this;
     }
 
