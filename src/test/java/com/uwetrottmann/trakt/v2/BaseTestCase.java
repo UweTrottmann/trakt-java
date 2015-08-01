@@ -88,6 +88,7 @@ public class BaseTestCase {
                         assertThat(episode.collected_at).isNotNull();
                     } else if ("watched".equals(type)) {
                         assertThat(episode.plays).isPositive();
+                        assertThat(episode.last_watched_at).isNotNull();
                     }
                 }
             }
