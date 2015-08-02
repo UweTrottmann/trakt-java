@@ -10,6 +10,7 @@ public class BaseEpisode {
     public DateTime collected_at;
     /** watched */
     public Integer plays;
+    public DateTime last_watched_at;
     /** progress */
     public Boolean completed;
 
