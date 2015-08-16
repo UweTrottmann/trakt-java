@@ -1,14 +1,12 @@
 package com.uwetrottmann.trakt.v2.services;
 
-import com.uwetrottmann.trakt.v2.entities.CalendarEntry;
+import com.uwetrottmann.trakt.v2.entities.CalendarMovieEntry;
 import com.uwetrottmann.trakt.v2.entities.CalendarShowEntry;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import org.joda.time.DateTime;
 import retrofit.http.GET;
 import retrofit.http.Path;
 
 import java.util.List;
-import java.util.Map;
 
 public interface Calendars {
 
@@ -41,6 +39,17 @@ public interface Calendars {
      */
     @GET("/calendars/my/shows/premieres/{startdate}/{days}")
     List<CalendarShowEntry> mySeasonPremieres(
+            @Path("startdate") String startDate,
+            @Path("days") int days
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * @see #movies(String, int)
+     */
+    @GET("/calendars/my/movies/{startdate}/{days}")
+    List<CalendarMovieEntry> myMovies(
             @Path("startdate") String startDate,
             @Path("days") int days
     ) throws OAuthUnauthorizedException;
@@ -82,25 +91,15 @@ public interface Calendars {
     );
 
     /**
-     * <b>OAuth Optional</b>
-     *
-     * <p> Returns all movies with a release date in the next 7 days.
-     */
-    @GET("/calendars/movies")
-    Map<DateTime, List<CalendarEntry>> movies() throws OAuthUnauthorizedException;
-
-    /**
-     * <b>OAuth Optional</b>
-     *
-     * <p> Returns all movies with a release date during the time period specified.
+     * Returns all movies with a release date during the time period specified.
      *
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
      * @param days Number of days to display. Example: 7.
      */
-    @GET("/calendars/movies/{startdate}/{days}")
-    Map<DateTime, List<CalendarEntry>> movies(
+    @GET("/calendars/all/movies/{startdate}/{days}")
+    List<CalendarMovieEntry> movies(
             @Path("startdate") String startDate,
             @Path("days") int days
-    ) throws OAuthUnauthorizedException;
+    );
 
 }
