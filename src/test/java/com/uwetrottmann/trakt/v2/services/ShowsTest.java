@@ -109,15 +109,32 @@ public class ShowsTest extends BaseTestCase {
     }
 
     @Test
+    public void test_collected_progress() throws OAuthUnauthorizedException {
+        BaseShow show = getTrakt().shows().collectedProgress(TestData.SHOW_SLUG, null, null, Extended.DEFAULT_MIN);
+        assertCollectedProgress(show);
+    }
+
+    @Test
     public void test_watched_progress() throws OAuthUnauthorizedException {
         BaseShow show = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, null, null, Extended.DEFAULT_MIN);
         assertWatchedProgress(show);
     }
 
+    private void assertCollectedProgress(BaseShow show) {
+        assertThat(show).isNotNull();
+        assertThat(show.last_collected_at).isNotNull();
+        assertProgress(show);
+    }
+
     private void assertWatchedProgress(BaseShow show) {
         assertThat(show).isNotNull();
+        assertThat(show.last_watched_at).isNotNull();
+        assertProgress(show);
+    }
+
+    private void assertProgress(BaseShow show) {
         assertThat(show.aired).isGreaterThan(60);
-        assertThat(show.completed).isGreaterThan(10);
+        assertThat(show.completed).isGreaterThanOrEqualTo(1);
         assertThat(show.next_episode).isNotNull();
 
         // Breaking Bad has 5 seasons
@@ -128,7 +145,7 @@ public class ShowsTest extends BaseTestCase {
         // all aired
         assertThat(season.aired).isEqualTo(7);
         // always at least 1 watched
-        assertThat(season.completed).isGreaterThan(1);
+        assertThat(season.completed).isGreaterThanOrEqualTo(1);
 
         // episode 1 should always be watched
         BaseEpisode episode = season.episodes.get(0);
