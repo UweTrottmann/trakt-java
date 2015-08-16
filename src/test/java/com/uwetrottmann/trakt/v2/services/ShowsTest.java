@@ -110,7 +110,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_watched_progress() throws OAuthUnauthorizedException {
-        BaseShow show = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, Extended.DEFAULT_MIN);
+        BaseShow show = getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, null, null, Extended.DEFAULT_MIN);
         assertWatchedProgress(show);
     }
 

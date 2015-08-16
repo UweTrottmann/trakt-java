@@ -97,11 +97,18 @@ public interface Shows {
      * Returns watched progress for show including details on all seasons and episodes. The {@code next_episode} will be
      * the next episode the user should watch, if there are no upcoming episodes it will be set to {@code null}.
      *
+     * <p>By default, any hidden seasons will be removed from the response and stats. To include these and adjust the
+     * completion stats, set the hidden flag to true.
+     *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param hidden Include any hidden seasons.
+     * @param specials Include specials as season 0.
      */
     @GET("/shows/{id}/progress/watched")
     BaseShow watchedProgress(
             @Path("id") String showId,
+            @Query("hidden") Boolean hidden,
+            @Query("specials") Boolean specials,
             @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 
