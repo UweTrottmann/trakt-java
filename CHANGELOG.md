@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+4.4.0 *(2015-08-17)*
+--------------------
+
+ * Allow checking in with show, season and episode without needing EpisodeIds. Thanks @samicemalone! #62
+ * Added `last_watched_at` to BaseEpisode. Thanks @mlaggner! #63
+ * Support new calendar methods. #64
+ * Add shows collected progress method. Update watched progress with new params, properties. #65
+ * Add watchlist methods to Users service. #66
+ * Support new `/users/:username/history` filters. Added `history` method, removed `historyEpisodes` and `historyMovies`. #67
+ * Support removing history items. #68
+
 4.3.1 *(2015-03-10)*
 --------------------
 
