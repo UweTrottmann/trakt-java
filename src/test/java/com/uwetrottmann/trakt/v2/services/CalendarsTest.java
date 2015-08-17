@@ -1,13 +1,12 @@
 package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
-import com.uwetrottmann.trakt.v2.entities.CalendarEntry;
+import com.uwetrottmann.trakt.v2.entities.CalendarMovieEntry;
+import com.uwetrottmann.trakt.v2.entities.CalendarShowEntry;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
-import org.joda.time.DateTime;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,11 +17,35 @@ public class CalendarsTest extends BaseTestCase {
     private static final int TEST_DAYS = 7;
 
     @Test
-    public void test_shows() throws OAuthUnauthorizedException {
+    public void test_myShows() throws OAuthUnauthorizedException {
+        List<CalendarShowEntry> shows = getTrakt().calendars().myShows(TEST_START_DATE, TEST_DAYS);
+        assertShowCalendar(shows);
+    }
+
+    @Test
+    public void test_myNewShows() throws OAuthUnauthorizedException {
+        List<CalendarShowEntry> shows = getTrakt().calendars().myNewShows(TEST_START_DATE, TEST_DAYS);
+        assertShowCalendar(shows);
+    }
+
+    @Test
+    public void test_mySeasonPremieres() throws OAuthUnauthorizedException {
+        List<CalendarShowEntry> shows = getTrakt().calendars().mySeasonPremieres(TEST_START_DATE, TEST_DAYS);
+        assertShowCalendar(shows);
+    }
+
+    @Test
+    public void test_myMovies() throws OAuthUnauthorizedException {
+        List<CalendarMovieEntry> movies = getTrakt().calendars().myMovies("2014-05-01", 30);
+        assertMovieCalendar(movies);
+    }
+
+    @Test
+    public void test_shows() {
         // do unauthenticated call
         getTrakt().setAccessToken(null);
 
-        Map<DateTime, List<CalendarEntry>> shows = getTrakt().calendars().shows(TEST_START_DATE, TEST_DAYS);
+        List<CalendarShowEntry> shows = getTrakt().calendars().shows(TEST_START_DATE, TEST_DAYS);
         assertShowCalendar(shows);
 
         // restore auth
@@ -30,11 +53,11 @@ public class CalendarsTest extends BaseTestCase {
     }
 
     @Test
-    public void test_newShows() throws OAuthUnauthorizedException {
+    public void test_newShows() {
         // do unauthenticated call
         getTrakt().setAccessToken(null);
 
-        Map<DateTime, List<CalendarEntry>> shows = getTrakt().calendars().newShows(TEST_START_DATE, TEST_DAYS);
+        List<CalendarShowEntry> shows = getTrakt().calendars().newShows(TEST_START_DATE, TEST_DAYS);
         assertShowCalendar(shows);
 
         // restore auth
@@ -42,11 +65,11 @@ public class CalendarsTest extends BaseTestCase {
     }
 
     @Test
-    public void test_seasonPremieres() throws OAuthUnauthorizedException {
+    public void test_seasonPremieres() {
         // do unauthenticated call
         getTrakt().setAccessToken(null);
 
-        Map<DateTime, List<CalendarEntry>> shows = getTrakt().calendars().seasonPremieres(TEST_START_DATE, TEST_DAYS);
+        List<CalendarShowEntry> shows = getTrakt().calendars().seasonPremieres(TEST_START_DATE, TEST_DAYS);
         assertShowCalendar(shows);
 
         // restore auth
@@ -54,34 +77,29 @@ public class CalendarsTest extends BaseTestCase {
     }
 
     @Test
-    public void test_movies() throws OAuthUnauthorizedException {
+    public void test_movies() {
         // do unauthenticated call
         getTrakt().setAccessToken(null);
 
-        Map<DateTime, List<CalendarEntry>> movies = getTrakt().calendars().movies("2014-05-01", 30);
-        assertThat(movies.keySet()).doesNotContainNull();
-        for (List<CalendarEntry> entries : movies.values()) {
-            for (CalendarEntry entry : entries) {
-                assertThat(entry.airs_at).isNull();
-                assertThat(entry.episode).isNull();
-                assertThat(entry.show).isNull();
-                assertThat(entry.movie).isNotNull();
-            }
+        List<CalendarMovieEntry> movies = getTrakt().calendars().movies("2014-05-01", 30);
+        assertMovieCalendar(movies);
+
+        // restore auth
+        getTrakt().setAccessToken(TEST_ACCESS_TOKEN);
+    }
+
+    private void assertShowCalendar(List<CalendarShowEntry> shows) {
+        for (CalendarShowEntry entry : shows) {
+            assertThat(entry.first_aired).isNotNull();
+            assertThat(entry.episode).isNotNull();
+            assertThat(entry.show).isNotNull();
         }
-
-        // restore auth
-        getTrakt().setAccessToken(TEST_ACCESS_TOKEN);
     }
 
-    private void assertShowCalendar(Map<DateTime, List<CalendarEntry>> shows) {
-        assertThat(shows.keySet()).doesNotContainNull();
-        for (List<CalendarEntry> entries : shows.values()) {
-            for (CalendarEntry entry : entries) {
-                assertThat(entry.airs_at).isNotNull();
-                assertThat(entry.episode).isNotNull();
-                assertThat(entry.show).isNotNull();
-                assertThat(entry.movie).isNull();
-            }
+    private void assertMovieCalendar(List<CalendarMovieEntry> movies) {
+        for (CalendarMovieEntry entry : movies) {
+            assertThat(entry.released).isNotNull();
+            assertThat(entry.movie).isNotNull();
         }
     }
 

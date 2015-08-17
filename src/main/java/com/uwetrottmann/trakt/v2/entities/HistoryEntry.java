@@ -4,8 +4,10 @@ import org.joda.time.DateTime;
 
 public class HistoryEntry {
 
+    public Integer id;
     public DateTime watched_at;
     public String action;
+    public String type;
 
     public Episode episode;
     public Show show;

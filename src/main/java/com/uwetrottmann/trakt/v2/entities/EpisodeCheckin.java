@@ -2,10 +2,12 @@ package com.uwetrottmann.trakt.v2.entities;
 
 public class EpisodeCheckin extends BaseCheckin {
 
+    public Show show;
     public SyncEpisode episode;
 
     public static class Builder {
 
+        private Show show;
         private SyncEpisode episode;
         protected ShareSettings sharing;
         protected String message;
@@ -21,6 +23,11 @@ public class EpisodeCheckin extends BaseCheckin {
             this.episode = episode;
             this.app_version = appVersion;
             this.app_date = appDate;
+        }
+
+        public Builder show(Show show) {
+            this.show = show;
+            return this;
         }
 
         public Builder sharing(ShareSettings shareSettings) {
@@ -45,6 +52,7 @@ public class EpisodeCheckin extends BaseCheckin {
 
         public EpisodeCheckin build() {
             EpisodeCheckin checkin = new EpisodeCheckin();
+            checkin.show = show;
             checkin.episode = episode;
             checkin.sharing = sharing;
             checkin.message = message;

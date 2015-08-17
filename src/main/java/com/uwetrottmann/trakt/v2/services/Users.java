@@ -15,7 +15,10 @@ import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
 import retrofit.client.Response;
@@ -223,14 +226,16 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      *
-     * <p> Returns episodes that a user has watched with the most recent first.
+     * <p>Returns movies and episodes that a user has watched, sorted by most recent.
+     *
+     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
+     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
+     * watch}.
      *
      * @param username Example: "sean".
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
-     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/users/{username}/history/episodes")
-    List<HistoryEntry> historyEpisodes(
+    @GET("/users/{username}/history")
+    List<HistoryEntry> history(
             @Path("username") String username,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -240,15 +245,42 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      *
-     * <p> Returns movies that a user has watched with the most recent first.
+     * <p>Returns movies or episodes that a user has watched, sorted by most recent.
+     *
+     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
+     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
+     * watch}.
      *
      * @param username Example: "sean".
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
-     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/users/{username}/history/movies")
-    List<HistoryEntry> historyMovies(
+    @GET("/users/{username}/history/{type}")
+    List<HistoryEntry> history(
             @Path("username") String username,
+            @Path("type") HistoryType type,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns the history for just the specified item. For example, {@code /history/movies/12601} would return all
+     * watches for TRON: Legacy and {@code /history/shows/1388} would return all watched episodes for Breaking Bad. If
+     * an invalid {@code id} is sent, a 404 error will be returned. If the {@code id} is valid, but there is no history,
+     * an empty array will be returned.
+     *
+     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
+     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
+     * watch}.
+     *
+     * @param username Example: "sean".
+     */
+    @GET("/users/{username}/history/{type}/{id}")
+    List<HistoryEntry> history(
+            @Path("username") String username,
+            @Path("type") HistoryType type,
+            @Path("id") int id,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encodeValue = false) Extended extended
@@ -311,6 +343,54 @@ public interface Users {
     List<RatedEpisode> ratingsEpisodes(
             @Path("username") String username,
             @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/movies")
+    List<BaseMovie> watchlistMovies(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/shows")
+    List<BaseShow> watchlistShows(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/seasons")
+    List<WatchlistedSeason> watchlistSeasons(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be
+     * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/episodes")
+    List<WatchlistedEpisode> watchlistEpisodes(
+            @Path("username") String username,
             @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 

@@ -20,9 +20,8 @@ public class BaseShow {
     public DateTime last_watched_at;
     /** progress */
     public Integer aired;
-    /** progress */
     public Integer completed;
-    /** progress */
+    public List<Season> hidden_seasons;
     public Episode next_episode;
 
 }
