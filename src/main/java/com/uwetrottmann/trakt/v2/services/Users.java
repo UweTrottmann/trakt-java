@@ -15,6 +15,8 @@ import com.uwetrottmann.trakt.v2.entities.Settings;
 import com.uwetrottmann.trakt.v2.entities.SyncItems;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
 import com.uwetrottmann.trakt.v2.exceptions.OAuthUnauthorizedException;
@@ -311,6 +313,54 @@ public interface Users {
     List<RatedEpisode> ratingsEpisodes(
             @Path("username") String username,
             @Path(value = "rating", encode = false) RatingsFilter filter,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/movies")
+    List<BaseMovie> watchlistMovies(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/shows")
+    List<BaseShow> watchlistShows(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/seasons")
+    List<WatchlistedSeason> watchlistSeasons(
+            @Path("username") String username,
+            @Query(value = "extended", encodeValue = false) Extended extended
+    ) throws OAuthUnauthorizedException;
+
+    /**
+     * <b>OAuth Optional</b>
+     *
+     * <p>Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be
+     * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     */
+    @GET("/users/{username}/watchlist/episodes")
+    List<WatchlistedEpisode> watchlistEpisodes(
+            @Path("username") String username,
             @Query(value = "extended", encodeValue = false) Extended extended
     ) throws OAuthUnauthorizedException;
 

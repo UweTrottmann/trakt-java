@@ -2,11 +2,11 @@ package com.uwetrottmann.trakt.v2.services;
 
 import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
+import com.uwetrottmann.trakt.v2.entities.BaseMovie;
+import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.Follower;
 import com.uwetrottmann.trakt.v2.entities.Friend;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
-import com.uwetrottmann.trakt.v2.entities.BaseMovie;
-import com.uwetrottmann.trakt.v2.entities.BaseShow;
 import com.uwetrottmann.trakt.v2.entities.ListEntry;
 import com.uwetrottmann.trakt.v2.entities.MovieIds;
 import com.uwetrottmann.trakt.v2.entities.RatedEpisode;
@@ -20,6 +20,8 @@ import com.uwetrottmann.trakt.v2.entities.SyncMovie;
 import com.uwetrottmann.trakt.v2.entities.SyncResponse;
 import com.uwetrottmann.trakt.v2.entities.SyncShow;
 import com.uwetrottmann.trakt.v2.entities.User;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
+import com.uwetrottmann.trakt.v2.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt.v2.enums.Extended;
 import com.uwetrottmann.trakt.v2.enums.ListPrivacy;
 import com.uwetrottmann.trakt.v2.enums.Rating;
@@ -148,7 +150,7 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
-         public void test_followers() throws OAuthUnauthorizedException {
+    public void test_followers() throws OAuthUnauthorizedException {
         List<Follower> followers = getTrakt().users().followers(TestData.USERNAME, Extended.DEFAULT_MIN);
         for (Follower follower : followers) {
             assertThat(follower.followed_at).isNotNull();
@@ -233,6 +235,41 @@ public class UsersTest extends BaseTestCase {
         List<RatedEpisode> ratedEpisodes = getTrakt().users().ratingsEpisodes(TestData.USERNAME, RatingsFilter.ALL,
                 Extended.DEFAULT_MIN);
         assertRatedEntities(ratedEpisodes);
+    }
+
+    @Test
+    public void test_watchlistMovies() throws OAuthUnauthorizedException {
+        List<BaseMovie> movies = getTrakt().users().watchlistMovies("me", Extended.DEFAULT_MIN);
+        assertSyncMovies(movies, "watchlist");
+    }
+
+    @Test
+    public void test_watchlistShows() throws OAuthUnauthorizedException {
+        List<BaseShow> shows = getTrakt().users().watchlistShows("me", Extended.DEFAULT_MIN);
+        for (BaseShow show : shows) {
+            assertThat(show.show).isNotNull();
+            assertThat(show.listed_at).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_watchlistSeasons() throws OAuthUnauthorizedException {
+        List<WatchlistedSeason> seasons = getTrakt().users().watchlistSeasons("me", Extended.DEFAULT_MIN);
+        for (WatchlistedSeason season : seasons) {
+            assertThat(season.season).isNotNull();
+            assertThat(season.show).isNotNull();
+            assertThat(season.listed_at).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_watchlistEpisodes() throws OAuthUnauthorizedException {
+        List<WatchlistedEpisode> episodes = getTrakt().users().watchlistEpisodes("me", Extended.DEFAULT_MIN);
+        for (WatchlistedEpisode episode : episodes) {
+            assertThat(episode.episode).isNotNull();
+            assertThat(episode.show).isNotNull();
+            assertThat(episode.listed_at).isNotNull();
+        }
     }
 
 
