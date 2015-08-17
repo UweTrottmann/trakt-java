@@ -23,6 +23,7 @@ import com.uwetrottmann.trakt.v2.entities.User;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt.v2.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt.v2.enums.Extended;
+import com.uwetrottmann.trakt.v2.enums.HistoryType;
 import com.uwetrottmann.trakt.v2.enums.ListPrivacy;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import com.uwetrottmann.trakt.v2.enums.RatingsFilter;
@@ -177,12 +178,32 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
-    public void test_historyEpisodes() throws OAuthUnauthorizedException {
-        List<HistoryEntry> history = getTrakt().users().historyEpisodes(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
+    public void test_historyEpisodesAndMovies() throws OAuthUnauthorizedException {
+        List<HistoryEntry> history = getTrakt().users().history(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
                 Extended.DEFAULT_MIN);
         for (HistoryEntry entry : history) {
+            assertThat(entry.id).isGreaterThan(0);
             assertThat(entry.watched_at).isNotNull();
             assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            if ("episode".equals(entry.type)) {
+                assertThat(entry.episode).isNotNull();
+                assertThat(entry.show).isNotNull();
+            } else if ("movie".equals(entry.type)) {
+                assertThat(entry.movie).isNotNull();
+            }
+        }
+    }
+
+    @Test
+    public void test_historyEpisodes() throws OAuthUnauthorizedException {
+        List<HistoryEntry> history = getTrakt().users().history(TestData.USERNAME, HistoryType.EPISODES, 1,
+                DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN);
+        for (HistoryEntry entry : history) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isEqualTo("episode");
             assertThat(entry.episode).isNotNull();
             assertThat(entry.show).isNotNull();
         }
@@ -190,11 +211,24 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_historyMovies() throws OAuthUnauthorizedException {
-        List<HistoryEntry> history = getTrakt().users().historyMovies(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
-                Extended.DEFAULT_MIN);
+        List<HistoryEntry> history = getTrakt().users().history("me", HistoryType.MOVIES, 1,
+                DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN);
         for (HistoryEntry entry : history) {
             assertThat(entry.watched_at).isNotNull();
             assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isEqualTo("movie");
+            assertThat(entry.movie).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_historyItem() throws OAuthUnauthorizedException {
+        List<HistoryEntry> history = getTrakt().users().history("me", HistoryType.MOVIES, TestData.MOVIE_TRAKT_ID, 1,
+                DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN);
+        for (HistoryEntry entry : history) {
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isEqualTo("movie");
             assertThat(entry.movie).isNotNull();
         }
     }
