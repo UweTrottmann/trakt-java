@@ -38,7 +38,7 @@ compile 'com.squareup.retrofit:retrofit:1.9.0'
 compile 'com.squareup.okhttp:okhttp:2.4.0'
 compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
 compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0'
-compile 'joda-time:joda-time:2.7'
+compile 'joda-time:joda-time:2.8.2'
 ```
 
 Or for Maven:
@@ -67,7 +67,7 @@ Or for Maven:
 <dependency>
     <groupId>joda-time</groupId>
     <artifactId>joda-time</artifactId>
-    <version>2.7</version>
+    <version>2.8.2</version>
 </dependency>
 ```
 
