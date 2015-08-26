@@ -13,7 +13,7 @@
     <groupId>com.uwetrottmann</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
-    <version>4.4.0</version>
+    <version>4.5.0</version>
 
     <name>trakt-java</name>
     <description>A Java wrapper around the trakt v2 API using retrofit.</description>
@@ -55,12 +55,12 @@
         <dependency>
             <groupId>com.squareup.okhttp</groupId>
             <artifactId>okhttp</artifactId>
-            <version>2.4.0</version>
+            <version>2.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp</groupId>
             <artifactId>okhttp-urlconnection</artifactId>
-            <version>2.4.0</version>
+            <version>2.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
