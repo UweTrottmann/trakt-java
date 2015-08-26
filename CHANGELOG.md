@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+4.5.0 *(2015-08-26)*
+--------------------
+
+ * Fix `/user` methods failing for usernames with periods in them. Usernames now have to be passed using
+   `new Username("someuser")`, or for the currently authenticated user `Username.ME`. #70
+ * Update okhttp to 2.5.0.
+
 4.4.0 *(2015-08-17)*
 --------------------
 
