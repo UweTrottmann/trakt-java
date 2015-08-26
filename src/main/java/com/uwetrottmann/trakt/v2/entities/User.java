@@ -9,7 +9,10 @@ public class User {
     @SerializedName("private")
     public Boolean isPrivate;
     public String name;
+    /** If a user is a regular VIP. */
     public Boolean vip;
+    /** If a user is an execute producer. */
+    public Boolean vip_ep;
 
     // full
     public DateTime joined_at;
