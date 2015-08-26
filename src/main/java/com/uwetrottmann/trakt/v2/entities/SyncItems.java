@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt.v2.entities;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SyncItems {
@@ -14,7 +14,7 @@ public class SyncItems {
     public List<Integer> ids;
 
     public SyncItems movies(SyncMovie movie) {
-        List<SyncMovie> list = new LinkedList<>();
+        ArrayList<SyncMovie> list = new ArrayList<>(1);
         list.add(movie);
         return movies(list);
     }
@@ -25,7 +25,7 @@ public class SyncItems {
     }
 
     public SyncItems shows(SyncShow show) {
-        List<SyncShow> list = new LinkedList<>();
+        ArrayList<SyncShow> list = new ArrayList<>(1);
         list.add(show);
         return shows(list);
     }
@@ -36,7 +36,7 @@ public class SyncItems {
     }
 
     public SyncItems episodes(SyncEpisode episode) {
-        List<SyncEpisode> list = new LinkedList<>();
+        ArrayList<SyncEpisode> list = new ArrayList<>(1);
         list.add(episode);
         return episodes(list);
     }
@@ -50,7 +50,7 @@ public class SyncItems {
      * History id to be removed.
      */
     public SyncItems ids(int id) {
-        List<Integer> list = new LinkedList<>();
+        ArrayList<Integer> list = new ArrayList<>(1);
         list.add(id);
         return ids(list);
     }

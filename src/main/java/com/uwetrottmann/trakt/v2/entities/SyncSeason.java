@@ -3,7 +3,7 @@ package com.uwetrottmann.trakt.v2.entities;
 import com.uwetrottmann.trakt.v2.enums.Rating;
 import org.joda.time.DateTime;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SyncSeason {
@@ -27,7 +27,7 @@ public class SyncSeason {
     }
 
     public SyncSeason episodes(SyncEpisode episode) {
-        LinkedList<SyncEpisode> list = new LinkedList<>();
+        ArrayList<SyncEpisode> list = new ArrayList<>(1);
         list.add(episode);
         return episodes(list);
     }
