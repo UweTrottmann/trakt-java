@@ -15,7 +15,7 @@ Usage
 Add the following dependency to your Gradle project:
 
 ```groovy
-compile 'com.uwetrottmann:trakt-java:4.5.0'
+compile 'com.uwetrottmann:trakt-java:4.5.1'
 ```
 
 Or for Maven:
@@ -24,7 +24,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>4.5.0</version>
+  <version>4.5.1</version>
 </dependency>
 ```
 
