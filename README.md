@@ -15,7 +15,7 @@ Usage
 Add the following dependency to your Gradle project:
 
 ```groovy
-compile 'com.uwetrottmann:trakt-java:4.5.1'
+compile 'com.uwetrottmann:trakt-java:4.5.2'
 ```
 
 Or for Maven:
@@ -24,7 +24,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>4.5.1</version>
+  <version>4.5.2</version>
 </dependency>
 ```
 
@@ -35,10 +35,10 @@ For example for Gradle:
 
 ```groovy
 compile 'com.squareup.retrofit:retrofit:1.9.0'
-compile 'com.squareup.okhttp:okhttp:2.5.0'
-compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
+compile 'com.squareup.okhttp:okhttp:2.6.0'
+compile 'com.squareup.okhttp:okhttp-urlconnection:2.6.0'
 compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0'
-compile 'joda-time:joda-time:2.8.2'
+compile 'joda-time:joda-time:2.9.1'
 ```
 
 Or for Maven:
@@ -52,12 +52,12 @@ Or for Maven:
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp</artifactId>
-  <version>2.5.0</version>
+  <version>2.6.0</version>
 </dependency>
 <dependency>
   <groupId>com.squareup.okhttp</groupId>
   <artifactId>okhttp-urlconnection</artifactId>
-  <version>2.5.0</version>
+  <version>2.6.0</version>
 </dependency>
 <dependency>
     <groupId>org.apache.oltu.oauth2</groupId>
@@ -67,7 +67,7 @@ Or for Maven:
 <dependency>
     <groupId>joda-time</groupId>
     <artifactId>joda-time</artifactId>
-    <version>2.8.2</version>
+    <version>2.9.1</version>
 </dependency>
 ```
 
