@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+4.5.1 *(2015-11-25)*
+--------------------
+
+ * Fix `/user` methods failing for usernames with spaces in them.
+ * Support for `shows` and `seasons` in `HistoryType`. Thanks @hrk!
+ * Update okhttp to 2.6.0.
+ * Update joda-time to 2.9.1.
+
 4.5.0 *(2015-08-26)*
 --------------------
 
