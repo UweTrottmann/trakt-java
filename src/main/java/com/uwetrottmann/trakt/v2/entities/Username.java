@@ -19,7 +19,11 @@ public class Username {
         if (username == null || username.length() == 0) {
             throw new IllegalArgumentException("trakt username can not be empty.");
         }
-        this.encodedUsername = username.replace(".", "-");
+        // trakt encodes some special chars in usernames
+        // - points "." as a dash "-"
+        // - spaces " " as a dash "-"
+        // - multiple dashes are reduced to one
+        this.encodedUsername = username.replace(".", "-").replace(" ", "-").replaceAll("(-)+", "-");
     }
 
     @Override
