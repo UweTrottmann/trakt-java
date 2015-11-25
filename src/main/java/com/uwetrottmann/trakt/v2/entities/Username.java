@@ -10,13 +10,17 @@ public class Username {
     private String encodedUsername;
 
     /**
-     * Encodes the username returned from trakt so it is API compatible (currently replaces "." with "-").
+     * Encodes the username returned from trakt so it is API compatible (currently replaces "." and spaces with "-").
      *
      * @param username A username as returned by the trakt API.
      * @see #ME
      */
     public Username(String username) {
         if (username == null || username.length() == 0) {
+            throw new IllegalArgumentException("trakt username can not be empty.");
+        }
+        username  = username.trim();
+        if (username.length() == 0) {
             throw new IllegalArgumentException("trakt username can not be empty.");
         }
         // trakt encodes some special chars in usernames

@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+4.5.2 *(2015-11-25)*
+--------------------
+
+ * Also trim leading and trailing white spaces of usernames.
+
 4.5.1 *(2015-11-25)*
 --------------------
 

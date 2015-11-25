@@ -5,23 +5,15 @@ Contributing
 
 1. [Fork trakt-java][1].
 2. Create a new branch and make [great commits + messages][2]. If you add or modify endpoints, make sure to also create and run basic tests ensuring they work (see `src/test`).
-3. [Start a pull request][3] against dev. Reference [existing issues][4] when possible.
+3. [Start a pull request][3] against `master`. Reference [existing issues][4] when possible.
 
 #### No code!
 * You can [discuss a bug][4] or if it was not reported yet [submit a bug][5]!
 
-Branch structure
-----------------
-
-The repository is made up of two main branches: master (stable) and dev (development).
-
-* **master** has the latest stable code, its tags are available packaged on the [releases page][6].
-* **dev** includes the latest unstable code.
-
 Setup
 -----
 
-This project is built with [Maven][7].
+This project is built with [Maven][7], see the `pom.xml` in the root folder.
 
 
  [1]: https://github.com/UweTrottmann/trakt-java/fork
