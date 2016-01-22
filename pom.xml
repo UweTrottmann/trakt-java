@@ -7,7 +7,7 @@
     <groupId>com.uwetrottmann</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
-    <version>4.5.2</version>
+    <version>4.5.3</version>
 
     <name>trakt-java</name>
     <description>A Java wrapper around the trakt v2 API using retrofit.</description>
