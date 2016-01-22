@@ -31,45 +31,7 @@ Or for Maven:
 Dependencies
 ------------
 If you would rather use the [released jar][3], add dependencies as you see fit.
-For example for Gradle:
-
-```groovy
-compile 'com.squareup.retrofit:retrofit:1.9.0'
-compile 'com.squareup.okhttp:okhttp:2.6.0'
-compile 'com.squareup.okhttp:okhttp-urlconnection:2.6.0'
-compile 'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:1.0.0'
-compile 'joda-time:joda-time:2.9.1'
-```
-
-Or for Maven:
-
-```xml
-<dependency>
-    <groupId>com.squareup.retrofit</groupId>
-    <artifactId>retrofit</artifactId>
-    <version>1.9.0</version>
-</dependency>
-<dependency>
-  <groupId>com.squareup.okhttp</groupId>
-  <artifactId>okhttp</artifactId>
-  <version>2.6.0</version>
-</dependency>
-<dependency>
-  <groupId>com.squareup.okhttp</groupId>
-  <artifactId>okhttp-urlconnection</artifactId>
-  <version>2.6.0</version>
-</dependency>
-<dependency>
-    <groupId>org.apache.oltu.oauth2</groupId>
-    <artifactId>org.apache.oltu.oauth2.client</artifactId>
-    <version>1.0.0</version>
-</dependency>
-<dependency>
-    <groupId>joda-time</groupId>
-    <artifactId>joda-time</artifactId>
-    <version>2.9.1</version>
-</dependency>
-```
+You can find the required dependencies in [pom.xml][6].
 
 Calling methods
 -----------------
@@ -134,3 +96,4 @@ License
  [3]: https://github.com/UweTrottmann/trakt-java/releases
  [4]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
  [5]: https://github.com/JakeWharton/trakt-java/
+ [6]: https://github.com/UweTrottmann/trakt-java/blob/master/pom.xml
