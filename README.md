@@ -3,14 +3,16 @@ trakt-java
 
 A Java wrapper around the [trakt v2 API][1] using [retrofit][2].
 
+Pull requests are welcome.
+
 Trakt methods are grouped into service objects which can be centrally
 managed by a `TraktV2` instance. It will act as a factory for
 all of the services and will automatically initialize them with your
 API key (OAuth client id) and optionally a given user access token.
 
-Usage
-=====
-![Maven Central version](https://img.shields.io/maven-central/v/com.uwetrottmann/trakt-java.svg?style=flat-square)
+## Usage
+
+<a href="https://search.maven.org/#search%7Cga%7C1%7Ctrakt-java"><img src="https://img.shields.io/maven-central/v/com.uwetrottmann/trakt-java.svg?style=flat-square"></a>
 
 Add the following dependency to your Gradle project:
 
@@ -28,17 +30,11 @@ Or for Maven:
 </dependency>
 ```
 
-Dependencies
-------------
-If you would rather use the [released jar][3], add dependencies as you see fit.
-You can find the required dependencies in [pom.xml][6].
+# Calling endpoints
 
-Calling methods
------------------
-
-Calling methods is easy, but make sure to do it on a background thread
-(there will be network activity). When using methods that require authentication,
-make sure to set a valid [OAuth 2.0][4] access token obtained from trakt.
+Calling endpoints is easy, but make sure to do it on a background thread
+(there will be network activity). When using endpoints that require authentication,
+make sure to set a valid [OAuth 2.0][3] access token obtained from trakt.
 
 `TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
 
@@ -66,15 +62,10 @@ try {
 
 See test cases in `src/test/` for more examples.
 
-Original Implementation
-=======================
+# License
 
-* [trakt-java][5] by Jake Wharton
-
-License
-=======
-
-    Copyright 2013-2016 Uwe Trottmann
+    Copyright 2012 Uwe Trottmann
+    Copyright 2011 Jake Wharton
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -89,11 +80,6 @@ License
     limitations under the License.
 
 
-
-
  [1]: http://docs.trakt.apiary.io/
  [2]: http://square.github.io/retrofit/
- [3]: https://github.com/UweTrottmann/trakt-java/releases
- [4]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
- [5]: https://github.com/JakeWharton/trakt-java/
- [6]: https://github.com/UweTrottmann/trakt-java/blob/master/pom.xml
+ [3]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
