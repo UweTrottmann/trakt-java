@@ -17,6 +17,7 @@
 
 package com.uwetrottmann.trakt.v2;
 
+import com.jakewharton.retrofit.Ok3Client;
 import com.uwetrottmann.trakt.v2.services.Calendars;
 import com.uwetrottmann.trakt.v2.services.Checkin;
 import com.uwetrottmann.trakt.v2.services.Comments;
@@ -30,6 +31,7 @@ import com.uwetrottmann.trakt.v2.services.Seasons;
 import com.uwetrottmann.trakt.v2.services.Shows;
 import com.uwetrottmann.trakt.v2.services.Sync;
 import com.uwetrottmann.trakt.v2.services.Users;
+import okhttp3.OkHttpClient;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
@@ -75,20 +77,16 @@ public class TraktV2 {
      * @param redirectUri The URI as configured on trakt to redirect to with appended auth code and state query
      * parameters.
      * @param state State variable to prevent request forgery attacks.
-     * @param username Pre-fill the username field.
      */
-    public static OAuthClientRequest getAuthorizationRequest(String clientId, String redirectUri, String state,
-            String username) throws OAuthSystemException {
-        OAuthClientRequest.AuthenticationRequestBuilder builder = OAuthClientRequest
+    public static OAuthClientRequest getAuthorizationRequest(String clientId, String redirectUri,
+            String state) throws OAuthSystemException {
+        return OAuthClientRequest
                 .authorizationLocation(OAUTH2_AUTHORIZATION_URL)
                 .setResponseType(ResponseType.CODE.toString())
                 .setClientId(clientId)
                 .setRedirectURI(redirectUri)
-                .setState(state);
-        if (username != null && username.length() != 0) {
-            builder.setParameter("username", username);
-        }
-        return builder.buildQueryMessage();
+                .setState(state)
+                .buildQueryMessage();
     }
 
     /**
@@ -124,8 +122,7 @@ public class TraktV2 {
      * @param clientId The OAuth client id obtained from trakt.
      * @param clientSecret The OAuth client secret obtained from trakt.
      * @param redirectUri The redirect URI as configured on trakt.
-     * @param authCode A valid authorization code (see {@link #getAuthorizationRequest(String, String, String,
-     * String)}).
+     * @param authCode A valid authorization code (see {@link #getAuthorizationRequest(String, String, String)}).
      */
     public static OAuthAccessTokenResponse getAccessToken(String clientId, String clientSecret, String redirectUri,
             String authCode) throws OAuthSystemException, OAuthProblemException {
@@ -258,6 +255,7 @@ public class TraktV2 {
         if (restAdapter == null) {
             RestAdapter.Builder builder = newRestAdapterBuilder();
             builder.setEndpoint(API_URL);
+            builder.setClient(new Ok3Client(Utils.createOkHttpClient()));
             builder.setConverter(new GsonConverter(TraktV2Helper.getGsonBuilder().create()));
 
             // supply the API key and if available OAuth access token

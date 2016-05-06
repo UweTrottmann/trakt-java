@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt.v2;
 
-import com.squareup.okhttp.OkHttpClient;
+import okhttp3.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,13 +13,13 @@ public class Utils {
      * Create an OkHttpClient with sensible timeouts for mobile connections.
      */
     public static OkHttpClient createOkHttpClient() {
-        OkHttpClient okHttpClient = new OkHttpClient();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         // set timeouts
-        okHttpClient.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-        okHttpClient.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        builder.connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        builder.readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
 
-        return okHttpClient;
+        return builder.build();
     }
 
 }

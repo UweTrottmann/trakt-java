@@ -1,7 +1,9 @@
 package com.uwetrottmann.trakt.v2;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.OkUrlFactory;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.apache.oltu.oauth2.client.HttpClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthClientResponse;
@@ -12,10 +14,6 @@ import org.apache.oltu.oauth2.common.utils.OAuthUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
 
 public class TraktHttpClient implements HttpClient {
@@ -26,52 +24,36 @@ public class TraktHttpClient implements HttpClient {
         OkHttpClient client = Utils.createOkHttpClient();
 
         try {
-            HttpURLConnection connection = new OkUrlFactory(client).open(new URL(request.getLocationUri()));
+            Request.Builder requestBuilder = new Request.Builder().url(request.getLocationUri());
 
             if (headers != null && !headers.isEmpty()) {
                 for (Map.Entry<String, String> header : headers.entrySet()) {
-                    connection.addRequestProperty(header.getKey(), header.getValue());
+                    requestBuilder.header(header.getKey(), header.getValue());
                 }
             }
 
             if (request.getHeaders() != null) {
                 for (Map.Entry<String, String> header : request.getHeaders().entrySet()) {
-                    connection.addRequestProperty(header.getKey(), header.getValue());
+                    requestBuilder.header(header.getKey(), header.getValue());
                 }
             }
 
-            if (!OAuthUtils.isEmpty(requestMethod)) {
-                connection.setRequestMethod(requestMethod);
-                if (requestMethod.equals("POST")) {
-                    connection.setDoOutput(true);
-                    OutputStream ost = connection.getOutputStream();
-                    PrintWriter pw = new PrintWriter(ost);
-                    pw.print(request.getBody());
-                    pw.flush();
-                    pw.close();
-                }
-            } else {
-                connection.setRequestMethod("GET");
-            }
+            // we only use POST with an empty body
+            requestBuilder.post(RequestBody.create(null, new byte[0]));
 
-            connection.connect();
-
-            InputStream inputStream;
-            int responseCode = connection.getResponseCode();
-            if (responseCode >= 400) {
-                inputStream = connection.getErrorStream();
-            } else {
-                inputStream = connection.getInputStream();
-            }
+            Response response = client.newCall(requestBuilder.build()).execute();
 
             String body = null;
-            if (inputStream != null) {
-                body = OAuthUtils.saveStreamAsString(inputStream);
+            if (response.body() != null) {
+                InputStream inputStream = response.body().byteStream();
+                if (inputStream != null) {
+                    body = OAuthUtils.saveStreamAsString(inputStream);
+                }
             }
 
             if (body != null) {
-                return OAuthClientResponseFactory
-                        .createCustomResponse(body, connection.getContentType(), responseCode, responseClass);
+                return OAuthClientResponseFactory.createCustomResponse(body, response.body().contentType().toString(),
+                        response.code(), responseClass);
             }
         } catch (IOException e) {
             throw new OAuthSystemException(e);

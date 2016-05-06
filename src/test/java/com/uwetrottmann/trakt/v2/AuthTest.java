@@ -27,8 +27,7 @@ public class AuthTest extends BaseTestCase {
     public void test_getAuthorizationRequest() throws OAuthSystemException, URISyntaxException {
         String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
 
-        OAuthClientRequest request = TraktV2.getAuthorizationRequest(TEST_CLIENT_ID, TEST_REDIRECT_URI, sampleState,
-                TEST_USERNAME);
+        OAuthClientRequest request = TraktV2.getAuthorizationRequest(TEST_CLIENT_ID, TEST_REDIRECT_URI, sampleState);
 
         assertThat(request).isNotNull();
         assertThat(request.getLocationUri()).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
