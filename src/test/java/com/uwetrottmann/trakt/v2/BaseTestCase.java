@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BaseTestCase {
 
     protected static final String TEST_CLIENT_ID = "35a671df22d3d98b09aab1c0bc52977e902e696a7704cab94f4d12c2672041e4";
-    public static final String TEST_ACCESS_TOKEN = "819d9de19e6aa186a9bdc887f8ec0ee0591f59425ad419db63f2d250a23a1b40"; // "sgtest" on production
+    public static final String TEST_ACCESS_TOKEN = "7161d80880e5407f0be6c89cd1245978e055dc53421c9d458fad734f06fbb816"; // "sgtest" on production
 
     private static final boolean DEBUG = true;
 
