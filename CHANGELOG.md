@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+4.6.0 *(2016-05-06)*
+--------------------
+
+ * As a stop-gap solution use OkHttp 3 adapter with retrofit, update to OkHttp 3. Moving to retrofit2 soon.
+ * Drop user name from auth code request creator.
+
 4.5.4 *(2016-01-22)*
 --------------------
 
