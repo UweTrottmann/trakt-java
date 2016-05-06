@@ -40,6 +40,10 @@
         <developerConnection>scm:git:git@github.com:UweTrottmann/trakt-java.git</developerConnection>
     </scm>
 
+    <prerequisites>
+        <maven>3.3.9</maven>
+    </prerequisites>
+
     <dependencies>
         <dependency>
             <groupId>com.squareup.retrofit</groupId>
