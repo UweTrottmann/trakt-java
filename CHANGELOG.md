@@ -1,8 +1,14 @@
 Change Log
 ==========
 
-4.6.0 *(2016-05-06)*
---------------------
+## 4.6.1
+_2016-05-06_
+
+* Fix `dismissMovie` and `dismissShow` endpoints (#77). Thanks @yacsrk!
+* Add tests for untested endpoints.
+
+## 4.6.0
+_2016-05-06_
 
  * As a stop-gap solution use OkHttp 3 adapter with retrofit, update to OkHttp 3. Moving to retrofit2 soon.
  * Drop user name from auth code request creator.
