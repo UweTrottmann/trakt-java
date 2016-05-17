@@ -31,7 +31,7 @@ public interface Recommendations {
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
-    @DELETE("recommendations/movies/{id}")
+    @DELETE("/recommendations/movies/{id}")
     Response dismissMovie(
             @Path("id") String movieId
     ) throws OAuthUnauthorizedException;
@@ -53,7 +53,7 @@ public interface Recommendations {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: 922.
      */
-    @DELETE("recommendations/shows/{id}")
+    @DELETE("/recommendations/shows/{id}")
     Response dismissShow(
             @Path("id") String showId
     ) throws OAuthUnauthorizedException;
