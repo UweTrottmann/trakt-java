@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt.v2.BaseTestCase;
 import com.uwetrottmann.trakt.v2.TestData;
 import com.uwetrottmann.trakt.v2.entities.BaseMovie;
 import com.uwetrottmann.trakt.v2.entities.BaseShow;
+import com.uwetrottmann.trakt.v2.entities.Followed;
 import com.uwetrottmann.trakt.v2.entities.Follower;
 import com.uwetrottmann.trakt.v2.entities.Friend;
 import com.uwetrottmann.trakt.v2.entities.HistoryEntry;
@@ -33,6 +34,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 import retrofit.client.Response;
 
+import java.net.HttpURLConnection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -152,6 +154,21 @@ public class UsersTest extends BaseTestCase {
                 items);
         assertThat(response.deleted.shows).isEqualTo(1);
         assertThat(response.deleted.movies).isEqualTo(1);
+    }
+
+    @Test
+    public void test_unfollowAndFollow() throws OAuthUnauthorizedException, InterruptedException {
+        // unfollow first
+        Username userToFollow = new Username(TestData.USER_TO_FOLLOW);
+        Response response = getTrakt().users().unfollow(userToFollow);
+        assertThat(response.getStatus()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
+
+        // give the server some time to handle the data
+        Thread.sleep(1000);
+
+        // follow again
+        Followed followed = getTrakt().users().follow(userToFollow);
+        assertThat(followed.user.username).isEqualTo(TestData.USER_TO_FOLLOW);
     }
 
     @Test

@@ -31,4 +31,6 @@ public interface TestData {
     String USERNAME_STRING = "sean";
     Username USERNAME = new Username("sean");
     String USER_REAL_NAME = "Sean Rudford";
+
+    String USER_TO_FOLLOW = "aeonmckay";
 }
