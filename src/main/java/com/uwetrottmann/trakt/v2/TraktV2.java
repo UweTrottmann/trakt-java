@@ -255,7 +255,7 @@ public class TraktV2 {
         if (restAdapter == null) {
             RestAdapter.Builder builder = newRestAdapterBuilder();
             builder.setEndpoint(API_URL);
-            builder.setClient(new Ok3Client(Utils.createOkHttpClient()));
+            builder.setClient(new Ok3Client(getOkHttpClient()));
             builder.setConverter(new GsonConverter(TraktV2Helper.getGsonBuilder().create()));
 
             // supply the API key and if available OAuth access token
@@ -282,6 +282,10 @@ public class TraktV2 {
         }
 
         return restAdapter;
+    }
+
+    protected OkHttpClient getOkHttpClient() {
+        return Utils.createOkHttpClient();
     }
 
     /**
