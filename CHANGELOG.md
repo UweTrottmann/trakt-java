@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 4.6.2
+_2016-05-27_
+
+* Add `getOkHttpClient()` to `TraktV2` to allow supplying your own OkHttp client instance more easily. 
+
 ## 4.6.1
 _2016-05-06_
 
