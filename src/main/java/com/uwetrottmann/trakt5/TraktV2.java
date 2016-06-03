@@ -17,7 +17,9 @@
 
 package com.uwetrottmann.trakt5;
 
+import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.CheckinError;
+import com.uwetrottmann.trakt5.services.Authentication;
 import com.uwetrottmann.trakt5.services.Calendars;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
@@ -34,10 +36,7 @@ import com.uwetrottmann.trakt5.services.Users;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
@@ -70,117 +69,6 @@ public class TraktV2 {
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
-
-    /**
-     * Build an OAuth 2.0 authorization request to obtain an authorization code.
-     *
-     * <p>Send the user to the location URI of this request. Once the user authorized your app, the server will redirect
-     * to {@code redirectUri} with the authorization code and the sent state in the query parameter {@code code}.
-     *
-     * <p>Ensure the state matches, then supply the authorization code to {@link #getAccessToken} to get an access
-     * token.
-     *
-     * @param clientId The OAuth client id obtained from trakt.
-     * @param redirectUri The URI as configured on trakt to redirect to with appended auth code and state query
-     * parameters.
-     * @param state State variable to prevent request forgery attacks.
-     */
-    public static OAuthClientRequest getAuthorizationRequest(String clientId, String redirectUri,
-            String state) throws OAuthSystemException {
-        return OAuthClientRequest
-                .authorizationLocation(OAUTH2_AUTHORIZATION_URL)
-                .setResponseType(ResponseType.CODE.toString())
-                .setClientId(clientId)
-                .setRedirectURI(redirectUri)
-                .setState(state)
-                .buildQueryMessage();
-    }
-
-    /**
-     * Build an OAuth 2.0 access token request. The grant is based on an authorization code that was just obtained from
-     * an authorization request.
-     *
-     * @param clientId The OAuth client id obtained from trakt.
-     * @param clientSecret The OAuth client secret obtained from trakt.
-     * @param redirectUri The redirect URI as configured on trakt.
-     * @param authCode A just obtained authorization code.
-     */
-    public static OAuthClientRequest getAccessTokenRequest(String clientId, String clientSecret, String redirectUri,
-            String authCode) throws OAuthSystemException {
-        return OAuthClientRequest
-                .tokenLocation(OAUTH2_TOKEN_URL)
-                .setGrantType(GrantType.AUTHORIZATION_CODE)
-                .setCode(authCode)
-                .setRedirectURI(redirectUri)
-                .setClientId(clientId)
-                .setClientSecret(clientSecret)
-                .buildQueryMessage();
-    }
-
-    /**
-     * Request an access token from trakt. Builds the request with {@link #getAccessTokenRequest} and executes it, then
-     * returns the response which includes the access token.
-     *
-     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
-     * the access token once it has expired.
-     *
-     * <p>On failure re-authorization of your app is required (see {@link #getAuthorizationRequest}).
-     *
-     * @param clientId The OAuth client id obtained from trakt.
-     * @param clientSecret The OAuth client secret obtained from trakt.
-     * @param redirectUri The redirect URI as configured on trakt.
-     * @param authCode A valid authorization code (see {@link #getAuthorizationRequest(String, String, String)}).
-     */
-    public static OAuthAccessTokenResponse getAccessToken(String clientId, String clientSecret, String redirectUri,
-            String authCode) throws OAuthSystemException, OAuthProblemException {
-        OAuthClientRequest request = getAccessTokenRequest(clientId, clientSecret, redirectUri, authCode);
-
-        OAuthClient client = new OAuthClient(new TraktHttpClient());
-        return client.accessToken(request);
-    }
-
-    /**
-     * Build an OAuth 2.0 access token request. The grant is based on the refresh token obtained with the last access
-     * token request response.
-     *
-     * @param clientId The OAuth client id obtained from trakt.
-     * @param clientSecret The OAuth client secret obtained from trakt.
-     * @param redirectUri The redirect URI as configured on trakt.
-     * @param refreshToken The refresh token obtained with the last access token request response.
-     */
-    public static OAuthClientRequest getAccessTokenRefreshRequest(String clientId, String clientSecret,
-            String redirectUri, String refreshToken) throws OAuthSystemException {
-        return OAuthClientRequest
-                .tokenLocation(OAUTH2_TOKEN_URL)
-                .setGrantType(GrantType.REFRESH_TOKEN)
-                .setRefreshToken(refreshToken)
-                .setRedirectURI(redirectUri)
-                .setClientId(clientId)
-                .setClientSecret(clientSecret)
-                .buildQueryMessage();
-    }
-
-    /**
-     * Request to refresh an expired access token for trakt. If your app is still authorized, returns a response which
-     * includes a new access token.
-     *
-     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
-     * the access token once it has expired.
-     *
-     * <p>On failure re-authorization of your app is required (see {@link #getAuthorizationRequest}).
-     *
-     * @param clientId The OAuth client id obtained from trakt.
-     * @param clientSecret The OAuth client secret obtained from trakt.
-     * @param redirectUri The redirect URI as configured on trakt.
-     * @param refreshToken The refresh token obtained with the last access token request response.
-     */
-    public static OAuthAccessTokenResponse refreshAccessToken(String clientId, String clientSecret, String redirectUri,
-            String refreshToken) throws OAuthSystemException, OAuthProblemException {
-        OAuthClientRequest request = getAccessTokenRefreshRequest(clientId, clientSecret, redirectUri, refreshToken);
-
-        OAuthClient client = new OAuthClient(new TraktHttpClient());
-        return client.accessToken(request);
-    }
 
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
@@ -217,7 +105,7 @@ public class TraktV2 {
      *
      * <p> If set, some methods will return user-specific data.
      *
-     * @param accessToken A valid access token, obtained via e.g. {@link #getAccessToken(String, String, String,
+     * @param accessToken A valid access token, obtained via e.g. {@link #exchangeCodeForAccessToken(String, String,
      * String)}.
      */
     public TraktV2 accessToken(String accessToken) {
@@ -291,6 +179,76 @@ public class TraktV2 {
     }
 
     /**
+     * Build an OAuth 2.0 authorization request to obtain an authorization code.
+     *
+     * <p>Send the user to the location URI of this request. Once the user authorized your app, the server will redirect
+     * to {@code redirectUri} with the authorization code and the sent state in the query parameter {@code code}.
+     *
+     * <p>Ensure the state matches, then supply the authorization code to {@link #exchangeCodeForAccessToken} to get an
+     * access token.
+     *
+     * @param redirectUri The URI as configured on trakt to redirect to with appended auth code and state query
+     * parameters.
+     * @param state State variable to prevent request forgery attacks.
+     */
+    public OAuthClientRequest buildAuthorizationRequest(String redirectUri, String state) throws OAuthSystemException {
+        return OAuthClientRequest
+                .authorizationLocation(OAUTH2_AUTHORIZATION_URL)
+                .setResponseType(ResponseType.CODE.toString())
+                .setClientId(apiKey())
+                .setRedirectURI(redirectUri)
+                .setState(state)
+                .buildQueryMessage();
+    }
+
+    /**
+     * Request an access token from trakt.
+     *
+     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
+     * the access token once it has expired.
+     *
+     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationRequest}).
+     *
+     * @param clientSecret The OAuth client secret obtained from trakt.
+     * @param redirectUri The redirect URI as configured on trakt.
+     * @param authCode A valid authorization code (see {@link #buildAuthorizationRequest(String, String)}).
+     */
+    public Response<AccessToken> exchangeCodeForAccessToken(String clientSecret, String redirectUri,
+            String authCode) throws IOException {
+        return authentication().exchangeCodeForAccessToken(
+                GrantType.AUTHORIZATION_CODE.toString(),
+                authCode,
+                apiKey(),
+                clientSecret,
+                redirectUri
+        ).execute();
+    }
+
+    /**
+     * Request to refresh an expired access token for trakt. If your app is still authorized, returns a response which
+     * includes a new access token.
+     *
+     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
+     * the access token once it has expired.
+     *
+     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationRequest}).
+     *
+     * @param clientSecret The OAuth client secret obtained from trakt.
+     * @param redirectUri The redirect URI as configured on trakt.
+     * @param refreshToken The refresh token obtained with the last access token request response.
+     */
+    public Response<AccessToken> refreshAccessToken(String clientSecret, String redirectUri,
+            String refreshToken) throws IOException {
+        return authentication().refreshAccessToken(
+                GrantType.REFRESH_TOKEN.toString(),
+                refreshToken,
+                apiKey(),
+                clientSecret,
+                redirectUri
+        ).execute();
+    }
+
+    /**
      * If the response code is 409 tries to convert the body into a {@link CheckinError}, otherwise returns {@code
      * null}.
      *
@@ -303,6 +261,10 @@ public class TraktV2 {
         Converter<ResponseBody, CheckinError> errorConverter =
                 retrofit.responseBodyConverter(CheckinError.class, new Annotation[0]);
         return errorConverter.convert(response.errorBody());
+    }
+
+    public Authentication authentication() {
+        return retrofit().create(Authentication.class);
     }
 
     /**
