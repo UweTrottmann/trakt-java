@@ -1,14 +1,13 @@
 package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.Comment;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 import java.util.List;
 
@@ -20,13 +19,13 @@ public interface Comments {
      * <p> Add a new comment to a movie, show, episode, or list. If you add a review, it needs to be at least 200 words.
      * Also make sure to allow and encourage spoilers to be indicated in your app.
      *
-     * @param comment A {@link Comment} with either a movie, show or episode set,
-     * plus comment and spoiler or review flags.
+     * @param comment A {@link Comment} with either a movie, show or episode set, plus comment and spoiler or review
+     * flags.
      */
     @POST("/comments")
-    Comment post(
+    Call<Comment> post(
             @Body Comment comment
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -37,9 +36,9 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      */
     @GET("/comments/{id}")
-    Comment get(
+    Call<Comment> get(
             @Path("id") int id
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -51,10 +50,10 @@ public interface Comments {
      * @param comment A {@link Comment} with comment and spoiler or review flags.
      */
     @PUT("/comments/{id}")
-    Comment update(
+    Call<Comment> update(
             @Path("id") int id,
             @Body Comment comment
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -65,9 +64,9 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      */
     @DELETE("/comments/{id}")
-    Response delete(
+    Call<Void> delete(
             @Path("id") int id
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -78,9 +77,9 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      */
     @GET("/comments/{id}/replies")
-    List<Comment> replies(
+    Call<List<Comment>> replies(
             @Path("id") int id
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -92,9 +91,9 @@ public interface Comments {
      * @param comment A {@link Comment} with comment and spoiler or review flags.
      */
     @POST("/comments/{id}/replies")
-    Comment postReply(
+    Call<Comment> postReply(
             @Path("id") int id,
             @Body Comment comment
-    ) throws OAuthUnauthorizedException;
+    );
 
 }
