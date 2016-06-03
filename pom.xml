@@ -10,7 +10,7 @@
     <version>5.0.0-SNAPSHOT</version>
 
     <name>trakt-java</name>
-    <description>A Java wrapper around the trakt v2 API using retrofit.</description>
+    <description>trakt-java is a retrofit2 based wrapper around the trakt API v2.</description>
     <url>https://github.com/UweTrottmann/trakt-java/</url>
     <inceptionYear>2013</inceptionYear>
 
