@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.uwetrottmann</groupId>
+    <groupId>com.uwetrottmann.trakt5</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
     <version>4.6.2</version>
