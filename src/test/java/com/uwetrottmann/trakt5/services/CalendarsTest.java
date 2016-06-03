@@ -43,49 +43,49 @@ public class CalendarsTest extends BaseTestCase {
     @Test
     public void test_shows() {
         // do unauthenticated call
-        getTrakt().setAccessToken(null);
+        getTrakt().accessToken(null);
 
         List<CalendarShowEntry> shows = getTrakt().calendars().shows(TEST_START_DATE, TEST_DAYS);
         assertShowCalendar(shows);
 
         // restore auth
-        getTrakt().setAccessToken(TEST_ACCESS_TOKEN);
+        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     @Test
     public void test_newShows() {
         // do unauthenticated call
-        getTrakt().setAccessToken(null);
+        getTrakt().accessToken(null);
 
         List<CalendarShowEntry> shows = getTrakt().calendars().newShows(TEST_START_DATE, TEST_DAYS);
         assertShowCalendar(shows);
 
         // restore auth
-        getTrakt().setAccessToken(TEST_ACCESS_TOKEN);
+        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     @Test
     public void test_seasonPremieres() {
         // do unauthenticated call
-        getTrakt().setAccessToken(null);
+        getTrakt().accessToken(null);
 
         List<CalendarShowEntry> shows = getTrakt().calendars().seasonPremieres(TEST_START_DATE, TEST_DAYS);
         assertShowCalendar(shows);
 
         // restore auth
-        getTrakt().setAccessToken(TEST_ACCESS_TOKEN);
+        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     @Test
     public void test_movies() {
         // do unauthenticated call
-        getTrakt().setAccessToken(null);
+        getTrakt().accessToken(null);
 
         List<CalendarMovieEntry> movies = getTrakt().calendars().movies("2014-05-01", 30);
         assertMovieCalendar(movies);
 
         // restore auth
-        getTrakt().setAccessToken(TEST_ACCESS_TOKEN);
+        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     private void assertShowCalendar(List<CalendarShowEntry> shows) {

@@ -11,10 +11,12 @@ import com.uwetrottmann.trakt5.entities.CrewMember;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.BeforeClass;
+import retrofit2.Response;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class BaseTestCase {
 
@@ -23,18 +25,28 @@ public class BaseTestCase {
 
     private static final boolean DEBUG = true;
 
-    private static final TraktV2 trakt = new TraktV2();
+    private static final TraktV2 trakt = new TraktV2(TEST_CLIENT_ID);
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
 
     @BeforeClass
     public static void setUpOnce() {
-        trakt.setApiKey(TEST_CLIENT_ID);
-        trakt.setAccessToken(TEST_ACCESS_TOKEN);
-        trakt.setIsDebug(DEBUG);
+        trakt.accessToken(TEST_ACCESS_TOKEN);
+        trakt.enableDebugLogging(DEBUG);
     }
 
     protected final TraktV2 getTrakt() {
         return trakt;
+    }
+
+    public static void assertSuccessfulResponse(Response response) {
+        if (!response.isSuccessful()) {
+            if (response.code() == 401) {
+                fail("Authorization required, supply a valid OAuth access token: "
+                        + response.code() + " " + response.message());
+            } else {
+                fail("Request failed: " + response.code() + " " + response.message());
+            }
+        }
     }
 
     protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedMovies) {
