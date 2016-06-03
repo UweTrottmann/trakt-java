@@ -8,10 +8,10 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -24,10 +24,10 @@ public interface Shows {
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/shows/popular")
-    List<Show> popular(
+    Call<List<Show>> popular(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -37,10 +37,10 @@ public interface Shows {
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/shows/trending")
-    List<TrendingShow> trending(
+    Call<List<TrendingShow>> trending(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -49,9 +49,9 @@ public interface Shows {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}")
-    Show summary(
+    Call<Show> summary(
             @Path("id") String showId,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -60,7 +60,7 @@ public interface Shows {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}/translations")
-    List<Translation> translations(
+    Call<List<Translation>> translations(
             @Path("id") String showId
     );
 
@@ -71,7 +71,7 @@ public interface Shows {
      * @param language 2-letter language code (ISO 639-1).
      */
     @GET("/shows/{id}/translations/{language}")
-    List<Translation> translation(
+    Call<List<Translation>> translation(
             @Path("id") String showId,
             @Path("language") String language
     );
@@ -84,18 +84,19 @@ public interface Shows {
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("/shows/{id}/comments")
-    List<Comment> comments(
+    Call<List<Comment>> comments(
             @Path("id") String showId,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
      * <b>OAuth Required</b>
      *
-     * <p>Returns collection progress for show including details on all seasons and episodes. The {@code next_episode} will
-     * be the next episode the user should collect, if there are no upcoming episodes it will be set to {@code null}.
+     * <p>Returns collection progress for show including details on all seasons and episodes. The {@code next_episode}
+     * will be the next episode the user should collect, if there are no upcoming episodes it will be set to {@code
+     * null}.
      *
      * <p>By default, any hidden seasons will be removed from the response and stats. To include these and adjust the
      * completion stats, set the {@code hidden} flag to {@code true}.
@@ -105,12 +106,12 @@ public interface Shows {
      * @param specials Include specials as season 0.
      */
     @GET("/shows/{id}/progress/collection")
-    BaseShow collectedProgress(
+    Call<BaseShow> collectedProgress(
             @Path("id") String showId,
             @Query("hidden") Boolean hidden,
             @Query("specials") Boolean specials,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -126,12 +127,12 @@ public interface Shows {
      * @param specials Include specials as season 0.
      */
     @GET("/shows/{id}/progress/watched")
-    BaseShow watchedProgress(
+    Call<BaseShow> watchedProgress(
             @Path("id") String showId,
             @Query("hidden") Boolean hidden,
             @Query("specials") Boolean specials,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * Returns all actors, directors, writers, and producers for a show.
@@ -139,7 +140,7 @@ public interface Shows {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}/people")
-    Credits people(
+    Call<Credits> people(
             @Path("id") String showId
     );
 
@@ -149,7 +150,7 @@ public interface Shows {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}/ratings")
-    Ratings ratings(
+    Call<Ratings> ratings(
             @Path("id") String showId
     );
 
