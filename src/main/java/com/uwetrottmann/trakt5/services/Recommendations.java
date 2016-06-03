@@ -3,12 +3,11 @@ package com.uwetrottmann.trakt5.services;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.client.Response;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -20,9 +19,9 @@ public interface Recommendations {
      * <p> Personalized movie recommendations for a user. Results returned with the top recommendation first.
      */
     @GET("/recommendations/movies")
-    List<Movie> movies(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<Movie>> movies(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -32,9 +31,9 @@ public interface Recommendations {
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
     @DELETE("/recommendations/movies/{id}")
-    Response dismissMovie(
+    Call<Void> dismissMovie(
             @Path("id") String movieId
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -42,9 +41,9 @@ public interface Recommendations {
      * <p> Personalized show recommendations for a user. Results returned with the top recommendation first.
      */
     @GET("/recommendations/shows")
-    List<Show> shows(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<Show>> shows(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -54,8 +53,8 @@ public interface Recommendations {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: 922.
      */
     @DELETE("/recommendations/shows/{id}")
-    Response dismissShow(
+    Call<Void> dismissShow(
             @Path("id") String showId
-    ) throws OAuthUnauthorizedException;
+    );
 
 }

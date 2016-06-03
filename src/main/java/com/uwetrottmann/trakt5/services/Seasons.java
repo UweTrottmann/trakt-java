@@ -5,9 +5,10 @@ import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Season;
 import com.uwetrottmann.trakt5.enums.Extended;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ public interface Seasons {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("/shows/{id}/seasons")
-    List<Season> summary(
+    Call<List<Season>> summary(
             @Path("id") String showId,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -31,10 +32,10 @@ public interface Seasons {
      * @param season Season number.
      */
     @GET("/shows/{id}/seasons/{season}")
-    List<Episode> season(
+    Call<List<Episode>> season(
             @Path("id") String showId,
             @Path("season") int season,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -44,7 +45,7 @@ public interface Seasons {
      * @param season Season number.
      */
     @GET("/shows/{id}/seasons/{season}/comments")
-    List<Comment> comments(
+    Call<List<Comment>> comments(
             @Path("id") String showId,
             @Path("season") int season
     );
@@ -56,7 +57,7 @@ public interface Seasons {
      * @param season Season number.
      */
     @GET("/shows/{id}/seasons/{season}/ratings")
-    Ratings ratings(
+    Call<Ratings> ratings(
             @Path("id") String showId,
             @Path("season") int season
     );

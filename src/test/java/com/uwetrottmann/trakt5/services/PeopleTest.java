@@ -6,6 +6,9 @@ import com.uwetrottmann.trakt5.entities.Person;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
+import retrofit2.Response;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,8 +17,10 @@ public class PeopleTest extends BaseTestCase {
     private static final String TEST_PERSON_SLUG = "bryan-cranston";
 
     @Test
-    public void test_summary() {
-        Person person = getTrakt().people().summary(TEST_PERSON_SLUG, Extended.FULLIMAGES);
+    public void test_summary() throws IOException {
+        Response<Person> response = getTrakt().people().summary(TEST_PERSON_SLUG, Extended.FULLIMAGES).execute();
+        assertSuccessfulResponse(response);
+        Person person = response.body();
         assertThat(person.name).isNotEmpty();
         assertThat(person.ids).isNotNull();
         assertThat(person.ids.trakt).isNotNull();
@@ -24,15 +29,19 @@ public class PeopleTest extends BaseTestCase {
     }
 
     @Test
-    public void test_movieCredits() {
-        Credits credits = getTrakt().people().movieCredits(TEST_PERSON_SLUG);
+    public void test_movieCredits() throws IOException {
+        Response<Credits> response = getTrakt().people().movieCredits(TEST_PERSON_SLUG).execute();
+        assertSuccessfulResponse(response);
+        Credits credits = response.body();
         assertCast(credits, Type.MOVIE);
         assertCrew(credits, Type.MOVIE);
     }
 
     @Test
-    public void test_showCredits() {
-        Credits credits = getTrakt().people().showCredits(TEST_PERSON_SLUG);
+    public void test_showCredits() throws IOException {
+        Response<Credits> response = getTrakt().people().showCredits(TEST_PERSON_SLUG).execute();
+        assertSuccessfulResponse(response);
+        Credits credits = response.body();
         assertCast(credits, Type.SHOW);
         assertCrew(credits, Type.SHOW);
     }

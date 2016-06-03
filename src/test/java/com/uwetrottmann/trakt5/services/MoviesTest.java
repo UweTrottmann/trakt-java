@@ -12,7 +12,9 @@ import com.uwetrottmann.trakt5.entities.TrendingMovie;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
+import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,8 +22,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MoviesTest extends BaseTestCase {
 
     @Test
-    public void test_popular() {
-        List<Movie> movies = getTrakt().movies().popular(2, null, Extended.DEFAULT_MIN);
+    public void test_popular() throws IOException {
+        Response<List<Movie>> response = getTrakt().movies().popular(2, null, Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<Movie> movies = response.body();
         assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (Movie movie : movies) {
             assertMovieNotNull(movie);
@@ -29,8 +33,10 @@ public class MoviesTest extends BaseTestCase {
     }
 
     @Test
-    public void test_trending() {
-        List<TrendingMovie> movies = getTrakt().movies().trending(1, null, Extended.DEFAULT_MIN);
+    public void test_trending() throws IOException {
+        Response<List<TrendingMovie>> response = getTrakt().movies().trending(1, null, Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<TrendingMovie> movies = response.body();
         assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingMovie movie : movies) {
             assertThat(movie.watchers).isNotNull();
@@ -46,14 +52,19 @@ public class MoviesTest extends BaseTestCase {
     }
 
     @Test
-    public void test_summary_slug() {
-        Movie movie = getTrakt().movies().summary(TestData.MOVIE_SLUG, Extended.FULLIMAGES);
+    public void test_summary_slug() throws IOException {
+        Response<Movie> response = getTrakt().movies().summary(TestData.MOVIE_SLUG, Extended.FULLIMAGES).execute();
+        assertSuccessfulResponse(response);
+        Movie movie = response.body();
         assertTestMovie(movie);
     }
 
     @Test
-    public void test_summary_trakt_id() {
-        Movie movie = getTrakt().movies().summary(String.valueOf(TestData.MOVIE_TRAKT_ID), Extended.FULLIMAGES);
+    public void test_summary_trakt_id() throws IOException {
+        Response<Movie> response = getTrakt().movies().summary(String.valueOf(TestData.MOVIE_TRAKT_ID),
+                Extended.FULLIMAGES).execute();
+        assertSuccessfulResponse(response);
+        Movie movie = response.body();
         assertTestMovie(movie);
     }
 
@@ -69,37 +80,49 @@ public class MoviesTest extends BaseTestCase {
     }
 
     @Test
-    public void test_translations() {
-        List<MovieTranslation> translations = getTrakt().movies().translations("batman-begins-2005");
+    public void test_translations() throws IOException {
+        Response<List<MovieTranslation>> response = getTrakt().movies().translations("batman-begins-2005").execute();
+        assertSuccessfulResponse(response);
+        List<MovieTranslation> translations = response.body();
         for (Translation translation : translations) {
             assertThat(translation.language).isNotEmpty();
         }
     }
 
     @Test
-    public void test_translation() {
-        List<MovieTranslation> translations = getTrakt().movies().translation("batman-begins-2005", "de");
+    public void test_translation() throws IOException {
+        Response<List<MovieTranslation>> response = getTrakt().movies().translation("batman-begins-2005",
+                "de").execute();
+        assertSuccessfulResponse(response);
+        List<MovieTranslation> translations = response.body();
         // we know that Batman Begins has a German translation, otherwise this test would fail
         assertThat(translations).hasSize(1);
         assertThat(translations.get(0).language).isEqualTo("de");
     }
 
     @Test
-    public void test_comments() {
-        List<Comment> comments = getTrakt().movies().comments(TestData.MOVIE_SLUG, 1, null, Extended.DEFAULT_MIN);
+    public void test_comments() throws IOException {
+        Response<List<Comment>> response = getTrakt().movies().comments(TestData.MOVIE_SLUG, 1, null,
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<Comment> comments = response.body();
         assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
     }
 
     @Test
-    public void test_people() {
-        Credits credits = getTrakt().movies().people(TestData.MOVIE_SLUG);
+    public void test_people() throws IOException {
+        Response<Credits> response = getTrakt().movies().people(TestData.MOVIE_SLUG).execute();
+        assertSuccessfulResponse(response);
+        Credits credits = response.body();
         assertCast(credits, Type.PERSON);
         assertCrew(credits, Type.PERSON);
     }
 
     @Test
-    public void test_ratings() {
-        Ratings ratings = getTrakt().movies().ratings(TestData.MOVIE_SLUG);
+    public void test_ratings() throws IOException {
+        Response<Ratings> response = getTrakt().movies().ratings(TestData.MOVIE_SLUG).execute();
+        assertSuccessfulResponse(response);
+        Ratings ratings = response.body();
         assertRatings(ratings);
     }
 

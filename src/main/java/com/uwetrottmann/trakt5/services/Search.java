@@ -3,8 +3,9 @@ package com.uwetrottmann.trakt5.services;
 import com.uwetrottmann.trakt5.entities.SearchResult;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface Search {
      * @param type (optional) Narrow down search by element type.
      */
     @GET("/search")
-    List<SearchResult> textQuery(
+    Call<List<SearchResult>> textQuery(
             @Query("query") String query,
             @Query("type") Type type,
             @Query("year") Integer year,
@@ -33,9 +34,9 @@ public interface Search {
      * @param id ID that matches with the type.
      */
     @GET("/search")
-    List<SearchResult> idLookup(
-            @Query(value = "id_type", encodeValue = false) IdType idType,
-            @Query(value = "id", encodeValue = false) String id,
+    Call<List<SearchResult>> idLookup(
+            @Query(value = "id_type", encoded = true) IdType idType,
+            @Query(value = "id", encoded = true) String id,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );

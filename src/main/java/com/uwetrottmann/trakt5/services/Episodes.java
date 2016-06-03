@@ -4,9 +4,10 @@ import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.enums.Extended;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -20,11 +21,11 @@ public interface Episodes {
      * @param episode Episode number.
      */
     @GET("/shows/{id}/seasons/{season}/episodes/{episode}")
-    Episode summary(
+    Call<Episode> summary(
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -35,13 +36,13 @@ public interface Episodes {
      * @param episode Episode number.
      */
     @GET("/shows/{id}/seasons/{season}/episodes/{episode}/comments")
-    List<Comment> comments(
+    Call<List<Comment>> comments(
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
@@ -52,7 +53,7 @@ public interface Episodes {
      * @param episode Episode number.
      */
     @GET("/shows/{id}/seasons/{season}/episodes/{episode}/ratings")
-    Ratings ratings(
+    Call<Ratings> ratings(
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode
