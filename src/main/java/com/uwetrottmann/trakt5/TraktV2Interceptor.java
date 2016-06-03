@@ -24,7 +24,7 @@ public class TraktV2Interceptor implements Interceptor {
      * TraktV2#HEADER_TRAKT_API_KEY} with the given api key, {@link TraktV2#HEADER_CONTENT_TYPE} and if not present an
      * Authorization header using the given access token.
      */
-    private Response handleIntercept(Chain chain, String apiKey, String accessToken) throws IOException {
+    public static Response handleIntercept(Chain chain, String apiKey, String accessToken) throws IOException {
         Request request = chain.request();
         if (!TraktV2.API_HOST.equals(request.url().host())) {
             // do not intercept requests for other hosts
