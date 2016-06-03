@@ -2,9 +2,9 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.CalendarMovieEntry;
 import com.uwetrottmann.trakt5.entities.CalendarShowEntry;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 import java.util.List;
 
@@ -16,10 +16,10 @@ public interface Calendars {
      * @see #shows(String, int)
      */
     @GET("/calendars/my/shows/{startdate}/{days}")
-    List<CalendarShowEntry> myShows(
+    Call<List<CalendarShowEntry>> myShows(
             @Path("startdate") String startDate,
             @Path("days") int days
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -27,10 +27,10 @@ public interface Calendars {
      * @see #newShows(String, int)
      */
     @GET("/calendars/my/shows/new/{startdate}/{days}")
-    List<CalendarShowEntry> myNewShows(
+    Call<List<CalendarShowEntry>> myNewShows(
             @Path("startdate") String startDate,
             @Path("days") int days
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -38,10 +38,10 @@ public interface Calendars {
      * @see #seasonPremieres(String, int)
      */
     @GET("/calendars/my/shows/premieres/{startdate}/{days}")
-    List<CalendarShowEntry> mySeasonPremieres(
+    Call<List<CalendarShowEntry>> mySeasonPremieres(
             @Path("startdate") String startDate,
             @Path("days") int days
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -49,10 +49,10 @@ public interface Calendars {
      * @see #movies(String, int)
      */
     @GET("/calendars/my/movies/{startdate}/{days}")
-    List<CalendarMovieEntry> myMovies(
+    Call<List<CalendarMovieEntry>> myMovies(
             @Path("startdate") String startDate,
             @Path("days") int days
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * Returns all shows airing during the time period specified.
@@ -61,7 +61,7 @@ public interface Calendars {
      * @param days Number of days to display. Example: 7.
      */
     @GET("/calendars/all/shows/{startdate}/{days}")
-    List<CalendarShowEntry> shows(
+    Call<List<CalendarShowEntry>> shows(
             @Path("startdate") String startDate,
             @Path("days") int days
     );
@@ -73,7 +73,7 @@ public interface Calendars {
      * @param days Number of days to display. Example: 7.
      */
     @GET("/calendars/all/shows/new/{startdate}/{days}")
-    List<CalendarShowEntry> newShows(
+    Call<List<CalendarShowEntry>> newShows(
             @Path("startdate") String startDate,
             @Path("days") int days
     );
@@ -85,7 +85,7 @@ public interface Calendars {
      * @param days Number of days to display. Example: 7.
      */
     @GET("/calendars/all/shows/premieres/{startdate}/{days}")
-    List<CalendarShowEntry> seasonPremieres(
+    Call<List<CalendarShowEntry>> seasonPremieres(
             @Path("startdate") String startDate,
             @Path("days") int days
     );
@@ -97,7 +97,7 @@ public interface Calendars {
      * @param days Number of days to display. Example: 7.
      */
     @GET("/calendars/all/movies/{startdate}/{days}")
-    List<CalendarMovieEntry> movies(
+    Call<List<CalendarMovieEntry>> movies(
             @Path("startdate") String startDate,
             @Path("days") int days
     );
