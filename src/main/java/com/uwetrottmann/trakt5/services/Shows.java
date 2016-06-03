@@ -23,7 +23,7 @@ public interface Shows {
      * @param page Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/shows/popular")
+    @GET("shows/popular")
     Call<List<Show>> popular(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -36,7 +36,7 @@ public interface Shows {
      * @param page Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/shows/trending")
+    @GET("shows/trending")
     Call<List<TrendingShow>> trending(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -48,7 +48,7 @@ public interface Shows {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
-    @GET("/shows/{id}")
+    @GET("shows/{id}")
     Call<Show> summary(
             @Path("id") String showId,
             @Query(value = "extended", encoded = true) Extended extended
@@ -59,7 +59,7 @@ public interface Shows {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
-    @GET("/shows/{id}/translations")
+    @GET("shows/{id}/translations")
     Call<List<Translation>> translations(
             @Path("id") String showId
     );
@@ -70,7 +70,7 @@ public interface Shows {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param language 2-letter language code (ISO 639-1).
      */
-    @GET("/shows/{id}/translations/{language}")
+    @GET("shows/{id}/translations/{language}")
     Call<List<Translation>> translation(
             @Path("id") String showId,
             @Path("language") String language
@@ -83,7 +83,7 @@ public interface Shows {
      * @param page Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/shows/{id}/comments")
+    @GET("shows/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
             @Query("page") Integer page,
@@ -105,7 +105,7 @@ public interface Shows {
      * @param hidden Include any hidden seasons.
      * @param specials Include specials as season 0.
      */
-    @GET("/shows/{id}/progress/collection")
+    @GET("shows/{id}/progress/collection")
     Call<BaseShow> collectedProgress(
             @Path("id") String showId,
             @Query("hidden") Boolean hidden,
@@ -126,7 +126,7 @@ public interface Shows {
      * @param hidden Include any hidden seasons.
      * @param specials Include specials as season 0.
      */
-    @GET("/shows/{id}/progress/watched")
+    @GET("shows/{id}/progress/watched")
     Call<BaseShow> watchedProgress(
             @Path("id") String showId,
             @Query("hidden") Boolean hidden,
@@ -139,7 +139,7 @@ public interface Shows {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
-    @GET("/shows/{id}/people")
+    @GET("shows/{id}/people")
     Call<Credits> people(
             @Path("id") String showId
     );
@@ -149,7 +149,7 @@ public interface Shows {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
-    @GET("/shows/{id}/ratings")
+    @GET("shows/{id}/ratings")
     Call<Ratings> ratings(
             @Path("id") String showId
     );

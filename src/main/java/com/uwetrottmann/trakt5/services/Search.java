@@ -17,7 +17,7 @@ public interface Search {
      * @param query Searches titles and descriptions.
      * @param type (optional) Narrow down search by element type.
      */
-    @GET("/search")
+    @GET("search")
     Call<List<SearchResult>> textQuery(
             @Query("query") String query,
             @Query("type") Type type,
@@ -33,7 +33,7 @@ public interface Search {
      * @param idType Set to any of {@link IdType}.
      * @param id ID that matches with the type.
      */
-    @GET("/search")
+    @GET("search")
     Call<List<SearchResult>> idLookup(
             @Query(value = "id_type", encoded = true) IdType idType,
             @Query(value = "id", encoded = true) String id,

@@ -19,7 +19,7 @@ public interface Seasons {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
-    @GET("/shows/{id}/seasons")
+    @GET("shows/{id}/seasons")
     Call<List<Season>> summary(
             @Path("id") String showId,
             @Query(value = "extended", encoded = true) Extended extended
@@ -31,7 +31,7 @@ public interface Seasons {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      */
-    @GET("/shows/{id}/seasons/{season}")
+    @GET("shows/{id}/seasons/{season}")
     Call<List<Episode>> season(
             @Path("id") String showId,
             @Path("season") int season,
@@ -44,7 +44,7 @@ public interface Seasons {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      */
-    @GET("/shows/{id}/seasons/{season}/comments")
+    @GET("shows/{id}/seasons/{season}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
             @Path("season") int season
@@ -56,7 +56,7 @@ public interface Seasons {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      */
-    @GET("/shows/{id}/seasons/{season}/ratings")
+    @GET("shows/{id}/seasons/{season}/ratings")
     Call<Ratings> ratings(
             @Path("id") String showId,
             @Path("season") int season

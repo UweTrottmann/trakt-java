@@ -18,7 +18,7 @@ public interface Checkin {
      * The item will display as watching on the site, then automatically switch to watched status once the duration has
      * elapsed.
      */
-    @POST("/checkin")
+    @POST("checkin")
     Call<EpisodeCheckinResponse> checkin(
             @Body EpisodeCheckin episodeCheckin
     );
@@ -30,7 +30,7 @@ public interface Checkin {
      * The item will display as watching on the site, then automatically switch to watched status once the duration has
      * elapsed.
      */
-    @POST("/checkin")
+    @POST("checkin")
     Call<MovieCheckinResponse> checkin(
             @Body MovieCheckin movieCheckin
     );
@@ -40,7 +40,7 @@ public interface Checkin {
      *
      * <p> Removes any active checkins, no need to provide a specific item.
      */
-    @DELETE("/checkin")
+    @DELETE("checkin")
     Call<Void> deleteActiveCheckin();
 
 }

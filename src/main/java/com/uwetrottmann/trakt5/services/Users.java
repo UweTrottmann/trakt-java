@@ -41,7 +41,7 @@ public interface Users {
      * <p> Get the user's settings so you can align your app's experience with what they're used to on the trakt
      * website.
      */
-    @GET("/users/settings")
+    @GET("users/settings")
     Call<Settings> settings();
 
     /**
@@ -52,7 +52,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}")
+    @GET("users/{username}")
     Call<User> profile(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -66,7 +66,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/collection/movies")
+    @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -80,7 +80,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/collection/shows")
+    @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -91,7 +91,7 @@ public interface Users {
      *
      * <p> Returns all custom lists for a user.
      */
-    @GET("/users/{username}/lists")
+    @GET("users/{username}/lists")
     Call<List<TraktList>> lists(
             @Path("username") Username username
     );
@@ -101,7 +101,7 @@ public interface Users {
      *
      * <p> Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
      */
-    @POST("/users/{username}/lists")
+    @POST("users/{username}/lists")
     Call<TraktList> createList(
             @Path("username") Username username,
             @Body TraktList list
@@ -113,7 +113,7 @@ public interface Users {
      * <p> Update a custom list by sending 1 or more parameters. If you update the list name, the original slug will
      * still be retained so existing references to this list won't break.
      */
-    @PUT("/users/{username}/lists/{id}")
+    @PUT("users/{username}/lists/{id}")
     Call<TraktList> updateList(
             @Path("username") Username username,
             @Path("id") String id,
@@ -125,7 +125,7 @@ public interface Users {
      *
      * <p> Remove a custom list and all items it contains.
      */
-    @DELETE("/users/{username}/lists/{id}")
+    @DELETE("users/{username}/lists/{id}")
     Call<Void> deleteList(
             @Path("username") Username username,
             @Path("id") String id
@@ -136,7 +136,7 @@ public interface Users {
      *
      * <p> Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
-    @GET("/users/{username}/lists/{id}/items")
+    @GET("users/{username}/lists/{id}/items")
     Call<List<ListEntry>> listItems(
             @Path("username") Username username,
             @Path("id") String id,
@@ -148,7 +148,7 @@ public interface Users {
      *
      * <p> Add one or more items to a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
-    @POST("/users/{username}/lists/{id}/items")
+    @POST("users/{username}/lists/{id}/items")
     Call<SyncResponse> addListItems(
             @Path("username") Username username,
             @Path("id") String id,
@@ -160,7 +160,7 @@ public interface Users {
      *
      * <p> Remove one or more items from a custom list.
      */
-    @POST("/users/{username}/lists/{id}/items/remove")
+    @POST("users/{username}/lists/{id}/items/remove")
     Call<SyncResponse> deleteListItems(
             @Path("username") Username username,
             @Path("id") String id,
@@ -175,7 +175,7 @@ public interface Users {
      *
      * <p>Note: If this user is already being followed, a 409 HTTP status code will returned.
      */
-    @POST("/users/{username}/follow")
+    @POST("users/{username}/follow")
     Call<Followed> follow(
             @Path("username") Username username
     );
@@ -185,7 +185,7 @@ public interface Users {
      *
      * <p>Unfollow someone you already follow.
      */
-    @DELETE("/users/{username}/follow")
+    @DELETE("users/{username}/follow")
     Call<Void> unfollow(
             @Path("username") Username username
     );
@@ -195,7 +195,7 @@ public interface Users {
      *
      * <p>Returns all followers including when the relationship began.
      */
-    @GET("/users/{username}/followers")
+    @GET("users/{username}/followers")
     Call<List<Follower>> followers(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -206,7 +206,7 @@ public interface Users {
      *
      * <p>Returns all user's they follow including when the relationship began.
      */
-    @GET("/users/{username}/following")
+    @GET("users/{username}/following")
     Call<List<Follower>> following(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -218,7 +218,7 @@ public interface Users {
      * <p>Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship where
      * each user follows the other.
      */
-    @GET("/users/{username}/friends")
+    @GET("users/{username}/friends")
     Call<List<Friend>> friends(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -235,7 +235,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/history")
+    @GET("users/{username}/history")
     Call<List<HistoryEntry>> history(
             @Path("username") Username username,
             @Query("page") Integer page,
@@ -254,7 +254,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/history/{type}")
+    @GET("users/{username}/history/{type}")
     Call<List<HistoryEntry>> history(
             @Path("username") Username username,
             @Path("type") HistoryType type,
@@ -277,7 +277,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/history/{type}/{id}")
+    @GET("users/{username}/history/{type}/{id}")
     Call<List<HistoryEntry>> history(
             @Path("username") Username username,
             @Path("type") HistoryType type,
@@ -295,7 +295,7 @@ public interface Users {
      * @param username Example: "sean".
      * @param filter Filter for a specific rating.
      */
-    @GET("/users/{username}/ratings/movies{rating}")
+    @GET("users/{username}/ratings/movies{rating}")
     Call<List<RatedMovie>> ratingsMovies(
             @Path("username") Username username,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
@@ -310,7 +310,7 @@ public interface Users {
      * @param username Example: "sean".
      * @param filter Filter for a specific rating.
      */
-    @GET("/users/{username}/ratings/shows{rating}")
+    @GET("users/{username}/ratings/shows{rating}")
     Call<List<RatedShow>> ratingsShows(
             @Path("username") Username username,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
@@ -325,7 +325,7 @@ public interface Users {
      * @param username Example: "sean".
      * @param filter Filter for a specific rating.
      */
-    @GET("/users/{username}/ratings/seasons{rating}")
+    @GET("users/{username}/ratings/seasons{rating}")
     Call<List<RatedSeason>> ratingsSeasons(
             @Path("username") Username username,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
@@ -340,7 +340,7 @@ public interface Users {
      * @param username Example: "sean".
      * @param filter Filter for a specific rating.
      */
-    @GET("/users/{username}/ratings/episodes{rating}")
+    @GET("users/{username}/ratings/episodes{rating}")
     Call<List<RatedEpisode>> ratingsEpisodes(
             @Path("username") Username username,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
@@ -353,7 +353,7 @@ public interface Users {
      * <p>Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
-    @GET("/users/{username}/watchlist/movies")
+    @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -365,7 +365,7 @@ public interface Users {
      * <p>Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
-    @GET("/users/{username}/watchlist/shows")
+    @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -377,7 +377,7 @@ public interface Users {
      * <p>Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
-    @GET("/users/{username}/watchlist/seasons")
+    @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -389,7 +389,7 @@ public interface Users {
      * <p>Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be
      * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
-    @GET("/users/{username}/watchlist/episodes")
+    @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -402,7 +402,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/watched/movies")
+    @GET("users/{username}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended
@@ -415,7 +415,7 @@ public interface Users {
      *
      * @param username Example: "sean".
      */
-    @GET("/users/{username}/watched/shows")
+    @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") Username username,
             @Query(value = "extended", encoded = true) Extended extended

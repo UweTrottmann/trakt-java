@@ -22,7 +22,7 @@ public interface Movies {
      * @param page Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/movies/popular")
+    @GET("movies/popular")
     Call<List<Movie>> popular(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -35,7 +35,7 @@ public interface Movies {
      * @param page Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/movies/trending")
+    @GET("movies/trending")
     Call<List<TrendingMovie>> trending(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -47,7 +47,7 @@ public interface Movies {
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
-    @GET("/movies/{id}")
+    @GET("movies/{id}")
     Call<Movie> summary(
             @Path("id") String movieId,
             @Query(value = "extended", encoded = true) Extended extended
@@ -58,7 +58,7 @@ public interface Movies {
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
-    @GET("/movies/{id}/translations")
+    @GET("movies/{id}/translations")
     Call<List<MovieTranslation>> translations(
             @Path("id") String movieId
     );
@@ -69,7 +69,7 @@ public interface Movies {
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      * @param language 2-letter language code (ISO 639-1).
      */
-    @GET("/movies/{id}/translations/{language}")
+    @GET("movies/{id}/translations/{language}")
     Call<List<MovieTranslation>> translation(
             @Path("id") String movieId,
             @Path("language") String language
@@ -82,7 +82,7 @@ public interface Movies {
      * @param page Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
-    @GET("/movies/{id}/comments")
+    @GET("movies/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String movieId,
             @Query("page") Integer page,
@@ -95,7 +95,7 @@ public interface Movies {
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
-    @GET("/movies/{id}/people")
+    @GET("movies/{id}/people")
     Call<Credits> people(
             @Path("id") String movieId
     );
@@ -105,7 +105,7 @@ public interface Movies {
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
-    @GET("/movies/{id}/ratings")
+    @GET("movies/{id}/ratings")
     Call<Ratings> ratings(
             @Path("id") String movieId
     );

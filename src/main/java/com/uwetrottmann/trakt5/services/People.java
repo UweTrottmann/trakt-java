@@ -15,18 +15,18 @@ public interface People {
      *
      * @param personId trakt ID, trakt slug, or IMDB ID Example: bryan-cranston.
      */
-    @GET("/people/{id}")
+    @GET("people/{id}")
     Call<Person> summary(
             @Path("id") String personId,
             @Query("extended") Extended extended
     );
 
-    @GET("/people/{id}/movies")
+    @GET("people/{id}/movies")
     Call<Credits> movieCredits(
             @Path("id") String personId
     );
 
-    @GET("/people/{id}/shows")
+    @GET("people/{id}/shows")
     Call<Credits> showCredits(
             @Path("id") String personId
     );

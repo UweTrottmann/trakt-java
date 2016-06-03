@@ -18,7 +18,7 @@ public interface Recommendations {
      *
      * <p> Personalized movie recommendations for a user. Results returned with the top recommendation first.
      */
-    @GET("/recommendations/movies")
+    @GET("recommendations/movies")
     Call<List<Movie>> movies(
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -30,7 +30,7 @@ public interface Recommendations {
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
-    @DELETE("/recommendations/movies/{id}")
+    @DELETE("recommendations/movies/{id}")
     Call<Void> dismissMovie(
             @Path("id") String movieId
     );
@@ -40,7 +40,7 @@ public interface Recommendations {
      *
      * <p> Personalized show recommendations for a user. Results returned with the top recommendation first.
      */
-    @GET("/recommendations/shows")
+    @GET("recommendations/shows")
     Call<List<Show>> shows(
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -52,7 +52,7 @@ public interface Recommendations {
      *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: 922.
      */
-    @DELETE("/recommendations/shows/{id}")
+    @DELETE("recommendations/shows/{id}")
     Call<Void> dismissShow(
             @Path("id") String showId
     );

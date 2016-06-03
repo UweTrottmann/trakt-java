@@ -22,7 +22,7 @@ public interface Comments {
      * @param comment A {@link Comment} with either a movie, show or episode set, plus comment and spoiler or review
      * flags.
      */
-    @POST("/comments")
+    @POST("comments")
     Call<Comment> post(
             @Body Comment comment
     );
@@ -35,7 +35,7 @@ public interface Comments {
      *
      * @param id A specific comment ID. Example: 417.
      */
-    @GET("/comments/{id}")
+    @GET("comments/{id}")
     Call<Comment> get(
             @Path("id") int id
     );
@@ -49,7 +49,7 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      * @param comment A {@link Comment} with comment and spoiler or review flags.
      */
-    @PUT("/comments/{id}")
+    @PUT("comments/{id}")
     Call<Comment> update(
             @Path("id") int id,
             @Body Comment comment
@@ -63,7 +63,7 @@ public interface Comments {
      *
      * @param id A specific comment ID. Example: 417.
      */
-    @DELETE("/comments/{id}")
+    @DELETE("comments/{id}")
     Call<Void> delete(
             @Path("id") int id
     );
@@ -76,7 +76,7 @@ public interface Comments {
      *
      * @param id A specific comment ID. Example: 417.
      */
-    @GET("/comments/{id}/replies")
+    @GET("comments/{id}/replies")
     Call<List<Comment>> replies(
             @Path("id") int id
     );
@@ -90,7 +90,7 @@ public interface Comments {
      * @param id A specific comment ID. Example: 417.
      * @param comment A {@link Comment} with comment and spoiler or review flags.
      */
-    @POST("/comments/{id}/replies")
+    @POST("comments/{id}/replies")
     Call<Comment> postReply(
             @Path("id") int id,
             @Body Comment comment

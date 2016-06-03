@@ -15,7 +15,7 @@ public interface Calendars {
      *
      * @see #shows(String, int)
      */
-    @GET("/calendars/my/shows/{startdate}/{days}")
+    @GET("calendars/my/shows/{startdate}/{days}")
     Call<List<CalendarShowEntry>> myShows(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -26,7 +26,7 @@ public interface Calendars {
      *
      * @see #newShows(String, int)
      */
-    @GET("/calendars/my/shows/new/{startdate}/{days}")
+    @GET("calendars/my/shows/new/{startdate}/{days}")
     Call<List<CalendarShowEntry>> myNewShows(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -37,7 +37,7 @@ public interface Calendars {
      *
      * @see #seasonPremieres(String, int)
      */
-    @GET("/calendars/my/shows/premieres/{startdate}/{days}")
+    @GET("calendars/my/shows/premieres/{startdate}/{days}")
     Call<List<CalendarShowEntry>> mySeasonPremieres(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -48,7 +48,7 @@ public interface Calendars {
      *
      * @see #movies(String, int)
      */
-    @GET("/calendars/my/movies/{startdate}/{days}")
+    @GET("calendars/my/movies/{startdate}/{days}")
     Call<List<CalendarMovieEntry>> myMovies(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -60,7 +60,7 @@ public interface Calendars {
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
      * @param days Number of days to display. Example: 7.
      */
-    @GET("/calendars/all/shows/{startdate}/{days}")
+    @GET("calendars/all/shows/{startdate}/{days}")
     Call<List<CalendarShowEntry>> shows(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -72,7 +72,7 @@ public interface Calendars {
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
      * @param days Number of days to display. Example: 7.
      */
-    @GET("/calendars/all/shows/new/{startdate}/{days}")
+    @GET("calendars/all/shows/new/{startdate}/{days}")
     Call<List<CalendarShowEntry>> newShows(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -84,7 +84,7 @@ public interface Calendars {
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
      * @param days Number of days to display. Example: 7.
      */
-    @GET("/calendars/all/shows/premieres/{startdate}/{days}")
+    @GET("calendars/all/shows/premieres/{startdate}/{days}")
     Call<List<CalendarShowEntry>> seasonPremieres(
             @Path("startdate") String startDate,
             @Path("days") int days
@@ -96,7 +96,7 @@ public interface Calendars {
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
      * @param days Number of days to display. Example: 7.
      */
-    @GET("/calendars/all/movies/{startdate}/{days}")
+    @GET("calendars/all/movies/{startdate}/{days}")
     Call<List<CalendarMovieEntry>> movies(
             @Path("startdate") String startDate,
             @Path("days") int days

@@ -20,7 +20,7 @@ public interface Episodes {
      * @param season Season number.
      * @param episode Episode number.
      */
-    @GET("/shows/{id}/seasons/{season}/episodes/{episode}")
+    @GET("shows/{id}/seasons/{season}/episodes/{episode}")
     Call<Episode> summary(
             @Path("id") String showId,
             @Path("season") int season,
@@ -35,7 +35,7 @@ public interface Episodes {
      * @param season Season number.
      * @param episode Episode number.
      */
-    @GET("/shows/{id}/seasons/{season}/episodes/{episode}/comments")
+    @GET("shows/{id}/seasons/{season}/episodes/{episode}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
             @Path("season") int season,
@@ -52,7 +52,7 @@ public interface Episodes {
      * @param season Season number.
      * @param episode Episode number.
      */
-    @GET("/shows/{id}/seasons/{season}/episodes/{episode}/ratings")
+    @GET("shows/{id}/seasons/{season}/episodes/{episode}/ratings")
     Call<Ratings> ratings(
             @Path("id") String showId,
             @Path("season") int season,

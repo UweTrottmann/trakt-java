@@ -11,13 +11,13 @@ public interface Genres {
     /**
      * Get a list of all genres for shows, including names and slugs.
      */
-    @GET("/genres/movies")
+    @GET("genres/movies")
     Call<List<Genre>> movies();
 
     /**
      * Get a list of all genres for movies, including names and slugs.
      */
-    @GET("/genres/shows")
+    @GET("genres/shows")
     Call<List<Genre>> shows();
 
 }
