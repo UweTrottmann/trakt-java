@@ -30,7 +30,7 @@ public class CheckinTest extends BaseTestCase {
     private static final String APP_DATE = "2014-10-15";
 
     private void assertNoCheckinInProgress(Response response) throws IOException {
-        if (!response.isSuccessful() && getTrakt().handleCheckinError(response) != null) {
+        if (!response.isSuccessful() && getTrakt().checkForCheckinError(response) != null) {
             fail("Check-in still in progress, may be left over from failed test");
         }
     }
@@ -135,7 +135,7 @@ public class CheckinTest extends BaseTestCase {
         if (responseBlocked.code() != 409) {
             fail("Check-in was not blocked");
         }
-        CheckinError checkinError = getTrakt().handleCheckinError(responseBlocked);
+        CheckinError checkinError = getTrakt().checkForCheckinError(responseBlocked);
         // episode check in should block until episode duration has passed
         assertThat(checkinError.expires_at.isBefore(new DateTime().plusHours(1)));
 

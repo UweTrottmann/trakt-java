@@ -273,7 +273,7 @@ public class TraktV2 {
      *
      * @throws IOException If converting the error to {@link CheckinError} failed.
      */
-    public CheckinError handleCheckinError(Response response) throws IOException {
+    public CheckinError checkForCheckinError(Response response) throws IOException {
         if (response.code() != 409) {
             return null; // only code 409 can be a check-in error
         }
