@@ -17,7 +17,6 @@
 
 package com.uwetrottmann.trakt5;
 
-import com.jakewharton.retrofit.Ok3Client;
 import com.uwetrottmann.trakt5.services.Calendars;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
@@ -32,6 +31,7 @@ import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.client.response.OAuthAccessTokenResponse;
@@ -39,9 +39,8 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
-import retrofit.RequestInterceptor;
-import retrofit.RestAdapter;
-import retrofit.converter.GsonConverter;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Helper class for easy usage of the trakt v2 API using retrofit.
@@ -51,18 +50,19 @@ public class TraktV2 {
     /**
      * trakt API v2 URL.
      */
-    public static final String SITE_URL = "https://trakt.tv";
-    public static final String API_URL = "https://api-v2launch.trakt.tv";
-    public static final String HEADER_TRAKT_API_VERSION_2 = "2";
-    public static final String HEADER_CONTENT_TYPE_JSON = "application/json";
+    public static final String API_HOST = "api-v2launch.trakt.tv";
+    public static final String API_URL = "https://" + API_HOST;
+    public static final String API_VERSION = "2";
 
+    public static final String SITE_URL = "https://trakt.tv";
     public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
     public static final String OAUTH2_TOKEN_URL = SITE_URL + "/oauth/token";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
-    public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
+    public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
+    public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
 
     /**
      * Build an OAuth 2.0 authorization request to obtain an authorization code.
@@ -114,8 +114,8 @@ public class TraktV2 {
      * Request an access token from trakt. Builds the request with {@link #getAccessTokenRequest} and executes it, then
      * returns the response which includes the access token.
      *
-     * <p>Supply the received access token to {@link #setAccessToken(String)} and store the refresh token to later
-     * refresh the access token once it has expired.
+     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
+     * the access token once it has expired.
      *
      * <p>On failure re-authorization of your app is required (see {@link #getAuthorizationRequest}).
      *
@@ -157,8 +157,8 @@ public class TraktV2 {
      * Request to refresh an expired access token for trakt. If your app is still authorized, returns a response which
      * includes a new access token.
      *
-     * <p>Supply the received access token to {@link #setAccessToken(String)} and store the refresh token to later
-     * refresh the access token once it has expired.
+     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
+     * the access token once it has expired.
      *
      * <p>On failure re-authorization of your app is required (see {@link #getAuthorizationRequest}).
      *
@@ -175,31 +175,34 @@ public class TraktV2 {
         return client.accessToken(request);
     }
 
+    private OkHttpClient okHttpClient;
+    private Retrofit retrofit;
+    private HttpLoggingInterceptor logging;
+
+    private boolean enableDebugLogging;
+
     private String apiKey;
     private String accessToken;
-    private boolean isDebug;
-    private RestAdapter restAdapter;
 
     /**
      * Get a new API manager instance.
      *
-     * <p> Re-use this instance instead of calling this constructor again.
+     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
      */
-    public TraktV2() {
+    public TraktV2(String apiKey) {
+        this.apiKey = apiKey;
     }
 
-    /**
-     * Set the trakt API key for this application.
-     *
-     * <p> Call this before creating a new service.
-     *
-     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
-     * @return This class, to enable the builder pattern.
-     */
-    public TraktV2 setApiKey(String apiKey) {
+    public String apiKey() {
+        return apiKey;
+    }
+
+    public void apiKey(String apiKey) {
         this.apiKey = apiKey;
-        restAdapter = null;
-        return this;
+    }
+
+    public String accessToken() {
+        return accessToken;
     }
 
     /**
@@ -207,85 +210,77 @@ public class TraktV2 {
      *
      * <p> If set, some methods will return user-specific data.
      *
-     * <p> Call this before creating a new service.
-     *
      * @param accessToken A valid access token, obtained via e.g. {@link #getAccessToken(String, String, String,
      * String)}.
-     * @return This class, to enable the builder pattern.
      */
-    public TraktV2 setAccessToken(String accessToken) {
+    public TraktV2 accessToken(String accessToken) {
         this.accessToken = accessToken;
-        restAdapter = null;
         return this;
     }
 
     /**
-     * Set the {@link retrofit.RestAdapter} log level.
+     * Enable debug log output.
      *
-     * @param isDebug If true, the log level is set to {@link retrofit.RestAdapter.LogLevel#FULL}. Otherwise {@link
-     * retrofit.RestAdapter.LogLevel#NONE}.
+     * @param enable If true, the log level is set to {@link HttpLoggingInterceptor.Level#BODY}. Otherwise {@link
+     * HttpLoggingInterceptor.Level#NONE}.
      */
-    public TraktV2 setIsDebug(boolean isDebug) {
-        this.isDebug = isDebug;
-
-        if (restAdapter != null) {
-            restAdapter.setLogLevel(isDebug ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
+    public TraktV2 enableDebugLogging(boolean enable) {
+        this.enableDebugLogging = enable;
+        if (logging != null) {
+            logging.setLevel(enable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
         }
-
         return this;
     }
 
     /**
-     * Create a new {@link retrofit.RestAdapter.Builder}. Override this to e.g. set your own client or executor.
+     * Creates a {@link Retrofit.Builder} that sets the base URL, adds a Gson converter and sets {@link #okHttpClient()}
+     * as its client.
      *
-     * @return A {@link retrofit.RestAdapter.Builder} with no modifications.
+     * @see #okHttpClient()
      */
-    protected RestAdapter.Builder newRestAdapterBuilder() {
-        return new RestAdapter.Builder();
+    protected Retrofit.Builder retrofitBuilder() {
+        return new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create(TraktV2Helper.getGsonBuilder().create()))
+                .client(okHttpClient());
     }
 
     /**
-     * Return the current {@link retrofit.RestAdapter} instance. If none exists (first call, API key changed), builds a
-     * new one.
+     * Returns the default OkHttp client instance. It is strongly recommended to override this and use your app
+     * instance.
      *
-     * <p> When building, sets the endpoint, a {@link retrofit.RequestInterceptor} which adds the API key and version
-     * headers and sets the log level.
+     * @see #setOkHttpClientDefaults(OkHttpClient.Builder)
      */
-    protected RestAdapter getRestAdapter() {
-        if (restAdapter == null) {
-            RestAdapter.Builder builder = newRestAdapterBuilder();
-            builder.setEndpoint(API_URL);
-            builder.setClient(new Ok3Client(getOkHttpClient()));
-            builder.setConverter(new GsonConverter(TraktV2Helper.getGsonBuilder().create()));
-
-            // supply the API key and if available OAuth access token
-            builder.setRequestInterceptor(new RequestInterceptor() {
-                @Override
-                public void intercept(RequestFacade request) {
-                    if (accessToken != null && accessToken.length() != 0) {
-                        request.addHeader(HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
-                    }
-                    request.addHeader(HEADER_CONTENT_TYPE, HEADER_CONTENT_TYPE_JSON);
-                    request.addHeader(HEADER_TRAKT_API_KEY, apiKey);
-                    request.addHeader(HEADER_TRAKT_API_VERSION, HEADER_TRAKT_API_VERSION_2);
-                }
-            });
-
-            // add custom error handling to intercept OAuth errors
-            builder.setErrorHandler(new TraktErrorHandler());
-
-            if (isDebug) {
-                builder.setLogLevel(RestAdapter.LogLevel.FULL);
-            }
-
-            restAdapter = builder.build();
+    protected synchronized OkHttpClient okHttpClient() {
+        if (okHttpClient == null) {
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            setOkHttpClientDefaults(builder);
+            okHttpClient = builder.build();
         }
-
-        return restAdapter;
+        return okHttpClient;
     }
 
-    protected OkHttpClient getOkHttpClient() {
-        return Utils.createOkHttpClient();
+    /**
+     * Adds a network interceptor to add version and auth headers and a regular interceptor to log requests.
+     */
+    protected void setOkHttpClientDefaults(OkHttpClient.Builder builder) {
+        builder.addNetworkInterceptor(new TraktV2Interceptor(this));
+        if (enableDebugLogging) {
+            logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(logging);
+        }
+    }
+
+    /**
+     * Return the {@link Retrofit} instance. If called for the first time builds the instance, so if desired make sure
+     * to call {@link #enableDebugLogging(boolean)} before.
+     */
+    protected Retrofit retrofit() {
+        if (retrofit == null) {
+            retrofit = retrofitBuilder().build();
+        }
+        return retrofit;
     }
 
     /**
@@ -294,7 +289,7 @@ public class TraktV2 {
      * likely want to send OAuth to make the calendar more relevant to the user.
      */
     public Calendars calendars() {
-        return getRestAdapter().create(Calendars.class);
+        return retrofit().create(Calendars.class);
     }
 
     /**
@@ -303,7 +298,7 @@ public class TraktV2 {
      * checkin from your phone or tablet in those situations.
      */
     public Checkin checkin() {
-        return getRestAdapter().create(Checkin.class);
+        return retrofit().create(Checkin.class);
     }
 
     /**
@@ -312,7 +307,7 @@ public class TraktV2 {
      * comments.
      */
     public Comments comments() {
-        return getRestAdapter().create(Comments.class);
+        return retrofit().create(Comments.class);
     }
 
     /**
@@ -320,15 +315,15 @@ public class TraktV2 {
      * to cache this list in your app.
      */
     public Genres genres() {
-        return getRestAdapter().create(Genres.class);
+        return retrofit().create(Genres.class);
     }
 
     public Movies movies() {
-        return getRestAdapter().create(Movies.class);
+        return retrofit().create(Movies.class);
     }
 
     public People people() {
-        return getRestAdapter().create(People.class);
+        return retrofit().create(People.class);
     }
 
     /**
@@ -336,7 +331,7 @@ public class TraktV2 {
      * into the algorithm as well to further personalize what gets recommended.
      */
     public Recommendations recommendations() {
-        return getRestAdapter().create(Recommendations.class);
+        return retrofit().create(Recommendations.class);
     }
 
     /**
@@ -345,27 +340,27 @@ public class TraktV2 {
      * shows, episodes, people, users, and lists.
      */
     public Search search() {
-        return getRestAdapter().create(Search.class);
+        return retrofit().create(Search.class);
     }
 
     public Shows shows() {
-        return getRestAdapter().create(Shows.class);
+        return retrofit().create(Shows.class);
     }
 
     public Seasons seasons() {
-        return getRestAdapter().create(Seasons.class);
+        return retrofit().create(Seasons.class);
     }
 
     public Episodes episodes() {
-        return getRestAdapter().create(Episodes.class);
+        return retrofit().create(Episodes.class);
     }
 
     public Sync sync() {
-        return getRestAdapter().create(Sync.class);
+        return retrofit().create(Sync.class);
     }
 
     public Users users() {
-        return getRestAdapter().create(Users.class);
+        return retrofit().create(Users.class);
     }
 
 }
