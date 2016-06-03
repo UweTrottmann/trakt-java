@@ -4,12 +4,10 @@ import com.uwetrottmann.trakt5.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt5.entities.EpisodeCheckinResponse;
 import com.uwetrottmann.trakt5.entities.MovieCheckin;
 import com.uwetrottmann.trakt5.entities.MovieCheckinResponse;
-import com.uwetrottmann.trakt5.exceptions.CheckinInProgressException;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.POST;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.POST;
 
 public interface Checkin {
 
@@ -21,9 +19,9 @@ public interface Checkin {
      * elapsed.
      */
     @POST("/checkin")
-    EpisodeCheckinResponse checkin(
+    Call<EpisodeCheckinResponse> checkin(
             @Body EpisodeCheckin episodeCheckin
-    ) throws OAuthUnauthorizedException, CheckinInProgressException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -33,9 +31,9 @@ public interface Checkin {
      * elapsed.
      */
     @POST("/checkin")
-    MovieCheckinResponse checkin(
+    Call<MovieCheckinResponse> checkin(
             @Body MovieCheckin movieCheckin
-    ) throws OAuthUnauthorizedException, CheckinInProgressException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -43,6 +41,6 @@ public interface Checkin {
      * <p> Removes any active checkins, no need to provide a specific item.
      */
     @DELETE("/checkin")
-    Response deleteActiveCheckin() throws OAuthUnauthorizedException;
+    Call<Void> deleteActiveCheckin();
 
 }

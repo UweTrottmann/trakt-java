@@ -17,6 +17,7 @@
 
 package com.uwetrottmann.trakt5;
 
+import com.uwetrottmann.trakt5.entities.CheckinError;
 import com.uwetrottmann.trakt5.services.Calendars;
 import com.uwetrottmann.trakt5.services.Checkin;
 import com.uwetrottmann.trakt5.services.Comments;
@@ -31,6 +32,7 @@ import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -39,8 +41,13 @@ import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ResponseType;
+import retrofit2.Converter;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 
 /**
  * Helper class for easy usage of the trakt v2 API using retrofit.
@@ -281,6 +288,21 @@ public class TraktV2 {
             retrofit = retrofitBuilder().build();
         }
         return retrofit;
+    }
+
+    /**
+     * If the response code is 409 tries to convert the body into a {@link CheckinError}, otherwise returns {@code
+     * null}.
+     *
+     * @throws IOException If converting the error to {@link CheckinError} failed.
+     */
+    public CheckinError handleCheckinError(Response response) throws IOException {
+        if (response.code() != 409) {
+            return null; // only code 409 can be a check-in error
+        }
+        Converter<ResponseBody, CheckinError> errorConverter =
+                retrofit.responseBodyConverter(CheckinError.class, new Annotation[0]);
+        return errorConverter.convert(response.errorBody());
     }
 
     /**
