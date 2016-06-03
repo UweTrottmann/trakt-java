@@ -77,7 +77,10 @@ public class TraktV2 {
     private boolean enableDebugLogging;
 
     private String apiKey;
+    private String clientSecret;
+    private String redirectUri;
     private String accessToken;
+    private String refreshToken;
 
     /**
      * Get a new API manager instance.
@@ -86,6 +89,19 @@ public class TraktV2 {
      */
     public TraktV2(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    /**
+     * Get a new API manager instance capable of calling OAuth2 protected endpoints.
+     *
+     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
+     * @param clientSecret The client secret obtained from trakt.
+     * @param redirectUri The redirect URI to use for OAuth2 token requests.
+     */
+    public TraktV2(String apiKey, String clientSecret, String redirectUri) {
+        this.apiKey = apiKey;
+        this.clientSecret = clientSecret;
+        this.redirectUri = redirectUri;
     }
 
     public String apiKey() {
@@ -105,11 +121,23 @@ public class TraktV2 {
      *
      * <p> If set, some methods will return user-specific data.
      *
-     * @param accessToken A valid access token, obtained via e.g. {@link #exchangeCodeForAccessToken(String, String,
-     * String)}.
+     * @param accessToken A valid access token, obtained via e.g. {@link #exchangeCodeForAccessToken(String)}.
      */
     public TraktV2 accessToken(String accessToken) {
         this.accessToken = accessToken;
+        return this;
+    }
+
+    public String refreshToken() {
+        return refreshToken;
+    }
+
+    /**
+     * Sets the OAuth 2.0 refresh token to be used, in case the current access token has expired, to get a new access
+     * token.
+     */
+    public TraktV2 refreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
         return this;
     }
 
@@ -160,6 +188,7 @@ public class TraktV2 {
      */
     protected void setOkHttpClientDefaults(OkHttpClient.Builder builder) {
         builder.addNetworkInterceptor(new TraktV2Interceptor(this));
+        builder.authenticator(new TraktV2Authenticator(this));
         if (enableDebugLogging) {
             logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -187,11 +216,9 @@ public class TraktV2 {
      * <p>Ensure the state matches, then supply the authorization code to {@link #exchangeCodeForAccessToken} to get an
      * access token.
      *
-     * @param redirectUri The URI as configured on trakt to redirect to with appended auth code and state query
-     * parameters.
      * @param state State variable to prevent request forgery attacks.
      */
-    public OAuthClientRequest buildAuthorizationRequest(String redirectUri, String state) throws OAuthSystemException {
+    public OAuthClientRequest buildAuthorizationRequest(String state) throws OAuthSystemException {
         return OAuthClientRequest
                 .authorizationLocation(OAUTH2_AUTHORIZATION_URL)
                 .setResponseType(ResponseType.CODE.toString())
@@ -209,12 +236,9 @@ public class TraktV2 {
      *
      * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationRequest}).
      *
-     * @param clientSecret The OAuth client secret obtained from trakt.
-     * @param redirectUri The redirect URI as configured on trakt.
-     * @param authCode A valid authorization code (see {@link #buildAuthorizationRequest(String, String)}).
+     * @param authCode A valid authorization code (see {@link #buildAuthorizationRequest(String)}).
      */
-    public Response<AccessToken> exchangeCodeForAccessToken(String clientSecret, String redirectUri,
-            String authCode) throws IOException {
+    public Response<AccessToken> exchangeCodeForAccessToken(String authCode) throws IOException {
         return authentication().exchangeCodeForAccessToken(
                 GrantType.AUTHORIZATION_CODE.toString(),
                 authCode,
@@ -232,16 +256,11 @@ public class TraktV2 {
      * the access token once it has expired.
      *
      * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationRequest}).
-     *
-     * @param clientSecret The OAuth client secret obtained from trakt.
-     * @param redirectUri The redirect URI as configured on trakt.
-     * @param refreshToken The refresh token obtained with the last access token request response.
      */
-    public Response<AccessToken> refreshAccessToken(String clientSecret, String redirectUri,
-            String refreshToken) throws IOException {
+    public Response<AccessToken> refreshAccessToken() throws IOException {
         return authentication().refreshAccessToken(
                 GrantType.REFRESH_TOKEN.toString(),
-                refreshToken,
+                refreshToken(),
                 apiKey(),
                 clientSecret,
                 redirectUri

@@ -22,11 +22,18 @@ public class AuthTest extends BaseTestCase {
     private static final String TEST_REFRESH_TOKEN = "";
     private static final String TEST_REDIRECT_URI = "http://localhost";
 
+    private static final TraktV2 trakt = new TraktV2(TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
+
+    @Override
+    protected TraktV2 getTrakt() {
+        return trakt;
+    }
+
     @Test
     public void test_getAuthorizationRequest() throws OAuthSystemException {
         String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
 
-        OAuthClientRequest request = getTrakt().buildAuthorizationRequest(TEST_REDIRECT_URI, sampleState);
+        OAuthClientRequest request = getTrakt().buildAuthorizationRequest(sampleState);
 
         assertThat(request).isNotNull();
         assertThat(request.getLocationUri()).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
@@ -43,8 +50,7 @@ public class AuthTest extends BaseTestCase {
             return;
         }
 
-        Response<AccessToken> response = getTrakt().exchangeCodeForAccessToken(TEST_CLIENT_SECRET,
-                TEST_REDIRECT_URI, TEST_AUTH_CODE);
+        Response<AccessToken> response = getTrakt().exchangeCodeForAccessToken(TEST_AUTH_CODE);
         assertAccessTokenResponse(response);
     }
 
@@ -55,8 +61,7 @@ public class AuthTest extends BaseTestCase {
             return;
         }
 
-        Response<AccessToken> response = getTrakt().refreshAccessToken(TEST_CLIENT_SECRET,
-                TEST_REDIRECT_URI, TEST_REFRESH_TOKEN);
+        Response<AccessToken> response = getTrakt().refreshAccessToken();
         assertAccessTokenResponse(response);
     }
 

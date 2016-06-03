@@ -34,7 +34,7 @@ public class BaseTestCase {
         trakt.enableDebugLogging(DEBUG);
     }
 
-    protected final TraktV2 getTrakt() {
+    protected TraktV2 getTrakt() {
         return trakt;
     }
 
