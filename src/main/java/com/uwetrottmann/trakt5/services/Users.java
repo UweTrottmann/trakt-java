@@ -14,6 +14,7 @@ import com.uwetrottmann.trakt5.entities.RatedShow;
 import com.uwetrottmann.trakt5.entities.Settings;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
+import com.uwetrottmann.trakt5.entities.TraktList;
 import com.uwetrottmann.trakt5.entities.User;
 import com.uwetrottmann.trakt5.entities.Username;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
@@ -21,15 +22,14 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.client.Response;
-import retrofit.http.Body;
-import retrofit.http.DELETE;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.PUT;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public interface Users {
      * website.
      */
     @GET("/users/settings")
-    Settings settings() throws OAuthUnauthorizedException;
+    Call<Settings> settings();
 
     /**
      * <b>OAuth Optional</b>
@@ -53,10 +53,10 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}")
-    User profile(
+    Call<User> profile(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -67,10 +67,10 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/collection/movies")
-    List<BaseMovie> collectionMovies(
+    Call<List<BaseMovie>> collectionMovies(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -81,10 +81,10 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/collection/shows")
-    List<BaseShow> collectionShows(
+    Call<List<BaseShow>> collectionShows(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -92,9 +92,9 @@ public interface Users {
      * <p> Returns all custom lists for a user.
      */
     @GET("/users/{username}/lists")
-    List<com.uwetrottmann.trakt5.entities.List> lists(
+    Call<List<TraktList>> lists(
             @Path("username") Username username
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -102,10 +102,10 @@ public interface Users {
      * <p> Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
      */
     @POST("/users/{username}/lists")
-    com.uwetrottmann.trakt5.entities.List createList(
+    Call<TraktList> createList(
             @Path("username") Username username,
-            @Body com.uwetrottmann.trakt5.entities.List list
-    ) throws OAuthUnauthorizedException;
+            @Body TraktList list
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -114,11 +114,11 @@ public interface Users {
      * still be retained so existing references to this list won't break.
      */
     @PUT("/users/{username}/lists/{id}")
-    com.uwetrottmann.trakt5.entities.List updateList(
+    Call<TraktList> updateList(
             @Path("username") Username username,
             @Path("id") String id,
-            @Body com.uwetrottmann.trakt5.entities.List list
-    ) throws OAuthUnauthorizedException;
+            @Body TraktList list
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -126,10 +126,10 @@ public interface Users {
      * <p> Remove a custom list and all items it contains.
      */
     @DELETE("/users/{username}/lists/{id}")
-    Response deleteList(
+    Call<Void> deleteList(
             @Path("username") Username username,
             @Path("id") String id
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -137,11 +137,11 @@ public interface Users {
      * <p> Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
     @GET("/users/{username}/lists/{id}/items")
-    List<ListEntry> listItems(
+    Call<List<ListEntry>> listItems(
             @Path("username") Username username,
             @Path("id") String id,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -149,11 +149,11 @@ public interface Users {
      * <p> Add one or more items to a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
     @POST("/users/{username}/lists/{id}/items")
-    SyncResponse addListItems(
+    Call<SyncResponse> addListItems(
             @Path("username") Username username,
             @Path("id") String id,
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -161,11 +161,11 @@ public interface Users {
      * <p> Remove one or more items from a custom list.
      */
     @POST("/users/{username}/lists/{id}/items/remove")
-    SyncResponse deleteListItems(
+    Call<SyncResponse> deleteListItems(
             @Path("username") Username username,
             @Path("id") String id,
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -176,9 +176,9 @@ public interface Users {
      * <p>Note: If this user is already being followed, a 409 HTTP status code will returned.
      */
     @POST("/users/{username}/follow")
-    Followed follow(
+    Call<Followed> follow(
             @Path("username") Username username
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -186,9 +186,9 @@ public interface Users {
      * <p>Unfollow someone you already follow.
      */
     @DELETE("/users/{username}/follow")
-    Response unfollow(
+    Call<Void> unfollow(
             @Path("username") Username username
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -196,10 +196,10 @@ public interface Users {
      * <p>Returns all followers including when the relationship began.
      */
     @GET("/users/{username}/followers")
-    List<Follower> followers(
+    Call<List<Follower>> followers(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -207,10 +207,10 @@ public interface Users {
      * <p>Returns all user's they follow including when the relationship began.
      */
     @GET("/users/{username}/following")
-    List<Follower> following(
+    Call<List<Follower>> following(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -219,10 +219,10 @@ public interface Users {
      * each user follows the other.
      */
     @GET("/users/{username}/friends")
-    List<Friend> friends(
+    Call<List<Friend>> friends(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -236,12 +236,12 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/history")
-    List<HistoryEntry> history(
+    Call<List<HistoryEntry>> history(
             @Path("username") Username username,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -255,13 +255,13 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/history/{type}")
-    List<HistoryEntry> history(
+    Call<List<HistoryEntry>> history(
             @Path("username") Username username,
             @Path("type") HistoryType type,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -278,14 +278,14 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/history/{type}/{id}")
-    List<HistoryEntry> history(
+    Call<List<HistoryEntry>> history(
             @Path("username") Username username,
             @Path("type") HistoryType type,
             @Path("id") int id,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -296,11 +296,11 @@ public interface Users {
      * @param filter Filter for a specific rating.
      */
     @GET("/users/{username}/ratings/movies{rating}")
-    List<RatedMovie> ratingsMovies(
+    Call<List<RatedMovie>> ratingsMovies(
             @Path("username") Username username,
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -311,11 +311,11 @@ public interface Users {
      * @param filter Filter for a specific rating.
      */
     @GET("/users/{username}/ratings/shows{rating}")
-    List<RatedShow> ratingsShows(
+    Call<List<RatedShow>> ratingsShows(
             @Path("username") Username username,
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -326,11 +326,11 @@ public interface Users {
      * @param filter Filter for a specific rating.
      */
     @GET("/users/{username}/ratings/seasons{rating}")
-    List<RatedSeason> ratingsSeasons(
+    Call<List<RatedSeason>> ratingsSeasons(
             @Path("username") Username username,
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -341,11 +341,11 @@ public interface Users {
      * @param filter Filter for a specific rating.
      */
     @GET("/users/{username}/ratings/episodes{rating}")
-    List<RatedEpisode> ratingsEpisodes(
+    Call<List<RatedEpisode>> ratingsEpisodes(
             @Path("username") Username username,
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -354,10 +354,10 @@ public interface Users {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/users/{username}/watchlist/movies")
-    List<BaseMovie> watchlistMovies(
+    Call<List<BaseMovie>> watchlistMovies(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -366,10 +366,10 @@ public interface Users {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/users/{username}/watchlist/shows")
-    List<BaseShow> watchlistShows(
+    Call<List<BaseShow>> watchlistShows(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -378,10 +378,10 @@ public interface Users {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/users/{username}/watchlist/seasons")
-    List<WatchlistedSeason> watchlistSeasons(
+    Call<List<WatchlistedSeason>> watchlistSeasons(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -390,10 +390,10 @@ public interface Users {
      * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/users/{username}/watchlist/episodes")
-    List<WatchlistedEpisode> watchlistEpisodes(
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -403,10 +403,10 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/watched/movies")
-    List<BaseMovie> watchedMovies(
+    Call<List<BaseMovie>> watchedMovies(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Optional</b>
@@ -416,9 +416,9 @@ public interface Users {
      * @param username Example: "sean".
      */
     @GET("/users/{username}/watched/shows")
-    List<BaseShow> watchedShows(
+    Call<List<BaseShow>> watchedShows(
             @Path("username") Username username,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
 }

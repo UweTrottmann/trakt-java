@@ -3,7 +3,7 @@ package com.uwetrottmann.trakt5.entities;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import org.joda.time.DateTime;
 
-public class List {
+public class TraktList {
 
     public ListIds ids;
     public String name;
@@ -16,27 +16,27 @@ public class List {
     public Integer comment_count;
     public Integer likes;
 
-    public List name(String name) {
+    public TraktList name(String name) {
         this.name = name;
         return this;
     }
 
-    public List description(String description) {
+    public TraktList description(String description) {
         this.description = description;
         return this;
     }
 
-    public List privacy(ListPrivacy privacy) {
+    public TraktList privacy(ListPrivacy privacy) {
         this.privacy = privacy;
         return this;
     }
 
-    public List displayNumbers(boolean displayNumbers) {
+    public TraktList displayNumbers(boolean displayNumbers) {
         this.display_numbers = displayNumbers;
         return this;
     }
 
-    public List allowComments(boolean allowComments) {
+    public TraktList allowComments(boolean allowComments) {
         this.allow_comments = allowComments;
         return this;
     }
