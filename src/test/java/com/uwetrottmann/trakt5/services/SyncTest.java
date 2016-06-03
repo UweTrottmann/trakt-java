@@ -24,10 +24,11 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SyncTest extends BaseTestCase {
 
     @Test
-    public void test_lastActivites() throws OAuthUnauthorizedException {
-        LastActivities lastActivities = getTrakt().sync().lastActivities();
+    public void test_lastActivites() throws IOException {
+        Response<LastActivities> response = getTrakt().sync().lastActivities().execute();
+        assertSuccessfulResponse(response);
+        LastActivities lastActivities = response.body();
         assertThat(lastActivities.all).isNotNull();
         assertLastActivityMore(lastActivities.movies);
         assertLastActivityMore(lastActivities.episodes);
@@ -59,19 +62,23 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_collectionMovies() throws OAuthUnauthorizedException {
-        List<BaseMovie> movies = getTrakt().sync().collectionMovies(Extended.DEFAULT_MIN);
+    public void test_collectionMovies() throws IOException {
+        Response<List<BaseMovie>> response = getTrakt().sync().collectionMovies(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<BaseMovie> movies = response.body();
         assertSyncMovies(movies, "collection");
     }
 
     @Test
-    public void test_collectionShows() throws OAuthUnauthorizedException {
-        List<BaseShow> shows = getTrakt().sync().collectionShows(Extended.DEFAULT_MIN);
+    public void test_collectionShows() throws IOException {
+        Response<List<BaseShow>> response = getTrakt().sync().collectionShows(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<BaseShow> shows = response.body();
         assertSyncShows(shows, "collection");
     }
 
     @Test
-    public void test_addItemsToCollection_movie() throws OAuthUnauthorizedException {
+    public void test_addItemsToCollection_movie() throws IOException {
         SyncMovie movie = new SyncMovie();
         movie.ids = buildMovieIds();
 
@@ -80,7 +87,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToCollection_show() throws OAuthUnauthorizedException {
+    public void test_addItemsToCollection_show() throws IOException {
         SyncShow show = new SyncShow();
         show.ids = buildShowIds();
 
@@ -89,7 +96,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToCollection_season() throws OAuthUnauthorizedException {
+    public void test_addItemsToCollection_season() throws IOException {
         // season
         SyncSeason season = new SyncSeason();
         season.number = 1;
@@ -105,7 +112,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToCollection_episode() throws OAuthUnauthorizedException {
+    public void test_addItemsToCollection_episode() throws IOException {
         // episodes
         SyncEpisode episode1 = new SyncEpisode();
         episode1.number = 1;
@@ -129,9 +136,10 @@ public class SyncTest extends BaseTestCase {
         addItemsToCollection(items);
     }
 
-    private void addItemsToCollection(SyncItems items) throws OAuthUnauthorizedException {
-        SyncResponse response = getTrakt().sync().addItemsToCollection(items);
-        assertSyncResponse(response);
+    private void addItemsToCollection(SyncItems items) throws IOException {
+        Response<SyncResponse> response = getTrakt().sync().addItemsToCollection(items).execute();
+        assertSuccessfulResponse(response);
+        assertSyncResponse(response.body());
     }
 
     private void assertSyncResponse(SyncResponse response) {
@@ -144,9 +152,11 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_deleteItemsFromCollection() throws OAuthUnauthorizedException {
-        SyncResponse response = getTrakt().sync().deleteItemsFromCollection(buildItemsForDeletion());
-        assertSyncResponseDelete(response);
+    public void test_deleteItemsFromCollection() throws IOException {
+        Response<SyncResponse> response = getTrakt().sync().deleteItemsFromCollection(
+                buildItemsForDeletion()).execute();
+        assertSuccessfulResponse(response);
+        assertSyncResponseDelete(response.body());
     }
 
     private void assertSyncResponseDelete(SyncResponse response) {
@@ -180,19 +190,23 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_watchedMovies() throws OAuthUnauthorizedException {
-        List<BaseMovie> watchedMovies = getTrakt().sync().watchedMovies(Extended.DEFAULT_MIN);
+    public void test_watchedMovies() throws IOException {
+        Response<List<BaseMovie>> response = getTrakt().sync().watchedMovies(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<BaseMovie> watchedMovies = response.body();
         assertSyncMovies(watchedMovies, "watched");
     }
 
     @Test
-    public void test_watchedShows() throws OAuthUnauthorizedException {
-        List<BaseShow> watchedShows = getTrakt().sync().watchedShows(Extended.DEFAULT_MIN);
+    public void test_watchedShows() throws IOException {
+        Response<List<BaseShow>> response = getTrakt().sync().watchedShows(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<BaseShow> watchedShows = response.body();
         assertSyncShows(watchedShows, "watched");
     }
 
     @Test
-    public void test_addItemsToWatchedHistory() throws OAuthUnauthorizedException {
+    public void test_addItemsToWatchedHistory() throws IOException {
         // movie
         SyncMovie movie = new SyncMovie();
         movie.watched_at = new DateTime().minusHours(1);
@@ -219,7 +233,9 @@ public class SyncTest extends BaseTestCase {
 
         SyncItems items = new SyncItems().movies(movie).shows(show);
 
-        SyncResponse response = getTrakt().sync().addItemsToWatchedHistory(items);
+        Response<SyncResponse> requestResponse = getTrakt().sync().addItemsToWatchedHistory(items).execute();
+        assertSuccessfulResponse(requestResponse);
+        SyncResponse response = requestResponse.body();
         assertThat(response.added.movies).isNotNull();
         assertThat(response.added.episodes).isNotNull();
         assertThat(response.existing).isNull();
@@ -228,10 +244,12 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_deleteItemsFromWatchedHistory() throws OAuthUnauthorizedException {
+    public void test_deleteItemsFromWatchedHistory() throws IOException {
         SyncItems items = buildItemsForDeletion();
 
-        SyncResponse response = getTrakt().sync().deleteItemsFromWatchedHistory(items);
+        Response<SyncResponse> requestResponse = getTrakt().sync().deleteItemsFromWatchedHistory(items).execute();
+        assertSuccessfulResponse(requestResponse);
+        SyncResponse response = requestResponse.body();
         assertThat(response.deleted.movies).isNotNull();
         assertThat(response.deleted.episodes).isNotNull();
         assertThat(response.added).isNull();
@@ -240,15 +258,20 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_ratingsMovies() throws OAuthUnauthorizedException {
-        List<RatedMovie> ratedMovies = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+    public void test_ratingsMovies() throws IOException {
+        Response<List<RatedMovie>> response = getTrakt().sync().ratingsMovies(RatingsFilter.ALL,
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<RatedMovie> ratedMovies = response.body();
         assertRatedEntities(ratedMovies);
     }
 
     @Test
-    public void test_ratingsMovies_filtered() throws OAuthUnauthorizedException {
-        List<RatedMovie> ratedMovies = getTrakt().sync().ratingsMovies(RatingsFilter.TOTALLYNINJA,
-                Extended.DEFAULT_MIN);
+    public void test_ratingsMovies_filtered() throws IOException {
+        Response<List<RatedMovie>> response = getTrakt().sync().ratingsMovies(RatingsFilter.TOTALLYNINJA,
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<RatedMovie> ratedMovies = response.body();
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
             assertThat(movie.rating).isEqualTo(Rating.TOTALLYNINJA);
@@ -256,45 +279,54 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_ratingsShows() throws OAuthUnauthorizedException {
-        List<RatedShow> ratedShows = getTrakt().sync().ratingsShows(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+    public void test_ratingsShows() throws IOException {
+        Response<List<RatedShow>> response = getTrakt().sync().ratingsShows(RatingsFilter.ALL,
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<RatedShow> ratedShows = response.body();
         assertRatedEntities(ratedShows);
     }
 
     @Test
-    public void test_ratingsSeasons() throws OAuthUnauthorizedException {
-        List<RatedSeason> ratedSeasons = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+    public void test_ratingsSeasons() throws IOException {
+        Response<List<RatedSeason>> response = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL,
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<RatedSeason> ratedSeasons = response.body();
         assertRatedEntities(ratedSeasons);
     }
 
     @Test
-    public void test_ratingsEpisodes() throws OAuthUnauthorizedException {
-        List<RatedEpisode> ratedEpisodes = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, Extended.DEFAULT_MIN);
+    public void test_ratingsEpisodes() throws IOException {
+        Response<List<RatedEpisode>> response = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL,
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<RatedEpisode> ratedEpisodes = response.body();
         assertRatedEntities(ratedEpisodes);
     }
 
     @Test
-    public void test_addRatings_movie() throws OAuthUnauthorizedException {
+    public void test_addRatings_movie() throws IOException {
         SyncMovie movie = new SyncMovie()
                 .id(MovieIds.slug(TestData.MOVIE_SLUG))
                 .rating(Rating.MEH);
 
         SyncItems items = new SyncItems().movies(movie);
-        getTrakt().sync().addRatings(items);
+        getTrakt().sync().addRatings(items).execute();
     }
 
     @Test
-    public void test_addRatings_show() throws OAuthUnauthorizedException {
+    public void test_addRatings_show() throws IOException {
         SyncShow show = new SyncShow()
                 .id(ShowIds.slug(TestData.SHOW_SLUG))
                 .rating(Rating.TERRIBLE);
 
         SyncItems items = new SyncItems().shows(show);
-        getTrakt().sync().addRatings(items);
+        getTrakt().sync().addRatings(items).execute();
     }
 
     @Test
-    public void test_addRatings_season() throws OAuthUnauthorizedException {
+    public void test_addRatings_season() throws IOException {
         SyncSeason season = new SyncSeason()
                 .number(TestData.EPISODE_SEASON)
                 .rating(Rating.FAIR);
@@ -304,11 +336,11 @@ public class SyncTest extends BaseTestCase {
                 .seasons(season);
 
         SyncItems items = new SyncItems().shows(show);
-        getTrakt().sync().addRatings(items);
+        getTrakt().sync().addRatings(items).execute();
     }
 
     @Test
-    public void test_addRatings_episode() throws OAuthUnauthorizedException {
+    public void test_addRatings_episode() throws IOException {
         SyncEpisode episode1 = new SyncEpisode()
                 .number(1)
                 .rating(Rating.TOTALLYNINJA);
@@ -329,14 +361,16 @@ public class SyncTest extends BaseTestCase {
                 .seasons(season);
 
         SyncItems items = new SyncItems().shows(show);
-        getTrakt().sync().addRatings(items);
+        getTrakt().sync().addRatings(items).execute();
     }
 
     @Test
-    public void test_deleteRatings() throws OAuthUnauthorizedException {
+    public void test_deleteRatings() throws IOException {
         SyncItems items = buildItemsForDeletion();
 
-        SyncResponse response = getTrakt().sync().deleteRatings(items);
+        Response<SyncResponse> requestResponse = getTrakt().sync().deleteRatings(items).execute();
+        assertSuccessfulResponse(requestResponse);
+        SyncResponse response = requestResponse.body();
         assertThat(response.deleted.movies).isNotNull();
         assertThat(response.deleted.shows).isNotNull();
         assertThat(response.deleted.seasons).isNotNull();
@@ -347,14 +381,18 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_watchlistMovies() throws OAuthUnauthorizedException {
-        List<BaseMovie> movies = getTrakt().sync().watchlistMovies(Extended.DEFAULT_MIN);
+    public void test_watchlistMovies() throws IOException {
+        Response<List<BaseMovie>> response = getTrakt().sync().watchlistMovies(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<BaseMovie> movies = response.body();
         assertSyncMovies(movies, "watchlist");
     }
 
     @Test
-    public void test_watchlistShows() throws OAuthUnauthorizedException {
-        List<BaseShow> shows = getTrakt().sync().watchlistShows(Extended.DEFAULT_MIN);
+    public void test_watchlistShows() throws IOException {
+        Response<List<BaseShow>> response = getTrakt().sync().watchlistShows(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<BaseShow> shows = response.body();
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
             assertThat(show.listed_at).isNotNull();
@@ -362,8 +400,10 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_watchlistSeasons() throws OAuthUnauthorizedException {
-        List<WatchlistedSeason> seasons = getTrakt().sync().watchlistSeasons(Extended.DEFAULT_MIN);
+    public void test_watchlistSeasons() throws IOException {
+        Response<List<WatchlistedSeason>> response = getTrakt().sync().watchlistSeasons(Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<WatchlistedSeason> seasons = response.body();
         for (WatchlistedSeason season : seasons) {
             assertThat(season.season).isNotNull();
             assertThat(season.show).isNotNull();
@@ -372,8 +412,11 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_watchlistEpisodes() throws OAuthUnauthorizedException {
-        List<WatchlistedEpisode> episodes = getTrakt().sync().watchlistEpisodes(Extended.DEFAULT_MIN);
+    public void test_watchlistEpisodes() throws IOException {
+        Response<List<WatchlistedEpisode>> response = getTrakt().sync().watchlistEpisodes(
+                Extended.DEFAULT_MIN).execute();
+        assertSuccessfulResponse(response);
+        List<WatchlistedEpisode> episodes = response.body();
         for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.episode).isNotNull();
             assertThat(episode.show).isNotNull();
@@ -382,7 +425,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToWatchlist_movie() throws OAuthUnauthorizedException {
+    public void test_addItemsToWatchlist_movie() throws IOException {
         SyncMovie movie = new SyncMovie();
         movie.ids = buildMovieIds();
 
@@ -391,7 +434,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToWatchlist_show() throws OAuthUnauthorizedException {
+    public void test_addItemsToWatchlist_show() throws IOException {
         SyncShow show = new SyncShow();
         show.ids = buildShowIds();
 
@@ -400,7 +443,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToWatchlist_season() throws OAuthUnauthorizedException {
+    public void test_addItemsToWatchlist_season() throws IOException {
         // season
         SyncSeason season = new SyncSeason();
         season.number = 1;
@@ -416,7 +459,7 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
-    public void test_addItemsToWatchlist_episodes() throws OAuthUnauthorizedException {
+    public void test_addItemsToWatchlist_episodes() throws IOException {
         // episode
         SyncEpisode episode1 = new SyncEpisode();
         episode1.number = 1;
@@ -438,15 +481,17 @@ public class SyncTest extends BaseTestCase {
         addItemsToWatchlist(items);
     }
 
-    private void addItemsToWatchlist(SyncItems items) throws OAuthUnauthorizedException {
-        SyncResponse response = getTrakt().sync().addItemsToWatchlist(items);
-        assertSyncResponse(response);
+    private void addItemsToWatchlist(SyncItems items) throws IOException {
+        Response<SyncResponse> requestResponse = getTrakt().sync().addItemsToWatchlist(items).execute();
+        assertSyncResponse(requestResponse.body());
     }
 
     @Test
-    public void test_deleteItemsFromWatchlist() throws OAuthUnauthorizedException {
-        SyncResponse response = getTrakt().sync().deleteItemsFromWatchlist(buildItemsForDeletion());
-        assertSyncResponseDelete(response);
+    public void test_deleteItemsFromWatchlist() throws IOException {
+        Response<SyncResponse> requestResponse = getTrakt().sync().deleteItemsFromWatchlist(
+                buildItemsForDeletion()).execute();
+        assertSuccessfulResponse(requestResponse);
+        assertSyncResponseDelete(requestResponse.body());
     }
 
 

@@ -13,12 +13,12 @@ import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
-import com.uwetrottmann.trakt5.exceptions.OAuthUnauthorizedException;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public interface Sync {
      * pull down a ton of data only to see nothing has actually changed.
      */
     @GET("/sync/last_activities")
-    LastActivities lastActivities() throws OAuthUnauthorizedException;
+    Call<LastActivities> lastActivities();
 
     /**
      * <b>OAuth Required</b>
@@ -41,9 +41,9 @@ public interface Sync {
      * or on physical media.
      */
     @GET("/sync/collection/movies")
-    List<BaseMovie> collectionMovies(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<BaseMovie>> collectionMovies(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -52,9 +52,9 @@ public interface Sync {
      * on physical media.
      */
     @GET("/sync/collection/shows")
-    List<BaseShow> collectionShows(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<BaseShow>> collectionShows(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -64,9 +64,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/collection")
-    SyncResponse addItemsToCollection(
+    Call<SyncResponse> addItemsToCollection(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -76,9 +76,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/collection/remove")
-    SyncResponse deleteItemsFromCollection(
+    Call<SyncResponse> deleteItemsFromCollection(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -86,9 +86,9 @@ public interface Sync {
      * <p> Returns all movies a user has watched.
      */
     @GET("/sync/watched/movies")
-    List<BaseMovie> watchedMovies(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<BaseMovie>> watchedMovies(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -96,9 +96,9 @@ public interface Sync {
      * <p> Returns all shows a user has watched.
      */
     @GET("/sync/watched/shows")
-    List<BaseShow> watchedShows(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<BaseShow>> watchedShows(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -110,9 +110,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/history")
-    SyncResponse addItemsToWatchedHistory(
+    Call<SyncResponse> addItemsToWatchedHistory(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -124,9 +124,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/history/remove")
-    SyncResponse deleteItemsFromWatchedHistory(
+    Call<SyncResponse> deleteItemsFromWatchedHistory(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -136,10 +136,10 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/movies{rating}")
-    List<RatedMovie> ratingsMovies(
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<RatedMovie>> ratingsMovies(
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -149,10 +149,10 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/shows{rating}")
-    List<RatedShow> ratingsShows(
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<RatedShow>> ratingsShows(
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -162,10 +162,10 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/seasons{rating}")
-    List<RatedSeason> ratingsSeasons(
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<RatedSeason>> ratingsSeasons(
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -175,10 +175,10 @@ public interface Sync {
      * @param filter Filter for a specific rating.
      */
     @GET("/sync/ratings/episodes{rating}")
-    List<RatedEpisode> ratingsEpisodes(
-            @Path(value = "rating", encode = false) RatingsFilter filter,
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<RatedEpisode>> ratingsEpisodes(
+            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -188,9 +188,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/ratings")
-    SyncResponse addRatings(
+    Call<SyncResponse> addRatings(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -200,9 +200,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/ratings/remove")
-    SyncResponse deleteRatings(
+    Call<SyncResponse> deleteRatings(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
 
     /**
@@ -212,9 +212,9 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/movies")
-    List<BaseMovie> watchlistMovies(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<BaseMovie>> watchlistMovies(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -223,9 +223,9 @@ public interface Sync {
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/shows")
-    List<BaseShow> watchlistShows(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<BaseShow>> watchlistShows(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -234,9 +234,9 @@ public interface Sync {
      * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/seasons")
-    List<WatchlistedSeason> watchlistSeasons(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -245,9 +245,9 @@ public interface Sync {
      * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("/sync/watchlist/episodes")
-    List<WatchlistedEpisode> watchlistEpisodes(
-            @Query(value = "extended", encodeValue = false) Extended extended
-    ) throws OAuthUnauthorizedException;
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -257,9 +257,9 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/watchlist")
-    SyncResponse addItemsToWatchlist(
+    Call<SyncResponse> addItemsToWatchlist(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
     /**
      * <b>OAuth Required</b>
@@ -269,8 +269,8 @@ public interface Sync {
      * @param items A list of movies, shows, seasons or episodes.
      */
     @POST("/sync/watchlist/remove")
-    SyncResponse deleteItemsFromWatchlist(
+    Call<SyncResponse> deleteItemsFromWatchlist(
             @Body SyncItems items
-    ) throws OAuthUnauthorizedException;
+    );
 
 }
