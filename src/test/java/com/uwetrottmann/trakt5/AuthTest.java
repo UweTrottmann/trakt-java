@@ -21,7 +21,6 @@ public class AuthTest extends BaseTestCase {
     private static final String TEST_AUTH_CODE = "";
     private static final String TEST_REFRESH_TOKEN = "";
     private static final String TEST_REDIRECT_URI = "http://localhost";
-    private static final String TEST_USERNAME = "sgtest";
 
     @Test
     public void test_getAuthorizationRequest() throws OAuthSystemException, URISyntaxException {
