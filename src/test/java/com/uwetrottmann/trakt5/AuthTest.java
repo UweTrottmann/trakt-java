@@ -22,7 +22,7 @@ public class AuthTest extends BaseTestCase {
     private static final String TEST_REFRESH_TOKEN = "";
     private static final String TEST_REDIRECT_URI = "http://localhost";
 
-    private static final TraktV2 trakt = new TraktV2(TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
+    private static final TraktV2 trakt = new TestTraktV2(TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
 
     @Override
     protected TraktV2 getTrakt() {

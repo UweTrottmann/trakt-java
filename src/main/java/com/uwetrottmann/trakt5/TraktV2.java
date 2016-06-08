@@ -35,7 +35,6 @@ import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
@@ -72,9 +71,6 @@ public class TraktV2 {
 
     private OkHttpClient okHttpClient;
     private Retrofit retrofit;
-    private HttpLoggingInterceptor logging;
-
-    private boolean enableDebugLogging;
 
     private String apiKey;
     private String clientSecret;
@@ -142,20 +138,6 @@ public class TraktV2 {
     }
 
     /**
-     * Enable debug log output.
-     *
-     * @param enable If true, the log level is set to {@link HttpLoggingInterceptor.Level#BODY}. Otherwise {@link
-     * HttpLoggingInterceptor.Level#NONE}.
-     */
-    public TraktV2 enableDebugLogging(boolean enable) {
-        this.enableDebugLogging = enable;
-        if (logging != null) {
-            logging.setLevel(enable ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
-        }
-        return this;
-    }
-
-    /**
      * Creates a {@link Retrofit.Builder} that sets the base URL, adds a Gson converter and sets {@link #okHttpClient()}
      * as its client.
      *
@@ -189,16 +171,10 @@ public class TraktV2 {
     protected void setOkHttpClientDefaults(OkHttpClient.Builder builder) {
         builder.addNetworkInterceptor(new TraktV2Interceptor(this));
         builder.authenticator(new TraktV2Authenticator(this));
-        if (enableDebugLogging) {
-            logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(logging);
-        }
     }
 
     /**
-     * Return the {@link Retrofit} instance. If called for the first time builds the instance, so if desired make sure
-     * to call {@link #enableDebugLogging(boolean)} before.
+     * Return the {@link Retrofit} instance. If called for the first time builds the instance.
      */
     protected Retrofit retrofit() {
         if (retrofit == null) {

@@ -10,6 +10,8 @@ import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.CrewMember;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.enums.Type;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import org.junit.BeforeClass;
 import retrofit2.Response;
 
@@ -25,13 +27,40 @@ public class BaseTestCase {
 
     private static final boolean DEBUG = true;
 
-    private static final TraktV2 trakt = new TraktV2(TEST_CLIENT_ID);
+    private static final TraktV2 trakt = new TestTraktV2(TEST_CLIENT_ID);
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
+
+    static class TestTraktV2 extends TraktV2 {
+
+        public TestTraktV2(String apiKey) {
+            super(apiKey);
+        }
+
+        public TestTraktV2(String apiKey, String clientSecret, String redirectUri) {
+            super(apiKey, clientSecret, redirectUri);
+        }
+
+        @Override
+        protected void setOkHttpClientDefaults(OkHttpClient.Builder builder) {
+            super.setOkHttpClientDefaults(builder);
+            if (DEBUG) {
+                // add logging
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log(String s) {
+                        // standard output is easier to read
+                        System.out.println(s);
+                    }
+                });
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                builder.addInterceptor(logging);
+            }
+        }
+    }
 
     @BeforeClass
     public static void setUpOnce() {
         trakt.accessToken(TEST_ACCESS_TOKEN);
-        trakt.enableDebugLogging(DEBUG);
     }
 
     protected TraktV2 getTrakt() {
