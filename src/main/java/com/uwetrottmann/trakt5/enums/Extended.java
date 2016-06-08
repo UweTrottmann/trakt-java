@@ -14,11 +14,15 @@ public enum Extended implements TraktEnum {
     /** Complete info for an item. */
     FULL("full"),
     /** Complete info and all images. */
-    FULLIMAGES("full,images");
+    FULLIMAGES("full,images"),
+    /** Only works with sync watchedShows. */
+    NOSEASONS("noseasons"),
+    /** Only works with sync watchedShows. */
+    NOSEASONSIMAGES("noseasons,images");
 
     private final String value;
 
-    private Extended(String value) {
+    Extended(String value) {
         this.value = value;
     }
 
