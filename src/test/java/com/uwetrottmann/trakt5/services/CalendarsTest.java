@@ -4,7 +4,6 @@ import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.entities.CalendarMovieEntry;
 import com.uwetrottmann.trakt5.entities.CalendarShowEntry;
 import org.junit.Test;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,34 +21,29 @@ public class CalendarsTest extends BaseTestCase {
 
     @Test
     public void test_myShows() throws IOException {
-        Response<List<CalendarShowEntry>> response = getTrakt().calendars().myShows(START_DATE_MY_SHOWS,
-                TEST_DAYS).execute();
-        assertSuccessfulResponse(response);
-        assertShowCalendar(response.body());
+        List<CalendarShowEntry> entries = executeCall(getTrakt().calendars().myShows(START_DATE_MY_SHOWS, TEST_DAYS));
+        assertShowCalendar(entries);
     }
 
     @Test
     public void test_myNewShows() throws IOException {
-        Response<List<CalendarShowEntry>> response = getTrakt().calendars().myNewShows(START_DATE_MY_SHOWS,
-                TEST_DAYS).execute();
-        assertSuccessfulResponse(response);
-        assertShowCalendar(response.body());
+        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().myNewShows(START_DATE_MY_SHOWS,
+                TEST_DAYS));
+        assertShowCalendar(response);
     }
 
     @Test
     public void test_mySeasonPremieres() throws IOException {
-        Response<List<CalendarShowEntry>> response = getTrakt().calendars().mySeasonPremieres(START_DATE_MY_SHOWS,
-                TEST_DAYS).execute();
-        assertSuccessfulResponse(response);
-        assertShowCalendar(response.body());
+        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().mySeasonPremieres(START_DATE_MY_SHOWS,
+                TEST_DAYS));
+        assertShowCalendar(response);
     }
 
     @Test
     public void test_myMovies() throws IOException {
-        Response<List<CalendarMovieEntry>> response = getTrakt().calendars().myMovies(START_DATE_MY_MOVIES,
-                DAYS_MOVIES).execute();
-        assertSuccessfulResponse(response);
-        assertMovieCalendar(response.body());
+        List<CalendarMovieEntry> response = executeCall(getTrakt().calendars().myMovies(START_DATE_MY_MOVIES,
+                DAYS_MOVIES));
+        assertMovieCalendar(response);
     }
 
     @Test
@@ -57,9 +51,8 @@ public class CalendarsTest extends BaseTestCase {
         // do unauthenticated call
         getTrakt().accessToken(null);
 
-        Response<List<CalendarShowEntry>> response = getTrakt().calendars().shows(START_DATE_ALL, TEST_DAYS).execute();
-        assertSuccessfulResponse(response);
-        assertShowCalendar(response.body());
+        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().shows(START_DATE_ALL, TEST_DAYS));
+        assertShowCalendar(response);
 
         // restore auth
         getTrakt().accessToken(TEST_ACCESS_TOKEN);
@@ -70,10 +63,9 @@ public class CalendarsTest extends BaseTestCase {
         // do unauthenticated call
         getTrakt().accessToken(null);
 
-        Response<List<CalendarShowEntry>> response = getTrakt().calendars().newShows(START_DATE_ALL,
-                TEST_DAYS).execute();
-        assertSuccessfulResponse(response);
-        assertShowCalendar(response.body());
+        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().newShows(START_DATE_ALL,
+                TEST_DAYS));
+        assertShowCalendar(response);
 
         // restore auth
         getTrakt().accessToken(TEST_ACCESS_TOKEN);
@@ -84,10 +76,9 @@ public class CalendarsTest extends BaseTestCase {
         // do unauthenticated call
         getTrakt().accessToken(null);
 
-        Response<List<CalendarShowEntry>> response = getTrakt().calendars().seasonPremieres(START_DATE_ALL,
-                TEST_DAYS).execute();
-        assertSuccessfulResponse(response);
-        assertShowCalendar(response.body());
+        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().seasonPremieres(START_DATE_ALL,
+                TEST_DAYS));
+        assertShowCalendar(response);
 
         // restore auth
         getTrakt().accessToken(TEST_ACCESS_TOKEN);
@@ -98,9 +89,8 @@ public class CalendarsTest extends BaseTestCase {
         // do unauthenticated call
         getTrakt().accessToken(null);
 
-        Response<List<CalendarMovieEntry>> response = getTrakt().calendars().movies(START_DATE_ALL, 30).execute();
-        assertSuccessfulResponse(response);
-        assertMovieCalendar(response.body());
+        List<CalendarMovieEntry> response = executeCall(getTrakt().calendars().movies(START_DATE_ALL, 30));
+        assertMovieCalendar(response);
 
         // restore auth
         getTrakt().accessToken(TEST_ACCESS_TOKEN);

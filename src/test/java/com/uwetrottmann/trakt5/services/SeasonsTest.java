@@ -2,13 +2,11 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
-import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Season;
 import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,10 +17,9 @@ public class SeasonsTest extends BaseTestCase {
 
     @Test
     public void test_summary() throws IOException {
-        Response<List<Season>> response = getTrakt().seasons().summary(TestData.SHOW_SLUG,
-                Extended.FULLIMAGES).execute();
-        assertSuccessfulResponse(response);
-        List<Season> seasons = response.body();
+        List<Season> seasons = executeCall(getTrakt().seasons().summary(TestData.SHOW_SLUG,
+                Extended.FULLIMAGES));
+        assertThat(seasons).isNotNull();
         assertThat(seasons).hasSize(6);
         for (Season season : seasons) {
             assertThat(season).isNotNull();
@@ -44,10 +41,9 @@ public class SeasonsTest extends BaseTestCase {
 
     @Test
     public void test_season() throws IOException {
-        Response<List<Episode>> response = getTrakt().seasons().season(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
-                Extended.DEFAULT_MIN).execute();
-        assertSuccessfulResponse(response);
-        List<Episode> season = response.body();
+        List<Episode> season = executeCall(getTrakt().seasons().season(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
+                Extended.DEFAULT_MIN));
+        assertThat(season).isNotNull();
         assertThat(season).isNotEmpty();
         for (Episode episode : season) {
             assertThat(episode.season).isEqualTo(TestData.EPISODE_SEASON);
@@ -56,17 +52,12 @@ public class SeasonsTest extends BaseTestCase {
 
     @Test
     public void test_comments() throws IOException {
-        Response<List<Comment>> response = getTrakt().seasons().comments(TestData.SHOW_SLUG,
-                TestData.EPISODE_SEASON).execute();
-        assertSuccessfulResponse(response);
+        executeCall(getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON));
     }
 
     @Test
     public void test_ratings() throws IOException {
-        Response<Ratings> response = getTrakt().seasons().ratings(TestData.SHOW_SLUG,
-                TestData.EPISODE_SEASON).execute();
-        assertSuccessfulResponse(response);
-        Ratings ratings = response.body();
+        Ratings ratings = executeCall(getTrakt().seasons().ratings(TestData.SHOW_SLUG, TestData.EPISODE_SEASON));
         assertRatings(ratings);
     }
 

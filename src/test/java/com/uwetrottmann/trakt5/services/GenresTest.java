@@ -3,7 +3,6 @@ package com.uwetrottmann.trakt5.services;
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.entities.Genre;
 import org.junit.Test;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,17 +13,13 @@ public class GenresTest extends BaseTestCase {
 
     @Test
     public void test_genres_shows() throws IOException {
-        Response<List<Genre>> response = getTrakt().genres().shows().execute();
-        assertSuccessfulResponse(response);
-        List<Genre> genres = response.body();
+        List<Genre> genres = executeCall(getTrakt().genres().shows());
         assertGenres(genres);
     }
 
     @Test
     public void test_genres_movies() throws IOException {
-        Response<List<Genre>> response = getTrakt().genres().movies().execute();
-        assertSuccessfulResponse(response);
-        List<Genre> genres = response.body();
+        List<Genre> genres = executeCall(getTrakt().genres().movies());
         assertGenres(genres);
     }
 

@@ -15,6 +15,7 @@ import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -29,38 +30,46 @@ public class CheckinTest extends BaseTestCase {
     private static final String APP_VERSION = "trakt-java-4";
     private static final String APP_DATE = "2014-10-15";
 
-    private void assertNoCheckinInProgress(Response response) throws IOException {
-        if (!response.isSuccessful() && getTrakt().checkForCheckinError(response) != null) {
-            fail("Check-in still in progress, may be left over from failed test");
+    @Override
+    public <T> T executeCall(Call<T> call) throws IOException {
+        Response<T> response = call.execute();
+        if (response.isSuccessful()) {
+            return response.body();
+        } else {
+            if (getTrakt().checkForCheckinError(response) != null) {
+                fail("Check-in still in progress, may be left over from failed test");
+            } else if (response.code() == 401) {
+                fail("Authorization required, supply a valid OAuth access token: "
+                        + response.code() + " " + response.message());
+            } else {
+                fail("Request failed: " + response.code() + " " + response.message());
+            }
         }
+        return null;
     }
 
     @Test
     public void test_checkin_episode() throws IOException {
         EpisodeCheckin checkin = buildEpisodeCheckin();
 
-        Response<EpisodeCheckinResponse> response = getTrakt().checkin().checkin(checkin).execute();
-        assertNoCheckinInProgress(response);
-        assertSuccessfulResponse(response);
+        EpisodeCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
 
         // delete check-in first
         test_checkin_delete();
 
-        assertEpisodeCheckin(response.body());
+        assertEpisodeCheckin(response);
     }
 
     @Test
     public void test_checkin_episode_without_ids() throws IOException {
         EpisodeCheckin checkin = buildEpisodeCheckinWithoutIds();
 
-        Response<EpisodeCheckinResponse> response = getTrakt().checkin().checkin(checkin).execute();
-        assertNoCheckinInProgress(response);
-        assertSuccessfulResponse(response);
+        EpisodeCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
 
         // delete check-in first
         test_checkin_delete();
 
-        assertEpisodeCheckin(response.body());
+        assertEpisodeCheckin(response);
     }
 
     private void assertEpisodeCheckin(EpisodeCheckinResponse response) {
@@ -96,13 +105,11 @@ public class CheckinTest extends BaseTestCase {
     public void test_checkin_movie() throws IOException {
         MovieCheckin checkin = buildMovieCheckin();
 
-        Response<MovieCheckinResponse> response = getTrakt().checkin().checkin(checkin).execute();
-        assertNoCheckinInProgress(response);
-        assertSuccessfulResponse(response);
+        MovieCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
         assertThat(response).isNotNull();
         // movie should be over in less than 3 hours
-        assertThat(response.body().watched_at).isBefore(new DateTime().plusHours(3));
-        MoviesTest.assertTestMovie(response.body().movie);
+        assertThat(response.watched_at).isBefore(new DateTime().plusHours(3));
+        MoviesTest.assertTestMovie(response.movie);
 
         test_checkin_delete();
     }
@@ -122,15 +129,13 @@ public class CheckinTest extends BaseTestCase {
         Checkin checkin = getTrakt().checkin();
 
         EpisodeCheckin episodeCheckin = buildEpisodeCheckin();
-        Response<EpisodeCheckinResponse> response = checkin.checkin(episodeCheckin).execute();
-        assertNoCheckinInProgress(response);
-        assertSuccessfulResponse(response);
+        EpisodeCheckinResponse response = executeCall(checkin.checkin(episodeCheckin));
 
         MovieCheckin movieCheckin = buildMovieCheckin();
         Response<MovieCheckinResponse> responseBlocked = checkin.checkin(movieCheckin).execute();
-        if (response.code() == 401) {
+        if (responseBlocked.code() == 401) {
             fail("Authorization required, supply a valid OAuth access token: "
-                    + response.code() + " " + response.message());
+                    + responseBlocked.code() + " " + responseBlocked.message());
         }
         if (responseBlocked.code() != 409) {
             fail("Check-in was not blocked");
