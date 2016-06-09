@@ -31,7 +31,7 @@ Or for Maven:
 ```
 
 Use like any other [retrofit2][2] based service. You only need to supply your [OAuth 2.0][3] credentials and optional user
-OAuth access token obtained from trakt. For example:
+OAuth access token obtained from trakt.
 
 `TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
 
