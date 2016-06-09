@@ -1,9 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
 import org.joda.time.DateTime;
+import retrofit2.Response;
 
 /**
- * Type to use for parsing check in error response (call {@link retrofit.RetrofitError#getBodyAs(java.lang.reflect.Type)}
+ * Type to use for parsing check in error response (call {@link com.uwetrottmann.trakt5.TraktV2#checkForCheckinError(Response)}
  * with this class) if you get a 409 HTTP status code when checking in.
  */
 public class CheckinError {
