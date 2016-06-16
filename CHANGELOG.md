@@ -1,6 +1,23 @@
 Change Log
 ==========
 
+## 5.0.0
+_2016-06-09_
+
+* Update to `retrofit2`. Read about the most [notable changes and benefits](https://github.com/square/retrofit/blob/master/CHANGELOG.md#version-200-2016-03-11).
+  You will have to make changes to your app, see the [README](https://github.com/UweTrottmann/trakt-java/blob/master/README.md#usage)
+  for an example of the new code flow.
+* Package name changed to `com.uwetrottmann.trakt5`. So you can keep using the old version while updating your code.
+* Removed `OAuthUnauthorizedException` and `CheckinInProgressException`. You now have to handle authentication errors
+  (check for `response.code() == 401`) and check-in errors (`TraktV2` now has `checkForCheckinError()`) yourself.
+* Better integrated support for handling OAuth, removing the need for a dedicated HTTP client (removed `TraktHttpClient`).
+* Better support for customizing `TraktV2`. You can now override `retrofit()`, `retrofitBuilder()`, `okHttpClient()` or 
+  `setOkHttpClientDefaults()`.
+* Add `noseasons` extended flag.
+* Removed debug logging. You can easily add your own `HttpLoggingInterceptor` by overriding the new
+  `setOkHttpClientDefaults()` in `TraktV2`. See `BaseTestCase` for an example.
+* Update joda-time to 2.9.4.
+
 ## 4.6.2
 _2016-05-27_
 
