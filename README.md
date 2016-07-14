@@ -41,8 +41,8 @@ Shows traktShows = trakt.shows();
 try {
     // Get trending shows
     Response<List<TrendingShow>> response = traktShows.trending(1, null, Extended.FULLIMAGES).execute();
-    List<TrendingShow> shows = traktShows.trending(1, 10, Extended.FULLIMAGES).execute();
     if (response.isSuccessful()) {
+        List<TrendingShow> trending = response.body();
         for (TrendingShow trending : shows) {
             System.out.println("Title: " + trending.show.title);
         }
