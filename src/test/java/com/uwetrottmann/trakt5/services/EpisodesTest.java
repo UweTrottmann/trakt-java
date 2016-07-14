@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
 
@@ -38,6 +39,13 @@ public class EpisodesTest extends BaseTestCase {
         Ratings ratings = executeCall(getTrakt().episodes().ratings(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
                 TestData.EPISODE_NUMBER));
         assertRatings(ratings);
+    }
+
+    @Test
+    public void test_stats() throws IOException {
+        Stats stats = executeCall(
+                getTrakt().episodes().stats(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER));
+        assertStats(stats);
     }
 
 }

@@ -5,6 +5,7 @@ import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Show;
+import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
@@ -151,6 +152,14 @@ public interface Shows {
      */
     @GET("shows/{id}/ratings")
     Call<Ratings> ratings(
+            @Path("id") String showId
+    );
+
+    /**
+     * Returns lots of show stats.
+     */
+    @GET("shows/{id}/stats")
+    Call<Stats> stats(
             @Path("id") String showId
     );
 

@@ -9,6 +9,7 @@ import com.uwetrottmann.trakt5.entities.CastMember;
 import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.CrewMember;
 import com.uwetrottmann.trakt5.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -106,6 +107,20 @@ public class BaseTestCase {
         assertThat(ratings.rating).isGreaterThanOrEqualTo(0);
         assertThat(ratings.votes).isGreaterThanOrEqualTo(0);
         assertThat(ratings.distribution).hasSize(10);
+    }
+
+    public void assertStats(Stats stats) {
+        assertThat(stats.watchers).isGreaterThanOrEqualTo(0);
+        assertThat(stats.plays).isGreaterThanOrEqualTo(0);
+        assertThat(stats.collectors).isGreaterThanOrEqualTo(0);
+        assertThat(stats.comments).isGreaterThanOrEqualTo(0);
+        assertThat(stats.lists).isGreaterThanOrEqualTo(0);
+        assertThat(stats.votes).isGreaterThanOrEqualTo(0);
+    }
+
+    public void assertShowStats(Stats stats) {
+        assertStats(stats);
+        assertThat(stats.collected_episodes).isGreaterThanOrEqualTo(0);
     }
 
     protected static void assertSyncMovies(List<BaseMovie> movies, String type) {

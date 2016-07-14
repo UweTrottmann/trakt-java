@@ -7,6 +7,7 @@ import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.MovieTranslation;
 import com.uwetrottmann.trakt5.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingMovie;
 import com.uwetrottmann.trakt5.enums.Extended;
@@ -110,6 +111,12 @@ public class MoviesTest extends BaseTestCase {
     public void test_ratings() throws IOException {
         Ratings ratings = executeCall(getTrakt().movies().ratings(TestData.MOVIE_SLUG));
         assertRatings(ratings);
+    }
+
+    @Test
+    public void test_stats() throws IOException {
+        Stats stats = executeCall(getTrakt().movies().stats(TestData.MOVIE_SLUG));
+        assertStats(stats);
     }
 
 }

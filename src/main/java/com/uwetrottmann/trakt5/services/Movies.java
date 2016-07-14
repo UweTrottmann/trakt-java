@@ -5,6 +5,7 @@ import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.MovieTranslation;
 import com.uwetrottmann.trakt5.entities.Ratings;
+import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.TrendingMovie;
 import com.uwetrottmann.trakt5.enums.Extended;
 import retrofit2.Call;
@@ -107,6 +108,14 @@ public interface Movies {
      */
     @GET("movies/{id}/ratings")
     Call<Ratings> ratings(
+            @Path("id") String movieId
+    );
+
+    /**
+     * Returns lots of movie stats.
+     */
+    @GET("movies/{id}/stats")
+    Call<Stats> stats(
             @Path("id") String movieId
     );
 

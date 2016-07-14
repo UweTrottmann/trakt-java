@@ -9,6 +9,7 @@ import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Show;
+import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
@@ -113,6 +114,12 @@ public class ShowsTest extends BaseTestCase {
     public void test_ratings() throws IOException {
         Ratings ratings = executeCall(getTrakt().shows().ratings(TestData.SHOW_SLUG));
         assertRatings(ratings);
+    }
+
+    @Test
+    public void test_stats() throws IOException {
+        Stats stats = executeCall(getTrakt().shows().stats(TestData.SHOW_SLUG));
+        assertShowStats(stats);
     }
 
     @Test
