@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 5.1.0
+_2016-07-14_
+
+* Added `stats` for movies, shows, seasons and episodes.
+* Update retrofit to 2.1.0.
+
 ## 5.0.0
 _2016-06-09_
 
