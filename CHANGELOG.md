@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.2.0
+_2016-07-31_
+
+* Add optional start and end date parameters to history methods. Thanks @mattkranzler5!
+
 ## 5.1.0
 _2016-07-14_
 
