@@ -31,6 +31,7 @@ import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import retrofit2.Response;
 
@@ -209,8 +210,9 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_historyEpisodesAndMovies() throws IOException {
         List<HistoryEntry> history = executeCall(
-                getTrakt().users().history(TestData.USERNAME, 1, DEFAULT_PAGE_SIZE,
-                        Extended.DEFAULT_MIN));
+                getTrakt().users().history(TestData.USERNAME, 1,
+                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                        null, null));
         for (HistoryEntry entry : history) {
             assertThat(entry.id).isGreaterThan(0);
             assertThat(entry.watched_at).isNotNull();
@@ -229,7 +231,8 @@ public class UsersTest extends BaseTestCase {
     public void test_historyEpisodes() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USERNAME, HistoryType.EPISODES, 1,
-                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN));
+                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                        null, null));
         for (HistoryEntry entry : history) {
             assertThat(entry.id).isGreaterThan(0);
             assertThat(entry.watched_at).isNotNull();
@@ -244,7 +247,8 @@ public class UsersTest extends BaseTestCase {
     public void test_historyMovies() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(Username.ME, HistoryType.MOVIES, 1,
-                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN));
+                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                        null, null));
         assertMovieHistory(history);
     }
 
@@ -252,7 +256,10 @@ public class UsersTest extends BaseTestCase {
     public void test_historyItem() throws IOException {
         List<HistoryEntry> history = executeCall(getTrakt().users().history(Username.ME, HistoryType.MOVIES,
                 TestData.MOVIE_TRAKT_ID, 1,
-                DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN));
+                DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                new DateTime(2016, 6, 3, 10, 0, 0, 0, DateTimeZone.UTC),
+                new DateTime(2016, 6, 3, 11, 0, 0, 0, DateTimeZone.UTC)));
+        assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);
     }
 
