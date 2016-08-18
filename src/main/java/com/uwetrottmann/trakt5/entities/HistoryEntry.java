@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 public class HistoryEntry {
 
-    public Integer id;
+    public Long id;
     public DateTime watched_at;
     public String action;
     public String type;
