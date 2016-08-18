@@ -151,7 +151,6 @@ public class ShowsTest extends BaseTestCase {
     private void assertProgress(BaseShow show) {
         assertThat(show.aired).isGreaterThan(60);
         assertThat(show.completed).isGreaterThanOrEqualTo(1);
-        assertThat(show.next_episode).isNotNull();
 
         // Breaking Bad has 5 seasons
         assertThat(show.seasons).hasSize(5);
