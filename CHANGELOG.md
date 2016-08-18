@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.2.1
+_2016-08-18_
+
+* `HistoryEntry` ids can be `Long` (64 bit numbers). Thanks @mattkranzler5!
+
 ## 5.2.0
 _2016-07-31_
 
