@@ -64,14 +64,14 @@ public class CommentsTest extends BaseTestCase {
 
         // post a reply to the new comment
         Comment expectedReply = new Comment("This is a reply to the toasty comment!", false, false);
-        Comment actualReply = executeCall(getTrakt().comments().postReply(comment.id, expectedReply));
+        Comment actualReply = executeCall(getTrakt().comments().postReply(response.id, expectedReply));
         assertCommentResponse(expectedReply, actualReply);
 
         // give the server some time to handle the data
         Thread.sleep(3000);
 
         // look if the comment replies include our new reply
-        List<Comment> replies = executeCall(getTrakt().comments().replies(comment.id));
+        List<Comment> replies = executeCall(getTrakt().comments().replies(response.id));
         for (Comment reply : replies) {
             if (reply.id.equals(actualReply.id)) {
                 assertCommentResponse(actualReply, reply);
@@ -79,7 +79,7 @@ public class CommentsTest extends BaseTestCase {
         }
 
         // delete the comment and replies (does this work?)
-        Response deleteResponse = getTrakt().comments().delete(comment.id).execute();
+        Response deleteResponse = getTrakt().comments().delete(response.id).execute();
         assertSuccessfulResponse(deleteResponse);
         assertThat(deleteResponse.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
     }
