@@ -60,6 +60,10 @@ try {
 
 See test cases in `src/test/` for more examples.
 
+## Use Proguard!
+You likely will not use every method in this library, so it is probably useful to strip unused ones with Proguard.
+Just apply the [Proguard rules for retrofit][4].
+
 # License
 
 Created by [Uwe Trottmann](http://uwetrottmann.com/contact).
@@ -70,3 +74,4 @@ Do not just copy, make it better.
  [1]: http://docs.trakt.apiary.io/
  [2]: http://square.github.io/retrofit/
  [3]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
+ [4]: http://square.github.io/retrofit/#download
