@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CalendarsTest extends BaseTestCase {
 
     // week which has show premiere (and therefore season premiere)
-    private static final String START_DATE_ALL = "2016-06-01";
+    private static final String START_DATE_ALL = "2016-10-01";
     private static final String START_DATE_MY_SHOWS = "2014-09-01";
     private static final int TEST_DAYS = 7;
     public static final String START_DATE_MY_MOVIES = "2014-05-01";
