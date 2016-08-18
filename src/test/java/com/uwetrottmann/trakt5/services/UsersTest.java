@@ -255,10 +255,10 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_historyItem() throws IOException {
         List<HistoryEntry> history = executeCall(getTrakt().users().history(Username.ME, HistoryType.MOVIES,
-                TestData.MOVIE_TRAKT_ID, 1,
+                TestData.MOVIE_WATCHED_TRAKT_ID, 1,
                 DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
-                new DateTime(2016, 6, 3, 10, 0, 0, 0, DateTimeZone.UTC),
-                new DateTime(2016, 6, 3, 11, 0, 0, 0, DateTimeZone.UTC)));
+                new DateTime(2016, 8, 3, 9, 0, 0, 0, DateTimeZone.UTC),
+                new DateTime(2016, 8, 3, 10, 0, 0, 0, DateTimeZone.UTC)));
         assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);
     }

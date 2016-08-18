@@ -11,6 +11,9 @@ public interface TestData {
     int MOVIE_TMDB_ID = 20526;
     int MOVIE_YEAR = 2010;
 
+    // Interstellar
+    int MOVIE_WATCHED_TRAKT_ID = 102156;
+
     String SHOW_TITLE = "Breaking Bad";
     int SHOW_TRAKT_ID = 1388;
     String SHOW_SLUG = "breaking-bad";
