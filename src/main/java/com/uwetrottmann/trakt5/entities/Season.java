@@ -1,5 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
+import java.util.List;
+
 public class Season {
 
     public Integer number;
@@ -11,5 +13,5 @@ public class Season {
     public Integer episode_count;
     public Integer aired_episodes;
     public Images images;
-
+    public List<Episode> episodes;
 }

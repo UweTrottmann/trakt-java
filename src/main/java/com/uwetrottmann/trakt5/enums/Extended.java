@@ -18,7 +18,11 @@ public enum Extended implements TraktEnum {
     /** Only works with sync watchedShows. */
     NOSEASONS("noseasons"),
     /** Only works with sync watchedShows. */
-    NOSEASONSIMAGES("noseasons,images");
+    NOSEASONSIMAGES("noseasons,images"),
+    /** Only works with seasons/summary */
+    EPISODES("episodes"),
+    /** Only works with seasons/summary */
+    FULLEPISODES("full,episodes");
 
     private final String value;
 
