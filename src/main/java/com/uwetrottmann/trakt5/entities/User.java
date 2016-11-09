@@ -20,8 +20,6 @@ public class User {
     public String about;
     public String gender;
     public int age;
-
-    // images
     public Images images;
 
 }

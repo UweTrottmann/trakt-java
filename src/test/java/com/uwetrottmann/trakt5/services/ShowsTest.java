@@ -53,14 +53,14 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_summary_slug() throws IOException {
-        Show show = executeCall(getTrakt().shows().summary(TestData.SHOW_SLUG, Extended.FULLIMAGES));
+        Show show = executeCall(getTrakt().shows().summary(TestData.SHOW_SLUG, Extended.FULL));
         assertTestShow(show);
     }
 
     @Test
     public void test_summary_trakt_id() throws IOException {
         Show show = executeCall(
-                getTrakt().shows().summary(String.valueOf(TestData.SHOW_TRAKT_ID), Extended.FULLIMAGES));
+                getTrakt().shows().summary(String.valueOf(TestData.SHOW_TRAKT_ID), Extended.FULL));
         assertTestShow(show);
     }
 

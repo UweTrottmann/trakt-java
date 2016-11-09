@@ -34,11 +34,6 @@ public class SeasonsTest extends BaseTestCase {
             assertThat(season.aired_episodes).isPositive();
             assertThat(season.rating).isBetween(0.0, 10.0);
             assertThat(season.votes).isPositive();
-            // Breaking Bad seasons all have a poster
-            /* trakt.tv does not offer images any more
-            assertThat(season.images.poster.full).isNotNull();
-            assertThat(season.images.poster.medium).isNotNull();
-            assertThat(season.images.poster.thumb).isNotNull(); */
             // episode details
             if (season.number == TestData.EPISODE_SEASON) {
                 assertThat(season.episodes).isNotNull();

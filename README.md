@@ -40,7 +40,7 @@ TraktV2 trakt = new TraktV2("api_key");
 Shows traktShows = trakt.shows();
 try {
     // Get trending shows
-    Response<List<TrendingShow>> response = traktShows.trending(1, null, Extended.FULLIMAGES).execute();
+    Response<List<TrendingShow>> response = traktShows.trending(1, null, Extended.FULL).execute();
     if (response.isSuccessful()) {
         List<TrendingShow> shows = response.body();
         for (TrendingShow trending : shows) {

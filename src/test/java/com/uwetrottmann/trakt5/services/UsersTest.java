@@ -56,11 +56,12 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_profile() throws IOException {
-        User user = executeCall(getTrakt().users().profile(TestData.USERNAME, Extended.FULLIMAGES));
+        User user = executeCall(getTrakt().users().profile(TestData.USERNAME, Extended.FULL));
         assertThat(user.username).isEqualTo(TestData.USERNAME_STRING);
         assertThat(user.isPrivate).isEqualTo(false);
         assertThat(user.name).isEqualTo(TestData.USER_REAL_NAME);
         assertThat(user.vip).isEqualTo(true);
+        assertThat(user.images.avatar.full).isNotEmpty();
     }
 
     @Test

@@ -17,13 +17,12 @@ public class PeopleTest extends BaseTestCase {
 
     @Test
     public void test_summary() throws IOException {
-        Person person = executeCall(getTrakt().people().summary(TEST_PERSON_SLUG, Extended.FULLIMAGES));
+        Person person = executeCall(getTrakt().people().summary(TEST_PERSON_SLUG, Extended.FULL));
         assertThat(person).isNotNull();
         assertThat(person.name).isNotEmpty();
         assertThat(person.ids).isNotNull();
         assertThat(person.ids.trakt).isNotNull();
         assertThat(person.ids.slug).isNotNull();
-        assertThat(person.images).isNotNull();
     }
 
     @Test

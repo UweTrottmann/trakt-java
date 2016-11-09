@@ -18,7 +18,7 @@ public class EpisodesTest extends BaseTestCase {
     public void test_summary() throws IOException {
         Episode episode = executeCall(getTrakt().episodes().summary(String.valueOf(TestData.SHOW_TRAKT_ID),
                 TestData.EPISODE_SEASON,
-                TestData.EPISODE_NUMBER, Extended.FULLIMAGES));
+                TestData.EPISODE_NUMBER, Extended.FULL));
         assertThat(episode).isNotNull();
         assertThat(episode.title).isEqualTo(TestData.EPISODE_TITLE);
         assertThat(episode.season).isEqualTo(TestData.EPISODE_SEASON);

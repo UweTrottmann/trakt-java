@@ -12,6 +12,5 @@ public class Season {
     public Integer votes;
     public Integer episode_count;
     public Integer aired_episodes;
-    public Images images;
     public List<Episode> episodes;
 }

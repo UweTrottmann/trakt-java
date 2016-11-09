@@ -51,14 +51,14 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_summary_slug() throws IOException {
-        Movie movie = executeCall(getTrakt().movies().summary(TestData.MOVIE_SLUG, Extended.FULLIMAGES));
+        Movie movie = executeCall(getTrakt().movies().summary(TestData.MOVIE_SLUG, Extended.FULL));
         assertTestMovie(movie);
     }
 
     @Test
     public void test_summary_trakt_id() throws IOException {
         Movie movie = executeCall(getTrakt().movies().summary(String.valueOf(TestData.MOVIE_TRAKT_ID),
-                Extended.FULLIMAGES));
+                Extended.FULL));
         assertTestMovie(movie);
     }
 

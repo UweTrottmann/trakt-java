@@ -8,7 +8,6 @@ public class Person {
     public PersonIds ids;
 
     // extended info
-    public Images images;
     public String biography;
     public DateTime birthday;
     public DateTime death;

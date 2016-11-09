@@ -9,16 +9,10 @@ public enum Extended implements TraktEnum {
 
     /** Default. Returns enough info to match locally. */
     DEFAULT_MIN("min"),
-    /** Minimal info and all images. */
-    IMAGES("images"),
     /** Complete info for an item. */
     FULL("full"),
-    /** Complete info and all images. */
-    FULLIMAGES("full,images"),
     /** Only works with sync watchedShows. */
     NOSEASONS("noseasons"),
-    /** Only works with sync watchedShows. */
-    NOSEASONSIMAGES("noseasons,images"),
     /** Only works with seasons/summary */
     EPISODES("episodes"),
     /** Only works with seasons/summary */
