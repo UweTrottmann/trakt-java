@@ -13,6 +13,7 @@ public class User {
     public Boolean vip;
     /** If a user is an execute producer. */
     public Boolean vip_ep;
+    public UserIds ids;
 
     // full
     public DateTime joined_at;
@@ -22,4 +23,7 @@ public class User {
     public int age;
     public Images images;
 
+    public static class UserIds {
+        public String slug;
+    }
 }

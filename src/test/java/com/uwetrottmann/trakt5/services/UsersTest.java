@@ -61,6 +61,8 @@ public class UsersTest extends BaseTestCase {
         assertThat(user.isPrivate).isEqualTo(false);
         assertThat(user.name).isEqualTo(TestData.USER_REAL_NAME);
         assertThat(user.vip).isEqualTo(true);
+        assertThat(user.vip_ep).isEqualTo(true);
+        assertThat(user.ids.slug).isEqualTo(TestData.USERNAME_STRING);
         assertThat(user.images.avatar.full).isNotEmpty();
     }
 
