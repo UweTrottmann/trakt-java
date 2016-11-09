@@ -1,12 +1,5 @@
 package com.uwetrottmann.trakt5.services;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-import java.util.List;
-
-import org.junit.Test;
-
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.Episode;
@@ -14,6 +7,12 @@ import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Season;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.enums.Extended;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SeasonsTest extends BaseTestCase {
 
