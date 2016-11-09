@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+## 5.3.0
+_2016-11-09_
+
+* Removed images, except for user avatars, as trakt no longer returns them.
+* Change host to api.trakt.tv (from api-v2launch.trakt.tv).
+* Add `episodes` to `Season`, can be requested with season summary by passing `Extended.EPISODES`. Thanks @mlaggner!
+* Add `ids` to `User`.
+* Update joda-time to 2.9.5.
+
 ## 5.2.1
 _2016-08-18_
 
