@@ -38,7 +38,7 @@ public class TraktV2 {
     /**
      * trakt API v2 URL.
      */
-    public static final String API_HOST = "api-v2launch.trakt.tv";
+    public static final String API_HOST = "api.trakt.tv";
     public static final String API_URL = "https://" + API_HOST + "/";
     public static final String API_VERSION = "2";
 
