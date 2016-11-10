@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## 5.4.0
+_2016-11-10_
+
+* Remove `Username` in favor of `UserSlug`. The user slug is returned in the new `ids.slug` field of `User` . It is
+  known to be URL safe. If you still only have a username you can use `UserSlug.fromUsername()` which will do its best
+  to encode for trakt. 
+
 ## 5.3.0
 _2016-11-09_
 
