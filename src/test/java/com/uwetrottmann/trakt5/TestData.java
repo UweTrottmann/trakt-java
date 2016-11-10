@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt5;
 
-import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 
 public interface TestData {
 
@@ -32,7 +32,7 @@ public interface TestData {
     int EPISODE_TMDB_ID = 62085;
 
     String USERNAME_STRING = "sean";
-    Username USERNAME = new Username("sean");
+    UserSlug USER_SLUG = new UserSlug("sean");
     String USER_REAL_NAME = "Sean Rudford";
 
     String USER_TO_FOLLOW = "aeonmckay";

@@ -16,7 +16,7 @@ import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.TraktList;
 import com.uwetrottmann.trakt5.entities.User;
-import com.uwetrottmann.trakt5.entities.Username;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
@@ -51,11 +51,11 @@ public interface Users {
      * <p> Get a user's profile information. If the user is private, info will only be returned if you send OAuth and
      * are either that user or an approved follower.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}")
     Call<User> profile(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -65,11 +65,11 @@ public interface Users {
      * <p> Get all collected movies in a user's collection. A collected item indicates availability to watch digitally
      * or on physical media.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -79,11 +79,11 @@ public interface Users {
      * <p> Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or
      * on physical media.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -94,7 +94,7 @@ public interface Users {
      */
     @GET("users/{username}/lists")
     Call<List<TraktList>> lists(
-            @Path("username") Username username
+            @Path("username") UserSlug userSlug
     );
 
     /**
@@ -104,7 +104,7 @@ public interface Users {
      */
     @POST("users/{username}/lists")
     Call<TraktList> createList(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Body TraktList list
     );
 
@@ -116,7 +116,7 @@ public interface Users {
      */
     @PUT("users/{username}/lists/{id}")
     Call<TraktList> updateList(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("id") String id,
             @Body TraktList list
     );
@@ -128,7 +128,7 @@ public interface Users {
      */
     @DELETE("users/{username}/lists/{id}")
     Call<Void> deleteList(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("id") String id
     );
 
@@ -139,7 +139,7 @@ public interface Users {
      */
     @GET("users/{username}/lists/{id}/items")
     Call<List<ListEntry>> listItems(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("id") String id,
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -151,7 +151,7 @@ public interface Users {
      */
     @POST("users/{username}/lists/{id}/items")
     Call<SyncResponse> addListItems(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("id") String id,
             @Body SyncItems items
     );
@@ -163,7 +163,7 @@ public interface Users {
      */
     @POST("users/{username}/lists/{id}/items/remove")
     Call<SyncResponse> deleteListItems(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("id") String id,
             @Body SyncItems items
     );
@@ -178,7 +178,7 @@ public interface Users {
      */
     @POST("users/{username}/follow")
     Call<Followed> follow(
-            @Path("username") Username username
+            @Path("username") UserSlug userSlug
     );
 
     /**
@@ -188,7 +188,7 @@ public interface Users {
      */
     @DELETE("users/{username}/follow")
     Call<Void> unfollow(
-            @Path("username") Username username
+            @Path("username") UserSlug userSlug
     );
 
     /**
@@ -198,7 +198,7 @@ public interface Users {
      */
     @GET("users/{username}/followers")
     Call<List<Follower>> followers(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -209,7 +209,7 @@ public interface Users {
      */
     @GET("users/{username}/following")
     Call<List<Follower>> following(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -221,7 +221,7 @@ public interface Users {
      */
     @GET("users/{username}/friends")
     Call<List<Friend>> friends(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -234,11 +234,11 @@ public interface Users {
      * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
      * watch}.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/history")
     Call<List<HistoryEntry>> history(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
@@ -255,11 +255,11 @@ public interface Users {
      * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
      * watch}.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/history/{type}")
     Call<List<HistoryEntry>> history(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("type") HistoryType type,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -280,11 +280,11 @@ public interface Users {
      * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
      * watch}.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/history/{type}/{id}")
     Call<List<HistoryEntry>> history(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path("type") HistoryType type,
             @Path("id") int id,
             @Query("page") Integer page,
@@ -299,12 +299,12 @@ public interface Users {
      *
      * <p> Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      * @param filter Filter for a specific rating.
      */
     @GET("users/{username}/ratings/movies{rating}")
     Call<List<RatedMovie>> ratingsMovies(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -314,12 +314,12 @@ public interface Users {
      *
      * <p> Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      * @param filter Filter for a specific rating.
      */
     @GET("users/{username}/ratings/shows{rating}")
     Call<List<RatedShow>> ratingsShows(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -329,12 +329,12 @@ public interface Users {
      *
      * <p> Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      * @param filter Filter for a specific rating.
      */
     @GET("users/{username}/ratings/seasons{rating}")
     Call<List<RatedSeason>> ratingsSeasons(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -344,12 +344,12 @@ public interface Users {
      *
      * <p> Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      * @param filter Filter for a specific rating.
      */
     @GET("users/{username}/ratings/episodes{rating}")
     Call<List<RatedEpisode>> ratingsEpisodes(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -362,7 +362,7 @@ public interface Users {
      */
     @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -374,7 +374,7 @@ public interface Users {
      */
     @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -386,7 +386,7 @@ public interface Users {
      */
     @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -398,7 +398,7 @@ public interface Users {
      */
     @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -407,11 +407,11 @@ public interface Users {
      *
      * <p> Returns all movies or shows a user has watched sorted by most plays.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -420,11 +420,11 @@ public interface Users {
      *
      * <p> Returns all movies or shows a user has watched sorted by most plays.
      *
-     * @param username Example: "sean".
+     * @param userSlug Example: "sean".
      */
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Path("username") Username username,
+            @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
