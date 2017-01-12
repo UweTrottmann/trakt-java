@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.5.1
+_2017-01-12_
+
+* Add `Extended` flag to new search methods.
+
 ## 5.5.0
 _2017-01-12_
 
