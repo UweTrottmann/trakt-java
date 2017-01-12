@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt5.services;
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.SearchResult;
+import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class SearchTest extends BaseTestCase {
     public void test_textQuery_show() throws IOException {
         List<SearchResult> results = executeCall(getTrakt().search().textQueryShow("House",
                 null, null, null, null, null, null, null, null, null,
-                1, DEFAULT_PAGE_SIZE));
+                Extended.FULL, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -31,7 +32,7 @@ public class SearchTest extends BaseTestCase {
     public void test_textQuery_show_withYear() throws IOException {
         List<SearchResult> results = executeCall(getTrakt().search().textQueryShow("Empire", "2015",
                 null, null, null, null, null, null, null, null,
-                1, DEFAULT_PAGE_SIZE));
+                Extended.FULL, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -44,7 +45,7 @@ public class SearchTest extends BaseTestCase {
     public void test_textQuery_movie() throws IOException {
         List<SearchResult> results = executeCall(getTrakt().search().textQueryMovie("Tron",
                 null, null, null, null, null, null, null,
-                1, DEFAULT_PAGE_SIZE));
+                Extended.FULL, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -57,7 +58,7 @@ public class SearchTest extends BaseTestCase {
     public void test_textQuery_person() throws IOException {
         List<SearchResult> results = executeCall(getTrakt().search().textQuery(Type.PERSON, "Bryan Cranston",
                 null, null, null, null, null, null,
-                1, DEFAULT_PAGE_SIZE));
+                Extended.FULL, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -70,7 +71,7 @@ public class SearchTest extends BaseTestCase {
     public void test_idLookup() throws IOException {
         List<SearchResult> results = executeCall(
                 getTrakt().search().idLookup(IdType.TVDB, String.valueOf(TestData.SHOW_TVDB_ID), Type.SHOW,
-                        null, 1, DEFAULT_PAGE_SIZE));
+                        Extended.FULL, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).hasSize(1);
         assertThat(results.get(0).score).isNull();

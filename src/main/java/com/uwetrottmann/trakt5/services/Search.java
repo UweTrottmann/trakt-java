@@ -18,6 +18,8 @@ public interface Search {
      *
      * @see <a href="http://docs.trakt.apiary.io/#reference/search/text-query/get-text-query-results">Search - Text Query</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/filters">Filters</a>
+     * @see <a href="http://docs.trakt.apiary.io/#introduction/extended-info">Extended</a>
+     * @see <a href="http://docs.trakt.apiary.io/#introduction/pagination">Pagination</a>
      */
     @GET("search/{type}")
     Call<List<SearchResult>> textQuery(
@@ -29,12 +31,13 @@ public interface Search {
             @Query("countries") String countries,
             @Query("runtimes") String runtimes,
             @Query("ratings") String ratings,
+            @Query("extended") Extended extended,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );
 
     /**
-     * @see #textQuery(Type, String, String, String, String, String, String, String, Integer, Integer) textQuery
+     * @see #textQuery textQuery
      */
     @GET("search/movie")
     Call<List<SearchResult>> textQueryMovie(
@@ -46,12 +49,13 @@ public interface Search {
             @Query("runtimes") String runtimes,
             @Query("ratings") String ratings,
             @Query("certifications") String certifications,
+            @Query("extended") Extended extended,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );
 
     /**
-     * @see #textQuery(Type, String, String, String, String, String, String, String, Integer, Integer) textQuery
+     * @see #textQuery textQuery
      */
     @GET("search/show")
     Call<List<SearchResult>> textQueryShow(
@@ -65,6 +69,7 @@ public interface Search {
             @Query("certifications") String certifications,
             @Query("networks") String networks,
             @Query("status") String status,
+            @Query("extended") Extended extended,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );
