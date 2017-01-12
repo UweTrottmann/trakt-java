@@ -2,9 +2,7 @@ package com.uwetrottmann.trakt5.enums;
 
 public enum IdType implements TraktEnum {
 
-    TRAKT_MOVIE("trakt-movie"),
-    TRAKT_SHOW("trakt-show"),
-    TRAKT_EPISODE("trakt-episode"),
+    TRAKT("trakt"),
     IMDB("imdb"),
     TMDB("tmdb"),
     TVDB("tvdb"),
@@ -12,7 +10,7 @@ public enum IdType implements TraktEnum {
 
     private final String value;
 
-    private IdType(String value) {
+    IdType(String value) {
         this.value = value;
     }
 

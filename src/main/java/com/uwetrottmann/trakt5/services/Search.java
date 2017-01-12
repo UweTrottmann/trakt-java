@@ -1,10 +1,12 @@
 package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.SearchResult;
+import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 import java.util.List;
@@ -12,31 +14,74 @@ import java.util.List;
 public interface Search {
 
     /**
-     * Queries will search fields like the title and description.
+     * Search all text fields that a media object contains (i.e. title, overview, etc). Results are ordered by the most relevant score.
      *
-     * @param query Searches titles and descriptions.
-     * @param type (optional) Narrow down search by element type.
+     * @see <a href="http://docs.trakt.apiary.io/#reference/search/text-query/get-text-query-results">Search - Text Query</a>
+     * @see <a href="http://docs.trakt.apiary.io/#introduction/filters">Filters</a>
      */
-    @GET("search")
+    @GET("search/{type}")
     Call<List<SearchResult>> textQuery(
+            @Path("type") Type type,
             @Query("query") String query,
-            @Query("type") Type type,
-            @Query("year") Integer year,
+            @Query("years") String years,
+            @Query("genres") String genres,
+            @Query("languages") String languages,
+            @Query("countries") String countries,
+            @Query("runtimes") String runtimes,
+            @Query("ratings") String ratings,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );
 
     /**
-     * ID lookups are helpful if you have an external ID and want to get the trakt ID and info. This method will search
-     * for movies, shows, episodes, people, users, and lists.
-     *
-     * @param idType Set to any of {@link IdType}.
-     * @param id ID that matches with the type.
+     * @see #textQuery(Type, String, String, String, String, String, String, String, Integer, Integer) textQuery
      */
-    @GET("search")
+    @GET("search/movie")
+    Call<List<SearchResult>> textQueryMovie(
+            @Query("query") String query,
+            @Query("years") String years,
+            @Query("genres") String genres,
+            @Query("languages") String languages,
+            @Query("countries") String countries,
+            @Query("runtimes") String runtimes,
+            @Query("ratings") String ratings,
+            @Query("certifications") String certifications,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * @see #textQuery(Type, String, String, String, String, String, String, String, Integer, Integer) textQuery
+     */
+    @GET("search/show")
+    Call<List<SearchResult>> textQueryShow(
+            @Query("query") String query,
+            @Query("years") String years,
+            @Query("genres") String genres,
+            @Query("languages") String languages,
+            @Query("countries") String countries,
+            @Query("runtimes") String runtimes,
+            @Query("ratings") String ratings,
+            @Query("certifications") String certifications,
+            @Query("networks") String networks,
+            @Query("status") String status,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * Lookup items by their Trakt, IMDB, TMDB, TVDB, or TVRage ID.
+     *
+     * @see <a href="http://docs.trakt.apiary.io/#reference/search/id-lookup/get-id-lookup-results">Search - ID Lookup</a>
+     * @see <a href="http://docs.trakt.apiary.io/#introduction/extended-info">Extended</a>
+     * @see <a href="http://docs.trakt.apiary.io/#introduction/pagination">Pagination</a>
+     */
+    @GET("search/{id_type}/{id}")
     Call<List<SearchResult>> idLookup(
-            @Query(value = "id_type", encoded = true) IdType idType,
-            @Query(value = "id", encoded = true) String id,
+            @Path(value = "id_type", encoded = true) IdType idType,
+            @Path(value = "id", encoded = true) String id,
+            @Query("type") Type type,
+            @Query("extended") Extended extended,
             @Query("page") Integer page,
             @Query("limit") Integer limit
     );

@@ -16,8 +16,9 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_show() throws IOException {
-        List<SearchResult> results = executeCall(getTrakt().search().textQuery("House", Type.SHOW, null, 1,
-                DEFAULT_PAGE_SIZE));
+        List<SearchResult> results = executeCall(getTrakt().search().textQueryShow("House",
+                null, null, null, null, null, null, null, null, null,
+                1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -28,8 +29,9 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_show_withYear() throws IOException {
-        List<SearchResult> results = executeCall(getTrakt().search().textQuery("Empire", Type.SHOW, 2015, 1,
-                DEFAULT_PAGE_SIZE));
+        List<SearchResult> results = executeCall(getTrakt().search().textQueryShow("Empire", "2015",
+                null, null, null, null, null, null, null, null,
+                1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -40,8 +42,9 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_movie() throws IOException {
-        List<SearchResult> results = executeCall(getTrakt().search().textQuery("Tron", Type.MOVIE, null, 1,
-                DEFAULT_PAGE_SIZE));
+        List<SearchResult> results = executeCall(getTrakt().search().textQueryMovie("Tron",
+                null, null, null, null, null, null, null,
+                1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -52,8 +55,9 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_textQuery_person() throws IOException {
-        List<SearchResult> results = executeCall(getTrakt().search().textQuery("Bryan Cranston", Type.PERSON, null, 1,
-                DEFAULT_PAGE_SIZE));
+        List<SearchResult> results = executeCall(getTrakt().search().textQuery(Type.PERSON, "Bryan Cranston",
+                null, null, null, null, null, null,
+                1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).isNotEmpty();
         for (SearchResult result : results) {
@@ -64,22 +68,18 @@ public class SearchTest extends BaseTestCase {
 
     @Test
     public void test_idLookup() throws IOException {
-        List<SearchResult> results = executeCall(getTrakt().search().idLookup(IdType.TVDB,
-                String.valueOf(TestData.SHOW_TVDB_ID), 1,
-                DEFAULT_PAGE_SIZE));
-
-        // episode and show
+        List<SearchResult> results = executeCall(
+                getTrakt().search().idLookup(IdType.TVDB, String.valueOf(TestData.SHOW_TVDB_ID), Type.SHOW,
+                        null, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
-        assertThat(results).hasSize(2);
+        assertThat(results).hasSize(1);
         assertThat(results.get(0).score).isNull();
 
-        results = executeCall(getTrakt().search().idLookup(IdType.TMDB,
-                String.valueOf(TestData.MOVIE_TMDB_ID), 1,
-                DEFAULT_PAGE_SIZE));
-
-        // episode, person and movie
+        results = executeCall(
+                getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.MOVIE_TMDB_ID), Type.MOVIE,
+                        null, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
-        assertThat(results).hasSize(3);
+        assertThat(results).hasSize(1);
         assertThat(results.get(0).score).isNull();
     }
 
