@@ -17,7 +17,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```groovy
-compile 'com.uwetrottmann.trakt5:trakt-java:5.4.0'
+compile 'com.uwetrottmann.trakt5:trakt-java:5.5.0'
 ```
 
 Or for Maven:
@@ -26,7 +26,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>5.4.0</version>
+  <version>5.5.0</version>
 </dependency>
 ```
 
@@ -66,12 +66,12 @@ Just apply the [Proguard rules for retrofit][4].
 
 # License
 
-Created by [Uwe Trottmann](http://uwetrottmann.com/contact).
+Created by [Uwe Trottmann](https://uwetrottmann.com).
 Except where noted otherwise, released into the [public domain](UNLICENSE).
 Do not just copy, make it better.
 
 
  [1]: http://docs.trakt.apiary.io/
- [2]: http://square.github.io/retrofit/
+ [2]: https://square.github.io/retrofit/
  [3]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
- [4]: http://square.github.io/retrofit/#download
+ [4]: https://square.github.io/retrofit/#download

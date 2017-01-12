@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 5.5.0
+_2017-01-12_
+
+* Update to new search methods [#89](https://github.com/UweTrottmann/trakt-java/issues/89).
+* Update joda-time to 2.9.7.
+
 ## 5.4.0
 _2016-11-10_
 
