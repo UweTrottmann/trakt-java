@@ -7,8 +7,6 @@ package com.uwetrottmann.trakt5.enums;
  */
 public enum Extended implements TraktEnum {
 
-    /** Default. Returns enough info to match locally. */
-    DEFAULT_MIN("min"),
     /** Complete info for an item. */
     FULL("full"),
     /** Only works with sync watchedShows. */
