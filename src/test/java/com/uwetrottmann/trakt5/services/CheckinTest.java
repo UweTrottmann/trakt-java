@@ -13,7 +13,6 @@ import com.uwetrottmann.trakt5.entities.ShareSettings;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
-import org.joda.time.DateTime;
 import org.junit.Test;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -22,7 +21,6 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.jodatime.api.Assertions.assertThat;
 
 
 public class CheckinTest extends BaseTestCase {
@@ -75,7 +73,7 @@ public class CheckinTest extends BaseTestCase {
     private void assertEpisodeCheckin(EpisodeCheckinResponse response) {
         assertThat(response).isNotNull();
         // episode should be over in less than an hour
-        assertThat(response.watched_at).isBefore(new DateTime().plusHours(1));
+        assertThat(response.watched_at).isBefore(newDatePlusHours(1));
         assertThat(response.episode).isNotNull();
         assertThat(response.episode.ids).isNotNull();
         assertThat(response.episode.ids.trakt).isEqualTo(TestData.EPISODE_TRAKT_ID);
@@ -108,7 +106,7 @@ public class CheckinTest extends BaseTestCase {
         MovieCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
         assertThat(response).isNotNull();
         // movie should be over in less than 3 hours
-        assertThat(response.watched_at).isBefore(new DateTime().plusHours(3));
+        assertThat(response.watched_at).isBefore(newDatePlusHours(3));
         MoviesTest.assertTestMovie(response.movie);
 
         test_checkin_delete();
@@ -142,7 +140,7 @@ public class CheckinTest extends BaseTestCase {
         }
         CheckinError checkinError = getTrakt().checkForCheckinError(responseBlocked);
         // episode check in should block until episode duration has passed
-        assertThat(checkinError.expires_at.isBefore(new DateTime().plusHours(1)));
+        assertThat(checkinError.expires_at.before(newDatePlusHours(1)));
 
         // clean the check in
         test_checkin_delete();

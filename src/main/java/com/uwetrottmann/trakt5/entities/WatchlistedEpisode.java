@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class WatchlistedEpisode {
 
-    public DateTime listed_at;
+    public Date listed_at;
 
     public Episode episode;
     public Show show;

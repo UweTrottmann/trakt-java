@@ -1,15 +1,16 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Rating;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 
 public class SyncMovie {
 
     public MovieIds ids;
 
-    public DateTime collected_at;
-    public DateTime watched_at;
-    public DateTime rated_at;
+    public Date collected_at;
+    public Date watched_at;
+    public Date rated_at;
     public Rating rating;
 
     public SyncMovie id(MovieIds id) {
@@ -17,17 +18,17 @@ public class SyncMovie {
         return this;
     }
 
-    public SyncMovie collectedAt(DateTime collectedAt) {
+    public SyncMovie collectedAt(Date collectedAt) {
         this.collected_at = collectedAt;
         return this;
     }
 
-    public SyncMovie watchedAt(DateTime watchedAt) {
+    public SyncMovie watchedAt(Date watchedAt) {
         this.watched_at = watchedAt;
         return this;
     }
 
-    public SyncMovie ratedAt(DateTime ratedAt) {
+    public SyncMovie ratedAt(Date ratedAt) {
         this.rated_at = ratedAt;
         return this;
     }

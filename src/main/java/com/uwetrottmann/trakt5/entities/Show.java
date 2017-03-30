@@ -1,8 +1,8 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Status;
-import org.joda.time.DateTime;
 
+import java.util.Date;
 import java.util.List;
 
 public class Show extends BaseEntity {
@@ -11,7 +11,7 @@ public class Show extends BaseEntity {
     public ShowIds ids;
 
     // extended info
-    public DateTime first_aired;
+    public Date first_aired;
     public Airs airs;
     public Integer runtime;
     public String certification;

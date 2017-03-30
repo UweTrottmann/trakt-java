@@ -1,7 +1,6 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
-
+import java.util.Date;
 import java.util.List;
 
 public abstract class BaseEntity {
@@ -12,7 +11,7 @@ public abstract class BaseEntity {
     public String overview;
     public Double rating;
     public Integer votes;
-    public DateTime updated_at;
+    public Date updated_at;
     public List<String> available_translations;
 
 }

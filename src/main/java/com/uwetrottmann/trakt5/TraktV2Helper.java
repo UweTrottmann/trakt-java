@@ -8,41 +8,53 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.google.gson.JsonSyntaxException;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.Status;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class TraktV2Helper {
 
-    private static final DateTimeFormatter ISO_8601_WITH_MILLIS;
+    private static class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
-    static {
-        ISO_8601_WITH_MILLIS = ISODateTimeFormat.dateTimeParser().withZoneUTC();
+        private final SimpleDateFormat iso8601WithMillis;
+
+        private DateTypeAdapter() {
+            iso8601WithMillis = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+            iso8601WithMillis.setTimeZone(TimeZone.getTimeZone("UTC"));
+        }
+
+        @Override
+        public Date deserialize(JsonElement json, Type typeOfT,
+                JsonDeserializationContext context) throws JsonParseException {
+            synchronized (iso8601WithMillis) {
+                try {
+                    return iso8601WithMillis.parse(json.getAsString());
+                } catch (ParseException e) {
+                    throw new JsonSyntaxException(json.getAsString(), e);
+                }
+            }
+        }
+
+        @Override
+        public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+            synchronized (iso8601WithMillis) {
+                return new JsonPrimitive(iso8601WithMillis.format(src));
+            }
+        }
     }
 
     public static GsonBuilder getGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
-
+        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
         // trakt exclusively uses ISO 8601 dates with milliseconds in Zulu time (UTC)
-        builder.registerTypeAdapter(DateTime.class, new JsonDeserializer<DateTime>() {
-            @Override
-            public DateTime deserialize(JsonElement json, Type typeOfT,
-                    JsonDeserializationContext context) throws JsonParseException {
-                // using the correct parser right away should save init time compared to new DateTime(<string>)
-                return ISO_8601_WITH_MILLIS.parseDateTime(json.getAsString());
-            }
-        });
-        builder.registerTypeAdapter(DateTime.class, new JsonSerializer<DateTime>() {
-            @Override
-            public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
-                return new JsonPrimitive(src.toString());
-            }
-        });
+        builder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 
         // privacy
         builder.registerTypeAdapter(ListPrivacy.class, new JsonDeserializer<ListPrivacy>() {

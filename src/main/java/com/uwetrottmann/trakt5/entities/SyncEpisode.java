@@ -1,7 +1,8 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Rating;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 
 public class SyncEpisode {
 
@@ -9,9 +10,9 @@ public class SyncEpisode {
     public Integer number;
     public EpisodeIds ids;
 
-    public DateTime collected_at;
-    public DateTime watched_at;
-    public DateTime rated_at;
+    public Date collected_at;
+    public Date watched_at;
+    public Date rated_at;
     public Rating rating;
 
     public SyncEpisode number(int number) {
@@ -29,17 +30,17 @@ public class SyncEpisode {
         return this;
     }
 
-    public SyncEpisode collectedAt(DateTime collectedAt) {
+    public SyncEpisode collectedAt(Date collectedAt) {
         this.collected_at = collectedAt;
         return this;
     }
 
-    public SyncEpisode watchedAt(DateTime watchedAt) {
+    public SyncEpisode watchedAt(Date watchedAt) {
         this.watched_at = watchedAt;
         return this;
     }
 
-    public SyncEpisode ratedAt(DateTime ratedAt) {
+    public SyncEpisode ratedAt(Date ratedAt) {
         this.rated_at = ratedAt;
         return this;
     }

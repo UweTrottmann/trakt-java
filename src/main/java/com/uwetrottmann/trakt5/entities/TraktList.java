@@ -1,7 +1,8 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 
 public class TraktList {
 
@@ -11,7 +12,7 @@ public class TraktList {
     public ListPrivacy privacy;
     public Boolean display_numbers;
     public Boolean allow_comments;
-    public DateTime updated_at;
+    public Date updated_at;
     public Integer item_count;
     public Integer comment_count;
     public Integer likes;

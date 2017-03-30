@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class Follower {
 
-    public DateTime followed_at;
+    public Date followed_at;
     public User user;
 
 }

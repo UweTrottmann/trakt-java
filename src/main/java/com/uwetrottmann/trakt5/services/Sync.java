@@ -104,7 +104,7 @@ public interface Sync {
      * <b>OAuth Required</b>
      *
      * <p> Add items to a user's watch history. Accepts shows, seasons, episodes and movies. If only a show is passed,
-     * assumes all seasons are to be marked watched. Same for seasons. Send a <code>watched_at</code> UTC datetime to
+     * assumes all seasons are to be marked watched. Same for seasons. Send a <code>watched_at</code> UTC Date to
      * mark items as watched in the past. This is useful for syncing past watches from a media center.
      *
      * @param items A list of movies, shows, seasons or episodes.

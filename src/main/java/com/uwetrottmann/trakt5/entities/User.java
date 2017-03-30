@@ -1,7 +1,8 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.google.gson.annotations.SerializedName;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 
 public class User {
 
@@ -16,7 +17,7 @@ public class User {
     public UserIds ids;
 
     // full
-    public DateTime joined_at;
+    public Date joined_at;
     public String location;
     public String about;
     public String gender;

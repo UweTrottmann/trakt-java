@@ -1,11 +1,11 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class HistoryEntry {
 
     public Long id;
-    public DateTime watched_at;
+    public Date watched_at;
     public String action;
     public String type;
 

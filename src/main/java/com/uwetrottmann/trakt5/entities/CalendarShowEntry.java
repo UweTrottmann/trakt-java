@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class CalendarShowEntry {
 
-    public DateTime first_aired;
+    public Date first_aired;
     public Episode episode;
     public Show show;
 

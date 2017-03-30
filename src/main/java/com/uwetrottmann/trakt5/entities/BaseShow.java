@@ -1,7 +1,6 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
-
+import java.util.Date;
 import java.util.List;
 
 public class BaseShow {
@@ -12,12 +11,12 @@ public class BaseShow {
     public List<BaseSeason> seasons;
 
     /** collection */
-    public DateTime last_collected_at;
+    public Date last_collected_at;
     /** watchlist */
-    public DateTime listed_at;
+    public Date listed_at;
     /** watched */
     public Integer plays;
-    public DateTime last_watched_at;
+    public Date last_watched_at;
     /** progress */
     public Integer aired;
     public Integer completed;

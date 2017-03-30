@@ -30,13 +30,12 @@ import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.junit.Test;
 import retrofit2.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -120,9 +119,9 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_updateList() throws IOException {
         // change name (append a new suffix that changes frequently)
-        int secondOfDay = new DateTime().getSecondOfDay();
+        int secondOfMinute = Calendar.getInstance().get(Calendar.SECOND);
         TraktList list = new TraktList();
-        list.name("trakt-java " + secondOfDay);
+        list.name("trakt-java " + secondOfMinute);
 
         // create list...
         TraktList updatedList = executeCall(getTrakt().users().updateList(UserSlug.ME, String.valueOf(
@@ -260,8 +259,9 @@ public class UsersTest extends BaseTestCase {
         List<HistoryEntry> history = executeCall(getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
                 TestData.MOVIE_WATCHED_TRAKT_ID, 1,
                 DEFAULT_PAGE_SIZE, null,
-                new DateTime(2016, 8, 3, 9, 0, 0, 0, DateTimeZone.UTC),
-                new DateTime(2016, 8, 3, 10, 0, 0, 0, DateTimeZone.UTC)));
+                newDate(2016, Calendar.AUGUST, 3, 9, 0),
+                newDate(2016, Calendar.AUGUST, 3, 10, 0)
+        ));
         assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);
     }

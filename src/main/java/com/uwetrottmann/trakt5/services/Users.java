@@ -22,7 +22,6 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
-import org.joda.time.DateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -32,6 +31,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public interface Users {
@@ -242,8 +242,8 @@ public interface Users {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") DateTime startAt,
-            @Query("end_at") DateTime endAt
+            @Query("start_at") Date startAt,
+            @Query("end_at") Date endAt
     );
 
     /**
@@ -264,8 +264,8 @@ public interface Users {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") DateTime startAt,
-            @Query("end_at") DateTime endAt
+            @Query("start_at") Date startAt,
+            @Query("end_at") Date endAt
     );
 
     /**
@@ -290,8 +290,8 @@ public interface Users {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") DateTime startAt,
-            @Query("end_at") DateTime endAt
+            @Query("start_at") Date startAt,
+            @Query("end_at") Date endAt
     );
 
     /**

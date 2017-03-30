@@ -1,11 +1,12 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Rating;
-import org.joda.time.DateTime;
+
+import java.util.Date;
 
 public class BaseRatedEntity {
 
-    public DateTime rated_at;
+    public Date rated_at;
     public Rating rating;
 
 }

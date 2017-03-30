@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class Friend {
 
-    public DateTime friends_at;
+    public Date friends_at;
     public User user;
 
 }

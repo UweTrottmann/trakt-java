@@ -1,12 +1,12 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class Comment {
 
     public Integer id;
     public Integer parent_id;
-    public DateTime created_at;
+    public Date created_at;
     public String comment;
     public Boolean spoiler;
     public Boolean review;

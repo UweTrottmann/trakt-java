@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.joda.time.DateTime;
+import java.util.Date;
 
 public class ListEntry {
 
-    public DateTime listed_at;
+    public Date listed_at;
     public Movie movie;
     public Show show;
     public Episode episode;
