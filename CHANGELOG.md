@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+## 5.6.0
+_2017-03-30_
+
+* Drop `Extended.DEFAULT_MIN` flag, pass `null` instead.
+* Drop joda-time dependency: switched from `DateTime` to `java.util.Date`.
+* Added new `TraktDate` to wrap `Date` for methods.
+* Drop oltu dependency: build authorization URL ourselves.
+
 ## 5.5.1
 _2017-01-12_
 
