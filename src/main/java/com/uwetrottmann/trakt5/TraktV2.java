@@ -18,17 +18,16 @@ import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import org.apache.oltu.oauth2.common.message.types.GrantType;
-import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Helper class for easy usage of the trakt v2 API using retrofit.
@@ -167,9 +166,9 @@ public class TraktV2 {
     }
 
     /**
-     * Build an OAuth 2.0 authorization request to obtain an authorization code.
+     * Build an OAuth 2.0 authorization URL to obtain an authorization code.
      *
-     * <p>Send the user to the location URI of this request. Once the user authorized your app, the server will redirect
+     * <p>Send the user to the URL. Once the user authorized your app, the server will redirect
      * to {@code redirectUri} with the authorization code and the sent state in the query parameter {@code code}.
      *
      * <p>Ensure the state matches, then supply the authorization code to {@link #exchangeCodeForAccessToken} to get an
@@ -177,14 +176,22 @@ public class TraktV2 {
      *
      * @param state State variable to prevent request forgery attacks.
      */
-    public OAuthClientRequest buildAuthorizationRequest(String state) throws OAuthSystemException {
-        return OAuthClientRequest
-                .authorizationLocation(OAUTH2_AUTHORIZATION_URL)
-                .setResponseType(ResponseType.CODE.toString())
-                .setClientId(apiKey())
-                .setRedirectURI(redirectUri)
-                .setState(state)
-                .buildQueryMessage();
+    public String buildAuthorizationUrl(String state) {
+        @SuppressWarnings("StringBufferReplaceableByString")
+        StringBuilder authUrl = new StringBuilder(OAUTH2_AUTHORIZATION_URL);
+        authUrl.append("?").append("response_type=code");
+        authUrl.append("&").append("redirect_uri=").append(urlEncode(redirectUri));
+        authUrl.append("&").append("state=").append(urlEncode(state));
+        authUrl.append("&").append("client_id=").append(urlEncode(apiKey()));
+        return authUrl.toString();
+    }
+
+    private String urlEncode(String content) {
+        try {
+            return URLEncoder.encode(content, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            throw new UnsupportedOperationException(e);
+        }
     }
 
     /**
@@ -193,13 +200,13 @@ public class TraktV2 {
      * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
      * the access token once it has expired.
      *
-     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationRequest}).
+     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
      *
-     * @param authCode A valid authorization code (see {@link #buildAuthorizationRequest(String)}).
+     * @param authCode A valid authorization code (see {@link #buildAuthorizationUrl(String)}).
      */
     public Response<AccessToken> exchangeCodeForAccessToken(String authCode) throws IOException {
         return authentication().exchangeCodeForAccessToken(
-                GrantType.AUTHORIZATION_CODE.toString(),
+                "authorization_code",
                 authCode,
                 apiKey(),
                 clientSecret,
@@ -214,11 +221,11 @@ public class TraktV2 {
      * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
      * the access token once it has expired.
      *
-     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationRequest}).
+     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
      */
     public Response<AccessToken> refreshAccessToken() throws IOException {
         return authentication().refreshAccessToken(
-                GrantType.REFRESH_TOKEN.toString(),
+                "refresh_token",
                 refreshToken(),
                 apiKey(),
                 clientSecret,

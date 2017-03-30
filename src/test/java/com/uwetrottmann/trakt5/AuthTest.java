@@ -1,8 +1,6 @@
 package com.uwetrottmann.trakt5;
 
 import com.uwetrottmann.trakt5.entities.AccessToken;
-import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.junit.Test;
 import retrofit2.Response;
 
@@ -30,17 +28,17 @@ public class AuthTest extends BaseTestCase {
     }
 
     @Test
-    public void test_getAuthorizationRequest() throws OAuthSystemException {
+    public void test_getAuthorizationRequest() {
         String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
 
-        OAuthClientRequest request = getTrakt().buildAuthorizationRequest(sampleState);
+        String authUrl = getTrakt().buildAuthorizationUrl(sampleState);
 
-        assertThat(request).isNotNull();
-        assertThat(request.getLocationUri()).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
+        assertThat(authUrl).isNotEmpty();
+        assertThat(authUrl).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
         // trakt does not support scopes, so don't send one (server sets default scope)
-        assertThat(request.getLocationUri()).doesNotContain("scope");
+        assertThat(authUrl).doesNotContain("scope");
 
-        System.out.println("Get an auth code at the following URI: " + request.getLocationUri());
+        System.out.println("Get an auth code at the following URI: " + authUrl);
     }
 
     @Test
