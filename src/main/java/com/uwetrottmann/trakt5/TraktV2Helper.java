@@ -21,8 +21,13 @@ import java.util.TimeZone;
 
 public class TraktV2Helper {
 
-    /** trakt uses ISO 8601 dates with milliseconds, mostly in Zulu time (UTC). */
-    public static final String DATE_FORMAT_TRAKT = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
+    /**
+     * trakt uses ISO 8601 dates with milliseconds, mostly in Zulu time (UTC).
+     *
+     * Have to use Z instead of X for time zone as Android SimpleDateFormat implementation does not support it despite
+     * saying it does. trakt does not seem to have an issue with it.
+     */
+    public static final String DATE_FORMAT_TRAKT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String DATE_FORMAT_SHORT = "yyyy-MM-dd";
     public static final TimeZone DEFAULT_TIME_ZONE_TRAKT = TimeZone.getTimeZone("UTC");
 
