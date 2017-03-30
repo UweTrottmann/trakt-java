@@ -23,15 +23,19 @@ public class TraktV2Helper {
 
     /** trakt uses ISO 8601 dates with milliseconds, mostly in Zulu time (UTC). */
     public static final String DATE_FORMAT_TRAKT = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
+    public static final String DATE_FORMAT_SHORT = "yyyy-MM-dd";
     public static final TimeZone DEFAULT_TIME_ZONE_TRAKT = TimeZone.getTimeZone("UTC");
 
     private static class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
         private final SimpleDateFormat iso8601WithMillis;
+        private final SimpleDateFormat iso8601Date;
 
         private DateTypeAdapter() {
             iso8601WithMillis = new SimpleDateFormat(DATE_FORMAT_TRAKT);
             iso8601WithMillis.setTimeZone(DEFAULT_TIME_ZONE_TRAKT);
+            iso8601Date = new SimpleDateFormat(DATE_FORMAT_SHORT);
+            iso8601Date.setTimeZone(DEFAULT_TIME_ZONE_TRAKT);
         }
 
         @Override
@@ -40,6 +44,10 @@ public class TraktV2Helper {
             synchronized (iso8601WithMillis) {
                 try {
                     return iso8601WithMillis.parse(json.getAsString());
+                } catch (ParseException ignored) {
+                }
+                try {
+                    return iso8601Date.parse(json.getAsString());
                 } catch (ParseException e) {
                     throw new JsonSyntaxException(json.getAsString(), e);
                 }
