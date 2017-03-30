@@ -239,11 +239,11 @@ public class BaseTestCase {
         return calendar.getTime();
     }
 
-    public static Date newDate(int year, int month, int date, int hourOfDay, int minute) {
+    public static TraktDate newTraktDate(int year, int month, int date, int hourOfDay, int minute) {
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         calendar.clear();
         calendar.set(year, month, date, hourOfDay, minute);
-        return calendar.getTime();
+        return new TraktDate(calendar.getTime());
     }
 
 }

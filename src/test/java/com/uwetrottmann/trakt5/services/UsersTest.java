@@ -259,8 +259,8 @@ public class UsersTest extends BaseTestCase {
         List<HistoryEntry> history = executeCall(getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
                 TestData.MOVIE_WATCHED_TRAKT_ID, 1,
                 DEFAULT_PAGE_SIZE, null,
-                newDate(2016, Calendar.AUGUST, 3, 9, 0),
-                newDate(2016, Calendar.AUGUST, 3, 10, 0)
+                newTraktDate(2016, Calendar.AUGUST, 3, 9, 0),
+                newTraktDate(2016, Calendar.AUGUST, 3, 10, 0)
         ));
         assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);

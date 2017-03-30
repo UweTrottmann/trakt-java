@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktDate;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Followed;
@@ -242,8 +243,8 @@ public interface Users {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") Date startAt,
-            @Query("end_at") Date endAt
+            @Query("start_at") TraktDate startAt,
+            @Query("end_at") TraktDate endAt
     );
 
     /**
@@ -264,8 +265,8 @@ public interface Users {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") Date startAt,
-            @Query("end_at") Date endAt
+            @Query("start_at") TraktDate startAt,
+            @Query("end_at") TraktDate endAt
     );
 
     /**
@@ -290,8 +291,8 @@ public interface Users {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") Date startAt,
-            @Query("end_at") Date endAt
+            @Query("start_at") TraktDate startAt,
+            @Query("end_at") TraktDate endAt
     );
 
     /**

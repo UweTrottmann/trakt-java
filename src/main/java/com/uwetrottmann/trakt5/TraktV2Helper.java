@@ -21,13 +21,17 @@ import java.util.TimeZone;
 
 public class TraktV2Helper {
 
+    /** trakt uses ISO 8601 dates with milliseconds, mostly in Zulu time (UTC). */
+    public static final String DATE_FORMAT_TRAKT = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
+    public static final TimeZone DEFAULT_TIME_ZONE_TRAKT = TimeZone.getTimeZone("UTC");
+
     private static class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
         private final SimpleDateFormat iso8601WithMillis;
 
         private DateTypeAdapter() {
-            iso8601WithMillis = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-            iso8601WithMillis.setTimeZone(TimeZone.getTimeZone("UTC"));
+            iso8601WithMillis = new SimpleDateFormat(DATE_FORMAT_TRAKT);
+            iso8601WithMillis.setTimeZone(DEFAULT_TIME_ZONE_TRAKT);
         }
 
         @Override
@@ -52,8 +56,7 @@ public class TraktV2Helper {
 
     public static GsonBuilder getGsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
-        builder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-        // trakt exclusively uses ISO 8601 dates with milliseconds in Zulu time (UTC)
+
         builder.registerTypeAdapter(Date.class, new DateTypeAdapter());
 
         // privacy
