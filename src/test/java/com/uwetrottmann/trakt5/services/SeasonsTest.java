@@ -59,7 +59,7 @@ public class SeasonsTest extends BaseTestCase {
     @Test
     public void test_season() throws IOException {
         List<Episode> season = executeCall(getTrakt().seasons().season(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
-                Extended.DEFAULT_MIN));
+                null));
         assertThat(season).isNotNull();
         assertThat(season).isNotEmpty();
         for (Episode episode : season) {

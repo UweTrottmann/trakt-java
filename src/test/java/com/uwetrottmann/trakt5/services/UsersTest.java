@@ -69,13 +69,13 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_collectionMovies() throws IOException {
         List<BaseMovie> movies = executeCall(
-                getTrakt().users().collectionMovies(TestData.USER_SLUG, Extended.DEFAULT_MIN));
+                getTrakt().users().collectionMovies(TestData.USER_SLUG, null));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, Extended.DEFAULT_MIN));
+        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, null));
         assertSyncShows(shows, "collection");
     }
 
@@ -135,7 +135,7 @@ public class UsersTest extends BaseTestCase {
     public void test_listItems() throws IOException {
         List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
                 String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                Extended.DEFAULT_MIN));
+                null));
         for (ListEntry entry : entries) {
             assertThat(entry.listed_at).isNotNull();
         }
@@ -185,7 +185,7 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_followers() throws IOException {
-        List<Follower> followers = executeCall(getTrakt().users().followers(TestData.USER_SLUG, Extended.DEFAULT_MIN));
+        List<Follower> followers = executeCall(getTrakt().users().followers(TestData.USER_SLUG, null));
         for (Follower follower : followers) {
             assertThat(follower.followed_at).isNotNull();
             assertThat(follower.user).isNotNull();
@@ -194,7 +194,7 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_following() throws IOException {
-        List<Follower> following = executeCall(getTrakt().users().following(TestData.USER_SLUG, Extended.DEFAULT_MIN));
+        List<Follower> following = executeCall(getTrakt().users().following(TestData.USER_SLUG, null));
         for (Follower follower : following) {
             assertThat(follower.followed_at).isNotNull();
             assertThat(follower.user).isNotNull();
@@ -203,7 +203,7 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_friends() throws IOException {
-        List<Friend> friends = executeCall(getTrakt().users().friends(TestData.USER_SLUG, Extended.DEFAULT_MIN));
+        List<Friend> friends = executeCall(getTrakt().users().friends(TestData.USER_SLUG, null));
         for (Friend friend : friends) {
             assertThat(friend.friends_at).isNotNull();
             assertThat(friend.user).isNotNull();
@@ -214,7 +214,7 @@ public class UsersTest extends BaseTestCase {
     public void test_historyEpisodesAndMovies() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USER_SLUG, 1,
-                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                        DEFAULT_PAGE_SIZE, null,
                         null, null));
         for (HistoryEntry entry : history) {
             assertThat(entry.id).isGreaterThan(0);
@@ -234,7 +234,7 @@ public class UsersTest extends BaseTestCase {
     public void test_historyEpisodes() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USER_SLUG, HistoryType.EPISODES, 1,
-                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                        DEFAULT_PAGE_SIZE, null,
                         null, null));
         for (HistoryEntry entry : history) {
             assertThat(entry.id).isGreaterThan(0);
@@ -250,7 +250,7 @@ public class UsersTest extends BaseTestCase {
     public void test_historyMovies() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES, 1,
-                        DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                        DEFAULT_PAGE_SIZE, null,
                         null, null));
         assertMovieHistory(history);
     }
@@ -259,7 +259,7 @@ public class UsersTest extends BaseTestCase {
     public void test_historyItem() throws IOException {
         List<HistoryEntry> history = executeCall(getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
                 TestData.MOVIE_WATCHED_TRAKT_ID, 1,
-                DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN,
+                DEFAULT_PAGE_SIZE, null,
                 new DateTime(2016, 8, 3, 9, 0, 0, 0, DateTimeZone.UTC),
                 new DateTime(2016, 8, 3, 10, 0, 0, 0, DateTimeZone.UTC)));
         assertThat(history.size()).isGreaterThan(0);
@@ -279,7 +279,7 @@ public class UsersTest extends BaseTestCase {
     public void test_ratingsMovies() throws IOException {
         List<RatedMovie> ratedMovies = executeCall(
                 getTrakt().users().ratingsMovies(TestData.USER_SLUG, RatingsFilter.ALL,
-                        Extended.DEFAULT_MIN));
+                        null));
         assertRatedEntities(ratedMovies);
     }
 
@@ -287,7 +287,7 @@ public class UsersTest extends BaseTestCase {
     public void test_ratingsMovies_filtered() throws IOException {
         List<RatedMovie> ratedMovies = executeCall(getTrakt().users().ratingsMovies(TestData.USER_SLUG,
                 RatingsFilter.TOTALLYNINJA,
-                Extended.DEFAULT_MIN));
+                null));
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
             assertThat(movie.rating).isEqualTo(Rating.TOTALLYNINJA);
@@ -298,7 +298,7 @@ public class UsersTest extends BaseTestCase {
     public void test_ratingsShows() throws IOException {
         List<RatedShow> ratedShows = executeCall(
                 getTrakt().users().ratingsShows(TestData.USER_SLUG, RatingsFilter.ALL,
-                        Extended.DEFAULT_MIN));
+                        null));
         assertRatedEntities(ratedShows);
     }
 
@@ -306,7 +306,7 @@ public class UsersTest extends BaseTestCase {
     public void test_ratingsSeasons() throws IOException {
         List<RatedSeason> ratedSeasons = executeCall(
                 getTrakt().users().ratingsSeasons(TestData.USER_SLUG, RatingsFilter.ALL,
-                        Extended.DEFAULT_MIN));
+                        null));
         assertRatedEntities(ratedSeasons);
     }
 
@@ -314,21 +314,21 @@ public class UsersTest extends BaseTestCase {
     public void test_ratingsEpisodes() throws IOException {
         List<RatedEpisode> ratedEpisodes = executeCall(
                 getTrakt().users().ratingsEpisodes(TestData.USER_SLUG, RatingsFilter.ALL,
-                        Extended.DEFAULT_MIN));
+                        null));
         assertRatedEntities(ratedEpisodes);
     }
 
     @Test
     public void test_watchlistMovies() throws IOException {
         List<BaseMovie> movies = executeCall(getTrakt().users().watchlistMovies(UserSlug.ME,
-                Extended.DEFAULT_MIN));
+                null));
         assertSyncMovies(movies, "watchlist");
     }
 
     @Test
     public void test_watchlistShows() throws IOException {
         List<BaseShow> shows = executeCall(getTrakt().users().watchlistShows(UserSlug.ME,
-                Extended.DEFAULT_MIN));
+                null));
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
             assertThat(show.listed_at).isNotNull();
@@ -338,7 +338,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchlistSeasons() throws IOException {
         List<WatchlistedSeason> seasons = executeCall(getTrakt().users().watchlistSeasons(UserSlug.ME,
-                Extended.DEFAULT_MIN));
+                null));
         for (WatchlistedSeason season : seasons) {
             assertThat(season.season).isNotNull();
             assertThat(season.show).isNotNull();
@@ -349,7 +349,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchlistEpisodes() throws IOException {
         List<WatchlistedEpisode> episodes = executeCall(getTrakt().users().watchlistEpisodes(UserSlug.ME,
-                Extended.DEFAULT_MIN));
+                null));
         for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.episode).isNotNull();
             assertThat(episode.show).isNotNull();
@@ -361,14 +361,14 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchedMovies() throws IOException {
         List<BaseMovie> watchedMovies = executeCall(getTrakt().users().watchedMovies(TestData.USER_SLUG,
-                Extended.DEFAULT_MIN));
+                null));
         assertSyncMovies(watchedMovies, "watched");
     }
 
     @Test
     public void test_watchedShows() throws IOException {
         List<BaseShow> watchedShows = executeCall(getTrakt().users().watchedShows(TestData.USER_SLUG,
-                Extended.DEFAULT_MIN));
+                null));
         assertSyncShows(watchedShows, "watched");
     }
 

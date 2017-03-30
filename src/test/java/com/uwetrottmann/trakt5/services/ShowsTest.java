@@ -25,7 +25,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_popular() throws IOException {
-        List<Show> shows = executeCall(getTrakt().shows().popular(2, null, Extended.DEFAULT_MIN));
+        List<Show> shows = executeCall(getTrakt().shows().popular(2, null, null));
         assertThat(shows).isNotNull();
         assertThat(shows.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (Show show : shows) {
@@ -35,7 +35,7 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_trending() throws IOException {
-        List<TrendingShow> shows = executeCall(getTrakt().shows().trending(1, null, Extended.DEFAULT_MIN));
+        List<TrendingShow> shows = executeCall(getTrakt().shows().trending(1, null, null));
         assertThat(shows).isNotNull();
         assertThat(shows.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingShow show : shows) {
@@ -98,7 +98,7 @@ public class ShowsTest extends BaseTestCase {
     @Test
     public void test_comments() throws IOException {
         List<Comment> comments = executeCall(getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null,
-                Extended.DEFAULT_MIN));
+                null));
         assertThat(comments).isNotNull();
         assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
     }
@@ -125,14 +125,14 @@ public class ShowsTest extends BaseTestCase {
     @Test
     public void test_collected_progress() throws IOException {
         BaseShow show = executeCall(getTrakt().shows().collectedProgress(TestData.SHOW_SLUG, null, null,
-                Extended.DEFAULT_MIN));
+                null));
         assertCollectedProgress(show);
     }
 
     @Test
     public void test_watched_progress() throws IOException {
         BaseShow show = executeCall(getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, null, null,
-                Extended.DEFAULT_MIN));
+                null));
         assertWatchedProgress(show);
     }
 

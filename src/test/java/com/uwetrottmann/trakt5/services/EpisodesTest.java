@@ -31,7 +31,7 @@ public class EpisodesTest extends BaseTestCase {
     @Test
     public void test_comments() throws IOException {
         executeCall(getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
-                TestData.EPISODE_NUMBER, 1, DEFAULT_PAGE_SIZE, Extended.DEFAULT_MIN));
+                TestData.EPISODE_NUMBER, 1, DEFAULT_PAGE_SIZE, null));
     }
 
     @Test

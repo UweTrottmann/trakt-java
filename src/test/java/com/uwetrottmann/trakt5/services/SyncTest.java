@@ -61,13 +61,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(Extended.DEFAULT_MIN));
+        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(null));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(Extended.DEFAULT_MIN));
+        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(null));
         assertSyncShows(shows, "collection");
     }
 
@@ -182,13 +182,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchedMovies() throws IOException {
-        List<BaseMovie> watchedMovies = executeCall(getTrakt().sync().watchedMovies(Extended.DEFAULT_MIN));
+        List<BaseMovie> watchedMovies = executeCall(getTrakt().sync().watchedMovies(null));
         assertSyncMovies(watchedMovies, "watched");
     }
 
     @Test
     public void test_watchedShows() throws IOException {
-        List<BaseShow> watchedShows = executeCall(getTrakt().sync().watchedShows(Extended.DEFAULT_MIN));
+        List<BaseShow> watchedShows = executeCall(getTrakt().sync().watchedShows(null));
         assertSyncShows(watchedShows, "watched");
     }
 
@@ -245,14 +245,14 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_ratingsMovies() throws IOException {
         List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL,
-                Extended.DEFAULT_MIN));
+                null));
         assertRatedEntities(ratedMovies);
     }
 
     @Test
     public void test_ratingsMovies_filtered() throws IOException {
         List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.TOTALLYNINJA,
-                Extended.DEFAULT_MIN));
+                null));
         assertThat(ratedMovies).isNotNull();
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
@@ -263,21 +263,21 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_ratingsShows() throws IOException {
         List<RatedShow> ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL,
-                Extended.DEFAULT_MIN));
+                null));
         assertRatedEntities(ratedShows);
     }
 
     @Test
     public void test_ratingsSeasons() throws IOException {
         List<RatedSeason> ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL,
-                Extended.DEFAULT_MIN));
+                null));
         assertRatedEntities(ratedSeasons);
     }
 
     @Test
     public void test_ratingsEpisodes() throws IOException {
         List<RatedEpisode> ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL,
-                Extended.DEFAULT_MIN));
+                null));
         assertRatedEntities(ratedEpisodes);
     }
 
@@ -357,13 +357,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().watchlistMovies(Extended.DEFAULT_MIN));
+        List<BaseMovie> movies = executeCall(getTrakt().sync().watchlistMovies(null));
         assertSyncMovies(movies, "watchlist");
     }
 
     @Test
     public void test_watchlistShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().watchlistShows(Extended.DEFAULT_MIN));
+        List<BaseShow> shows = executeCall(getTrakt().sync().watchlistShows(null));
         assertThat(shows).isNotNull();
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
@@ -373,7 +373,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistSeasons() throws IOException {
-        List<WatchlistedSeason> seasons = executeCall(getTrakt().sync().watchlistSeasons(Extended.DEFAULT_MIN));
+        List<WatchlistedSeason> seasons = executeCall(getTrakt().sync().watchlistSeasons(null));
         assertThat(seasons).isNotNull();
         for (WatchlistedSeason season : seasons) {
             assertThat(season.season).isNotNull();
@@ -384,7 +384,7 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistEpisodes() throws IOException {
-        List<WatchlistedEpisode> episodes = executeCall(getTrakt().sync().watchlistEpisodes(Extended.DEFAULT_MIN));
+        List<WatchlistedEpisode> episodes = executeCall(getTrakt().sync().watchlistEpisodes(null));
         assertThat(episodes).isNotNull();
         for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.episode).isNotNull();

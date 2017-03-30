@@ -23,7 +23,7 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_popular() throws IOException {
-        List<Movie> movies = executeCall(getTrakt().movies().popular(2, null, Extended.DEFAULT_MIN));
+        List<Movie> movies = executeCall(getTrakt().movies().popular(2, null, null));
         assertThat(movies).isNotNull();
         assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (Movie movie : movies) {
@@ -33,7 +33,7 @@ public class MoviesTest extends BaseTestCase {
 
     @Test
     public void test_trending() throws IOException {
-        List<TrendingMovie> movies = executeCall(getTrakt().movies().trending(1, null, Extended.DEFAULT_MIN));
+        List<TrendingMovie> movies = executeCall(getTrakt().movies().trending(1, null, null));
         assertThat(movies).isNotNull();
         assertThat(movies.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
         for (TrendingMovie movie : movies) {
@@ -95,7 +95,7 @@ public class MoviesTest extends BaseTestCase {
     @Test
     public void test_comments() throws IOException {
         List<Comment> comments = executeCall(getTrakt().movies().comments(TestData.MOVIE_SLUG, 1, null,
-                Extended.DEFAULT_MIN));
+                null));
         assertThat(comments).isNotNull();
         assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
     }

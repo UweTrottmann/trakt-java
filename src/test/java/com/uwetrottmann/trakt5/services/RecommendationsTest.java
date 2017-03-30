@@ -16,7 +16,7 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_movies() throws IOException {
-        List<Movie> movies = executeCall(getTrakt().recommendations().movies(Extended.DEFAULT_MIN));
+        List<Movie> movies = executeCall(getTrakt().recommendations().movies(null));
         assertThat(movies).isNotEmpty();
     }
 
@@ -27,7 +27,7 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_shows() throws IOException {
-        List<Show> shows = executeCall(getTrakt().recommendations().shows(Extended.DEFAULT_MIN));
+        List<Show> shows = executeCall(getTrakt().recommendations().shows(null));
         assertThat(shows).isNotEmpty();
     }
 
