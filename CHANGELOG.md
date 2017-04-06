@@ -1,6 +1,19 @@
 Change Log
 ==========
 
+## 5.7.0
+_2017-04-06_
+
+* Use [ThreeTen](https://github.com/ThreeTen/threetenbp) to replace broken date parsing: `java.util.Date` replaced with `OffsetDateTime` and `LocalDate`.
+* Note: to avoid [issues on Android](https://github.com/JakeWharton/ThreeTenABP#why-not-use-threetenbp) exclude the 
+  ThreeTen dependency and include [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP) instead:
+    ```groovy
+    compile ('com.uwetrottmann.trakt5:trakt-java:<latest-version>') {
+      exclude group: 'org.threeten', module: 'threetenbp'
+    }
+    compile 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
+    ```
+
 ## 5.6.0
 _2017-03-30_
 
