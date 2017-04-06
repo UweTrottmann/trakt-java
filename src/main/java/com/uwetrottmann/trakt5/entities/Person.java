@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.LocalDate;
 
 public class Person {
 
@@ -9,8 +9,8 @@ public class Person {
 
     // extended info
     public String biography;
-    public OffsetDateTime birthday;
-    public OffsetDateTime death;
+    public LocalDate birthday;
+    public LocalDate death;
     public String birthplace;
     public String homepage;
 

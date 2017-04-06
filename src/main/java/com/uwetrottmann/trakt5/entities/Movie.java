@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.LocalDate;
 
 import java.util.List;
 
@@ -12,7 +12,8 @@ public class Movie extends BaseEntity {
     // extended info
     public String certification;
     public String tagline;
-    public OffsetDateTime released;
+    /** Date in UTC time. */
+    public LocalDate released;
     public Integer runtime;
     public String trailer;
     public String homepage;

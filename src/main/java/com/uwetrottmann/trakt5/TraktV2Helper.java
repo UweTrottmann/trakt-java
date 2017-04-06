@@ -11,6 +11,7 @@ import com.google.gson.JsonSerializer;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.Status;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 
 import java.lang.reflect.Type;
@@ -27,6 +28,14 @@ public class TraktV2Helper {
             public OffsetDateTime deserialize(JsonElement json, Type typeOfT,
                     JsonDeserializationContext context) throws JsonParseException {
                 return OffsetDateTime.parse(json.getAsString());
+            }
+        });
+        // dates are in ISO 8601 format as well
+        builder.registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+            @Override
+            public LocalDate deserialize(JsonElement json, Type typeOfT,
+                    JsonDeserializationContext context) throws JsonParseException {
+                return LocalDate.parse(json.getAsString());
             }
         });
 

@@ -1,10 +1,11 @@
 package com.uwetrottmann.trakt5.entities;
 
-import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.LocalDate;
 
 public class CalendarMovieEntry {
 
-    public OffsetDateTime released;
+    /** Date in UTC time. */
+    public LocalDate released;
     public Movie movie;
 
 }
