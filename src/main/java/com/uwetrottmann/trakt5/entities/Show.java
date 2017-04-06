@@ -1,8 +1,8 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Status;
+import org.threeten.bp.OffsetDateTime;
 
-import java.util.Date;
 import java.util.List;
 
 public class Show extends BaseEntity {
@@ -11,7 +11,7 @@ public class Show extends BaseEntity {
     public ShowIds ids;
 
     // extended info
-    public Date first_aired;
+    public OffsetDateTime first_aired;
     public Airs airs;
     public Integer runtime;
     public String certification;

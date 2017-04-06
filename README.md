@@ -30,6 +30,20 @@ Or for Maven:
 </dependency>
 ```
 
+### Android
+This library depends on [threetenbp](https://github.com/ThreeTen/threetenbp). To avoid 
+[issues on Android](https://github.com/JakeWharton/ThreeTenABP#why-not-use-threetenbp) you should exclude this 
+dependency and include [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP) instead:
+
+```groovy
+compile ('com.uwetrottmann.trakt5:trakt-java:<latest-version>') {
+  exclude group: 'org.threeten', module: 'threetenbp'
+}
+compile 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
+```
+
+### Example
+
 Use like any other [retrofit2][2] based service. You only need to supply your [OAuth 2.0][3] credentials and optional user
 OAuth access token obtained from trakt.
 

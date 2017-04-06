@@ -1,6 +1,6 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class Episode extends BaseEntity {
 
@@ -10,6 +10,6 @@ public class Episode extends BaseEntity {
 
     // extended info
     public Integer number_abs;
-    public Date first_aired;
+    public OffsetDateTime first_aired;
 
 }

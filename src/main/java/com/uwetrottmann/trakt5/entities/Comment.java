@@ -1,12 +1,12 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class Comment {
 
     public Integer id;
     public Integer parent_id;
-    public Date created_at;
+    public OffsetDateTime created_at;
     public String comment;
     public Boolean spoiler;
     public Boolean review;

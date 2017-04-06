@@ -31,11 +31,13 @@ import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.junit.Test;
+import org.threeten.bp.LocalTime;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneOffset;
 import retrofit2.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Calendar;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -119,9 +121,9 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_updateList() throws IOException {
         // change name (append a new suffix that changes frequently)
-        int secondOfMinute = Calendar.getInstance().get(Calendar.SECOND);
+        int secondOfDay = LocalTime.now().toSecondOfDay();
         TraktList list = new TraktList();
-        list.name("trakt-java " + secondOfMinute);
+        list.name("trakt-java " + secondOfDay);
 
         // create list...
         TraktList updatedList = executeCall(getTrakt().users().updateList(UserSlug.ME, String.valueOf(
@@ -242,6 +244,7 @@ public class UsersTest extends BaseTestCase {
             assertThat(entry.type).isEqualTo("episode");
             assertThat(entry.episode).isNotNull();
             assertThat(entry.show).isNotNull();
+            System.out.println("Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
         }
     }
 
@@ -259,9 +262,8 @@ public class UsersTest extends BaseTestCase {
         List<HistoryEntry> history = executeCall(getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
                 TestData.MOVIE_WATCHED_TRAKT_ID, 1,
                 DEFAULT_PAGE_SIZE, null,
-                newTraktDate(2016, Calendar.AUGUST, 3, 9, 0),
-                newTraktDate(2016, Calendar.AUGUST, 3, 10, 0)
-        ));
+                OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
+                OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC)));
         assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);
     }

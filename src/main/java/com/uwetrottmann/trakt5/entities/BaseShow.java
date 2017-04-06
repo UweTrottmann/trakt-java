@@ -1,6 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
+
 import java.util.List;
 
 public class BaseShow {
@@ -11,12 +12,12 @@ public class BaseShow {
     public List<BaseSeason> seasons;
 
     /** collection */
-    public Date last_collected_at;
+    public OffsetDateTime last_collected_at;
     /** watchlist */
-    public Date listed_at;
+    public OffsetDateTime listed_at;
     /** watched */
     public Integer plays;
-    public Date last_watched_at;
+    public OffsetDateTime last_watched_at;
     /** progress */
     public Integer aired;
     public Integer completed;

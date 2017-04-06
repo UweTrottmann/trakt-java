@@ -1,8 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class User {
 
@@ -17,7 +16,7 @@ public class User {
     public UserIds ids;
 
     // full
-    public Date joined_at;
+    public OffsetDateTime joined_at;
     public String location;
     public String about;
     public String gender;

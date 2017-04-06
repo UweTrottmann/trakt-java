@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class Followed {
 
-    public Date approved_at;
+    public OffsetDateTime approved_at;
     public User user;
 
 }
