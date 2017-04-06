@@ -18,10 +18,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -221,29 +218,6 @@ public class BaseTestCase {
                 assertThat(crewMember.person).isNotNull();
             }
         }
-    }
-
-    public static Date newDatePlusHours(int hours) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.add(Calendar.HOUR_OF_DAY, hours);
-        return calendar.getTime();
-    }
-
-    public static Date newDateMinusHours(int hours) {
-        return newDatePlusHours(-hours);
-    }
-
-    public static Date newDateMinusMinutes(int minutes) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.add(Calendar.MINUTE, -minutes);
-        return calendar.getTime();
-    }
-
-    public static TraktDate newTraktDate(int year, int month, int date, int hourOfDay, int minute) {
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.clear();
-        calendar.set(year, month, date, hourOfDay, minute);
-        return new TraktDate(calendar.getTime());
     }
 
 }

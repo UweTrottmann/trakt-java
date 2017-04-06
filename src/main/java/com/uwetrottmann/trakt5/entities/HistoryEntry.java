@@ -1,11 +1,11 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class HistoryEntry {
 
     public Long id;
-    public Date watched_at;
+    public OffsetDateTime watched_at;
     public String action;
     public String type;
 

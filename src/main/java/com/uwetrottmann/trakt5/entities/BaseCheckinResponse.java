@@ -1,10 +1,11 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
+
 
 public abstract class BaseCheckinResponse {
 
-    public Date watched_at;
+    public OffsetDateTime watched_at;
     public ShareSettings sharing;
 
 }

@@ -1,9 +1,9 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Rating;
+import org.threeten.bp.OffsetDateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SyncSeason {
@@ -11,9 +11,9 @@ public class SyncSeason {
     public Integer number;
     public List<SyncEpisode> episodes;
 
-    public Date collected_at;
-    public Date watched_at;
-    public Date rated_at;
+    public OffsetDateTime collected_at;
+    public OffsetDateTime watched_at;
+    public OffsetDateTime rated_at;
     public Rating rating;
 
     public SyncSeason number(int number) {
@@ -32,17 +32,17 @@ public class SyncSeason {
         return episodes(list);
     }
 
-    public SyncSeason collectedAt(Date collectedAt) {
+    public SyncSeason collectedAt(OffsetDateTime collectedAt) {
         this.collected_at = collectedAt;
         return this;
     }
 
-    public SyncSeason watchedAt(Date watchedAt) {
+    public SyncSeason watchedAt(OffsetDateTime watchedAt) {
         this.watched_at = watchedAt;
         return this;
     }
 
-    public SyncSeason ratedAt(Date ratedAt) {
+    public SyncSeason ratedAt(OffsetDateTime ratedAt) {
         this.rated_at = ratedAt;
         return this;
     }

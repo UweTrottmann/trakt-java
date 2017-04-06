@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class Friend {
 
-    public Date friends_at;
+    public OffsetDateTime friends_at;
     public User user;
 
 }

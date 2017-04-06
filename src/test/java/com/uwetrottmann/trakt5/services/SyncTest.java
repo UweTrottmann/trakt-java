@@ -24,6 +24,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.junit.Test;
+import org.threeten.bp.OffsetDateTime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,16 +195,16 @@ public class SyncTest extends BaseTestCase {
     public void test_addItemsToWatchedHistory() throws IOException {
         // movie
         SyncMovie movie = new SyncMovie();
-        movie.watched_at = newDateMinusHours(1);
+        movie.watched_at = OffsetDateTime.now().minusHours(1);
         movie.ids = buildMovieIds();
 
         // episode
         SyncEpisode episode = new SyncEpisode();
         episode.number = TestData.EPISODE_NUMBER;
-        episode.watched_at = newDateMinusHours(1);
+        episode.watched_at = OffsetDateTime.now().minusHours(1);
         SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
-        episode2.watched_at = newDateMinusMinutes(30);
+        episode2.watched_at = OffsetDateTime.now().minusMinutes(30);
         // season
         SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;

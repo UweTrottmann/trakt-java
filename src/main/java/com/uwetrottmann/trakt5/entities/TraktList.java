@@ -1,8 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
-
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class TraktList {
 
@@ -12,7 +11,7 @@ public class TraktList {
     public ListPrivacy privacy;
     public Boolean display_numbers;
     public Boolean allow_comments;
-    public Date updated_at;
+    public OffsetDateTime updated_at;
     public Integer item_count;
     public Integer comment_count;
     public Integer likes;

@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class WatchlistedSeason {
 
-    public Date listed_at;
+    public OffsetDateTime listed_at;
 
     public Season season;
     public Show show;

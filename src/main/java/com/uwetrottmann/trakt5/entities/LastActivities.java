@@ -1,10 +1,10 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class LastActivities {
 
-    public Date all;
+    public OffsetDateTime all;
     public LastActivityMore movies;
     public LastActivityMore episodes;
     public LastActivity shows;

@@ -1,8 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
 import com.uwetrottmann.trakt5.enums.Rating;
-
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class SyncEpisode {
 
@@ -10,9 +9,9 @@ public class SyncEpisode {
     public Integer number;
     public EpisodeIds ids;
 
-    public Date collected_at;
-    public Date watched_at;
-    public Date rated_at;
+    public OffsetDateTime collected_at;
+    public OffsetDateTime watched_at;
+    public OffsetDateTime rated_at;
     public Rating rating;
 
     public SyncEpisode number(int number) {
@@ -30,17 +29,17 @@ public class SyncEpisode {
         return this;
     }
 
-    public SyncEpisode collectedAt(Date collectedAt) {
+    public SyncEpisode collectedAt(OffsetDateTime collectedAt) {
         this.collected_at = collectedAt;
         return this;
     }
 
-    public SyncEpisode watchedAt(Date watchedAt) {
+    public SyncEpisode watchedAt(OffsetDateTime watchedAt) {
         this.watched_at = watchedAt;
         return this;
     }
 
-    public SyncEpisode ratedAt(Date ratedAt) {
+    public SyncEpisode ratedAt(OffsetDateTime ratedAt) {
         this.rated_at = ratedAt;
         return this;
     }

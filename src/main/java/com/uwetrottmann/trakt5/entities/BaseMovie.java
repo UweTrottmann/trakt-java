@@ -1,14 +1,14 @@
 package com.uwetrottmann.trakt5.entities;
 
-import java.util.Date;
+import org.threeten.bp.OffsetDateTime;
 
 public class BaseMovie {
 
     public Movie movie;
 
-    public Date collected_at;
-    public Date last_watched_at;
-    public Date listed_at;
+    public OffsetDateTime collected_at;
+    public OffsetDateTime last_watched_at;
+    public OffsetDateTime listed_at;
     public int plays;
 
 }
