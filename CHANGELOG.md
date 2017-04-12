@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.7.1
+_2017-04-12_
+
+* Hard-code UTF-8 charset to support all Android versions. `java.nio.charset.StandardCharsets` is only available on Android API 19+.
+
 ## 5.7.0
 _2017-04-06_
 
