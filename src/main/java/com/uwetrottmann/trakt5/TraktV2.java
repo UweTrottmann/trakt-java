@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Helper class for easy usage of the trakt v2 API using retrofit.
@@ -188,7 +187,8 @@ public class TraktV2 {
 
     private String urlEncode(String content) {
         try {
-            return URLEncoder.encode(content, StandardCharsets.UTF_8.name());
+            // can not use java.nio.charset.StandardCharsets as on Android only available since API 19
+            return URLEncoder.encode(content, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedOperationException(e);
         }
