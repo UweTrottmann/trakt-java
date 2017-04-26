@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -12,7 +13,9 @@ import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import org.joda.time.DateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -99,6 +102,134 @@ public interface Sync {
     Call<List<BaseShow>> watchedShows(
             @Query(value = "extended", encoded = true) Extended extended
     );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> watchedHistory(@Query("page") Integer page,
+            @Query("limit") Integer limit);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     * @param startAt the watched at date time to start at
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> watchedHistory(@Query("page") Integer page,
+            @Query("limit") Integer limit, @Query("start_at") DateTime startAt);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     * @param startAt the watched at date time to start at
+     * @param endAt the watched at date time to end at
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> watchedHistory(@Query("page") Integer page,
+            @Query("limit") Integer limit, @Query("start_at") DateTime startAt, @Query("end_at") DateTime endAt);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param type the type (movies, shows, seasons, episodes) to limit results to
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     */
+    @GET("sync/history/{type}")
+    Call<List<HistoryEntry>> watchedHistory(@Path("type") HistoryType type, @Query("page") Integer page,
+            @Query("limit") Integer limit);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param type the type (movies, shows, seasons, episodes) to limit results to
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     * @param startAt the watched at date time to start at
+     */
+    @GET("sync/history/{type}")
+    Call<List<HistoryEntry>> watchedHistory(@Path("type") HistoryType type, @Query("page") Integer page,
+            @Query("limit") Integer limit, @Query("start_at") DateTime startAt);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param type the type (movies, shows, seasons, episodes) to limit results to
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     * @param startAt the watched at date time to start at
+     * @param endAt the watched at date time to end at
+     */
+    @GET("sync/history/{type}")
+    Call<List<HistoryEntry>> watchedHistory(@Path("type") HistoryType type, @Query("page") Integer page,
+            @Query("limit") Integer limit, @Query("start_at") DateTime startAt, @Query("end_at") DateTime endAt);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param type the type (movies, shows, seasons, episodes) to limit results to
+     * @param id the id to further limit the type by (eg. /shows/1 will limit results to the show with the id of 1)
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     */
+    @GET("sync/history/{type}/{id}")
+    Call<List<HistoryEntry>> watchedHistory(@Path("type") HistoryType type, @Path("id") Integer id,
+            @Query("page") Integer page, @Query("limit") Integer limit);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param type the type (movies, shows, seasons, episodes) to limit results to
+     * @param id the id to further limit the type by (eg. /shows/1 will limit results to the show with the id of 1)
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     * @param startAt the watched at date time to start at
+     */
+    @GET("sync/history/{type}/{id}")
+    Call<List<HistoryEntry>> watchedHistory(@Path("type") HistoryType type, @Path("id") Integer id,
+            @Query("page") Integer page, @Query("limit") Integer limit, @Query("start_at") DateTime startAt);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that a user has watched, sorted by most recent.</p>
+     *
+     * @param type the type (movies, shows, seasons, episodes) to limit results to
+     * @param id the id to further limit the type by (eg. /shows/1 will limit results to the show with the id of 1)
+     * @param page the page to retrieve
+     * @param limit the number of results per page
+     * @param startAt the watched at date time to start at
+     * @param endAt the watched at date time to end at
+     */
+    @GET("sync/history/{type}/{id}")
+    Call<List<HistoryEntry>> watchedHistory(@Path("type") HistoryType type, @Path("id") Integer id,
+            @Query("page") Integer page, @Query("limit") Integer limit, @Query("start_at") DateTime startAt,
+            @Query("end_at") DateTime endAt);
+
 
     /**
      * <b>OAuth Required</b>
