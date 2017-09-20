@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.7.2
+_2017-09-20_
+
+* Properly serialize `OffsetDateTime`, fixes issues with `watched_at` and `collected_at` properties.
+
 ## 5.7.1
 _2017-04-12_
 
