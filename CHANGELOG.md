@@ -5,6 +5,7 @@ Change Log
 _2017-09-20_
 
 * Properly serialize `OffsetDateTime`, fixes issues with `watched_at` and `collected_at` properties.
+* Update retrofit to 2.3.0.
 
 ## 5.7.1
 _2017-04-12_
