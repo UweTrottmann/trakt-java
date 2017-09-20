@@ -24,7 +24,9 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.junit.Test;
+import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneOffset;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,9 +108,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_addItemsToCollection_episode() throws IOException {
+        // Fri Jul 14 2017 02:40:00 UTC
+        OffsetDateTime collectedAt = OffsetDateTime.ofInstant(Instant.ofEpochMilli(1500000000000L), ZoneOffset.UTC);
+
         // episodes
         SyncEpisode episode1 = new SyncEpisode();
         episode1.number = 1;
+        episode1.collectedAt(collectedAt);
         SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
 
