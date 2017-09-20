@@ -30,6 +30,12 @@ public class TraktV2Helper {
                 return OffsetDateTime.parse(json.getAsString());
             }
         });
+        builder.registerTypeAdapter(OffsetDateTime.class, new JsonSerializer<OffsetDateTime>() {
+            @Override
+            public JsonElement serialize(OffsetDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                return new JsonPrimitive(src.toString());
+            }
+        });
         // dates are in ISO 8601 format as well
         builder.registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
             @Override
