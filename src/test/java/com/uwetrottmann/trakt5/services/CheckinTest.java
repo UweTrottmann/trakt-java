@@ -141,6 +141,8 @@ public class CheckinTest extends BaseTestCase {
         }
         CheckinError checkinError = getTrakt().checkForCheckinError(responseBlocked);
         // episode check in should block until episode duration has passed
+        assertThat(checkinError).isNotNull();
+        assertThat(checkinError.expires_at).isNotNull();
         assertThat(checkinError.expires_at.isBefore(OffsetDateTime.now().plusHours(1)));
 
         // clean the check in

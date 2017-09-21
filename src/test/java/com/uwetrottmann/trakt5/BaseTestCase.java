@@ -10,6 +10,7 @@ import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.CrewMember;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
+import com.uwetrottmann.trakt5.entities.TraktError;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -17,6 +18,8 @@ import org.junit.BeforeClass;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
 
@@ -80,18 +83,23 @@ public class BaseTestCase {
         return null;
     }
 
-    public static void assertSuccessfulResponse(Response response) {
+    public void assertSuccessfulResponse(Response response) {
         if (!response.isSuccessful()) {
             handleFailedResponse(response);
         }
     }
 
-    private static void handleFailedResponse(Response response) {
+    private void handleFailedResponse(Response response) {
         if (response.code() == 401) {
             fail("Authorization required, supply a valid OAuth access token: "
                     + response.code() + " " + response.message());
         } else {
-            fail("Request failed: " + response.code() + " " + response.message());
+            String message = "Request failed: " + response.code() + " " + response.message();
+            TraktError error = getTrakt().checkForTraktError(response);
+            if (error != null && error.message != null) {
+                message += " message: " + error.message;
+            }
+            fail(message);
         }
     }
 

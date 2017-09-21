@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt5;
 
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.CheckinError;
+import com.uwetrottmann.trakt5.entities.TraktError;
 import com.uwetrottmann.trakt5.services.Authentication;
 import com.uwetrottmann.trakt5.services.Calendars;
 import com.uwetrottmann.trakt5.services.Checkin;
@@ -23,6 +24,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
@@ -167,8 +169,8 @@ public class TraktV2 {
     /**
      * Build an OAuth 2.0 authorization URL to obtain an authorization code.
      *
-     * <p>Send the user to the URL. Once the user authorized your app, the server will redirect
-     * to {@code redirectUri} with the authorization code and the sent state in the query parameter {@code code}.
+     * <p>Send the user to the URL. Once the user authorized your app, the server will redirect to {@code redirectUri}
+     * with the authorization code and the sent state in the query parameter {@code code}.
      *
      * <p>Ensure the state matches, then supply the authorization code to {@link #exchangeCodeForAccessToken} to get an
      * access token.
@@ -234,18 +236,39 @@ public class TraktV2 {
     }
 
     /**
-     * If the response code is 409 tries to convert the body into a {@link CheckinError}, otherwise returns {@code
-     * null}.
-     *
-     * @throws IOException If converting the error to {@link CheckinError} failed.
+     * If the response code is 409 tries to convert the body into a {@link CheckinError}.
      */
-    public CheckinError checkForCheckinError(Response response) throws IOException {
+    @Nullable
+    public CheckinError checkForCheckinError(Response response) {
         if (response.code() != 409) {
             return null; // only code 409 can be a check-in error
         }
         Converter<ResponseBody, CheckinError> errorConverter =
                 retrofit.responseBodyConverter(CheckinError.class, new Annotation[0]);
-        return errorConverter.convert(response.errorBody());
+        try {
+            //noinspection ConstantConditions never null if unsuccessful
+            return errorConverter.convert(response.errorBody());
+        } catch (IOException e) {
+            return new CheckinError(); // null values
+        }
+    }
+
+    /**
+     * If the response is not successful, tries to parse the error body into a {@link TraktError}.
+     */
+    @Nullable
+    public TraktError checkForTraktError(Response response) {
+        if (response.isSuccessful()) {
+            return null;
+        }
+        Converter<ResponseBody, TraktError> errorConverter =
+                retrofit.responseBodyConverter(TraktError.class, new Annotation[0]);
+        try {
+            //noinspection ConstantConditions never null if unsuccessful
+            return errorConverter.convert(response.errorBody());
+        } catch (IOException ignored) {
+            return new TraktError(); // null values
+        }
     }
 
     public Authentication authentication() {
