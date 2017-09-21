@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 5.7.3
+_2017-09-21_
+
+* Support parsing generic errors of unsuccessful responses with `TraktV2.checkForTraktError(response)`.
+* `TraktV2.checkForCheckinError(response)` now returns error instance with null value instead of throwing.
+
 ## 5.7.2
 _2017-09-20_
 
