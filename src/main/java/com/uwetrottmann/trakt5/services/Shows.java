@@ -163,4 +163,15 @@ public interface Shows {
             @Path("id") String showId
     );
 
+    /**
+     * Returns related and similar shows.
+     */
+    @GET("shows/{id}/related")
+    Call<List<Show>> related(
+            @Path("id") String showId,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
 }
