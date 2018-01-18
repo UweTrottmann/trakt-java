@@ -136,6 +136,16 @@ public class ShowsTest extends BaseTestCase {
         assertWatchedProgress(show);
     }
 
+    @Test
+    public void test_related() throws IOException {
+        List<Show> related = executeCall(getTrakt().shows().related(TestData.SHOW_SLUG, 1, null, null));
+        assertThat(related).isNotNull();
+        assertThat(related.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+        for (Show show : related) {
+            assertShowNotNull(show);
+        }
+    }
+
     private void assertCollectedProgress(BaseShow show) {
         assertThat(show).isNotNull();
         assertThat(show.last_collected_at).isNotNull();
