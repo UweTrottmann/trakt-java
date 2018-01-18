@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.8.0
+_2018-01-18_
+
+* Add related shows endpoint. Thanks @chrisbanes!
+
 ## 5.7.3
 _2017-09-21_
 
