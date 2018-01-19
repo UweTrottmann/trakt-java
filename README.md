@@ -78,6 +78,7 @@ See test cases in `src/test/` for more examples and the [retrofit website][2] fo
 You likely will not use every method in this library, so it is probably useful to strip unused ones with Proguard.
 Just apply the [Proguard rules for retrofit][4].
 
+## License
 Created by [Uwe Trottmann](https://uwetrottmann.com).
 
 See full [list of contributors](https://github.com/UweTrottmann/trakt-java/graphs/contributors).
