@@ -44,7 +44,7 @@ compile 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
 
 ### Example
 
-Use like any other [retrofit2][2] based service. You only need to supply your [OAuth 2.0][3] credentials and optional user
+Use like any other retrofit2 based service. You only need to supply your [OAuth 2.0][3] credentials and optional user
 OAuth access token obtained from trakt.
 
 `TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
@@ -72,15 +72,16 @@ try {
 }
 ```
 
-See test cases in `src/test/` for more examples.
+See test cases in `src/test/` for more examples and the [retrofit website][2] for configuration options.
 
 ## Use Proguard!
 You likely will not use every method in this library, so it is probably useful to strip unused ones with Proguard.
 Just apply the [Proguard rules for retrofit][4].
 
-# License
-
 Created by [Uwe Trottmann](https://uwetrottmann.com).
+
+See full [list of contributors](https://github.com/UweTrottmann/trakt-java/graphs/contributors).
+
 Except where noted otherwise, released into the [public domain](UNLICENSE).
 Do not just copy, make it better.
 
