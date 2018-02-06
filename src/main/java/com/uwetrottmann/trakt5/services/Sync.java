@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -13,6 +14,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -98,6 +100,42 @@ public interface Sync {
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies that a user has watched, sorted by most recent. The id (64-bit integer) in each history item
+     * uniquely identifies the event and can be used to remove individual events by using the /sync/history/remove
+     * method.
+     *
+     * @param movieId The Trakt.tv ID of the specific item.
+     * @param startAt The start date for the search
+     * @param endAt The end date for the search
+     */
+    @GET("sync/history/movies/{id}")
+    Call<List<HistoryEntry>> moviesHistory(
+            @Path("id") Long movieId,
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns shows that a user has watched, sorted by most recent. The id (64-bit integer) in each history item
+     * uniquely identifies the event and can be used to remove individual events by using the /sync/history/remove
+     * method.
+     *
+     * @param showId The Trakt.tv ID of the specific item.
+     * @param startAt The start date for the search
+     * @param endAt The end date for the search
+     */
+    @GET("sync/history/shows/{id}")
+    Call<List<HistoryEntry>> showsHistory(
+            @Path("id") Long showId,
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
     );
 
     /**
