@@ -67,8 +67,8 @@ try {
             // the request failed for some other reason
         }
     }
-} catch (IOException e) {
-    // could not connect to trakt 
+} catch (Exception e) {
+    // see execute() javadoc 
 }
 ```
 
