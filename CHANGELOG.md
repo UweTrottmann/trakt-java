@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.8.1
+_2018-04-06_
+
+* Add `title` and `network` to `Season`. Thanks @chrisbanes!
+
 ## 5.8.0
 _2018-01-18_
 
