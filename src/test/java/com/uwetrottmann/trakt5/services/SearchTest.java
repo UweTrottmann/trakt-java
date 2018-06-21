@@ -74,14 +74,12 @@ public class SearchTest extends BaseTestCase {
                         Extended.FULL, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).score).isNull();
 
         results = executeCall(
                 getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.MOVIE_TMDB_ID), Type.MOVIE,
                         null, 1, DEFAULT_PAGE_SIZE));
         assertThat(results).isNotNull();
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).score).isNull();
     }
 
 }
