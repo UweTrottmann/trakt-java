@@ -35,8 +35,8 @@
         <url>https://github.com/UweTrottmann/trakt-java</url>
         <connection>scm:git:git://github.com/UweTrottmann/trakt-java.git</connection>
         <developerConnection>scm:git:git@github.com:UweTrottmann/trakt-java.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <prerequisites>
         <maven>3.3.9</maven>

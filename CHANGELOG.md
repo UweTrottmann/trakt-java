@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.9.0
+_2018-06-21_
+
+* `SyncItems` uses `long` instead of `int` for history entry IDs. Thanks @chrisbanes!
+
 ## 5.8.1
 _2018-04-06_
 
