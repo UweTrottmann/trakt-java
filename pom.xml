@@ -5,7 +5,7 @@
     <groupId>com.uwetrottmann.trakt5</groupId>
     <artifactId>trakt-java</artifactId>
     <packaging>jar</packaging>
-    <version>5.8.2-SNAPSHOT</version>
+    <version>5.9.0</version>
 
     <name>trakt-java</name>
     <description>trakt-java is a retrofit2 based wrapper around the trakt API v2.</description>
@@ -35,7 +35,7 @@
         <url>https://github.com/UweTrottmann/trakt-java</url>
         <connection>scm:git:git://github.com/UweTrottmann/trakt-java.git</connection>
         <developerConnection>scm:git:git@github.com:UweTrottmann/trakt-java.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v5.9.0</tag>
     </scm>
 
     <prerequisites>
