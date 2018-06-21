@@ -8,10 +8,11 @@ public class SyncItems {
     public List<SyncMovie> movies;
     public List<SyncShow> shows;
     public List<SyncEpisode> episodes;
+
     /**
      * Only supported for removing specific history items.
      */
-    public List<Integer> ids;
+    public List<Long> ids;
 
     public SyncItems movies(SyncMovie movie) {
         ArrayList<SyncMovie> list = new ArrayList<>(1);
@@ -47,10 +48,18 @@ public class SyncItems {
     }
 
     /**
+     * @deprecated use {@link #ids(long)} instead
+     */
+    @Deprecated
+    public SyncItems ids(int id) {
+        return ids((long) id);
+    }
+
+    /**
      * History id to be removed.
      */
-    public SyncItems ids(int id) {
-        ArrayList<Integer> list = new ArrayList<>(1);
+    public SyncItems ids(long id) {
+        ArrayList<Long> list = new ArrayList<>(1);
         list.add(id);
         return ids(list);
     }
@@ -58,9 +67,8 @@ public class SyncItems {
     /**
      * History ids to be removed.
      */
-    public SyncItems ids(List<Integer> ids) {
+    public SyncItems ids(List<Long> ids) {
         this.ids = ids;
         return this;
     }
-
 }
