@@ -26,6 +26,8 @@ public class EpisodesTest extends BaseTestCase {
         assertThat(episode.ids.imdb).isEqualTo(TestData.EPISODE_IMDB_ID);
         assertThat(episode.ids.tmdb).isEqualTo(TestData.EPISODE_TMDB_ID);
         assertThat(episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
+        assertThat(episode.runtime).isGreaterThan(0);
+        assertThat(episode.comment_count).isGreaterThanOrEqualTo(0);
     }
 
     @Test
