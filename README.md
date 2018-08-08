@@ -1,7 +1,7 @@
 trakt-java
 ==========
 
-A Java wrapper around the [trakt v2 API][1] using [retrofit 2][2].
+A Java wrapper around the [trakt v2 API](http://docs.trakt.apiary.io/) using [retrofit 2](https://square.github.io/retrofit/).
 
 Pull requests are welcome.
 
@@ -12,12 +12,12 @@ API key (OAuth client id) and optionally a given user access token.
 
 ## Usage
 
-<a href="https://search.maven.org/#search%7Cga%7C1%7Ctrakt-java"><img src="https://img.shields.io/maven-central/v/com.uwetrottmann.trakt5/trakt-java.svg?style=flat-square"></a>
+<a href="https://search.maven.org/#search%7Cga%7C1%7Ctrakt-java">Available on Maven Central</a>
 
 Add the following dependency to your Gradle project:
 
 ```groovy
-compile 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
+implementation 'com.uwetrottmann.trakt5:trakt-java:5.9.0'
 ```
 
 Or for Maven:
@@ -36,15 +36,16 @@ This library depends on [threetenbp](https://github.com/ThreeTen/threetenbp). To
 dependency and include [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP) instead:
 
 ```groovy
-compile ('com.uwetrottmann.trakt5:trakt-java:<latest-version>') {
+implementation ('com.uwetrottmann.trakt5:trakt-java:<latest-version>') {
   exclude group: 'org.threeten', module: 'threetenbp'
 }
-compile 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
+implementation 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
 ```
 
 ### Example
 
-Use like any other retrofit2 based service. You only need to supply your [OAuth 2.0][3] credentials and optional user
+Use like any other retrofit2 based service. You only need to supply your 
+[OAuth 2.0](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) credentials and optional user
 OAuth access token obtained from trakt.
 
 `TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
@@ -72,11 +73,11 @@ try {
 }
 ```
 
-See test cases in `src/test/` for more examples and the [retrofit website][2] for configuration options.
+See test cases in `src/test/` for more examples and the [retrofit website](https://square.github.io/retrofit/) for configuration options.
 
 ## Use Proguard!
 You likely will not use every method in this library, so it is probably useful to strip unused ones with Proguard.
-Just apply the [Proguard rules for retrofit][4].
+Just apply the [Proguard rules for retrofit](https://square.github.io/retrofit/#download).
 
 ## License
 Created by [Uwe Trottmann](https://uwetrottmann.com).
@@ -85,9 +86,3 @@ See full [list of contributors](https://github.com/UweTrottmann/trakt-java/graph
 
 Except where noted otherwise, released into the [public domain](UNLICENSE).
 Do not just copy, make it better.
-
-
- [1]: http://docs.trakt.apiary.io/
- [2]: https://square.github.io/retrofit/
- [3]: https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
- [4]: https://square.github.io/retrofit/#download
