@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## 5.10.0
+_2018-08-08_
+
+* Add `runtime` and `comment_count` to `Episode`. Thanks @KilianB!
+* Update retrofit to 2.4.0.
+* Update threetenbp to 1.3.6. Android projects should update ThreeTenABP to 1.1.0.
+
 ## 5.9.0
 _2018-06-21_
 
