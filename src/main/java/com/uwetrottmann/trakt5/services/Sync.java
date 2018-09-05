@@ -44,6 +44,16 @@ public interface Sync {
     Call<List<BaseMovie>> collectionMovies(
             @Query(value = "extended", encoded = true) Extended extended
     );
+    
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Get a single movie in a user's collection.
+     */
+    @GET("sync/history/movies/{id}")
+    Call<List<BaseMovie>> getWatchedMovie(
+            @Path(value = "id", encoded = true) int id
+    );
 
     /**
      * <b>OAuth Required</b>
