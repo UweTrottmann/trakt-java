@@ -10,6 +10,7 @@ public class Season {
     public String title;
     public String overview;
     public String network;
+    public String first_aired;
     public Double rating;
     public Integer votes;
     public Integer episode_count;
