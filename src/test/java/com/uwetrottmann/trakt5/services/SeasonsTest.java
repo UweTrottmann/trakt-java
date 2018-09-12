@@ -30,6 +30,7 @@ public class SeasonsTest extends BaseTestCase {
             // 5 seasons + sepcials for Breaking Bad
             assertThat(season.title).isNotNull();
             assertThat(season.network).isNotNull();
+            assertThat(season.first_aired).isNotNull();
             assertThat(season.number).isBetween(0, 5);
             assertThat(season.episode_count).isPositive();
             assertThat(season.aired_episodes).isPositive();
