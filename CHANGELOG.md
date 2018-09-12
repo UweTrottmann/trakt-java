@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.10.1
+_2018-09-12_
+
+* Add `first_aired` to `Season`. Thanks @Larsg310!
+
 ## 5.10.0
 _2018-08-08_
 
