@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 5.10.2
+_2018-09-20_
+
+* Change `SyncErrors.ids` from `List<Integer>` to `List<Long>`. Thanks @MMarco94!
+
 ## 5.10.1
 _2018-09-12_
 
