@@ -159,16 +159,16 @@ public class ShowsTest extends BaseTestCase {
     }
 
     private void assertProgress(BaseShow show) {
-        assertThat(show.aired).isGreaterThan(60);
+        assertThat(show.aired).isGreaterThan(30);
         assertThat(show.completed).isGreaterThanOrEqualTo(1);
 
-        // Breaking Bad has 5 seasons
-        assertThat(show.seasons).hasSize(5);
+        // Killjoys has 4 aired seasons
+        assertThat(show.seasons).hasSize(4);
 
         BaseSeason season = show.seasons.get(0);
         assertThat(season.number).isEqualTo(1);
         // all aired
-        assertThat(season.aired).isEqualTo(7);
+        assertThat(season.aired).isEqualTo(10);
         // always at least 1 watched
         assertThat(season.completed).isGreaterThanOrEqualTo(1);
 

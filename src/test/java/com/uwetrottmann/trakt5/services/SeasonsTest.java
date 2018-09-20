@@ -21,21 +21,22 @@ public class SeasonsTest extends BaseTestCase {
         List<Season> seasons = executeCall(getTrakt().seasons().summary(TestData.SHOW_SLUG,
         Extended.FULLEPISODES));
         assertThat(seasons).isNotNull();
-        assertThat(seasons).hasSize(6);
+        assertThat(seasons).hasSize(5);
         for (Season season : seasons) {
             assertThat(season).isNotNull();
             // must have at least trakt and tvdb id
             assertThat(season.ids.trakt).isPositive();
-            assertThat(season.ids.tvdb).isPositive();
-            // 5 seasons + sepcials for Breaking Bad
+            if (season.ids.tvdb != null) {
+                assertThat(season.ids.tvdb).isPositive();
+            }
             assertThat(season.title).isNotNull();
             assertThat(season.network).isNotNull();
-            assertThat(season.first_aired).isNotNull();
-            assertThat(season.number).isBetween(0, 5);
+            // seasons start at 0 for specials
+            assertThat(season.number).isGreaterThanOrEqualTo(0);
             assertThat(season.episode_count).isPositive();
-            assertThat(season.aired_episodes).isPositive();
+            assertThat(season.aired_episodes).isGreaterThanOrEqualTo(0);
             assertThat(season.rating).isBetween(0.0, 10.0);
-            assertThat(season.votes).isPositive();
+            assertThat(season.votes).isGreaterThanOrEqualTo(0);
             // episode details
             if (season.number == TestData.EPISODE_SEASON) {
                 assertThat(season.episodes).isNotNull();
