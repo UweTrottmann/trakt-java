@@ -74,7 +74,7 @@ public class CheckinTest extends BaseTestCase {
     private void assertEpisodeCheckin(EpisodeCheckinResponse response) {
         assertThat(response).isNotNull();
         // episode should be over in less than an hour
-        assertThat(response.watched_at.isBefore(OffsetDateTime.now().plusHours(1)));
+        assertThat(response.watched_at.isBefore(OffsetDateTime.now().plusHours(1))).isTrue();
         assertThat(response.episode).isNotNull();
         assertThat(response.episode.ids).isNotNull();
         assertThat(response.episode.ids.trakt).isEqualTo(TestData.EPISODE_TRAKT_ID);
@@ -107,7 +107,7 @@ public class CheckinTest extends BaseTestCase {
         MovieCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
         assertThat(response).isNotNull();
         // movie should be over in less than 3 hours
-        assertThat(response.watched_at.isBefore(OffsetDateTime.now().plusHours(3)));
+        assertThat(response.watched_at.isBefore(OffsetDateTime.now().plusHours(3))).isTrue();
         MoviesTest.assertTestMovie(response.movie);
 
         test_checkin_delete();
@@ -143,7 +143,7 @@ public class CheckinTest extends BaseTestCase {
         // episode check in should block until episode duration has passed
         assertThat(checkinError).isNotNull();
         assertThat(checkinError.expires_at).isNotNull();
-        assertThat(checkinError.expires_at.isBefore(OffsetDateTime.now().plusHours(1)));
+        assertThat(checkinError.expires_at.isBefore(OffsetDateTime.now().plusHours(1))).isTrue();
 
         // clean the check in
         test_checkin_delete();
