@@ -12,7 +12,7 @@ API key (OAuth client id) and optionally a given user access token.
 
 ## Usage
 
-<a href="https://search.maven.org/#search%7Cga%7C1%7Ctrakt-java">Available on Maven Central</a>
+<a href="https://search.maven.org/search?q=g:com.uwetrottmann.trakt5">Available on Maven Central</a>
 
 Add the following dependency to your Gradle project:
 
