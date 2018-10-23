@@ -8,6 +8,7 @@ public class SyncItems {
     public List<SyncMovie> movies;
     public List<SyncShow> shows;
     public List<SyncEpisode> episodes;
+    public List<SyncPerson> people;
 
     /**
      * Only supported for removing specific history items.
@@ -44,6 +45,17 @@ public class SyncItems {
 
     public SyncItems episodes(List<SyncEpisode> episodes) {
         this.episodes = episodes;
+        return this;
+    }
+
+    public SyncItems people(SyncPerson person) {
+        ArrayList<SyncPerson> list = new ArrayList<>(1);
+        list.add(person);
+        return people(list);
+    }
+
+    public SyncItems people(List<SyncPerson> people) {
+        this.people = people;
         return this;
     }
 
