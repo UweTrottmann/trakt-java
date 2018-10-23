@@ -11,6 +11,12 @@ public interface TestData {
     int MOVIE_TMDB_ID = 20526;
     int MOVIE_YEAR = 2010;
 
+    String PERSON_NAME = "Jennifer Aniston";
+    int PERSON_TRAKT_ID = 9689;
+    String PERSON_SLUG = "jennifer-aniston";
+    String PERSON_IMDB_ID = "nm0000098";
+    int PERSON_TMDB_ID = 4491;
+
     // Interstellar
     int MOVIE_WATCHED_TRAKT_ID = 102156;
 
