@@ -10,6 +10,7 @@ import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.ListEntry;
 import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.PersonIds;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
@@ -18,6 +19,7 @@ import com.uwetrottmann.trakt5.entities.Settings;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.entities.SyncPerson;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.entities.TraktList;
@@ -149,10 +151,12 @@ public class UsersTest extends BaseTestCase {
     public void test_addListItems() throws IOException {
         SyncShow show = new SyncShow().id(ShowIds.tvdb(256227));
         SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(TestData.MOVIE_TMDB_ID));
+        SyncPerson person = new SyncPerson().id(PersonIds.tmdb(TestData.PERSON_TMDB_ID));
 
         SyncItems items = new SyncItems();
         items.shows(show);
         items.movies(movie);
+        items.people(person);
 
         // add items...
         SyncResponse response = executeCall(getTrakt().users().addListItems(UserSlug.ME,
@@ -161,6 +165,7 @@ public class UsersTest extends BaseTestCase {
 
         assertThat(response.added.shows).isEqualTo(1);
         assertThat(response.added.movies).isEqualTo(1);
+        assertThat(response.added.people).isEqualTo(1);
 
         // ...and remove them again
         response = executeCall(
@@ -169,6 +174,7 @@ public class UsersTest extends BaseTestCase {
 
         assertThat(response.deleted.shows).isEqualTo(1);
         assertThat(response.deleted.movies).isEqualTo(1);
+        assertThat(response.deleted.people).isEqualTo(1);
     }
 
     @Test
@@ -247,7 +253,8 @@ public class UsersTest extends BaseTestCase {
             assertThat(entry.type).isEqualTo("episode");
             assertThat(entry.episode).isNotNull();
             assertThat(entry.show).isNotNull();
-            System.out.println("Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
+            System.out.println(
+                    "Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
         }
     }
 
