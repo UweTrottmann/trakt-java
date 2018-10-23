@@ -139,6 +139,9 @@ public class UsersTest extends BaseTestCase {
                 null));
         for (ListEntry entry : entries) {
             assertThat(entry.listed_at).isNotNull();
+            assertThat(entry.id).isNotNull();
+            assertThat(entry.rank).isNotNull();
+            assertThat(entry.type).isNotNull();
         }
     }
 
