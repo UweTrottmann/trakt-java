@@ -90,10 +90,18 @@ public class UsersTest extends BaseTestCase {
             assertThat(list.ids).isNotNull();
             assertThat(list.ids.trakt).isNotNull();
             assertThat(list.name).isNotEmpty();
+            assertThat(list.description).isNotEmpty();
+            assertThat(list.privacy).isNotNull();
+            assertThat(list.display_numbers).isNotNull();
+            assertThat(list.allow_comments).isNotNull();
+            assertThat(list.sort_by).isNotNull();
+            assertThat(list.sort_how).isNotNull();
+            assertThat(list.created_at).isNotNull();
             assertThat(list.updated_at).isNotNull();
             assertThat(list.item_count).isPositive();
             assertThat(list.comment_count).isGreaterThanOrEqualTo(0);
             assertThat(list.likes).isGreaterThanOrEqualTo(0);
+            assertThat(list.user).isNotNull();
         }
     }
 

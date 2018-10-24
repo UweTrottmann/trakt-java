@@ -10,6 +10,8 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
+import com.uwetrottmann.trakt5.enums.SortBy;
+import com.uwetrottmann.trakt5.enums.SortHow;
 import com.uwetrottmann.trakt5.enums.Status;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
@@ -66,6 +68,24 @@ public class TraktV2Helper {
             @Override
             public JsonElement serialize(Rating src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonPrimitive(src.value);
+            }
+        });
+
+        // sort by
+        builder.registerTypeAdapter(SortBy.class, new JsonDeserializer<SortBy>() {
+            @Override
+            public SortBy deserialize(JsonElement json, Type typeOfT,
+                    JsonDeserializationContext context) throws JsonParseException {
+                return SortBy.fromValue(json.getAsString());
+            }
+        });
+
+        // sort how
+        builder.registerTypeAdapter(SortHow.class, new JsonDeserializer<SortHow>() {
+            @Override
+            public SortHow deserialize(JsonElement json, Type typeOfT,
+                    JsonDeserializationContext context) throws JsonParseException {
+                return SortHow.fromValue(json.getAsString());
             }
         });
 
