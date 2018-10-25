@@ -7,6 +7,8 @@ import com.uwetrottmann.trakt5.entities.Follower;
 import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.ListEntry;
+import com.uwetrottmann.trakt5.entities.ListRanks;
+import com.uwetrottmann.trakt5.entities.ListReorderResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
@@ -166,6 +168,18 @@ public interface Users {
             @Path("username") UserSlug userSlug,
             @Path("id") String id,
             @Body SyncItems items
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Reorder all items on a list by sending the updated rank of list item ids.
+     */
+    @POST("users/{username}/lists/{id}/items/reorder")
+    Call<ListReorderResponse> reorderListItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Body ListRanks ranks
     );
 
     /**
