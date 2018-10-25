@@ -9,6 +9,8 @@ import com.uwetrottmann.trakt5.entities.Follower;
 import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.ListEntry;
+import com.uwetrottmann.trakt5.entities.ListItemRank;
+import com.uwetrottmann.trakt5.entities.ListReorderResponse;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.PersonIds;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
@@ -40,6 +42,7 @@ import retrofit2.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -183,6 +186,26 @@ public class UsersTest extends BaseTestCase {
         assertThat(response.deleted.shows).isEqualTo(1);
         assertThat(response.deleted.movies).isEqualTo(1);
         assertThat(response.deleted.people).isEqualTo(1);
+    }
+
+    @Test
+    public void test_reorderListItems() throws IOException {
+        List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
+                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                null));
+
+        // reverse order
+        List<Long> newRank = new ArrayList<>();
+        for (int i = entries.size() - 1; i >= 0; i--) {
+            newRank.add(entries.get(i).id);
+        }
+
+        ListReorderResponse response = executeCall(getTrakt().users().reorderListItems(
+                UserSlug.ME,
+                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                ListItemRank.from(newRank)
+        ));
+        assertThat(response.updated).isEqualTo(entries.size());
     }
 
     @Test
