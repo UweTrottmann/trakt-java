@@ -7,6 +7,7 @@ import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import com.uwetrottmann.trakt5.entities.ListsLastActivity;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -45,10 +46,12 @@ public class SyncTest extends BaseTestCase {
         assertLastActivityMore(lastActivities.episodes);
         assertLastActivity(lastActivities.shows);
         assertLastActivity(lastActivities.seasons);
+        assertListsLastActivity(lastActivities.lists);
     }
 
     private void assertLastActivityMore(LastActivityMore activityMore) {
         assertLastActivity(activityMore);
+        assertThat(activityMore.paused_at).isNotNull();
         assertThat(activityMore.collected_at).isNotNull();
         assertThat(activityMore.watched_at).isNotNull();
     }
@@ -58,6 +61,13 @@ public class SyncTest extends BaseTestCase {
         assertThat(activity.commented_at).isNotNull();
         assertThat(activity.rated_at).isNotNull();
         assertThat(activity.watchlisted_at).isNotNull();
+    }
+
+    private void assertListsLastActivity(ListsLastActivity activity) {
+        assertThat(activity).isNotNull();
+        assertThat(activity.commented_at).isNotNull();
+        assertThat(activity.liked_at).isNotNull();
+        assertThat(activity.updated_at).isNotNull();
     }
 
     @Test

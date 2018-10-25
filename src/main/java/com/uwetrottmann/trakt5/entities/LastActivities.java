@@ -9,5 +9,6 @@ public class LastActivities {
     public LastActivityMore episodes;
     public LastActivity shows;
     public LastActivity seasons;
+    public ListsLastActivity lists;
 
 }
