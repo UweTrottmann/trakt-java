@@ -5,5 +5,5 @@ import java.util.List;
 public class ListReorderResponse {
 
     public Integer updated;
-    public List<Integer> skipped_ids;
+    public List<Long> skipped_ids;
 }
