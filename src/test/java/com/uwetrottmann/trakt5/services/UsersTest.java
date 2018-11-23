@@ -9,7 +9,10 @@ import com.uwetrottmann.trakt5.entities.Follower;
 import com.uwetrottmann.trakt5.entities.Friend;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.ListEntry;
+import com.uwetrottmann.trakt5.entities.ListItemRank;
+import com.uwetrottmann.trakt5.entities.ListReorderResponse;
 import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.PersonIds;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
@@ -18,6 +21,7 @@ import com.uwetrottmann.trakt5.entities.Settings;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
+import com.uwetrottmann.trakt5.entities.SyncPerson;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.entities.TraktList;
@@ -38,6 +42,7 @@ import retrofit2.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -88,10 +93,18 @@ public class UsersTest extends BaseTestCase {
             assertThat(list.ids).isNotNull();
             assertThat(list.ids.trakt).isNotNull();
             assertThat(list.name).isNotEmpty();
+            assertThat(list.description).isNotEmpty();
+            assertThat(list.privacy).isNotNull();
+            assertThat(list.display_numbers).isNotNull();
+            assertThat(list.allow_comments).isNotNull();
+            assertThat(list.sort_by).isNotNull();
+            assertThat(list.sort_how).isNotNull();
+            assertThat(list.created_at).isNotNull();
             assertThat(list.updated_at).isNotNull();
             assertThat(list.item_count).isPositive();
             assertThat(list.comment_count).isGreaterThanOrEqualTo(0);
             assertThat(list.likes).isGreaterThanOrEqualTo(0);
+            assertThat(list.user).isNotNull();
         }
     }
 
@@ -139,6 +152,9 @@ public class UsersTest extends BaseTestCase {
                 null));
         for (ListEntry entry : entries) {
             assertThat(entry.listed_at).isNotNull();
+            assertThat(entry.id).isNotNull();
+            assertThat(entry.rank).isNotNull();
+            assertThat(entry.type).isNotNull();
         }
     }
 
@@ -146,10 +162,12 @@ public class UsersTest extends BaseTestCase {
     public void test_addListItems() throws IOException {
         SyncShow show = new SyncShow().id(ShowIds.tvdb(256227));
         SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(TestData.MOVIE_TMDB_ID));
+        SyncPerson person = new SyncPerson().id(PersonIds.tmdb(TestData.PERSON_TMDB_ID));
 
         SyncItems items = new SyncItems();
         items.shows(show);
         items.movies(movie);
+        items.people(person);
 
         // add items...
         SyncResponse response = executeCall(getTrakt().users().addListItems(UserSlug.ME,
@@ -158,6 +176,7 @@ public class UsersTest extends BaseTestCase {
 
         assertThat(response.added.shows).isEqualTo(1);
         assertThat(response.added.movies).isEqualTo(1);
+        assertThat(response.added.people).isEqualTo(1);
 
         // ...and remove them again
         response = executeCall(
@@ -166,6 +185,27 @@ public class UsersTest extends BaseTestCase {
 
         assertThat(response.deleted.shows).isEqualTo(1);
         assertThat(response.deleted.movies).isEqualTo(1);
+        assertThat(response.deleted.people).isEqualTo(1);
+    }
+
+    @Test
+    public void test_reorderListItems() throws IOException {
+        List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
+                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                null));
+
+        // reverse order
+        List<Long> newRank = new ArrayList<>();
+        for (int i = entries.size() - 1; i >= 0; i--) {
+            newRank.add(entries.get(i).id);
+        }
+
+        ListReorderResponse response = executeCall(getTrakt().users().reorderListItems(
+                UserSlug.ME,
+                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                ListItemRank.from(newRank)
+        ));
+        assertThat(response.updated).isEqualTo(entries.size());
     }
 
     @Test
@@ -244,7 +284,8 @@ public class UsersTest extends BaseTestCase {
             assertThat(entry.type).isEqualTo("episode");
             assertThat(entry.episode).isNotNull();
             assertThat(entry.show).isNotNull();
-            System.out.println("Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
+            System.out.println(
+                    "Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
         }
     }
 
