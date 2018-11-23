@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+## 5.11.0
+_2018-11-23_
+
+* Support reordering list items with `Users.reorderListItems()`. Thanks @MMauro94!
+* Support adding/removing people from lists with `SyncItems.people()`. Thanks @MMauro94!
+* Add `sort_by`, `sort_how`, `created_at`, `user` to `TraktList`. Thanks @MMauro94!
+* Add `id`, `rank` and `type` to `ListEntry`. Thanks @MMauro94!
+* Add list activity to `LastActivities` response. Thanks @MMauro94!
+* Update retrofit to 2.5.0.
+* Update threetenbp to 1.3.7. Android projects should update ThreeTenABP to 1.1.1.
+
 ## 5.10.2
 _2018-09-20_
 
