@@ -4,7 +4,6 @@ import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Show;
-import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
 
 import java.io.IOException;
