@@ -71,6 +71,9 @@ public class BaseTestCase {
         return trakt;
     }
 
+    /**
+     * Execute call with non-Void response body.
+     */
     public <T> T executeCall(Call<T> call) throws IOException {
         Response<T> response = call.execute();
         if (!response.isSuccessful()) {
@@ -81,6 +84,16 @@ public class BaseTestCase {
             return body;
         } else {
             throw new IllegalStateException("Body should not be null for successful response");
+        }
+    }
+
+    /**
+     * Execute call with Void response body.
+     */
+    public <T> void executeVoidCall(Call<T> call) throws IOException {
+        Response<T> response = call.execute();
+        if (!response.isSuccessful()) {
+            handleFailedResponse(response); // will throw error
         }
     }
 

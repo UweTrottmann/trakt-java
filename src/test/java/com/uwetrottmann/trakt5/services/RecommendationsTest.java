@@ -21,7 +21,7 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_dismissMovie() throws IOException {
-        executeCall(getTrakt().recommendations().dismissMovie(String.valueOf(TestData.MOVIE_TRAKT_ID)));
+        executeVoidCall(getTrakt().recommendations().dismissMovie(String.valueOf(TestData.MOVIE_TRAKT_ID)));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_dismissShow() throws IOException {
-        executeCall(getTrakt().recommendations().dismissShow(String.valueOf(TestData.SHOW_TRAKT_ID)));
+        executeVoidCall(getTrakt().recommendations().dismissShow(String.valueOf(TestData.SHOW_TRAKT_ID)));
     }
 
 }
