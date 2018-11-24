@@ -59,7 +59,7 @@ public class AuthTest extends BaseTestCase {
             return;
         }
 
-        Response<AccessToken> response = getTrakt().refreshAccessToken();
+        Response<AccessToken> response = getTrakt().refreshAccessToken(getTrakt().refreshToken());
         assertAccessTokenResponse(response);
     }
 

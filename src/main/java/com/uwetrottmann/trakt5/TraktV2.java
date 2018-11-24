@@ -52,14 +52,14 @@ public class TraktV2 {
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
 
-    private OkHttpClient okHttpClient;
-    private Retrofit retrofit;
+    @Nullable private OkHttpClient okHttpClient;
+    @Nullable private Retrofit retrofit;
 
     private String apiKey;
-    private String clientSecret;
-    private String redirectUri;
-    private String accessToken;
-    private String refreshToken;
+    @Nullable private String clientSecret;
+    @Nullable private String redirectUri;
+    @Nullable private String accessToken;
+    @Nullable private String refreshToken;
 
     /**
      * Get a new API manager instance.
@@ -87,10 +87,12 @@ public class TraktV2 {
         return apiKey;
     }
 
-    public void apiKey(String apiKey) {
+    public TraktV2 apiKey(String apiKey) {
         this.apiKey = apiKey;
+        return this;
     }
 
+    @Nullable
     public String accessToken() {
         return accessToken;
     }
@@ -102,11 +104,12 @@ public class TraktV2 {
      *
      * @param accessToken A valid access token, obtained via e.g. {@link #exchangeCodeForAccessToken(String)}.
      */
-    public TraktV2 accessToken(String accessToken) {
+    public TraktV2 accessToken(@Nullable String accessToken) {
         this.accessToken = accessToken;
         return this;
     }
 
+    @Nullable
     public String refreshToken() {
         return refreshToken;
     }
@@ -115,7 +118,7 @@ public class TraktV2 {
      * Sets the OAuth 2.0 refresh token to be used, in case the current access token has expired, to get a new access
      * token.
      */
-    public TraktV2 refreshToken(String refreshToken) {
+    public TraktV2 refreshToken(@Nullable String refreshToken) {
         this.refreshToken = refreshToken;
         return this;
     }
@@ -178,6 +181,10 @@ public class TraktV2 {
      * @param state State variable to prevent request forgery attacks.
      */
     public String buildAuthorizationUrl(String state) {
+        if (redirectUri == null) {
+            throw new IllegalStateException("redirectUri not provided");
+        }
+
         @SuppressWarnings("StringBufferReplaceableByString")
         StringBuilder authUrl = new StringBuilder(OAUTH2_AUTHORIZATION_URL);
         authUrl.append("?").append("response_type=code");
@@ -207,6 +214,13 @@ public class TraktV2 {
      * @param authCode A valid authorization code (see {@link #buildAuthorizationUrl(String)}).
      */
     public Response<AccessToken> exchangeCodeForAccessToken(String authCode) throws IOException {
+        if (clientSecret == null) {
+            throw new IllegalStateException("clientSecret not provided");
+        }
+        if (redirectUri == null) {
+            throw new IllegalStateException("redirectUri not provided");
+        }
+
         return authentication().exchangeCodeForAccessToken(
                 "authorization_code",
                 authCode,
@@ -225,10 +239,17 @@ public class TraktV2 {
      *
      * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
      */
-    public Response<AccessToken> refreshAccessToken() throws IOException {
+    public Response<AccessToken> refreshAccessToken(String refreshToken) throws IOException {
+        if (clientSecret == null) {
+            throw new IllegalStateException("clientSecret not provided");
+        }
+        if (redirectUri == null) {
+            throw new IllegalStateException("redirectUri not provided");
+        }
+
         return authentication().refreshAccessToken(
                 "refresh_token",
-                refreshToken(),
+                refreshToken,
                 apiKey(),
                 clientSecret,
                 redirectUri
@@ -244,7 +265,7 @@ public class TraktV2 {
             return null; // only code 409 can be a check-in error
         }
         Converter<ResponseBody, CheckinError> errorConverter =
-                retrofit.responseBodyConverter(CheckinError.class, new Annotation[0]);
+                retrofit().responseBodyConverter(CheckinError.class, new Annotation[0]);
         try {
             //noinspection ConstantConditions never null if unsuccessful
             return errorConverter.convert(response.errorBody());
@@ -262,7 +283,7 @@ public class TraktV2 {
             return null;
         }
         Converter<ResponseBody, TraktError> errorConverter =
-                retrofit.responseBodyConverter(TraktError.class, new Annotation[0]);
+                retrofit().responseBodyConverter(TraktError.class, new Annotation[0]);
         try {
             //noinspection ConstantConditions never null if unsuccessful
             return errorConverter.convert(response.errorBody());

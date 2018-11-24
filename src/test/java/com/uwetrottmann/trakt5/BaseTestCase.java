@@ -18,8 +18,6 @@ import org.junit.BeforeClass;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
 
@@ -75,12 +73,15 @@ public class BaseTestCase {
 
     public <T> T executeCall(Call<T> call) throws IOException {
         Response<T> response = call.execute();
-        if (response.isSuccessful()) {
-            return response.body();
-        } else {
-            handleFailedResponse(response);
+        if (!response.isSuccessful()) {
+            handleFailedResponse(response); // will throw error
         }
-        return null;
+        T body = response.body();
+        if (body != null) {
+            return body;
+        } else {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
     }
 
     public void assertSuccessfulResponse(Response response) {

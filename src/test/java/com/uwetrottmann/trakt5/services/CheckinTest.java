@@ -18,6 +18,7 @@ import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import javax.annotation.Nonnull;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,12 +30,11 @@ public class CheckinTest extends BaseTestCase {
     private static final String APP_VERSION = "trakt-java-4";
     private static final String APP_DATE = "2014-10-15";
 
+    @Nonnull
     @Override
-    public <T> T executeCall(Call<T> call) throws IOException {
+    public <T> T executeCall(@Nonnull Call<T> call) throws IOException {
         Response<T> response = call.execute();
-        if (response.isSuccessful()) {
-            return response.body();
-        } else {
+        if (!response.isSuccessful()) {
             if (getTrakt().checkForCheckinError(response) != null) {
                 fail("Check-in still in progress, may be left over from failed test");
             } else if (response.code() == 401) {
@@ -44,7 +44,12 @@ public class CheckinTest extends BaseTestCase {
                 fail("Request failed: " + response.code() + " " + response.message());
             }
         }
-        return null;
+        T body = response.body();
+        if (body != null) {
+            return body;
+        } else {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
     }
 
     @Test
