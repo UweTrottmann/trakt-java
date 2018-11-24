@@ -11,7 +11,7 @@ public enum ListPrivacy implements TraktEnum {
 
     public final String value;
 
-    private ListPrivacy(String value) {
+    ListPrivacy(String value) {
         this.value = value;
     }
 

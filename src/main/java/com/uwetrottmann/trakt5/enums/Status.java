@@ -1,6 +1,7 @@
 package com.uwetrottmann.trakt5.enums;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public enum Status implements TraktEnum {
@@ -12,7 +13,7 @@ public enum Status implements TraktEnum {
 
     private final String value;
 
-    private Status(String value) {
+    Status(String value) {
         this.value = value;
     }
 
@@ -20,12 +21,12 @@ public enum Status implements TraktEnum {
 
     static {
         for (Status via : Status.values()) {
-            STRING_MAPPING.put(via.toString().toUpperCase(), via);
+            STRING_MAPPING.put(via.toString().toUpperCase(Locale.ROOT), via);
         }
     }
 
     public static Status fromValue(String value) {
-        return STRING_MAPPING.get(value.toUpperCase());
+        return STRING_MAPPING.get(value.toUpperCase(Locale.ROOT));
     }
 
     @Override

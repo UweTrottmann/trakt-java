@@ -15,7 +15,7 @@ public enum Rating implements TraktEnum {
 
     public int value;
 
-    private Rating(int value) {
+    Rating(int value) {
         this.value = value;
     }
 

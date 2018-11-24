@@ -10,7 +10,7 @@ public enum Type implements TraktEnum {
 
     private final String value;
 
-    private Type(String value) {
+    Type(String value) {
         this.value = value;
     }
 

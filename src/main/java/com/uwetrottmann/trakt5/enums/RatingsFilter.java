@@ -15,7 +15,7 @@ public enum RatingsFilter implements TraktEnum {
 
     private final String value;
 
-    private RatingsFilter(String value) {
+    RatingsFilter(String value) {
         this.value = value;
     }
 
