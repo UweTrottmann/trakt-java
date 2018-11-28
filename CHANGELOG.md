@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+## 6.0.0
+_2018-11-28_
+
+* Produce Java 8 bytecode. For Android this requires Android Gradle Plugin 3.2.x or newer.
+* For the root package (this specifically excludes entity classes) return values and fields are now non-null unless 
+  otherwise annotated.
+* `TraktV2.refreshAccessToken(refreshToken)` requires explicitly passing the refresh token.
+* `buildAuthorizationUrl()`, `exchangeCodeForAccessToken()` and `refreshAccessToken()` now check for required values.
+
 ## 5.11.0
 _2018-11-23_
 
