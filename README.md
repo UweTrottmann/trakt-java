@@ -31,6 +31,8 @@ Or for Maven:
 ```
 
 ### Android
+This library ships Java 8 bytecode. This requires Android Gradle Plugin 3.2.x or newer.
+
 This library depends on [threetenbp](https://github.com/ThreeTen/threetenbp). To avoid 
 [issues on Android](https://github.com/JakeWharton/ThreeTenABP#why-not-use-threetenbp) you should exclude this 
 dependency and include [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP) instead:
