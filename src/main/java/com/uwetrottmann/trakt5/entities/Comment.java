@@ -7,10 +7,13 @@ public class Comment {
     public Integer id;
     public Integer parent_id;
     public OffsetDateTime created_at;
+    public OffsetDateTime updated_at;
     public String comment;
     public Boolean spoiler;
     public Boolean review;
     public Integer replies;
+    public Integer likes;
+    public Integer user_rating;
     public User user;
 
     // for posting
