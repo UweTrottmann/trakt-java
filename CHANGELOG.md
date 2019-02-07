@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## 6.1.0
+_2019-02-07_
+
+* Add `updated_at`, `likes` and `user_rating` to `Comment`. Thanks @MMauro94!
+  https://github.com/UweTrottmann/trakt-java/pull/105
+* For the `com.uwetrottmann.trakt5.entities` package return values and fields are now annotated nullable.
+
 ## 6.0.0
 _2018-11-28_
 

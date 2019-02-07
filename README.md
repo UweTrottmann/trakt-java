@@ -17,7 +17,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```groovy
-implementation 'com.uwetrottmann.trakt5:trakt-java:6.0.0'
+implementation 'com.uwetrottmann.trakt5:trakt-java:6.1.0'
 ```
 
 Or for Maven:
@@ -26,7 +26,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>6.0.0</version>
+  <version>6.1.0</version>
 </dependency>
 ```
 
