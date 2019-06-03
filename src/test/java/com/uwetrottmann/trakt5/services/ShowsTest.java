@@ -155,6 +155,7 @@ public class ShowsTest extends BaseTestCase {
     private void assertWatchedProgress(BaseShow show) {
         assertThat(show).isNotNull();
         assertThat(show.last_watched_at).isNotNull();
+        assertThat(show.last_updated_at).isNotNull();
         assertProgress(show);
     }
 
