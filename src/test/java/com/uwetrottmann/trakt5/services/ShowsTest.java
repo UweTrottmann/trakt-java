@@ -45,6 +45,7 @@ public class ShowsTest extends BaseTestCase {
     }
 
     private void assertShowNotNull(Show show) {
+        assertThat(show).isNotNull();
         assertThat(show.title).isNotEmpty();
         assertThat(show.ids).isNotNull();
         assertThat(show.ids.trakt).isNotNull();
@@ -151,6 +152,7 @@ public class ShowsTest extends BaseTestCase {
         assertThat(show.completed).isGreaterThanOrEqualTo(1);
 
         // Killjoys has 4 aired seasons
+        assertThat(show.seasons).isNotNull();
         assertThat(show.seasons).hasSize(4);
 
         BaseSeason season = show.seasons.get(0);
@@ -161,6 +163,7 @@ public class ShowsTest extends BaseTestCase {
         assertThat(season.completed).isGreaterThanOrEqualTo(1);
 
         // episode 1 should always be watched
+        assertThat(season.episodes).isNotNull();
         BaseEpisode episode = season.episodes.get(0);
         assertThat(episode.number).isEqualTo(1);
         assertThat(episode.completed).isTrue();
