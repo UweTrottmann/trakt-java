@@ -18,6 +18,7 @@ public class BaseShow {
     /** watched */
     public Integer plays;
     public OffsetDateTime last_watched_at;
+    public OffsetDateTime last_updated_at;
     /** progress */
     public Integer aired;
     public Integer completed;

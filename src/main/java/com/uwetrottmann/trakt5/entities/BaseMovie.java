@@ -8,6 +8,7 @@ public class BaseMovie {
 
     public OffsetDateTime collected_at;
     public OffsetDateTime last_watched_at;
+    public OffsetDateTime last_updated_at;
     public OffsetDateTime listed_at;
     public int plays;
 

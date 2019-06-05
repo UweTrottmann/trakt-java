@@ -150,6 +150,7 @@ public class BaseTestCase {
                 case "watched":
                     assertThat(movie.plays).isPositive();
                     assertThat(movie.last_watched_at).isNotNull();
+                    assertThat(movie.last_updated_at).isNotNull();
                     break;
                 case "watchlist":
                     assertThat(movie.listed_at).isNotNull();
@@ -166,6 +167,7 @@ public class BaseTestCase {
             } else if ("watched".equals(type)) {
                 assertThat(show.plays).isPositive();
                 assertThat(show.last_watched_at).isNotNull();
+                assertThat(show.last_updated_at).isNotNull();
             }
 
             for (BaseSeason season : show.seasons) {
