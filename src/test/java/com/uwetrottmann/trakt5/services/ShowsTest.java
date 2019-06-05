@@ -124,38 +124,25 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_collected_progress() throws IOException {
-        BaseShow show = executeCall(getTrakt().shows().collectedProgress(TestData.SHOW_SLUG, null, null,
-                null));
-        assertCollectedProgress(show);
-    }
+        BaseShow show = executeCall(getTrakt()
+                .shows()
+                .collectedProgress(TestData.SHOW_SLUG, null, null, null)
+        );
 
-    @Test
-    public void test_watched_progress() throws IOException {
-        BaseShow show = executeCall(getTrakt().shows().watchedProgress(TestData.SHOW_SLUG, null, null,
-                null));
-        assertWatchedProgress(show);
-    }
-
-    @Test
-    public void test_related() throws IOException {
-        List<Show> related = executeCall(getTrakt().shows().related(TestData.SHOW_SLUG, 1, null, null));
-        assertThat(related).isNotNull();
-        assertThat(related.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
-        for (Show show : related) {
-            assertShowNotNull(show);
-        }
-    }
-
-    private void assertCollectedProgress(BaseShow show) {
         assertThat(show).isNotNull();
         assertThat(show.last_collected_at).isNotNull();
         assertProgress(show);
     }
 
-    private void assertWatchedProgress(BaseShow show) {
+    @Test
+    public void test_watched_progress() throws IOException {
+        BaseShow show = executeCall(getTrakt()
+                .shows()
+                .watchedProgress(TestData.SHOW_SLUG, null, null, null)
+        );
+
         assertThat(show).isNotNull();
         assertThat(show.last_watched_at).isNotNull();
-        assertThat(show.last_updated_at).isNotNull();
         assertProgress(show);
     }
 
@@ -177,6 +164,16 @@ public class ShowsTest extends BaseTestCase {
         BaseEpisode episode = season.episodes.get(0);
         assertThat(episode.number).isEqualTo(1);
         assertThat(episode.completed).isTrue();
+    }
+
+    @Test
+    public void test_related() throws IOException {
+        List<Show> related = executeCall(getTrakt().shows().related(TestData.SHOW_SLUG, 1, null, null));
+        assertThat(related).isNotNull();
+        assertThat(related.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+        for (Show show : related) {
+            assertShowNotNull(show);
+        }
     }
 
 }
