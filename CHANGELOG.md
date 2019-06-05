@@ -2,6 +2,13 @@ Change Log
 ==========
 
 ## 6.1.0
+_2019-06-05_
+
+* Add `last_updated_at` returned by `sync().watchedMovies()` and `sync().watchedShows()`. Thanks @chrisbanes!
+  https://github.com/UweTrottmann/trakt-java/pull/106
+* Update threetenbp [1.3.7 -> 1.4.0].
+
+## 6.1.0
 _2019-02-07_
 
 * Add `updated_at`, `likes` and `user_rating` to `Comment`. Thanks @MMauro94!
