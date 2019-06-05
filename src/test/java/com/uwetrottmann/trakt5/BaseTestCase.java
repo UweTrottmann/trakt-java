@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.fail;
 public class BaseTestCase {
 
     protected static final String TEST_CLIENT_ID = "35a671df22d3d98b09aab1c0bc52977e902e696a7704cab94f4d12c2672041e4";
-    public static final String TEST_ACCESS_TOKEN = "3d0b1e1a0b7bf0925e16c45ccbcaa55a1b70757735fabf2f56aa7f8e6cfcde57"; // "sgtest" on production
+    public static final String TEST_ACCESS_TOKEN = "54295176f4e671866d40e5de2ebd94c25573596720dbc1d1e21df36fe7b023e8"; // "sgtest" on production
 
     private static final boolean DEBUG = true;
 
