@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-## 6.1.0
+## 6.2.0
 _2019-06-05_
 
 * Add `last_updated_at` returned by `sync().watchedMovies()` and `sync().watchedShows()`. Thanks @chrisbanes!
