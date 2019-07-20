@@ -151,9 +151,9 @@ public class ShowsTest extends BaseTestCase {
         assertThat(show.aired).isGreaterThan(30);
         assertThat(show.completed).isGreaterThanOrEqualTo(1);
 
-        // Killjoys has 4 aired seasons
+        // Killjoys has 5 aired seasons
         assertThat(show.seasons).isNotNull();
-        assertThat(show.seasons).hasSize(4);
+        assertThat(show.seasons).hasSize(5);
 
         BaseSeason season = show.seasons.get(0);
         assertThat(season.number).isEqualTo(1);
