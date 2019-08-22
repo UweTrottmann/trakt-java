@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 6.3.0
+_2019-08-22_
+
+* In `Recommendations` `movies` and `shows` now have a page and limit parameter. Thanks @chrisbanes!
+* Update retrofit [2.5.0 -> 2.6.1].
+
 ## 6.2.0
 _2019-06-05_
 
