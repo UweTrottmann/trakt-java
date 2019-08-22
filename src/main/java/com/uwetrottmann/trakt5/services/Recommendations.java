@@ -17,9 +17,14 @@ public interface Recommendations {
      * <b>OAuth Required</b>
      *
      * <p> Personalized movie recommendations for a user. Results returned with the top recommendation first.
+     *
+     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("recommendations/movies")
     Call<List<Movie>> movies(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -39,9 +44,14 @@ public interface Recommendations {
      * <b>OAuth Required</b>
      *
      * <p> Personalized show recommendations for a user. Results returned with the top recommendation first.
+     *
+     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("recommendations/shows")
     Call<List<Show>> shows(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

@@ -15,8 +15,17 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_movies() throws IOException {
-        List<Movie> movies = executeCall(getTrakt().recommendations().movies(null));
+        List<Movie> movies = executeCall(getTrakt().recommendations().movies(null, null, null));
         assertThat(movies).isNotEmpty();
+    }
+
+    @Test
+    public void test_movies_pages() throws IOException {
+        List<Movie> movies1 = executeCall(getTrakt().recommendations().movies(1, 5, null));
+        assertThat(movies1).isNotEmpty();
+
+        List<Movie> movies2 = executeCall(getTrakt().recommendations().movies(2, 5, null));
+        assertThat(movies2).isNotEmpty().isNotEqualTo(movies1);
     }
 
     @Test
@@ -26,8 +35,17 @@ public class RecommendationsTest extends BaseTestCase {
 
     @Test
     public void test_shows() throws IOException {
-        List<Show> shows = executeCall(getTrakt().recommendations().shows(null));
+        List<Show> shows = executeCall(getTrakt().recommendations().shows(null, null, null));
         assertThat(shows).isNotEmpty();
+    }
+
+    @Test
+    public void test_shows_pages() throws IOException {
+        List<Show> shows1 = executeCall(getTrakt().recommendations().shows(1, 5, null));
+        assertThat(shows1).isNotEmpty();
+
+        List<Show> shows2 = executeCall(getTrakt().recommendations().shows(2, 5, null));
+        assertThat(shows2).isNotEmpty().isNotEqualTo(shows1);
     }
 
     @Test
