@@ -17,6 +17,8 @@ import com.uwetrottmann.trakt5.services.Seasons;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
+import com.uwetrottmann.trakt5.services.Scrobble;
+
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -371,6 +373,8 @@ public class TraktV2 {
     public Sync sync() {
         return retrofit().create(Sync.class);
     }
+
+    public Scrobble scrobble() { return retrofit().create(Scrobble.class); }
 
     public Users users() {
         return retrofit().create(Users.class);

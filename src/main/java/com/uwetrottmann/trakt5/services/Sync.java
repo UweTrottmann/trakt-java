@@ -2,7 +2,9 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.GenericProgress;
 import com.uwetrottmann.trakt5.entities.LastActivities;
+import com.uwetrottmann.trakt5.entities.Progress;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
@@ -89,6 +91,14 @@ public interface Sync {
     Call<List<BaseMovie>> watchedMovies(
             @Query(value = "extended", encoded = true) Extended extended
     );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all playbacks;
+     */
+    @GET("sync/playback")
+    Call<List<GenericProgress>> getPlayback();
 
     /**
      * <b>OAuth Required</b>
