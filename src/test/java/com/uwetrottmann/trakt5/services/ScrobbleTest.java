@@ -2,23 +2,14 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
-import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
-import com.uwetrottmann.trakt5.entities.EpisodeProgress;
 import com.uwetrottmann.trakt5.entities.GenericProgress;
-import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.MovieIds;
-import com.uwetrottmann.trakt5.entities.Ratings;
-import com.uwetrottmann.trakt5.entities.ShowIds;
-import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
-import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScrobbleTest extends BaseTestCase {
 
