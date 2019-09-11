@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.GenericProgress;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
@@ -47,6 +48,28 @@ public class SyncTest extends BaseTestCase {
         assertLastActivity(lastActivities.shows);
         assertLastActivity(lastActivities.seasons);
         assertListsLastActivity(lastActivities.lists);
+    }
+
+    @Test
+    public void test_getPlayback() throws IOException {
+        List<GenericProgress> playbacks = executeCall(getTrakt().sync().getPlayback());
+        assertThat(playbacks).isNotNull();
+        for (GenericProgress playback : playbacks) {
+            assertThat(playback.type).isNotNull();
+            assertThat(playback.progress).isGreaterThanOrEqualTo( (float) 0.0);
+            assertThat(playback.progress).isLessThanOrEqualTo( (float) 100.0);
+            switch(playback.type) {
+                case "episode":
+                    assertThat(playback.episode).isNotNull();
+                    break;
+                case "movie":
+                    assertThat(playback.movie).isNotNull();
+                    break;
+                case "show":
+                    assertThat(playback.show).isNotNull();
+                    break;
+            }
+        }
     }
 
     private void assertLastActivityMore(LastActivityMore activityMore) {
