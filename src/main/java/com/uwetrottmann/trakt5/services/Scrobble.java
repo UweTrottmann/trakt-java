@@ -1,7 +1,7 @@
 package com.uwetrottmann.trakt5.services;
 
-import com.uwetrottmann.trakt5.entities.GenericProgress;
-
+import com.uwetrottmann.trakt5.entities.PlaybackResponse;
+import com.uwetrottmann.trakt5.entities.ScrobbleProgress;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -13,8 +13,8 @@ public interface Scrobble {
      * <p> User starts a video
      */
     @POST("scrobble/start")
-    Call<Void> startWatching(
-            @Body GenericProgress prog
+    Call<PlaybackResponse> startWatching(
+            @Body ScrobbleProgress prog
     );
 
     /**
@@ -23,8 +23,8 @@ public interface Scrobble {
      * <p> User pauses a video
      */
     @POST("scrobble/pause")
-    Call<Void> pauseWatching(
-            @Body GenericProgress prog
+    Call<PlaybackResponse> pauseWatching(
+            @Body ScrobbleProgress prog
     );
 
 	/**
@@ -33,8 +33,8 @@ public interface Scrobble {
      * <p> User stops a video
      */
     @POST("scrobble/stop")
-    Call<Void> stopWatching(
-            @Body GenericProgress prog
+    Call<PlaybackResponse> stopWatching(
+            @Body ScrobbleProgress prog
     );
 
 }

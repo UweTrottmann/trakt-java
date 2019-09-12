@@ -3,52 +3,69 @@ package com.uwetrottmann.trakt5.services;
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
-import com.uwetrottmann.trakt5.entities.GenericProgress;
 import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.PlaybackResponse;
+import com.uwetrottmann.trakt5.entities.ScrobbleProgress;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncMovie;
 import org.junit.Test;
 
 import java.io.IOException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class ScrobbleTest extends BaseTestCase {
 
-    private GenericProgress genEpisodeProgress() {
-        float progress = (float) 10.0;
-        GenericProgress episodeProgress = new GenericProgress();
-        episodeProgress.progress = progress;
-        SyncEpisode episode = new SyncEpisode();
-        episode.ids = EpisodeIds.tvdb(TestData.EPISODE_TVDB_ID);
-        episodeProgress.episode = episode;
-        return episodeProgress;
+    private ScrobbleProgress genEpisodeProgress(double progress) {
+        // Use a different episode than for other tests to avoid conflicts.
+        SyncEpisode episode = new SyncEpisode().id( EpisodeIds.tvdb(4647887)); /* Agents of Shield S01E02 */
+        return new ScrobbleProgress(episode, progress, null, null);
     }
 
-    private GenericProgress genMovieProgress() {
-        float progress = (float) 10.0;
-        GenericProgress movieProgress = new GenericProgress();
-        movieProgress.progress = progress;
-        SyncMovie movie = new SyncMovie();
-        movie.ids = MovieIds.tmdb(TestData.MOVIE_TMDB_ID);
-        movieProgress.movie = movie;
-        return movieProgress;
+    private ScrobbleProgress genMovieProgress(double progress) {
+        // Use a different movie than for other tests to avoid conflicts.
+        SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(333339)); /* Ready Player One */
+        return new ScrobbleProgress(movie, progress, null, null);
     }
 
     @Test
-    public void startWatching() throws IOException {
-        executeCall(getTrakt().scrobble().startWatching(genEpisodeProgress()));
-        executeCall(getTrakt().scrobble().startWatching(genMovieProgress()));
+    public void scrobble_episode() throws IOException, InterruptedException {
+        PlaybackResponse playbackResponse = executeCall(getTrakt().scrobble().startWatching(genEpisodeProgress(20.0)));
+        assertThat(playbackResponse.action).isEqualTo("start");
+
+        // Give the server some time to process the request.
+        Thread.sleep(1500);
+
+        playbackResponse = executeCall(getTrakt().scrobble().pauseWatching(genEpisodeProgress(50.0)));
+        assertThat(playbackResponse.action).isEqualTo("pause");
+
+        // Give the server some time to process the request.
+        Thread.sleep(1500);
+
+        playbackResponse = executeCall(getTrakt().scrobble().stopWatching(genEpisodeProgress(75.0)));
+        // Above 80% progress action is "scrobble", below "pause".
+        // Pause to avoid blocking the next test until the episode runtime has passed.
+        assertThat(playbackResponse.action).isEqualTo("pause");
     }
 
     @Test
-    public void stopWatching() throws IOException {
-        executeCall(getTrakt().scrobble().stopWatching(genEpisodeProgress()));
-        executeCall(getTrakt().scrobble().stopWatching(genMovieProgress()));
-    }
+    public void scrobble_movie() throws IOException, InterruptedException {
+        PlaybackResponse playbackResponse = executeCall(getTrakt().scrobble().startWatching(genMovieProgress(20.0)));
+        assertThat(playbackResponse.action).isEqualTo("start");
 
-    @Test
-    public void pauseWatching() throws IOException {
-        executeCall(getTrakt().scrobble().pauseWatching(genEpisodeProgress()));
-        executeCall(getTrakt().scrobble().pauseWatching(genMovieProgress()));
+        // Give the server some time to process the request.
+        Thread.sleep(1500);
+
+        playbackResponse = executeCall(getTrakt().scrobble().pauseWatching(genMovieProgress(50.0)));
+        assertThat(playbackResponse.action).isEqualTo("pause");
+
+        // Give the server some time to process the request.
+        Thread.sleep(1500);
+
+        playbackResponse = executeCall(getTrakt().scrobble().stopWatching(genMovieProgress(75.0)));
+        // Above 80% progress action is "scrobble", below "pause".
+        // Pause to avoid blocking the next test until the movie runtime has passed.
+        assertThat(playbackResponse.action).isEqualTo("pause");
     }
 
 }
