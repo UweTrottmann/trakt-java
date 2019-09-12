@@ -3,6 +3,7 @@ package com.uwetrottmann.trakt5.services;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.LastActivities;
+import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
@@ -88,6 +89,36 @@ public interface Sync {
     @GET("sync/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
             @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all playbacks;
+     */
+    @GET("sync/playback")
+    Call<List<PlaybackResponse>> getPlayback(
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all playbacks;
+     */
+    @GET("sync/playback/episodes")
+    Call<List<PlaybackResponse>> getPlaybackEpisodes(
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all playbacks;
+     */
+    @GET("sync/playback/movies")
+    Call<List<PlaybackResponse>> getPlaybackMovies(
+            @Query("limit") Integer limit
     );
 
     /**

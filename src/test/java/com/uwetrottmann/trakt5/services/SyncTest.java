@@ -4,15 +4,18 @@ import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.EpisodeIds;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
 import com.uwetrottmann.trakt5.entities.ListsLastActivity;
 import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
 import com.uwetrottmann.trakt5.entities.RatedShow;
+import com.uwetrottmann.trakt5.entities.ScrobbleProgress;
 import com.uwetrottmann.trakt5.entities.ShowIds;
 import com.uwetrottmann.trakt5.entities.SyncEpisode;
 import com.uwetrottmann.trakt5.entities.SyncItems;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class SyncTest extends BaseTestCase {
 
@@ -47,6 +51,56 @@ public class SyncTest extends BaseTestCase {
         assertLastActivity(lastActivities.shows);
         assertLastActivity(lastActivities.seasons);
         assertListsLastActivity(lastActivities.lists);
+    }
+
+    @Test
+    public void test_getPlayback() throws IOException, InterruptedException {
+        // Make sure there are paused entries.
+        int agentsOfShield = 4420028; /* S01E01 */
+        SyncEpisode episode = new SyncEpisode().id(EpisodeIds.tvdb(agentsOfShield));
+        ScrobbleProgress episodeProgress = new ScrobbleProgress(episode, 25.0, null, null);
+        PlaybackResponse episodeResponse = executeCall(getTrakt().scrobble().pauseWatching(episodeProgress));
+        assertThat(episodeResponse.action).isEqualTo("pause");
+
+        // Give the server some time to process the request.
+        Thread.sleep(1500);
+
+        int interstellar = 157336;
+        SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(157336));
+        ScrobbleProgress movieProgress = new ScrobbleProgress(movie, 32.0, null, null);
+        PlaybackResponse movieResponse = executeCall(getTrakt().scrobble().pauseWatching(movieProgress));
+        assertThat(movieResponse.action).isEqualTo("pause");
+
+        // Give the server some time to process the request.
+        Thread.sleep(1500);
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlayback(10));
+        assertThat(playbacks).isNotNull();
+        boolean foundEpisode = false;
+        boolean foundMovie = false;
+
+        for (PlaybackResponse playback : playbacks) {
+            assertThat(playback.type).isNotNull();
+
+            if (playback.episode != null && playback.episode.ids != null && playback.episode.ids.tvdb != null
+                    && playback.episode.ids.tvdb == agentsOfShield) {
+                foundEpisode = true;
+                assertThat(playback.paused_at).isNotNull();
+                assertThat(playback.progress).isEqualTo(25.0);
+            }
+            
+            if (playback.movie != null && playback.movie.ids != null && playback.movie.ids.tmdb != null
+                    && playback.movie.ids.tmdb == interstellar) {
+                foundMovie = true;
+                assertThat(playback.paused_at).isNotNull();
+                assertThat(playback.progress).isEqualTo(32.0);
+            }
+        }
+
+        if (!foundEpisode) //noinspection ResultOfMethodCallIgnored
+            fail("Agents of Shield episode not paused.");
+        if (!foundMovie) //noinspection ResultOfMethodCallIgnored
+            fail("Interstellar movie not paused.");
     }
 
     private void assertLastActivityMore(LastActivityMore activityMore) {
