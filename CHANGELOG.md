@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 6.4.0
+_2019-09-12_
+
+* Support scrobble methods and getting playback progress. Thanks @courville!
+
 ## 6.3.0
 _2019-08-22_
 
