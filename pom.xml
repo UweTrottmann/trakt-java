@@ -63,6 +63,14 @@
             <artifactId>converter-gson</artifactId>
             <version>2.7.1</version>
         </dependency>
+
+        <dependency>
+            <scope>compile</scope>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.threeten</groupId>
             <artifactId>threetenbp</artifactId>
@@ -82,21 +90,21 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-        
-        
-    <dependency>
-<scope>test</scope>
-<groupId>org.assertj</groupId>
-<artifactId>assertj-core</artifactId>
-<version>3.14.0</version>
-</dependency>
-<dependency>
-<scope>test</scope>
-<groupId>com.squareup.okhttp3</groupId>
-<artifactId>logging-interceptor</artifactId>
-<version>4.2.2</version>
-</dependency>
-</dependencies>
+
+
+        <dependency>
+            <scope>test</scope>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+        <dependency>
+            <scope>test</scope>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>logging-interceptor</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+    </dependencies>
 
     <distributionManagement>
         <snapshotRepository>
