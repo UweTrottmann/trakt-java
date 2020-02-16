@@ -9,6 +9,7 @@ import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ProgressLastActivity;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -102,15 +103,33 @@ public interface Shows {
      * <p>By default, any hidden seasons will be removed from the response and stats. To include these and adjust the
      * completion stats, set the {@code hidden} flag to {@code true}.
      *
+     * <p>By default, specials will be excluded from the response. Set the {@code specials} flag to {@code true} to
+     * include season 0 and adjust the stats accordingly. If you'd like to include specials, but not adjust the stats,
+     * set {@code count_specials} to {@code false}.
+     *
+     * <p>By default, the {@code last_episode} and {@code next_episode} are calculated using the last {@code aired}
+     * episode the user has collected, even if they've collected older episodes more recently. To use their last
+     * collected episode for these calculations, set the {@code last_activity} flag to {@code collected}.
+     *
+     * <b>Note:</b>
+     *
+     * <p>Only aired episodes are used to calculate progress. Episodes in the future or without an air date are ignored.
+     *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param hidden Include any hidden seasons.
      * @param specials Include specials as season 0.
+     * @param countSpecials Count specials in the overall stats (only applies if specials are included)
+     * @param lastActivity By default, the last_episode and next_episode are calculated using the last aired episode the
+     * user has watched, even if they've watched older episodes more recently. To use their last watched episode for
+     * these calculations, set the last_activity flag to collected or watched respectively.
      */
     @GET("shows/{id}/progress/collection")
     Call<BaseShow> collectedProgress(
             @Path("id") String showId,
             @Query("hidden") Boolean hidden,
             @Query("specials") Boolean specials,
+            @Query("count_specials") Boolean countSpecials,
+            @Query("last_activity") ProgressLastActivity lastActivity,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -119,19 +138,39 @@ public interface Shows {
      *
      * Returns watched progress for show including details on all seasons and episodes. The {@code next_episode} will be
      * the next episode the user should watch, if there are no upcoming episodes it will be set to {@code null}.
+     * If not {@code null}, the {@code reset_at} date is when the user started re-watching the show. Your app can adjust
+     * the progress by ignoring episodes with a {@code last_watched_at} prior to the {@code reset_at}.
      *
      * <p>By default, any hidden seasons will be removed from the response and stats. To include these and adjust the
      * completion stats, set the {@code hidden} flag to {@code true}.
      *
+     * <p>By default, specials will be excluded from the response. Set the {@code specials} flag to {@code true} to
+     * include season 0 and adjust the stats accordingly. If you'd like to include specials, but not adjust the stats,
+     * set {@code count_specials} to {@code false}.
+     *
+     * <p>By default, the {@code last_episode} and {@code next_episode} are calculated using the last {@code aired}
+     * episode the user has watched, even if they've watched older episodes more recently. To use their last watched
+     * episode for these calculations, set the {@code last_activity} flag to {@code watched}.
+     *
+     * <b>Note:</b>
+     *
+     * <p>Only aired episodes are used to calculate progress. Episodes in the future or without an air date are ignored.
+     *
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param hidden Include any hidden seasons.
      * @param specials Include specials as season 0.
+     * @param countSpecials Count specials in the overall stats (only applies if specials are included)
+     * @param lastActivity By default, the last_episode and next_episode are calculated using the last aired episode the
+     * user has watched, even if they've watched older episodes more recently. To use their last watched episode for
+     * these calculations, set the last_activity flag to collected or watched respectively.
      */
     @GET("shows/{id}/progress/watched")
     Call<BaseShow> watchedProgress(
             @Path("id") String showId,
             @Query("hidden") Boolean hidden,
             @Query("specials") Boolean specials,
+            @Query("count_specials") Boolean countSpecials,
+            @Query("last_activity") ProgressLastActivity lastActivity,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
