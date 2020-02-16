@@ -7,5 +7,6 @@ public class AccessToken {
     public Integer expires_in;
     public String refresh_token;
     public String scope;
+    public Integer created_at;
 
 }

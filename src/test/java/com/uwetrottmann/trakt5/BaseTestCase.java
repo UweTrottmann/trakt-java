@@ -244,6 +244,8 @@ public class BaseTestCase {
         assertSuccessfulResponse(response);
         assertThat(response.body().access_token).isNotEmpty();
         assertThat(response.body().refresh_token).isNotEmpty();
+        assertThat(response.body().created_at).isPositive();
+        assertThat(response.body().expires_in).isPositive();
 
         System.out.println("Retrieved access token: " + response.body().access_token);
         System.out.println("Retrieved refresh token: " + response.body().refresh_token);
