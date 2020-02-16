@@ -2,6 +2,9 @@ package com.uwetrottmann.trakt5;
 
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.CheckinError;
+import com.uwetrottmann.trakt5.entities.ClientId;
+import com.uwetrottmann.trakt5.entities.DeviceCode;
+import com.uwetrottmann.trakt5.entities.DeviceCodeAccessTokenRequest;
 import com.uwetrottmann.trakt5.entities.TraktError;
 import com.uwetrottmann.trakt5.services.Authentication;
 import com.uwetrottmann.trakt5.services.Calendars;
@@ -46,6 +49,8 @@ public class TraktV2 {
 
     public static final String SITE_URL = "https://trakt.tv";
     public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
+    public static final String OAUTH2_DEVICE_CODE_URL = API_URL + "oauth/device/code";
+    public static final String OAUTH2_DEVICE_TOKEN_URL = API_URL + "oauth/device/token";
     public static final String OAUTH2_TOKEN_URL = SITE_URL + "/oauth/token";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
@@ -203,6 +208,40 @@ public class TraktV2 {
         } catch (UnsupportedEncodingException e) {
             throw new UnsupportedOperationException(e);
         }
+    }
+
+    /**
+     * Request a code to start the device authentication process from trakt.
+     *
+     * The {@code device_code} and {@code interval} will be used later to poll for the {@code access_token}.
+     * The {@code user_code} and {@code verification_url} should be presented to the user.
+     */
+    public Response<DeviceCode> generateDeviceCode() throws IOException {
+        ClientId clientId = new ClientId();
+        clientId.client_id = apiKey;
+        return authentication().generateDeviceCode(clientId).execute();
+    }
+
+    /**
+     * Request an access token from trakt using device authentication.
+     *
+     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
+     * the access token once it has expired.
+     *
+     * <p>On failure re-authorization of your app is required (see {@link #generateDeviceCode()}).
+     *
+     * @param deviceCode A valid device code (see {@link #generateDeviceCode()}).
+     */
+    public Response<AccessToken> exchangeDeviceCodeForAccessToken(String deviceCode) throws IOException {
+        if (clientSecret == null) {
+            throw new IllegalStateException("clientSecret not provided");
+        }
+
+        DeviceCodeAccessTokenRequest request = new DeviceCodeAccessTokenRequest();
+        request.client_id = apiKey;
+        request.client_secret = clientSecret;
+        request.code = deviceCode;
+        return authentication().exchangeDeviceCodeForAccessToken(request).execute();
     }
 
     /**
