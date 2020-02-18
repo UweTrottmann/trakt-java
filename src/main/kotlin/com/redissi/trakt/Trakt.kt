@@ -3,11 +3,13 @@ package com.redissi.trakt
 import com.uwetrottmann.trakt5.entities.AccessToken
 import com.uwetrottmann.trakt5.entities.CheckinError
 import com.uwetrottmann.trakt5.entities.TraktError
+import com.redissi.trakt.services.Movies
 import com.uwetrottmann.trakt5.services.*
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -80,9 +82,10 @@ open class Trakt(
      *
      * @see [okHttpClient]
      */
-    protected fun retrofitBuilder(): Retrofit.Builder {
+    protected open fun retrofitBuilder(): Retrofit.Builder {
         return Retrofit.Builder()
                 .baseUrl(getApiUrl(staging))
+                .addConverterFactory(MoshiConverterFactory.create(TraktHelper.moshiBuilder.build()))
                 .addConverterFactory(GsonConverterFactory.create(TraktHelper.gsonBuilder.create()))
                 .client(okHttpClient)
     }
@@ -90,7 +93,7 @@ open class Trakt(
     /**
      * Adds a network interceptor to add version and auth headers and a regular interceptor to log requests.
      */
-    protected fun setOkHttpClientDefaults(builder: OkHttpClient.Builder) {
+    protected open fun setOkHttpClientDefaults(builder: OkHttpClient.Builder) {
         builder.addNetworkInterceptor(TraktInterceptor(this))
         builder.authenticator(TraktAuthenticator(this))
     }
