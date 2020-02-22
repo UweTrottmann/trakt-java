@@ -42,6 +42,7 @@ abstract class BaseTestCase {
         const val DEFAULT_PAGE_SIZE = 10
 
         @BeforeClass
+        @JvmStatic
         fun setUpOnce() {
             trakt.accessToken(TEST_ACCESS_TOKEN)
         }
