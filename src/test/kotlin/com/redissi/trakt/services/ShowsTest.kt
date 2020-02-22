@@ -146,13 +146,13 @@ class ShowsTest : BaseTestCase(), TestCrew, TestShowStats, TestRatings, TestCast
     private fun assertProgress(show: BaseShow) {
         show.aired.shouldNotBeNull().shouldBeGreaterThan(1)
         show.completed.shouldNotBeNull().shouldBeGreaterOrEqualTo(1)
-        // Killjoys has 5 aired seasons
+        // Breaking Bad has 5 aired seasons
         show.seasons.shouldNotBeNull()
         show.seasons!!.size.shouldBeGreaterOrEqualTo(3)
         val season = show.seasons!![0]
-        season.number.shouldNotBeNull().shouldBe(1)
+        season.number.shouldNotBeNull().shouldBeEqualTo(1)
         // all aired
-        season.aired.shouldNotBeNull().shouldBe(10)
+        season.aired.shouldNotBeNull().shouldBeEqualTo(7)
         // always at least 1 watched
         season.completed.shouldNotBeNull().shouldBeGreaterOrEqualTo(1)
         // episode 1 should always be watched

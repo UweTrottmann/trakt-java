@@ -3,6 +3,7 @@ package com.redissi.trakt
 import com.uwetrottmann.trakt5.entities.AccessToken
 import com.uwetrottmann.trakt5.entities.CheckinError
 import com.uwetrottmann.trakt5.entities.TraktError
+import com.redissi.trakt.services.Episodes
 import com.redissi.trakt.services.Movies
 import com.redissi.trakt.services.Shows
 import com.uwetrottmann.trakt5.services.*
