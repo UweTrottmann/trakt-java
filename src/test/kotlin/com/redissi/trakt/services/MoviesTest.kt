@@ -1,7 +1,6 @@
 package com.redissi.trakt.services
 
-import com.redissi.trakt.BaseTestCase
-import com.redissi.trakt.TestData
+import com.redissi.trakt.*
 import com.redissi.trakt.entities.Movie
 import com.redissi.trakt.enums.Extended
 import com.redissi.trakt.enums.Type
@@ -10,7 +9,7 @@ import org.amshove.kluent.*
 import org.junit.Test
 import java.io.IOException
 
-class MoviesTest : BaseTestCase() {
+class MoviesTest : BaseTestCase(), TestCrew, TestStats, TestCast, TestRatings {
     @Test
     @Throws(IOException::class)
     fun `get popular movies`() = runBlocking {

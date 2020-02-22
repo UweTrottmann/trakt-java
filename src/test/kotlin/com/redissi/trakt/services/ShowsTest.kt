@@ -1,7 +1,6 @@
 package com.redissi.trakt.services
 
-import com.redissi.trakt.BaseTestCase
-import com.redissi.trakt.TestData
+import com.redissi.trakt.*
 import com.redissi.trakt.entities.BaseShow
 import com.redissi.trakt.entities.Show
 import com.redissi.trakt.enums.Extended
@@ -11,7 +10,7 @@ import org.amshove.kluent.*
 import org.junit.Test
 import java.io.IOException
 
-class ShowsTest : BaseTestCase() {
+class ShowsTest : BaseTestCase(), TestCrew, TestShowStats, TestRatings, TestCast {
     @Test
     @Throws(IOException::class)
     fun `get popular shows`() = runBlocking {
