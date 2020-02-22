@@ -1,11 +1,16 @@
 package com.redissi.trakt.enums
 
+import com.squareup.moshi.Json
 import java.util.*
 
 enum class Status(private val value: String) : TraktEnum {
+    @Json(name = "ended")
     ENDED("ended"),
+    @Json(name = "returning series")
     RETURNING("returning series"),
+    @Json(name = "canceled")
     CANCELED("canceled"),
+    @Json(name = "in production")
     IN_PRODUCTION("in production");
 
     companion object {

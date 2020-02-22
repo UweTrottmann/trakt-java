@@ -4,7 +4,7 @@ import com.uwetrottmann.trakt5.entities.UserSlug
 
 object TestData {
     const val MOVIE_TITLE = "TRON: Legacy"
-    const val MOVIE_TRAKT_ID = 12601
+    const val MOVIE_TRAKT_ID = 343
     const val MOVIE_SLUG = "tron-legacy-2010"
     const val MOVIE_IMDB_ID = "tt1104001"
     const val MOVIE_TMDB_ID = 20526
@@ -17,7 +17,7 @@ object TestData {
     // Interstellar
     const val MOVIE_WATCHED_TRAKT_ID = 102156
     const val SHOW_TITLE = "Killjoys"
-    const val SHOW_TRAKT_ID = 77712
+    const val SHOW_TRAKT_ID = 2887
     const val SHOW_SLUG = "killjoys"
     const val SHOW_IMDB_ID = "tt3952222"
     const val SHOW_TMDB_ID = 62413

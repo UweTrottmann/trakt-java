@@ -4,6 +4,7 @@ import com.uwetrottmann.trakt5.entities.AccessToken
 import com.uwetrottmann.trakt5.entities.CheckinError
 import com.uwetrottmann.trakt5.entities.TraktError
 import com.redissi.trakt.services.Movies
+import com.redissi.trakt.services.Shows
 import com.uwetrottmann.trakt5.services.*
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -300,7 +301,7 @@ open class Trakt(
 
     companion object {
         fun getApiHost(staging: Boolean = false): String {
-            return if (staging) "staging.api.trakt.tv" else "api.trakt.tv"
+            return if (staging) "api-staging.trakt.tv" else "api.trakt.tv"
         }
 
         fun getApiUrl(staging: Boolean = false): String {

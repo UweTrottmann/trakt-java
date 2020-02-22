@@ -14,9 +14,9 @@ import java.io.IOException
 
 abstract class BaseTestCase {
     internal class TestTrakt : Trakt {
-        constructor(apiKey: String) : super(apiKey)
+        constructor(apiKey: String) : super(apiKey, staging = true)
         constructor(apiKey: String, clientSecret: String?, redirectUri: String?)
-                : super(apiKey, clientSecret, redirectUri)
+                : super(apiKey, clientSecret, redirectUri, true)
 
         override fun setOkHttpClientDefaults(builder: OkHttpClient.Builder) {
             super.setOkHttpClientDefaults(builder)
@@ -173,8 +173,8 @@ abstract class BaseTestCase {
     }
 
     companion object {
-        protected const val TEST_CLIENT_ID = "35a671df22d3d98b09aab1c0bc52977e902e696a7704cab94f4d12c2672041e4"
-        const val TEST_ACCESS_TOKEN = "695b0a5e7e9800f5ddc6b9b4379182e5943f7937c66c4c5de77c151222d59ce7" // "sgtest" on production
+        protected val TEST_CLIENT_ID = System.getProperty("TRAKT_CLIENT_ID") ?: fail("No TEST_CLIENT_ID")
+        val TEST_ACCESS_TOKEN = System.getProperty("TRAKT_ACCESS_TOKEN") ?: fail("No TEST_CLIENT_ID")
 
         private val trakt = TestTrakt(TEST_CLIENT_ID)
 
