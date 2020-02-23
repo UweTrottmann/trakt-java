@@ -2,6 +2,8 @@ package com.redissi.trakt
 
 import com.redissi.trakt.entities.*
 import com.redissi.trakt.enums.Type
+import com.redissi.trakt.services.Authentication
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.amshove.kluent.*
@@ -10,13 +12,14 @@ import org.assertj.core.api.Assertions.fail
 import org.junit.BeforeClass
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.create
 import java.io.IOException
 
 abstract class BaseTestCase {
     internal class TestTrakt : Trakt {
         constructor(apiKey: String) : super(apiKey, staging = true)
         constructor(apiKey: String, clientSecret: String?, redirectUri: String?)
-                : super(apiKey, clientSecret, redirectUri, true)
+                : super(apiKey, clientSecret, redirectUri, staging = true)
 
         override fun setOkHttpClientDefaults(builder: OkHttpClient.Builder) {
             super.setOkHttpClientDefaults(builder)
@@ -29,12 +32,16 @@ abstract class BaseTestCase {
             logging.level = HttpLoggingInterceptor.Level.BODY
             builder.addNetworkInterceptor(logging)
         }
+
+        override fun authentication(): Authentication {
+            return retrofit.create<StagingAuthentication>()
+        }
     }
 
-    protected val trakt: Trakt = BaseTestCase.trakt
+    protected open val trakt: Trakt = BaseTestCase.trakt
 
     companion object {
-        protected val TEST_CLIENT_ID = System.getProperty("TRAKT_CLIENT_ID") ?: fail("No TEST_CLIENT_ID")
+        val TEST_CLIENT_ID = System.getProperty("TRAKT_CLIENT_ID") ?: fail("No TEST_CLIENT_ID")
         val TEST_ACCESS_TOKEN = System.getProperty("TRAKT_ACCESS_TOKEN") ?: fail("No TEST_CLIENT_ID")
 
         private val trakt = TestTrakt(TEST_CLIENT_ID)

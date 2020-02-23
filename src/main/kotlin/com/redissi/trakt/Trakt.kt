@@ -1,8 +1,9 @@
 package com.redissi.trakt
 
-import com.uwetrottmann.trakt5.entities.AccessToken
+import com.redissi.trakt.entities.AccessToken
 import com.uwetrottmann.trakt5.entities.CheckinError
 import com.uwetrottmann.trakt5.entities.TraktError
+import com.redissi.trakt.services.Authentication
 import com.redissi.trakt.services.Comments
 import com.redissi.trakt.services.Episodes
 import com.redissi.trakt.services.Genres
@@ -119,7 +120,7 @@ open class Trakt(
      */
     fun buildAuthorizationUrl(state: String): String {
         checkNotNull(redirectUri) { "redirectUri not provided" }
-        val authUrl = StringBuilder(OAUTH2_AUTHORIZATION_URL)
+        val authUrl = StringBuilder(getOauth2AuthorizationUrl(staging))
         authUrl.append("?").append("response_type=code")
         authUrl.append("&").append("redirect_uri=").append(urlEncode(redirectUri))
         authUrl.append("&").append("state=").append(urlEncode(state))
@@ -147,8 +148,7 @@ open class Trakt(
      *
      * @param authCode A valid authorization code (see [.buildAuthorizationUrl]).
      */
-    @Throws(IOException::class)
-    fun exchangeCodeForAccessToken(authCode: String?): Response<AccessToken> {
+    suspend fun exchangeCodeForAccessToken(authCode: String?): Response<AccessToken> {
         checkNotNull(clientSecret) { "clientSecret not provided" }
         checkNotNull(redirectUri) { "redirectUri not provided" }
         return authentication().exchangeCodeForAccessToken(
@@ -157,7 +157,7 @@ open class Trakt(
                 apiKey,
                 clientSecret,
                 redirectUri
-        ).execute()
+        )
     }
 
     /**
@@ -171,8 +171,7 @@ open class Trakt(
      *
      * On failure re-authorization of your app is required (see [buildAuthorizationUrl]).
      */
-    @Throws(IOException::class)
-    fun refreshAccessToken(refreshToken: String?): Response<AccessToken> {
+    suspend fun refreshAccessToken(refreshToken: String?): Response<AccessToken> {
         checkNotNull(clientSecret) { "clientSecret not provided" }
         checkNotNull(redirectUri) { "redirectUri not provided" }
         return authentication().refreshAccessToken(
@@ -181,7 +180,7 @@ open class Trakt(
                 apiKey,
                 clientSecret,
                 redirectUri
-        ).execute()
+        )
     }
 
     /**
@@ -216,7 +215,7 @@ open class Trakt(
         }
     }
 
-    fun authentication(): Authentication {
+    internal open fun authentication(): Authentication {
         return retrofit.create(Authentication::class.java)
     }
 
@@ -313,10 +312,19 @@ open class Trakt(
             return "https://${getApiHost(staging)}/"
         }
 
+        fun getSiteUrl(staging: Boolean = false): String {
+            return if (staging) "https://staging.trakt.tv" else "https://trakt.tv"
+        }
+
+        fun getOauth2AuthorizationUrl(staging: Boolean = false): String {
+            return "${getSiteUrl(staging)}/oauth/authorize"
+        }
+
         const val API_VERSION = "2"
         const val SITE_URL = "https://trakt.tv"
-        const val OAUTH2_AUTHORIZATION_URL = "$SITE_URL/oauth/authorize"
+        private const val SITE_URL_STAGING = "https://staging.trakt.tv"
         const val OAUTH2_TOKEN_URL = "$SITE_URL/oauth/token"
+        internal const val OAUTH2_TOKEN_URL_STAGING = "$SITE_URL_STAGING/oauth/token"
         const val HEADER_AUTHORIZATION = "Authorization"
         const val HEADER_CONTENT_TYPE = "Content-Type"
         const val CONTENT_TYPE_JSON = "application/json"
