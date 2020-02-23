@@ -11,6 +11,7 @@ import com.redissi.trakt.services.Episodes
 import com.redissi.trakt.services.Genres
 import com.redissi.trakt.services.Movies
 import com.redissi.trakt.services.People
+import com.redissi.trakt.services.Recommendations
 import com.redissi.trakt.services.Seasons
 import com.redissi.trakt.services.Shows
 import com.uwetrottmann.trakt5.services.*
