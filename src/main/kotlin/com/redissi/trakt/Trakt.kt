@@ -5,6 +5,7 @@ import com.uwetrottmann.trakt5.entities.CheckinError
 import com.uwetrottmann.trakt5.entities.TraktError
 import com.redissi.trakt.services.Authentication
 import com.redissi.trakt.services.Comments
+import com.redissi.trakt.services.Calendars
 import com.redissi.trakt.services.Episodes
 import com.redissi.trakt.services.Genres
 import com.redissi.trakt.services.Movies
