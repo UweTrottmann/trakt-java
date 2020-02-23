@@ -9,7 +9,7 @@ import org.amshove.kluent.*
 import org.junit.Test
 import java.io.IOException
 
-class MoviesTest : BaseTestCase(), TestCrew, TestStats, TestCast, TestRatings {
+class MoviesTest : BaseTestCase(), TestCrew, TestStats, TestCast, TestRatings, TestMovie {
     @Test
     @Throws(IOException::class)
     fun `get popular movies`() = runBlocking {
@@ -108,18 +108,5 @@ class MoviesTest : BaseTestCase(), TestCrew, TestStats, TestCast, TestRatings {
         val stats = trakt.movies().stats(TestData.MOVIE_SLUG)
         stats.shouldNotBeNull()
         assertStats(stats)
-    }
-
-    companion object {
-        fun assertTestMovie(movie: Movie) {
-            movie.shouldNotBeNull()
-            movie.ids.shouldNotBeNull()
-            movie.title.shouldBeEqualTo(TestData.MOVIE_TITLE)
-            movie.year.shouldBeEqualTo(TestData.MOVIE_YEAR)
-            movie.ids!!.trakt.shouldBeEqualTo(TestData.MOVIE_TRAKT_ID)
-            movie.ids!!.slug.shouldBeEqualTo(TestData.MOVIE_SLUG)
-            movie.ids!!.imdb.shouldBeEqualTo(TestData.MOVIE_IMDB_ID)
-            movie.ids!!.tmdb.shouldBeEqualTo(TestData.MOVIE_TMDB_ID)
-        }
     }
 }

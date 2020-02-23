@@ -1,19 +1,13 @@
 package com.redissi.trakt
 
 import com.redissi.trakt.entities.*
-import com.redissi.trakt.enums.Type
 import com.redissi.trakt.services.Authentication
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.amshove.kluent.*
-import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.fail
 import org.junit.BeforeClass
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.create
-import java.io.IOException
 
 abstract class BaseTestCase {
     internal class TestTrakt : Trakt {
@@ -44,7 +38,7 @@ abstract class BaseTestCase {
         val TEST_CLIENT_ID = System.getProperty("TRAKT_CLIENT_ID") ?: fail("No TEST_CLIENT_ID")
         val TEST_ACCESS_TOKEN = System.getProperty("TRAKT_ACCESS_TOKEN") ?: fail("No TEST_CLIENT_ID")
 
-        private val trakt = TestTrakt(TEST_CLIENT_ID)
+        internal val trakt = TestTrakt(TEST_CLIENT_ID)
 
         const val DEFAULT_PAGE_SIZE = 10
 

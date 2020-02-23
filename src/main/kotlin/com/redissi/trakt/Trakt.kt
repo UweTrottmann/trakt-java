@@ -1,9 +1,10 @@
 package com.redissi.trakt
 
 import com.redissi.trakt.entities.AccessToken
-import com.uwetrottmann.trakt5.entities.CheckinError
+import com.redissi.trakt.entities.CheckinError
 import com.uwetrottmann.trakt5.entities.TraktError
 import com.redissi.trakt.services.Authentication
+import com.redissi.trakt.services.Checkin
 import com.redissi.trakt.services.Comments
 import com.redissi.trakt.services.Calendars
 import com.redissi.trakt.services.Episodes
