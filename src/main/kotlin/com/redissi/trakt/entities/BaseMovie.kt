@@ -1,8 +1,10 @@
 package com.redissi.trakt.entities
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.time.OffsetDateTime
 
+@JsonClass(generateAdapter = true)
 class BaseMovie(
     val movie: Movie? = null,
     @Json(name = "collected_at")

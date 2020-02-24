@@ -16,6 +16,7 @@ import com.redissi.trakt.services.Scrobble
 import com.redissi.trakt.services.Search
 import com.redissi.trakt.services.Seasons
 import com.redissi.trakt.services.Shows
+import com.redissi.trakt.services.Sync
 import com.uwetrottmann.trakt5.services.*
 import okhttp3.OkHttpClient
 import retrofit2.Response

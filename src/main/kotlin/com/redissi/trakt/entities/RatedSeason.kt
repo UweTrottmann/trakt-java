@@ -6,8 +6,9 @@ import com.squareup.moshi.JsonClass
 import java.time.OffsetDateTime
 
 @JsonClass(generateAdapter = true)
-open class BaseRatedEntity(
+class RatedSeason(
     @Json(name = "rated_at")
-    val ratedAt: OffsetDateTime? = null,
-    val rating: Rating? = null
-)
+    ratedAt: OffsetDateTime? = null,
+    rating: Rating? = null,
+    val season: Season? = null
+) : RatedShow(ratedAt, rating)

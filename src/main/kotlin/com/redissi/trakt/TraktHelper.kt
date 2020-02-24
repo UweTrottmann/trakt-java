@@ -3,6 +3,7 @@ package com.redissi.trakt
 import com.google.gson.*
 import com.redissi.moshi.adapter.iso8601.jdk8.LocalDateAdapter
 import com.redissi.moshi.adapter.iso8601.jdk8.OffsetDateTimeAdapter
+import com.redissi.trakt.internal.RatingAdapter
 import com.squareup.moshi.Moshi
 import com.uwetrottmann.trakt5.enums.*
 import org.threeten.bp.LocalDate
@@ -12,8 +13,9 @@ import java.lang.reflect.Type
 object TraktHelper {
 
     val moshiBuilder: Moshi.Builder = Moshi.Builder()
-            .add(OffsetDateTimeAdapter())
-            .add(LocalDateAdapter())
+        .add(RatingAdapter())
+        .add(OffsetDateTimeAdapter())
+        .add(LocalDateAdapter())
 
     // trakt exclusively uses ISO 8601 date times with milliseconds and time zone offset
 // such as '2011-12-03T10:15:30.000+01:00' or '2011-12-03T10:15:30.000Z'

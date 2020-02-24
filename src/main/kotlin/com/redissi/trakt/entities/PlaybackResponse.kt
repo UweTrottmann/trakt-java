@@ -1,5 +1,6 @@
 package com.redissi.trakt.entities
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.time.OffsetDateTime
 
@@ -11,7 +12,8 @@ class PlaybackResponse(
     override val progress: Double? = null,
     val id: Long? = null,
     /** Playpack response only.  */
-    val paused_at: OffsetDateTime? = null,
+    @Json(name = "paused_at")
+    val pausedAt: OffsetDateTime? = null,
     /** Playpack response only.  */
     val type: String? = null,
     /** Scrobble response only.  */

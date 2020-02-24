@@ -47,58 +47,5 @@ abstract class BaseTestCase {
         fun setUpOnce() {
             trakt.accessToken(TEST_ACCESS_TOKEN)
         }
-
-        protected fun <T : BaseRatedEntity> assertRatedEntities(ratedEntities: List<T>) {
-            for (ratedEntity in ratedEntities) {
-                ratedEntity.ratedAt.shouldNotBeNull()
-                ratedEntity.rating.shouldNotBeNull()
-            }
-        }
-
-        protected fun assertSyncMovies(baseMovies: List<BaseMovie>, type: String?) {
-            for (baseMovie in baseMovies) {
-                baseMovie.movie.shouldNotBeNull()
-                when (type) {
-                    "collection" -> baseMovie.collectedAt.shouldNotBeNull()
-                    "watched" -> {
-                        baseMovie.plays.shouldBePositive()
-                        baseMovie.lastWatchedAt.shouldNotBeNull()
-                        baseMovie.lastUpdatedAt.shouldNotBeNull()
-                    }
-                    "watchlist" -> baseMovie.listedAt.shouldNotBeNull()
-                }
-            }
-        }
-
-        protected fun assertSyncShows(baseShows: List<BaseShow>, type: String) {
-            for (baseShow in baseShows) {
-                baseShow.show.shouldNotBeNull()
-                if ("collection" == type) {
-                    baseShow.lastCollectedAt.shouldNotBeNull()
-                } else if ("watched" == type) {
-                    baseShow.plays.shouldNotBeNull()
-                            .shouldBePositive()
-                    baseShow.lastWatchedAt.shouldNotBeNull()
-                    baseShow.lastUpdatedAt.shouldNotBeNull()
-                }
-                baseShow.seasons.shouldNotBeNull()
-                for (season in baseShow.seasons!!) {
-                    season.number.shouldNotBeNull()
-                            .shouldBeGreaterOrEqualTo(0)
-                    season.episodes.shouldNotBeNull()
-                    for (episode in season.episodes!!) {
-                        episode.number.shouldNotBeNull()
-                                .shouldBeGreaterOrEqualTo(0)
-                        if ("collection" == type) {
-                            episode.collectedAt.shouldNotBeNull()
-                        } else if ("watched" == type) {
-                            episode.plays.shouldNotBeNull()
-                                    .shouldBePositive()
-                            episode.lastWatchedAt.shouldNotBeNull()
-                        }
-                    }
-                }
-            }
-        }
     }
 }
