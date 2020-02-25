@@ -1,6 +1,6 @@
 package com.redissi.trakt
 
-import com.uwetrottmann.trakt5.entities.TraktError
+import com.redissi.trakt.entities.TraktError
 import org.assertj.core.api.Assertions
 import retrofit2.Response
 

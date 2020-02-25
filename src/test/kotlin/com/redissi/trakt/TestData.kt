@@ -1,6 +1,6 @@
 package com.redissi.trakt
 
-import com.uwetrottmann.trakt5.entities.UserSlug
+import com.redissi.trakt.entities.UserSlug
 
 object TestData {
     const val MOVIE_TITLE = "TRON: Legacy"
@@ -14,8 +14,8 @@ object TestData {
     const val PERSON_SLUG = "jennifer-aniston"
     const val PERSON_IMDB_ID = "nm0000098"
     const val PERSON_TMDB_ID = 4491
-    // Interstellar
-    const val MOVIE_WATCHED_TRAKT_ID = 102156
+    // Back to the Future
+    const val MOVIE_WATCHED_TRAKT_ID = 308
     const val SHOW_TITLE = "Breaking Bad"
     const val SHOW_TRAKT_ID = 1
     const val SHOW_SLUG = "breaking-bad"
@@ -35,5 +35,5 @@ object TestData {
     const val USERNAME_STRING = "sean"
     val USER_SLUG = UserSlug("sean")
     const val USER_REAL_NAME = "Sean Rudford"
-    const val USER_TO_FOLLOW = "aeonmckay"
+    const val USER_TO_FOLLOW = "uwe"
 }

@@ -2,26 +2,11 @@ package com.redissi.trakt
 
 import com.redissi.trakt.entities.AccessToken
 import com.redissi.trakt.entities.CheckinError
-import com.uwetrottmann.trakt5.entities.TraktError
-import com.redissi.trakt.services.Authentication
-import com.redissi.trakt.services.Checkin
-import com.redissi.trakt.services.Comments
-import com.redissi.trakt.services.Calendars
-import com.redissi.trakt.services.Episodes
-import com.redissi.trakt.services.Genres
-import com.redissi.trakt.services.Movies
-import com.redissi.trakt.services.People
-import com.redissi.trakt.services.Recommendations
-import com.redissi.trakt.services.Scrobble
-import com.redissi.trakt.services.Search
-import com.redissi.trakt.services.Seasons
-import com.redissi.trakt.services.Shows
-import com.redissi.trakt.services.Sync
-import com.uwetrottmann.trakt5.services.*
+import com.redissi.trakt.entities.TraktError
+import com.redissi.trakt.services.*
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 import java.io.UnsupportedEncodingException
@@ -99,7 +84,6 @@ open class Trakt(
         return Retrofit.Builder()
                 .baseUrl(getApiUrl(staging))
                 .addConverterFactory(MoshiConverterFactory.create(TraktHelper.moshiBuilder.build()))
-                .addConverterFactory(GsonConverterFactory.create(TraktHelper.gsonBuilder.create()))
                 .client(okHttpClient)
     }
 

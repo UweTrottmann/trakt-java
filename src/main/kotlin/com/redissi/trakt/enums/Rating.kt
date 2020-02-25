@@ -1,8 +1,5 @@
 package com.redissi.trakt.enums
 
-import com.squareup.moshi.Json
-import com.uwetrottmann.trakt5.enums.TraktEnum
-
 enum class Rating(var value: Int) : TraktEnum {
     WEAKSAUCE(1),
     TERRIBLE(2),

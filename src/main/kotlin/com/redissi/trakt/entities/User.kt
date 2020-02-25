@@ -26,7 +26,7 @@ class User(
     val images: Images? = null
 ) {
     @JsonClass(generateAdapter = true)
-    class UserIds {
+    class UserIds(
         val slug: String? = null
-    }
+    )
 }
