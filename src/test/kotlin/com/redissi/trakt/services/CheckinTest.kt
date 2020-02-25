@@ -9,13 +9,13 @@ import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBeEqualTo
 import org.amshove.kluent.shouldBeTrue
 import org.amshove.kluent.shouldNotBeNull
-import org.assertj.core.api.Assertions
 import org.junit.After
 import org.junit.Test
 import retrofit2.Response
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.time.OffsetDateTime
+import kotlin.test.fail
 
 class CheckinTest : BaseTestCase(), TestResponse, TestMovie {
 
@@ -80,13 +80,13 @@ class CheckinTest : BaseTestCase(), TestResponse, TestMovie {
         val movieCheckin = buildMovieCheckin()
         val responseBlocked = checkin.checkin(movieCheckin)
         if (responseBlocked.code() == 401) {
-            Assertions.fail<Any>(
+            fail(
                 "Authorization required, supply a valid OAuth access token: "
                         + responseBlocked.code() + " " + responseBlocked.message()
             )
         }
         if (responseBlocked.code() != 409) {
-            Assertions.fail<Any>("Check-in was not blocked")
+            fail("Check-in was not blocked")
         }
         val checkinError = trakt.checkForCheckinError(responseBlocked)
         // episode check in should block until episode duration has passed

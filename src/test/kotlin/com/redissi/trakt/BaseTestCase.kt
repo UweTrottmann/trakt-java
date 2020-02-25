@@ -1,13 +1,11 @@
 package com.redissi.trakt
 
-import com.redissi.trakt.entities.*
 import com.redissi.trakt.services.Authentication
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.amshove.kluent.*
-import org.assertj.core.api.Assertions.fail
 import org.junit.BeforeClass
 import retrofit2.create
+import kotlin.test.fail
 
 abstract class BaseTestCase {
     internal class TestTrakt : Trakt {

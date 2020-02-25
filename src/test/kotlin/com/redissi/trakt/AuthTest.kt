@@ -6,12 +6,12 @@ import org.amshove.kluent.shouldNotBeNull
 import org.amshove.kluent.shouldNotBeNullOrEmpty
 import org.amshove.kluent.shouldNotContain
 import org.amshove.kluent.shouldStartWith
-import org.assertj.core.api.Assertions
 import org.junit.Test
 import retrofit2.Response
 import java.io.IOException
 import java.math.BigInteger
 import java.security.SecureRandom
+import kotlin.test.fail
 
 /**
  * This test should NOT be run with the regular test suite. It requires a valid, temporary (!) auth code to be set.
@@ -67,7 +67,7 @@ class AuthTest : BaseTestCase(), TestResponse {
     }
 
     companion object {
-        private val TEST_CLIENT_SECRET = System.getProperty("TRAKT_CLIENT_SECRET") ?: Assertions.fail("No TRAKT_CLIENT_SECRET")
+        private val TEST_CLIENT_SECRET = System.getProperty("TRAKT_CLIENT_SECRET") ?: fail("No TRAKT_CLIENT_SECRET")
         private val TEST_AUTH_CODE = System.getProperty("TRAKT_AUTH_CODE")
         private val TEST_REFRESH_TOKEN = System.getProperty("TRAKT_REFRESH_TOKEN")
         private const val TEST_REDIRECT_URI = "http://localhost"

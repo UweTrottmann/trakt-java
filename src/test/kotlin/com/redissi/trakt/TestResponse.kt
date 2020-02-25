@@ -1,8 +1,8 @@
 package com.redissi.trakt
 
 import com.redissi.trakt.entities.TraktError
-import org.assertj.core.api.Assertions
 import retrofit2.Response
+import kotlin.test.fail
 
 interface TestResponse {
 
@@ -14,9 +14,9 @@ interface TestResponse {
 
     private fun handleFailedResponse(response: Response<*>, trakt: Trakt) {
         if (response.code() == 401) {
-            Assertions.fail<Any>(
+            fail(
                 "Authorization required, supply a valid OAuth access token: "
-                        + response.code() + " " + response.message()
+                    + response.code() + " " + response.message()
             )
         } else {
             var message = "Request failed: " + response.code() + " " + response.message()
@@ -24,7 +24,7 @@ interface TestResponse {
             if (error?.message != null) {
                 message += " message: " + error.message
             }
-            Assertions.fail<Any>(message)
+            fail(message)
         }
     }
 

@@ -2,19 +2,14 @@ package com.redissi.trakt.services
 
 import com.redissi.trakt.BaseTestCase
 import com.redissi.trakt.TestData
-import com.redissi.trakt.entities.Movie
-import com.redissi.trakt.entities.Person
 import com.redissi.trakt.entities.SearchResult
-import com.redissi.trakt.entities.Show
 import com.redissi.trakt.enums.Extended
 import com.redissi.trakt.enums.IdType
 import com.redissi.trakt.enums.Type
 import kotlinx.coroutines.runBlocking
-import org.amshove.kluent.shouldBePositive
 import org.amshove.kluent.shouldHaveSize
 import org.amshove.kluent.shouldNotBeEmpty
 import org.amshove.kluent.shouldNotBeNull
-import org.assertj.core.api.Assertions
 import org.junit.Test
 import java.io.IOException
 
