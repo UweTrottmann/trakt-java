@@ -1,5 +1,6 @@
 package com.uwetrottmann.trakt5;
 
+import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.BaseEpisode;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseRatedEntity;
@@ -237,6 +238,19 @@ public class BaseTestCase {
                 assertThat(crewMember.person).isNotNull();
             }
         }
+    }
+
+    protected void assertAccessTokenResponse(Response<AccessToken> response) {
+        assertSuccessfulResponse(response);
+        assertThat(response.body().access_token).isNotEmpty();
+        assertThat(response.body().refresh_token).isNotEmpty();
+        assertThat(response.body().created_at).isPositive();
+        assertThat(response.body().expires_in).isPositive();
+
+        System.out.println("Retrieved access token: " + response.body().access_token);
+        System.out.println("Retrieved refresh token: " + response.body().refresh_token);
+        System.out.println("Retrieved scope: " + response.body().scope);
+        System.out.println("Retrieved expires in: " + response.body().expires_in + " seconds");
     }
 
 }

@@ -63,15 +63,4 @@ public class AuthTest extends BaseTestCase {
         assertAccessTokenResponse(response);
     }
 
-    private void assertAccessTokenResponse(Response<AccessToken> response) {
-        assertSuccessfulResponse(response);
-        assertThat(response.body().access_token).isNotEmpty();
-        assertThat(response.body().refresh_token).isNotEmpty();
-
-        System.out.println("Retrieved access token: " + response.body().access_token);
-        System.out.println("Retrieved refresh token: " + response.body().refresh_token);
-        System.out.println("Retrieved scope: " + response.body().scope);
-        System.out.println("Retrieved expires in: " + response.body().expires_in + " seconds");
-    }
-
 }
