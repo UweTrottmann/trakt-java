@@ -44,15 +44,16 @@
 
     <dependencies>
         <!-- https://github.com/square/retrofit/blob/master/CHANGELOG.md -->
+        <!-- retrofit 2.7.x requires Java 8+ or Android 5+, library users may update manually. -->
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>retrofit</artifactId>
-            <version>2.6.1</version>
+            <version>2.6.4</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>converter-gson</artifactId>
-            <version>2.6.1</version>
+            <version>2.6.4</version>
         </dependency>
         <dependency>
             <groupId>org.threeten</groupId>
