@@ -1,7 +1,7 @@
 trakt-java
 ==========
 
-A Java wrapper around the [trakt v2 API](http://docs.trakt.apiary.io/) using [retrofit 2](https://square.github.io/retrofit/).
+A Java wrapper around the [Trakt v2 API](http://docs.trakt.apiary.io/) using [retrofit 2](https://square.github.io/retrofit/).
 
 Pull requests are welcome.
 
