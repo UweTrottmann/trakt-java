@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+## 6.5.0
+_2020-03-05_
+
+* Add support for [Trakt device authentication](https://trakt.docs.apiary.io/#reference/authentication-devices). #112 Thanks @samicemalone!
+* Update progress endpoints to provide the last episode watched/collected. #111 Thanks @samicemalone!
+* Update retrofit [2.6.1 -> 2.6.4]. Note: if your project is Java 8+ or Android 5+ manually depend on retrofit 2.7.x.
+* Update threetenbp [1.4.0 -> 1.4.1].
+
 ## 6.4.0
 _2019-09-12_
 

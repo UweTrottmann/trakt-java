@@ -17,7 +17,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```groovy
-implementation 'com.uwetrottmann.trakt5:trakt-java:6.4.0'
+implementation 'com.uwetrottmann.trakt5:trakt-java:6.5.0'
 ```
 
 Or for Maven:
@@ -26,7 +26,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>6.4.0</version>
+  <version>6.5.0</version>
 </dependency>
 ```
 
@@ -48,7 +48,7 @@ implementation 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
 
 Use like any other retrofit2 based service. You only need to supply your 
 [OAuth 2.0](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2) credentials and optional user
-OAuth access token obtained from trakt.
+OAuth access token obtained from Trakt.
 
 `TraktV2` provides some helper methods to handle the OAuth 2.0 flow.
 
