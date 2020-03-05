@@ -127,7 +127,7 @@ public class ShowsTest extends BaseTestCase {
     public void test_collected_progress() throws IOException {
         BaseShow show = executeCall(getTrakt()
                 .shows()
-                .collectedProgress(TestData.SHOW_SLUG, null, null, null)
+                .collectedProgress(TestData.SHOW_SLUG, null, null, null, null, null)
         );
 
         assertThat(show).isNotNull();
@@ -139,7 +139,7 @@ public class ShowsTest extends BaseTestCase {
     public void test_watched_progress() throws IOException {
         BaseShow show = executeCall(getTrakt()
                 .shows()
-                .watchedProgress(TestData.SHOW_SLUG, null, null, null)
+                .watchedProgress(TestData.SHOW_SLUG, null, null, null, null, null)
         );
 
         assertThat(show).isNotNull();
@@ -150,6 +150,11 @@ public class ShowsTest extends BaseTestCase {
     private void assertProgress(BaseShow show) {
         assertThat(show.aired).isGreaterThan(30);
         assertThat(show.completed).isGreaterThanOrEqualTo(1);
+        assertThat(show.last_episode).isNotNull();
+
+        // show progress not complete
+        assertThat(show.completed).isLessThan(show.aired);
+        assertThat(show.next_episode).isNotNull();
 
         // Killjoys has 5 aired seasons
         assertThat(show.seasons).isNotNull();

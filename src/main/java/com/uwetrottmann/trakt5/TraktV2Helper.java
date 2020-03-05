@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
+import com.uwetrottmann.trakt5.enums.ProgressLastActivity;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.SortBy;
@@ -48,6 +49,10 @@ public class TraktV2Helper {
         // status
         builder.registerTypeAdapter(Status.class,
                 (JsonDeserializer<Status>) (json, typeOfT, context) -> Status.fromValue(json.getAsString()));
+
+        // progress last activity
+        builder.registerTypeAdapter(ProgressLastActivity.class,
+                (JsonDeserializer<ProgressLastActivity>) (json, typeOfT, context) -> ProgressLastActivity.fromValue(json.getAsString()));
 
         return builder;
     }

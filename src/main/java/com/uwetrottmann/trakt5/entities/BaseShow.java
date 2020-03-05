@@ -19,10 +19,12 @@ public class BaseShow {
     public Integer plays;
     public OffsetDateTime last_watched_at;
     public OffsetDateTime last_updated_at;
+    public OffsetDateTime reset_at;
     /** progress */
     public Integer aired;
     public Integer completed;
     public List<Season> hidden_seasons;
     public Episode next_episode;
+    public Episode last_episode;
 
 }
