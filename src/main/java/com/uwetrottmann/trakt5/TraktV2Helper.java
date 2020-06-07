@@ -4,9 +4,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
-import com.uwetrottmann.trakt5.enums.ProgressLastActivity;
+import com.uwetrottmann.trakt5.enums.Audio;
+import com.uwetrottmann.trakt5.enums.AudioChannels;
+import com.uwetrottmann.trakt5.enums.Hdr;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
+import com.uwetrottmann.trakt5.enums.MediaType;
+import com.uwetrottmann.trakt5.enums.ProgressLastActivity;
 import com.uwetrottmann.trakt5.enums.Rating;
+import com.uwetrottmann.trakt5.enums.Resolution;
 import com.uwetrottmann.trakt5.enums.SortBy;
 import com.uwetrottmann.trakt5.enums.SortHow;
 import com.uwetrottmann.trakt5.enums.Status;
@@ -53,6 +58,36 @@ public class TraktV2Helper {
         // progress last activity
         builder.registerTypeAdapter(ProgressLastActivity.class,
                 (JsonDeserializer<ProgressLastActivity>) (json, typeOfT, context) -> ProgressLastActivity.fromValue(json.getAsString()));
+
+        // media type
+        builder.registerTypeAdapter(MediaType.class,
+                (JsonSerializer<MediaType>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
+        builder.registerTypeAdapter(MediaType.class,
+                (JsonDeserializer<MediaType>) (json, typeOfT, context) -> MediaType.fromValue(json.getAsString()));
+
+        // resolution
+        builder.registerTypeAdapter(Resolution.class,
+                (JsonSerializer<Resolution>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
+        builder.registerTypeAdapter(Resolution.class,
+                (JsonDeserializer<Resolution>) (json, typeOfT, context) -> Resolution.fromValue(json.getAsString()));
+
+        // hdr
+        builder.registerTypeAdapter(Hdr.class,
+                (JsonSerializer<Hdr>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
+        builder.registerTypeAdapter(Hdr.class,
+                (JsonDeserializer<Hdr>) (json, typeOfT, context) -> Hdr.fromValue(json.getAsString()));
+
+        // audio
+        builder.registerTypeAdapter(Audio.class,
+                (JsonSerializer<Audio>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
+        builder.registerTypeAdapter(Audio.class,
+                (JsonDeserializer<Audio>) (json, typeOfT, context) -> Audio.fromValue(json.getAsString()));
+
+        // audio channels
+        builder.registerTypeAdapter(AudioChannels.class,
+                (JsonSerializer<AudioChannels>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
+        builder.registerTypeAdapter(AudioChannels.class,
+                (JsonDeserializer<AudioChannels>) (json, typeOfT, context) -> AudioChannels.fromValue(json.getAsString()));
 
         return builder;
     }
