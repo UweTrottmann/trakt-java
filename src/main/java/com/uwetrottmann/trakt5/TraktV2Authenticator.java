@@ -32,7 +32,7 @@ public class TraktV2Authenticator implements Authenticator {
      */
     @Nullable
     public static Request handleAuthenticate(Response response, TraktV2 trakt) throws IOException {
-        if (!TraktV2.API_HOST.equals(response.request().url().host())) {
+        if (!trakt.apiHost().equals(response.request().url().host())) {
             return null; // not a trakt API endpoint (possibly trakt OAuth or other API), give up.
         }
         if (responseCount(response) >= 2) {

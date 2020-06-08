@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class TraktV2Interceptor implements Interceptor {
 
-    private TraktV2 trakt;
+    private final TraktV2 trakt;
 
     public TraktV2Interceptor(TraktV2 trakt) {
         this.trakt = trakt;
@@ -28,7 +28,7 @@ public class TraktV2Interceptor implements Interceptor {
     public static Response handleIntercept(Chain chain, String apiKey,
             @Nullable String accessToken) throws IOException {
         Request request = chain.request();
-        if (!TraktV2.API_HOST.equals(request.url().host())) {
+        if (!(TraktV2.API_HOST.equals(request.url().host()) || TraktV2.API_STAGING_HOST.equals(request.url().host()))) {
             // do not intercept requests for other hosts
             // this allows the interceptor to be used on a shared okhttp client
             return chain.proceed(request);

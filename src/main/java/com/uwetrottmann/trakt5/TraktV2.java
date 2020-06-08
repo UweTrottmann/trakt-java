@@ -22,6 +22,7 @@ import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
 import com.uwetrottmann.trakt5.services.Scrobble;
 
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -44,14 +45,14 @@ public class TraktV2 {
      * trakt API v2 URL.
      */
     public static final String API_HOST = "api.trakt.tv";
+    public static final String API_STAGING_HOST = "api-staging.trakt.tv";
     public static final String API_URL = "https://" + API_HOST + "/";
+    public static final String API_STAGING_URL = "https://" + API_STAGING_HOST + "/";
     public static final String API_VERSION = "2";
 
     public static final String SITE_URL = "https://trakt.tv";
     public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
-    public static final String OAUTH2_DEVICE_CODE_URL = API_URL + "oauth/device/code";
-    public static final String OAUTH2_DEVICE_TOKEN_URL = API_URL + "oauth/device/token";
-    public static final String OAUTH2_TOKEN_URL = SITE_URL + "/oauth/token";
+    public static final String OAUTH2_TOKEN_URL = "oauth/token";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
@@ -67,14 +68,16 @@ public class TraktV2 {
     @Nullable private String redirectUri;
     @Nullable private String accessToken;
     @Nullable private String refreshToken;
+    private final HttpUrl apiBaseUrl;
 
     /**
      * Get a new API manager instance.
      *
      * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
+     * @see #TraktV2(java.lang.String, boolean)
      */
     public TraktV2(String apiKey) {
-        this.apiKey = apiKey;
+        this(apiKey, false);
     }
 
     /**
@@ -83,11 +86,41 @@ public class TraktV2 {
      * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
      * @param clientSecret The client secret obtained from trakt.
      * @param redirectUri The redirect URI to use for OAuth2 token requests.
+     * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String, boolean)
      */
     public TraktV2(String apiKey, String clientSecret, String redirectUri) {
+        this(apiKey, clientSecret, redirectUri, false);
+    }
+
+    /**
+     * Get a new API manager instance.
+     *
+     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
+     * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
+     * @see #TraktV2(java.lang.String)
+     */
+    public TraktV2(String apiKey, boolean staging){
         this.apiKey = apiKey;
+        apiBaseUrl = HttpUrl.get(staging ? API_STAGING_URL : API_URL);
+    }
+
+    /**
+     * Get a new API manager instance capable of calling OAuth2 protected endpoints.
+     *
+     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
+     * @param clientSecret The client secret obtained from trakt.
+     * @param redirectUri The redirect URI to use for OAuth2 token requests.
+     * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
+     * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String)
+     */
+    public TraktV2(String apiKey, String clientSecret, String redirectUri, boolean staging) {
+        this(apiKey, staging);
         this.clientSecret = clientSecret;
         this.redirectUri = redirectUri;
+    }
+
+    public String apiHost(){
+        return apiBaseUrl.host();
     }
 
     public String apiKey() {
@@ -138,7 +171,7 @@ public class TraktV2 {
      */
     protected Retrofit.Builder retrofitBuilder() {
         return new Retrofit.Builder()
-                .baseUrl(API_URL)
+                .baseUrl(apiBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create(TraktV2Helper.getGsonBuilder().create()))
                 .client(okHttpClient());
     }

@@ -39,7 +39,7 @@ public interface Authentication {
      * The {@code user_code} and {@code verification_url} should be presented to the user.
      * @param clientId Application Client Id
      */
-    @POST(TraktV2.OAUTH2_DEVICE_CODE_URL)
+    @POST("oauth/device/code")
     Call<DeviceCode> generateDeviceCode(
             @Body ClientId clientId
     );
@@ -56,7 +56,7 @@ public interface Authentication {
      * to re-authenticate.
      * @param deviceCodeAccessTokenRequest Device Code
      */
-    @POST(TraktV2.OAUTH2_DEVICE_TOKEN_URL)
+    @POST("oauth/device/token")
     Call<AccessToken> exchangeDeviceCodeForAccessToken(
             @Body DeviceCodeAccessTokenRequest deviceCodeAccessTokenRequest
     );
