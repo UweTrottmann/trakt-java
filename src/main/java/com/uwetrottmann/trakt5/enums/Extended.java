@@ -14,7 +14,9 @@ public enum Extended implements TraktEnum {
     /** Only works with seasons/summary */
     EPISODES("episodes"),
     /** Only works with seasons/summary */
-    FULLEPISODES("full,episodes");
+    FULLEPISODES("full,episodes"),
+    /** Only work with movies/episodes */
+    METADATA("metadata");
 
     private final String value;
 

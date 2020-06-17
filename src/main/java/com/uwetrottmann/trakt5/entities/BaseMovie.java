@@ -12,4 +12,6 @@ public class BaseMovie {
     public OffsetDateTime listed_at;
     public int plays;
 
+    public Metadata metadata;
+
 }
