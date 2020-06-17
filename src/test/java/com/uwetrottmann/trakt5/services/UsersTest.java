@@ -122,6 +122,9 @@ public class UsersTest extends BaseTestCase {
         assertThat(createdList.ids.trakt).isNotNull();
         assertThat(createdList.name).isEqualTo(list.name);
         assertThat(createdList.description).isEqualTo(list.description);
+        assertThat(createdList.privacy).isEqualTo(ListPrivacy.PUBLIC);
+        assertThat(createdList.allow_comments).isEqualTo(false);
+        assertThat(createdList.display_numbers).isEqualTo(false);
 
         // ...and delete it again
         Response deleteResponse = getTrakt().users().deleteList(UserSlug.ME,

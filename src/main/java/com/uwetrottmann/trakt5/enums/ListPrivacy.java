@@ -1,34 +1,15 @@
 package com.uwetrottmann.trakt5.enums;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.google.gson.annotations.SerializedName;
 
-public enum ListPrivacy implements TraktEnum {
+public enum ListPrivacy {
 
-    PRIVATE("private"),
-    FRIENDS("friends"),
-    PUBLIC("public");
+    @SerializedName("private")
+    PRIVATE,
 
-    public final String value;
+    @SerializedName("friends")
+    FRIENDS,
 
-    ListPrivacy(String value) {
-        this.value = value;
-    }
-
-    private static final Map<String, ListPrivacy> STRING_MAPPING = new HashMap<>();
-
-    static {
-        for (ListPrivacy via : ListPrivacy.values()) {
-            STRING_MAPPING.put(via.toString(), via);
-        }
-    }
-
-    public static ListPrivacy fromValue(String value) {
-        return STRING_MAPPING.get(value);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
+    @SerializedName("public")
+    PUBLIC
 }
