@@ -37,14 +37,6 @@ public class TraktV2Helper {
         builder.registerTypeAdapter(Rating.class,
                 (JsonSerializer<Rating>) (src, typeOfSrc, context) -> new JsonPrimitive(src.value));
 
-        // sort by
-        builder.registerTypeAdapter(SortBy.class,
-                (JsonDeserializer<SortBy>) (json, typeOfT, context) -> SortBy.fromValue(json.getAsString()));
-
-        // sort how
-        builder.registerTypeAdapter(SortHow.class,
-                (JsonDeserializer<SortHow>) (json, typeOfT, context) -> SortHow.fromValue(json.getAsString()));
-
         // status
         builder.registerTypeAdapter(Status.class,
                 (JsonDeserializer<Status>) (json, typeOfT, context) -> Status.fromValue(json.getAsString()));
