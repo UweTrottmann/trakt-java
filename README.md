@@ -3,7 +3,7 @@ trakt-java
 
 A Java wrapper around the [Trakt v2 API](http://docs.trakt.apiary.io/) using [retrofit 2](https://square.github.io/retrofit/).
 
-Pull requests are welcome.
+[Pull requests](CONTRIBUTING.md) are welcome.
 
 Trakt methods are grouped into service objects which can be centrally
 managed by a `TraktV2` instance. It will act as a factory for
@@ -89,9 +89,9 @@ prevent entities from getting optimized. Obviously they also should not be obfus
 ```
 
 ## License
-Created by [Uwe Trottmann](https://uwetrottmann.com).
 
-See full [list of contributors](https://github.com/UweTrottmann/trakt-java/graphs/contributors).
+This work by [Uwe Trottmann](https://uwetrottmann.com) is licensed under the [Apache License 2.0](LICENSE.txt).
 
-Except where noted otherwise, released into the [public domain](UNLICENSE).
+[Contributors](https://github.com/UweTrottmann/trakt-java/graphs/contributors) and changes are tracked by Git.
+
 Do not just copy, make it better.
