@@ -21,8 +21,9 @@ public class TraktV2Interceptor implements Interceptor {
     }
 
     /**
-     * If the host matches {@link TraktV2#API_HOST} adds a header for the current {@link TraktV2#API_VERSION}, {@link
-     * TraktV2#HEADER_TRAKT_API_KEY} with the given api key, {@link TraktV2#HEADER_CONTENT_TYPE} and if not present an
+     * If the host matches {@link TraktV2#API_HOST} or {@link TraktV2#API_STAGING_HOST} adds a header for
+     * the current {@link TraktV2#API_VERSION}, {@link TraktV2#HEADER_TRAKT_API_KEY} with the given api key,
+     * {@link TraktV2#HEADER_CONTENT_TYPE} and if not present an
      * Authorization header using the given access token.
      */
     public static Response handleIntercept(Chain chain, String apiKey,
@@ -34,6 +35,30 @@ public class TraktV2Interceptor implements Interceptor {
             return chain.proceed(request);
         }
 
+        return handleInterceptInternal(chain, apiKey, accessToken);
+    }
+
+    /**
+     *  Version of {@link TraktV2Interceptor#handleIntercept(okhttp3.Interceptor.Chain, java.lang.String, java.lang.String)}
+     *  that supports any configured trakt api host.
+     */
+    public static Response handleIntercept(Chain chain, String apiKey,
+            @Nullable String accessToken, @Nullable TraktV2 trakt) throws IOException {
+        if (trakt == null) {
+            return handleIntercept(chain, apiKey, accessToken);
+        }
+
+        Request request = chain.request();
+        if (trakt.apiHost().equals(request.url().host())) {
+            return handleInterceptInternal(chain, apiKey, accessToken);
+        }
+        return chain.proceed(request);
+    }
+
+
+    private static Response handleInterceptInternal(Chain chain, String apiKey,
+            @Nullable String accessToken) throws IOException {
+        Request request = chain.request();
         Request.Builder builder = request.newBuilder();
 
         // set required content type, api key and request specific API version

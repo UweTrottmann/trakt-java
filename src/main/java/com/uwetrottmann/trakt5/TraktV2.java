@@ -50,6 +50,8 @@ public class TraktV2 {
     public static final String API_STAGING_URL = "https://" + API_STAGING_HOST + "/";
     public static final String API_VERSION = "2";
 
+    public static final String OAUTH2_DEVICE_CODE_URL = "oauth/device/code";
+    public static final String OAUTH2_DEVICE_TOKEN_URL = "oauth/device/token";
     public static final String SITE_URL = "https://trakt.tv";
     public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
     public static final String OAUTH2_TOKEN_URL = "oauth/token";
