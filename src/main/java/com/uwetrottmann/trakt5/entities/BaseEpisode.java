@@ -14,4 +14,5 @@ public class BaseEpisode {
     /** progress */
     public Boolean completed;
 
+    public Metadata metadata;
 }

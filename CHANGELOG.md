@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 6.6.0
+_2020-06-17_
+
+* Fix `TraktList` enum serialization (`ListPrivacy`, `SortHow` and `SortBy`).
+* Added metadata to episodes and movies. Thanks @mlaggner!
+
 ## 6.5.0
 _2020-03-05_
 

@@ -34,6 +34,8 @@ import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import com.uwetrottmann.trakt5.enums.SortBy;
+import com.uwetrottmann.trakt5.enums.SortHow;
 import org.junit.Test;
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.OffsetDateTime;
@@ -116,12 +118,19 @@ public class UsersTest extends BaseTestCase {
         list.privacy(ListPrivacy.PUBLIC);
         list.allowComments(false);
         list.displayNumbers(false);
+        list.sortBy(SortBy.ADDED);
+        list.sortHow(SortHow.ASC);
 
         // create list...
         TraktList createdList = executeCall(getTrakt().users().createList(UserSlug.ME, list));
         assertThat(createdList.ids.trakt).isNotNull();
         assertThat(createdList.name).isEqualTo(list.name);
         assertThat(createdList.description).isEqualTo(list.description);
+        assertThat(createdList.privacy).isEqualTo(ListPrivacy.PUBLIC);
+        assertThat(createdList.allow_comments).isEqualTo(false);
+        assertThat(createdList.display_numbers).isEqualTo(false);
+        assertThat(createdList.sort_by).isEqualTo(SortBy.ADDED);
+        assertThat(createdList.sort_how).isEqualTo(SortHow.DESC); // Note: created list is always desc, even on web.
 
         // ...and delete it again
         Response deleteResponse = getTrakt().users().deleteList(UserSlug.ME,

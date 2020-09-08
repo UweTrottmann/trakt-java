@@ -1,42 +1,36 @@
 package com.uwetrottmann.trakt5.enums;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import com.google.gson.annotations.SerializedName;
 
-public enum SortBy implements TraktEnum {
-    RANK("rank"),
-    ADDED("added"),
-    TITLE("title"),
-    RELEASED("released"),
-    RUNTIME("runtime"),
-    POPULARITY("popularity"),
-    PERCENTAGE("percentage"),
-    VOTES("votes"),
-    MY_RATING("my_rating"),
-    RANDOM("random");
+public enum SortBy {
+    @SerializedName("rank")
+    RANK,
 
-    private final String value;
+    @SerializedName("added")
+    ADDED,
 
-    SortBy(String value) {
-        this.value = value;
-    }
+    @SerializedName("title")
+    TITLE,
 
-    private static final Map<String, SortBy> STRING_MAPPING = new HashMap<>();
+    @SerializedName("released")
+    RELEASED,
 
-    static {
-        for (SortBy via : SortBy.values()) {
-            STRING_MAPPING.put(via.toString().toUpperCase(Locale.ROOT), via);
-        }
-    }
+    @SerializedName("runtime")
+    RUNTIME,
 
-    public static SortBy fromValue(String value) {
-        return STRING_MAPPING.get(value.toUpperCase(Locale.ROOT));
-    }
+    @SerializedName("popularity")
+    POPULARITY,
 
-    @Override
-    public String toString() {
-        return value;
-    }
+    @SerializedName("percentage")
+    PERCENTAGE,
+
+    @SerializedName("votes")
+    VOTES,
+
+    @SerializedName("my_rating")
+    MY_RATING,
+
+    @SerializedName("random")
+    RANDOM
 
 }
