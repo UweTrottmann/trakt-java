@@ -1,6 +1,8 @@
 package com.uwetrottmann.trakt5;
 
 import com.uwetrottmann.trakt5.entities.AccessToken;
+import com.uwetrottmann.trakt5.entities.AccessTokenRefreshRequest;
+import com.uwetrottmann.trakt5.entities.AccessTokenRequest;
 import com.uwetrottmann.trakt5.entities.CheckinError;
 import com.uwetrottmann.trakt5.entities.ClientId;
 import com.uwetrottmann.trakt5.entities.DeviceCode;
@@ -15,13 +17,12 @@ import com.uwetrottmann.trakt5.services.Genres;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.People;
 import com.uwetrottmann.trakt5.services.Recommendations;
+import com.uwetrottmann.trakt5.services.Scrobble;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Seasons;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
-import com.uwetrottmann.trakt5.services.Scrobble;
-
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -49,9 +50,6 @@ public class TraktV2 {
 
     public static final String SITE_URL = "https://trakt.tv";
     public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
-    public static final String OAUTH2_DEVICE_CODE_URL = API_URL + "oauth/device/code";
-    public static final String OAUTH2_DEVICE_TOKEN_URL = API_URL + "oauth/device/token";
-    public static final String OAUTH2_TOKEN_URL = SITE_URL + "/oauth/token";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
@@ -263,11 +261,11 @@ public class TraktV2 {
         }
 
         return authentication().exchangeCodeForAccessToken(
-                "authorization_code",
-                authCode,
-                apiKey(),
-                clientSecret,
-                redirectUri
+                new AccessTokenRequest(
+                        authCode,
+                        apiKey(),
+                        clientSecret,
+                        redirectUri)
         ).execute();
     }
 
@@ -289,11 +287,12 @@ public class TraktV2 {
         }
 
         return authentication().refreshAccessToken(
-                "refresh_token",
-                refreshToken,
-                apiKey(),
-                clientSecret,
-                redirectUri
+                new AccessTokenRefreshRequest(
+                        refreshToken,
+                        apiKey(),
+                        clientSecret,
+                        redirectUri
+                )
         ).execute();
     }
 
