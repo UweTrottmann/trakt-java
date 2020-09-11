@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 6.7.0
+_2020-09-11_
+
+* Switch `Authentication` methods to use API instead of website. This should make errors less likely.
+
 ## 6.6.0
 _2020-06-17_
 
