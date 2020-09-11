@@ -1,36 +1,25 @@
 package com.uwetrottmann.trakt5.services;
 
-import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
+import com.uwetrottmann.trakt5.entities.AccessTokenRefreshRequest;
+import com.uwetrottmann.trakt5.entities.AccessTokenRequest;
 import com.uwetrottmann.trakt5.entities.ClientId;
 import com.uwetrottmann.trakt5.entities.DeviceCode;
 import com.uwetrottmann.trakt5.entities.DeviceCodeAccessTokenRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface Authentication {
 
-    @FormUrlEncoded
-    @POST(TraktV2.OAUTH2_TOKEN_URL)
+    @POST("oauth/token")
     Call<AccessToken> exchangeCodeForAccessToken(
-            @Field("grant_type") String grantType,
-            @Field("code") String code,
-            @Field("client_id") String clientId,
-            @Field("client_secret") String clientSecret,
-            @Field("redirect_uri") String redirectUri
+            @Body AccessTokenRequest tokenRequest
     );
 
-    @FormUrlEncoded
-    @POST(TraktV2.OAUTH2_TOKEN_URL)
+    @POST("oauth/token")
     Call<AccessToken> refreshAccessToken(
-            @Field("grant_type") String grantType,
-            @Field("refresh_token") String refreshToken,
-            @Field("client_id") String clientId,
-            @Field("client_secret") String clientSecret,
-            @Field("redirect_uri") String redirectUri
+            @Body AccessTokenRefreshRequest refreshRequest
     );
 
     /**
@@ -39,7 +28,7 @@ public interface Authentication {
      * The {@code user_code} and {@code verification_url} should be presented to the user.
      * @param clientId Application Client Id
      */
-    @POST(TraktV2.OAUTH2_DEVICE_CODE_URL)
+    @POST("oauth/device/code")
     Call<DeviceCode> generateDeviceCode(
             @Body ClientId clientId
     );
@@ -56,7 +45,7 @@ public interface Authentication {
      * to re-authenticate.
      * @param deviceCodeAccessTokenRequest Device Code
      */
-    @POST(TraktV2.OAUTH2_DEVICE_TOKEN_URL)
+    @POST("oauth/device/token")
     Call<AccessToken> exchangeDeviceCodeForAccessToken(
             @Body DeviceCodeAccessTokenRequest deviceCodeAccessTokenRequest
     );

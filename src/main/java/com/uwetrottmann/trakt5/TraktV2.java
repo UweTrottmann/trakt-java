@@ -1,11 +1,14 @@
 package com.uwetrottmann.trakt5;
 
 import com.uwetrottmann.trakt5.entities.AccessToken;
+import com.uwetrottmann.trakt5.entities.AccessTokenRefreshRequest;
+import com.uwetrottmann.trakt5.entities.AccessTokenRequest;
 import com.uwetrottmann.trakt5.entities.CheckinError;
 import com.uwetrottmann.trakt5.entities.ClientId;
 import com.uwetrottmann.trakt5.entities.DeviceCode;
 import com.uwetrottmann.trakt5.entities.DeviceCodeAccessTokenRequest;
 import com.uwetrottmann.trakt5.entities.TraktError;
+import com.uwetrottmann.trakt5.entities.TraktOAuthError;
 import com.uwetrottmann.trakt5.services.Authentication;
 import com.uwetrottmann.trakt5.services.Calendars;
 import com.uwetrottmann.trakt5.services.Checkin;
@@ -15,13 +18,12 @@ import com.uwetrottmann.trakt5.services.Genres;
 import com.uwetrottmann.trakt5.services.Movies;
 import com.uwetrottmann.trakt5.services.People;
 import com.uwetrottmann.trakt5.services.Recommendations;
+import com.uwetrottmann.trakt5.services.Scrobble;
 import com.uwetrottmann.trakt5.services.Search;
 import com.uwetrottmann.trakt5.services.Seasons;
 import com.uwetrottmann.trakt5.services.Shows;
 import com.uwetrottmann.trakt5.services.Sync;
 import com.uwetrottmann.trakt5.services.Users;
-import com.uwetrottmann.trakt5.services.Scrobble;
-
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -49,9 +51,6 @@ public class TraktV2 {
 
     public static final String SITE_URL = "https://trakt.tv";
     public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
-    public static final String OAUTH2_DEVICE_CODE_URL = API_URL + "oauth/device/code";
-    public static final String OAUTH2_DEVICE_TOKEN_URL = API_URL + "oauth/device/token";
-    public static final String OAUTH2_TOKEN_URL = SITE_URL + "/oauth/token";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
@@ -263,11 +262,11 @@ public class TraktV2 {
         }
 
         return authentication().exchangeCodeForAccessToken(
-                "authorization_code",
-                authCode,
-                apiKey(),
-                clientSecret,
-                redirectUri
+                new AccessTokenRequest(
+                        authCode,
+                        apiKey(),
+                        clientSecret,
+                        redirectUri)
         ).execute();
     }
 
@@ -289,11 +288,12 @@ public class TraktV2 {
         }
 
         return authentication().refreshAccessToken(
-                "refresh_token",
-                refreshToken,
-                apiKey(),
-                clientSecret,
-                redirectUri
+                new AccessTokenRefreshRequest(
+                        refreshToken,
+                        apiKey(),
+                        clientSecret,
+                        redirectUri
+                )
         ).execute();
     }
 
@@ -301,7 +301,7 @@ public class TraktV2 {
      * If the response code is 409 tries to convert the body into a {@link CheckinError}.
      */
     @Nullable
-    public CheckinError checkForCheckinError(Response response) {
+    public CheckinError checkForCheckinError(Response<?> response) {
         if (response.code() != 409) {
             return null; // only code 409 can be a check-in error
         }
@@ -319,7 +319,7 @@ public class TraktV2 {
      * If the response is not successful, tries to parse the error body into a {@link TraktError}.
      */
     @Nullable
-    public TraktError checkForTraktError(Response response) {
+    public TraktError checkForTraktError(Response<?> response) {
         if (response.isSuccessful()) {
             return null;
         }
@@ -331,6 +331,27 @@ public class TraktV2 {
         } catch (IOException ignored) {
             return new TraktError(); // null values
         }
+    }
+
+    /**
+     * If the {@link Authentication} response is not successful,
+     * tries to parse the error body into a {@link TraktOAuthError}.
+     */
+    @Nullable
+    public TraktOAuthError checkForTraktOAuthError(Response<?> response) {
+        if (response.isSuccessful()) {
+            return null;
+        }
+        Converter<ResponseBody, TraktOAuthError> errorConverter = retrofit()
+                .responseBodyConverter(TraktOAuthError.class, new Annotation[0]);
+
+        if (response.errorBody() != null) {
+            try {
+                return errorConverter.convert(response.errorBody());
+            } catch (IOException ignored) {
+            }
+        }
+        return new TraktOAuthError(); // null values
     }
 
     public Authentication authentication() {
