@@ -8,6 +8,7 @@ import com.uwetrottmann.trakt5.entities.ClientId;
 import com.uwetrottmann.trakt5.entities.DeviceCode;
 import com.uwetrottmann.trakt5.entities.DeviceCodeAccessTokenRequest;
 import com.uwetrottmann.trakt5.entities.TraktError;
+import com.uwetrottmann.trakt5.entities.TraktOAuthError;
 import com.uwetrottmann.trakt5.services.Authentication;
 import com.uwetrottmann.trakt5.services.Calendars;
 import com.uwetrottmann.trakt5.services.Checkin;
@@ -300,7 +301,7 @@ public class TraktV2 {
      * If the response code is 409 tries to convert the body into a {@link CheckinError}.
      */
     @Nullable
-    public CheckinError checkForCheckinError(Response response) {
+    public CheckinError checkForCheckinError(Response<?> response) {
         if (response.code() != 409) {
             return null; // only code 409 can be a check-in error
         }
@@ -318,7 +319,7 @@ public class TraktV2 {
      * If the response is not successful, tries to parse the error body into a {@link TraktError}.
      */
     @Nullable
-    public TraktError checkForTraktError(Response response) {
+    public TraktError checkForTraktError(Response<?> response) {
         if (response.isSuccessful()) {
             return null;
         }
@@ -330,6 +331,27 @@ public class TraktV2 {
         } catch (IOException ignored) {
             return new TraktError(); // null values
         }
+    }
+
+    /**
+     * If the {@link Authentication} response is not successful,
+     * tries to parse the error body into a {@link TraktOAuthError}.
+     */
+    @Nullable
+    public TraktOAuthError checkForTraktOAuthError(Response<?> response) {
+        if (response.isSuccessful()) {
+            return null;
+        }
+        Converter<ResponseBody, TraktOAuthError> errorConverter = retrofit()
+                .responseBodyConverter(TraktOAuthError.class, new Annotation[0]);
+
+        if (response.errorBody() != null) {
+            try {
+                return errorConverter.convert(response.errorBody());
+            } catch (IOException ignored) {
+            }
+        }
+        return new TraktOAuthError(); // null values
     }
 
     public Authentication authentication() {
