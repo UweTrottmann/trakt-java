@@ -9,6 +9,11 @@ import okhttp3.Route;
 import javax.annotation.Nullable;
 import java.io.IOException;
 
+/**
+ * If required tries to obtain a new access and refresh tokens if a refresh token is available.
+ * If so, replaces the existing tokens and updates the authentication header of the request.
+ * See {@link #handleAuthenticate(Response, TraktV2)}.
+ */
 public class TraktV2Authenticator implements Authenticator {
 
     public final TraktV2 trakt;
