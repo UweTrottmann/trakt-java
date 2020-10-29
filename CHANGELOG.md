@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+## 6.8.0
+_2020-10-29_
+
+* Handle new HTTP 429 Too Many Requests response from Trakt. Note that if you use `TraktV2Interceptor` or its methods
+  directly, it now is a regular interceptor (previously network interceptor) as it may retry requests. Details at
+  https://trakt.docs.apiary.io/#introduction/rate-limiting.
+* Add more `Audio` types. Via #121 from @riksmith, thanks!
+* Update threetenbp [1.4.1 -> 1.5.0].
+
 ## 6.7.0
 _2020-09-11_
 
