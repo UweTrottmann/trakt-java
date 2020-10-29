@@ -54,7 +54,13 @@ public class BaseTestCase {
                 // add logging
                 // standard output is easier to read
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor(System.out::println);
-                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+                boolean isCI = System.getenv("CI") != null;
+                // Reduce log size on CI server. If there is a response issue, should test on dev machine!
+                logging.setLevel(isCI ? HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.BODY);
+                if (isCI) {
+                    logging.redactHeader(TraktV2.HEADER_TRAKT_API_KEY);
+                    logging.redactHeader(TraktV2.HEADER_AUTHORIZATION);
+                }
                 builder.addNetworkInterceptor(logging);
             }
         }
