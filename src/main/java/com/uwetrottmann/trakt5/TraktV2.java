@@ -158,10 +158,10 @@ public class TraktV2 {
     }
 
     /**
-     * Adds a network interceptor to add version and auth headers and a regular interceptor to log requests.
+     * Adds {@link TraktV2Interceptor} as an application interceptor and {@link TraktV2Authenticator} as an authenticator.
      */
     protected void setOkHttpClientDefaults(OkHttpClient.Builder builder) {
-        builder.addNetworkInterceptor(new TraktV2Interceptor(this));
+        builder.addInterceptor(new TraktV2Interceptor(this));
         builder.authenticator(new TraktV2Authenticator(this));
     }
 
