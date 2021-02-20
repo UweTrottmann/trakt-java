@@ -1,7 +1,7 @@
 trakt-java
 ==========
 
-A Java wrapper around the [Trakt v2 API](http://docs.trakt.apiary.io/) using [retrofit 2](https://square.github.io/retrofit/).
+A Java wrapper around the [Trakt v2 API](https://trakt.docs.apiary.io/) using [retrofit 2](https://square.github.io/retrofit/).
 
 [Pull requests](CONTRIBUTING.md) are welcome.
 
@@ -17,7 +17,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```groovy
-implementation 'com.uwetrottmann.trakt5:trakt-java:6.8.0'
+implementation 'com.uwetrottmann.trakt5:trakt-java:6.9.0'
 ```
 
 Or for Maven:
@@ -26,7 +26,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>6.8.0</version>
+  <version>6.9.0</version>
 </dependency>
 ```
 

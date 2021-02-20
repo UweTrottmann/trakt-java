@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 6.9.0
+_2021-02-29_
+
+* Add support for staging environment. See the new constructors for `SgTraktV2`. Thanks @srggsf!
+* Annotate builder methods that return non-null.
+
 ## 6.8.0
 _2020-10-29_
 
