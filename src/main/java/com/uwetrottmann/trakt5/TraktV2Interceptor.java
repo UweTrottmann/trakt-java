@@ -27,8 +27,9 @@ public class TraktV2Interceptor implements Interceptor {
     }
 
     /**
-     * If the host matches {@link TraktV2#API_HOST} adds a header for the current {@link TraktV2#API_VERSION}, {@link
-     * TraktV2#HEADER_TRAKT_API_KEY} with the given api key, {@link TraktV2#HEADER_CONTENT_TYPE} and if not present an
+     * If the host matches {@link TraktV2#API_HOST} or {@link TraktV2#API_STAGING_HOST} adds a header for
+     * the current {@link TraktV2#API_VERSION}, {@link TraktV2#HEADER_TRAKT_API_KEY} with the given api key,
+     * {@link TraktV2#HEADER_CONTENT_TYPE} and if not present an
      * Authorization header using the given access token.
      *
      * If a request fails due to HTTP 429 Too Many Requests, will retry the request after the time in seconds given
@@ -37,7 +38,7 @@ public class TraktV2Interceptor implements Interceptor {
     public static Response handleIntercept(Chain chain, String apiKey,
             @Nullable String accessToken) throws IOException {
         Request request = chain.request();
-        if (!TraktV2.API_HOST.equals(request.url().host())) {
+        if (!(TraktV2.API_HOST.equals(request.url().host()) || TraktV2.API_STAGING_HOST.equals(request.url().host()))) {
             // do not intercept requests for other hosts
             // this allows the interceptor to be used on a shared okhttp client
             return chain.proceed(request);
