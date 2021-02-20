@@ -1,5 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
+import javax.annotation.Nonnull;
+
 public class EpisodeCheckin extends BaseCheckin {
 
     public Show show;
@@ -25,31 +27,37 @@ public class EpisodeCheckin extends BaseCheckin {
             this.app_date = appDate;
         }
 
+        @Nonnull
         public Builder show(Show show) {
             this.show = show;
             return this;
         }
 
+        @Nonnull
         public Builder sharing(ShareSettings shareSettings) {
             this.sharing = shareSettings;
             return this;
         }
 
+        @Nonnull
         public Builder message(String message) {
             this.message = message;
             return this;
         }
 
+        @Nonnull
         public Builder venueId(String venueId) {
             this.venue_id = venueId;
             return this;
         }
 
+        @Nonnull
         public Builder venueName(String venueName) {
             this.venue_name = venueName;
             return this;
         }
 
+        @Nonnull
         public EpisodeCheckin build() {
             EpisodeCheckin checkin = new EpisodeCheckin();
             checkin.show = show;

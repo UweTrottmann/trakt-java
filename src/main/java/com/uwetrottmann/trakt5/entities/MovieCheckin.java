@@ -1,5 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
+import javax.annotation.Nonnull;
+
 public class MovieCheckin extends BaseCheckin {
 
     public SyncMovie movie;
@@ -23,26 +25,31 @@ public class MovieCheckin extends BaseCheckin {
             this.app_date = appDate;
         }
 
+        @Nonnull
         public Builder sharing(ShareSettings shareSettings) {
             this.sharing = shareSettings;
             return this;
         }
 
+        @Nonnull
         public Builder message(String message) {
             this.message = message;
             return this;
         }
 
+        @Nonnull
         public Builder venueId(String venueId) {
             this.venue_id = venueId;
             return this;
         }
 
+        @Nonnull
         public Builder venueName(String venueName) {
             this.venue_name = venueName;
             return this;
         }
 
+        @Nonnull
         public MovieCheckin build() {
             MovieCheckin checkin = new MovieCheckin();
             checkin.movie = movie;

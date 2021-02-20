@@ -9,6 +9,8 @@ import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.Resolution;
 import org.threeten.bp.OffsetDateTime;
 
+import javax.annotation.Nonnull;
+
 public class SyncEpisode {
 
     public Integer season;
@@ -27,66 +29,79 @@ public class SyncEpisode {
     @SerializedName("3d")
     public Boolean is3d;
 
+    @Nonnull
     public SyncEpisode number(int number) {
         this.number = number;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode season(int season) {
         this.season = season;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode id(EpisodeIds id) {
         this.ids = id;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode collectedAt(OffsetDateTime collectedAt) {
         this.collected_at = collectedAt;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode watchedAt(OffsetDateTime watchedAt) {
         this.watched_at = watchedAt;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode ratedAt(OffsetDateTime ratedAt) {
         this.rated_at = ratedAt;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode rating(Rating rating) {
         this.rating = rating;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode mediaType(MediaType media_type){
         this.media_type = media_type;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode resolution(Resolution resolution){
         this.resolution = resolution;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode hdr(Hdr hdr){
         this.hdr = hdr;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode audio(Audio audio){
         this.audio = audio;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode audioChannels(AudioChannels audio_channels){
         this.audio_channels = audio_channels;
         return this;
     }
 
+    @Nonnull
     public SyncEpisode is3d(Boolean is3d){
         this.is3d = is3d;
         return this;

@@ -1,5 +1,7 @@
 package com.uwetrottmann.trakt5.entities;
 
+import javax.annotation.Nonnull;
+
 public class UserSlug {
 
     /**
@@ -7,7 +9,7 @@ public class UserSlug {
      */
     public static final UserSlug ME = new UserSlug("me");
 
-    private String userSlug;
+    private final String userSlug;
 
     /**
      * User slug to pass to the API, performs some simple null and empty checks.
@@ -29,6 +31,7 @@ public class UserSlug {
     /**
      * Encodes the username returned from trakt so it is API compatible (currently replaces "." and spaces with "-").
      */
+    @Nonnull
     public static UserSlug fromUsername(String username) {
         if (username == null) {
             throw new IllegalArgumentException("trakt username can not be null.");
