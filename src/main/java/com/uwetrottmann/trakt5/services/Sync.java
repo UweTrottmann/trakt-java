@@ -165,11 +165,17 @@ public interface Sync {
      * <p> Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
+     * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
+     *               1, otherwise items are paginated.
+     * @param limit  Number of results to return per page. If {@code null} but {@code page} is provided defaults to 10,
+     *               otherwise all items are returned.
      */
     @GET("sync/ratings/movies{rating}")
     Call<List<RatedMovie>> ratingsMovies(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     /**
@@ -178,11 +184,17 @@ public interface Sync {
      * <p> Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
+     * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
+     *               1, otherwise items are not paginated.
+     * @param limit  Number of results to return per page. If {@code null} but {@code page} is provided defaults to 10,
+     *               otherwise all items are returned.
      */
     @GET("sync/ratings/shows{rating}")
     Call<List<RatedShow>> ratingsShows(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     /**
@@ -191,11 +203,17 @@ public interface Sync {
      * <p> Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
+     * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
+     *               1, otherwise items are paginated.
+     * @param limit  Number of results to return per page. If {@code null} but {@code page} is provided defaults to 10,
+     *               otherwise all items are returned.
      */
     @GET("sync/ratings/seasons{rating}")
     Call<List<RatedSeason>> ratingsSeasons(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     /**
@@ -204,11 +222,17 @@ public interface Sync {
      * <p> Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
+     * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
+     *               1, otherwise items are paginated.
+     * @param limit  Number of results to return per page. If {@code null} but {@code page} is provided defaults to 10,
+     *               otherwise all items are returned.
      */
     @GET("sync/ratings/episodes{rating}")
     Call<List<RatedEpisode>> ratingsEpisodes(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
     );
 
     /**

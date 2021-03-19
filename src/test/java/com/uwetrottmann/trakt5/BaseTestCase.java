@@ -121,10 +121,10 @@ public class BaseTestCase {
         }
     }
 
-    protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedMovies) {
-        for (BaseRatedEntity movie : ratedMovies) {
-            assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isNotNull();
+    protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedEntities) {
+        for (BaseRatedEntity ratedEntity : ratedEntities) {
+            assertThat(ratedEntity.rated_at).isNotNull();
+            assertThat(ratedEntity.rating).isNotNull();
         }
     }
 

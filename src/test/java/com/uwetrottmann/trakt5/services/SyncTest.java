@@ -313,15 +313,14 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsMovies() throws IOException {
-        List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL,
-                null));
+        List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 1, 2));
         assertRatedEntities(ratedMovies);
     }
 
     @Test
     public void test_ratingsMovies_filtered() throws IOException {
         List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.TOTALLYNINJA,
-                null));
+                null, null, null));
         assertThat(ratedMovies).isNotNull();
         for (RatedMovie movie : ratedMovies) {
             assertThat(movie.rated_at).isNotNull();
@@ -330,24 +329,64 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_ratingsMovies_with_pagination() throws IOException {
+        List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 1, 2));
+        assertThat(ratedMovies).hasSize(2);
+        assertRatedEntities(ratedMovies);
+        ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 2, 2));
+        assertThat(ratedMovies).hasSize(2);
+        assertRatedEntities(ratedMovies);
+    }
+
+    @Test
     public void test_ratingsShows() throws IOException {
-        List<RatedShow> ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL,
-                null));
+        List<RatedShow> ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, null, null));
+        assertRatedEntities(ratedShows);
+    }
+
+    @Test
+    public void test_ratingsShows_with_pagination() throws IOException {
+        List<RatedShow> ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 1, 2));
+        assertThat(ratedShows).hasSize(2);
+        assertRatedEntities(ratedShows);
+        ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 2, 2));
+        assertThat(ratedShows).hasSize(2);
         assertRatedEntities(ratedShows);
     }
 
     @Test
     public void test_ratingsSeasons() throws IOException {
-        List<RatedSeason> ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL,
+        List<RatedSeason> ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, null,
                 null));
         assertRatedEntities(ratedSeasons);
     }
 
     @Test
+    public void test_ratingsSeasons_with_pagination() throws IOException {
+        List<RatedSeason> ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 1, 2));
+        assertRatedEntities(ratedSeasons);
+        assertThat(ratedSeasons).hasSize(2);
+        ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 2, 2));
+        assertRatedEntities(ratedSeasons);
+        assertThat(ratedSeasons).hasSize(2);
+    }
+
+    @Test
     public void test_ratingsEpisodes() throws IOException {
-        List<RatedEpisode> ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL,
+        List<RatedEpisode> ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, null,
                 null));
         assertRatedEntities(ratedEpisodes);
+    }
+
+    @Test
+    public void test_ratingsEpisodes_with_pagination() throws IOException {
+        List<RatedEpisode> ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null,
+                1, 2));
+        assertRatedEntities(ratedEpisodes);
+        assertThat(ratedEpisodes).hasSize(2);
+        ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, 2, 2));
+        assertRatedEntities(ratedEpisodes);
+        assertThat(ratedEpisodes).hasSize(2);
     }
 
     @Test
