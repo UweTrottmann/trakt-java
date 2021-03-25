@@ -31,6 +31,8 @@ import org.junit.Test;
 import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneOffset;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,7 +90,7 @@ public class SyncTest extends BaseTestCase {
                 assertThat(playback.paused_at).isNotNull();
                 assertThat(playback.progress).isEqualTo(25.0);
             }
-            
+
             if (playback.movie != null && playback.movie.ids != null && playback.movie.ids.tmdb != null
                     && playback.movie.ids.tmdb == interstellar) {
                 foundMovie = true;
@@ -330,12 +332,10 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsMovies_with_pagination() throws IOException {
-        List<RatedMovie> ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 1, 2));
-        assertThat(ratedMovies).hasSize(2);
-        assertRatedEntities(ratedMovies);
-        ratedMovies = executeCall(getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 2, 2));
-        assertThat(ratedMovies).hasSize(2);
-        assertRatedEntities(ratedMovies);
+        Call<List<RatedMovie>> call = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 1, 2);
+        Response<List<RatedMovie>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
     }
 
     @Test
@@ -346,12 +346,10 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsShows_with_pagination() throws IOException {
-        List<RatedShow> ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 1, 2));
-        assertThat(ratedShows).hasSize(2);
-        assertRatedEntities(ratedShows);
-        ratedShows = executeCall(getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 2, 2));
-        assertThat(ratedShows).hasSize(2);
-        assertRatedEntities(ratedShows);
+        Call<List<RatedShow>> call = getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 1, 2);
+        Response<List<RatedShow>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
     }
 
     @Test
@@ -363,12 +361,10 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsSeasons_with_pagination() throws IOException {
-        List<RatedSeason> ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 1, 2));
-        assertRatedEntities(ratedSeasons);
-        assertThat(ratedSeasons).hasSize(2);
-        ratedSeasons = executeCall(getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 2, 2));
-        assertRatedEntities(ratedSeasons);
-        assertThat(ratedSeasons).hasSize(2);
+        Call<List<RatedSeason>> call = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 1, 5);
+        Response<List<RatedSeason>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
     }
 
     @Test
@@ -380,13 +376,10 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsEpisodes_with_pagination() throws IOException {
-        List<RatedEpisode> ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null,
-                1, 2));
-        assertRatedEntities(ratedEpisodes);
-        assertThat(ratedEpisodes).hasSize(2);
-        ratedEpisodes = executeCall(getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, 2, 2));
-        assertRatedEntities(ratedEpisodes);
-        assertThat(ratedEpisodes).hasSize(2);
+        Call<List<RatedEpisode>> call = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, 1, 2);
+        Response<List<RatedEpisode>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
     }
 
     @Test
