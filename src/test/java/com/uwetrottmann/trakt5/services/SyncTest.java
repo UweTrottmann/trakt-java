@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
 import com.uwetrottmann.trakt5.entities.LastActivityAccount;
@@ -44,6 +45,7 @@ import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
+import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.junit.Test;
@@ -613,6 +615,169 @@ public class SyncTest extends BaseTestCase {
         SyncResponse requestResponse = executeCall(getTrakt().sync().deleteItemsFromWatchlist(
                 buildItemsForDeletion()));
         assertSyncResponseDelete(requestResponse);
+    }
+
+    @Test
+    public void test_getHistory() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(null, null, null, null, null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("10");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            if ("episode".equals(entry.type)) {
+                assertThat(entry.episode).isNotNull();
+                assertThat(entry.show).isNotNull();
+            } else if ("movie".equals(entry.type)) {
+                assertThat(entry.movie).isNotNull();
+            }
+        }
+    }
+
+    @Test
+    public void test_getHistory_with_pagination() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(1, 5, null, null, null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("5");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            if ("episode".equals(entry.type)) {
+                assertThat(entry.episode).isNotNull();
+                assertThat(entry.show).isNotNull();
+            } else if ("movie".equals(entry.type)) {
+                assertThat(entry.movie).isNotNull();
+            }
+        }
+    }
+
+    @Test
+    public void test_getHistory_movies() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(HistoryType.MOVIES, null, null, null, null, null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("10");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            assertThat(entry.movie).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getHistory_movies_with_pagination() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(HistoryType.MOVIES, 1, 5, null, null, null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("5");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            assertThat(entry.movie).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getHistory_episodes() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(HistoryType.EPISODES, null, null, null, null,
+                null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("10");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            assertThat(entry.episode).isNotNull();
+            assertThat(entry.show).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getHistory_episodes_with_pagination() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(HistoryType.EPISODES, 1, 5, null, null, null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("5");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.id).isGreaterThan(0);
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isNotEmpty();
+            assertThat(entry.episode).isNotNull();
+            assertThat(entry.show).isNotNull();
+        }
+    }
+
+    @Test
+    public void test_getHistory_item() throws IOException {
+        Call<List<HistoryEntry>> call = getTrakt().sync().getHistory(HistoryType.MOVIES,
+                TestData.MOVIE_WATCHED_TRAKT_ID, null, null, null,
+                OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
+                OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC));
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("10");
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+        assertThat(body.size()).isGreaterThan(0);
+
+        for (HistoryEntry entry : body) {
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotEmpty();
+            assertThat(entry.type).isEqualTo("movie");
+            assertThat(entry.movie).isNotNull();
+        }
     }
 
 
