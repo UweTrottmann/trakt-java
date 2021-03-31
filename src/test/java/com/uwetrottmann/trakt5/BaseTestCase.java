@@ -92,6 +92,17 @@ public class BaseTestCase {
     }
 
     /**
+     * Execute call with non-Void response body, without extracting it.
+     */
+    public <T> Response<T> executeCallWithoutReadingBody(Call<T> call) throws IOException {
+        Response<T> response = call.execute();
+        if (!response.isSuccessful()) {
+            handleFailedResponse(response); // will throw error
+        }
+        return response;
+    }
+
+    /**
      * Execute call with Void response body.
      */
     public <T> void executeVoidCall(Call<T> call) throws IOException {
@@ -121,10 +132,10 @@ public class BaseTestCase {
         }
     }
 
-    protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedMovies) {
-        for (BaseRatedEntity movie : ratedMovies) {
-            assertThat(movie.rated_at).isNotNull();
-            assertThat(movie.rating).isNotNull();
+    protected static <T extends BaseRatedEntity> void assertRatedEntities(List<T> ratedEntities) {
+        for (BaseRatedEntity ratedEntity : ratedEntities) {
+            assertThat(ratedEntity.rated_at).isNotNull();
+            assertThat(ratedEntity.rating).isNotNull();
         }
     }
 
