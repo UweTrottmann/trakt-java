@@ -19,6 +19,7 @@ import org.junit.BeforeClass;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
 
@@ -113,13 +114,13 @@ public class BaseTestCase {
         }
     }
 
-    public void assertSuccessfulResponse(Response response) {
+    public <T> void assertSuccessfulResponse(Response<T> response) {
         if (!response.isSuccessful()) {
             handleFailedResponse(response);
         }
     }
 
-    private void handleFailedResponse(Response response) {
+    private <T> void handleFailedResponse(Response<T> response) {
         if (response.code() == 401) {
             fail("Authorization required, supply a valid OAuth access token: "
                     + response.code() + " " + response.message());
@@ -238,7 +239,7 @@ public class BaseTestCase {
         }
     }
 
-    public void assertCrewMembers(List<CrewMember> crew, Type type) {
+    public void assertCrewMembers(@Nullable List<CrewMember> crew, Type type) {
         if (crew == null) {
             return;
         }
