@@ -17,7 +17,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```groovy
-implementation 'com.uwetrottmann.trakt5:trakt-java:6.9.0'
+implementation("com.uwetrottmann.trakt5:trakt-java:6.10.0")
 ```
 
 Or for Maven:
@@ -26,7 +26,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>6.9.0</version>
+  <version>6.10.0</version>
 </dependency>
 ```
 
@@ -38,10 +38,10 @@ This library depends on [threetenbp](https://github.com/ThreeTen/threetenbp). To
 dependency and include [ThreeTenABP](https://github.com/JakeWharton/ThreeTenABP) instead:
 
 ```groovy
-implementation ('com.uwetrottmann.trakt5:trakt-java:<latest-version>') {
-  exclude group: 'org.threeten', module: 'threetenbp'
+implementation ("com.uwetrottmann.trakt5:trakt-java:<latest-version>") {
+  exclude group: "org.threeten", module: "threetenbp"
 }
-implementation 'com.jakewharton.threetenabp:threetenabp:<latest-version>'
+implementation("com.jakewharton.threetenabp:threetenabp:<latest-version>")
 ```
 
 ### Example

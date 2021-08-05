@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+## 6.10.0
+_2021-08-05_
+        
+* Change sync ratings endpoints to add pagination. Thanks @defhead!
+* Update retrofit to 2.9.0, requires Java 8/Android 5. But most should be using that version anyhow (including latest okhttp).
+* Update threetenbp [1.5.0 -> 1.5.1].
+
 ## 6.9.0
 _2021-02-29_
 
