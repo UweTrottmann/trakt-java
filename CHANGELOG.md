@@ -1,8 +1,10 @@
 Change Log
 ==========
-           
-## latest
 
+## 6.11.0
+_2022-08-25_
+
+* Bundle R8 rules into library. Thanks @Goooler! #127
 * Update threetenbp [1.5.1 -> 1.6.1].
 * Add explicit OkHttp dependency [4.10.0].
 
