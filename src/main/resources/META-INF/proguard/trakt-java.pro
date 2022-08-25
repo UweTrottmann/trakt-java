@@ -1,0 +1,2 @@
+-keep class com.uwetrottmann.trakt5.entities.** { *; }
+-keep class com.uwetrottmann.trakt5.enums.** { *; }
