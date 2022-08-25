@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 6.11.1
+_2022-08-25_
+
+* Add explicit Gson dependency [2.9.1]: transient dependency on 2.8.5 has a [security vulnerability](https://github.com/google/gson/pull/1991)
+  and this library uses the Gson API explicitly.
+
 ## 6.11.0
 _2022-08-25_
 
