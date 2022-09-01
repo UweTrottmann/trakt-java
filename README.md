@@ -81,7 +81,8 @@ See test cases in `src/test/` for more examples and the [retrofit website](https
 It is likely not every method in this library is used, so it is probably useful to strip unused ones with Proguard.
 Apply the [Proguard rules for retrofit](https://square.github.io/retrofit/#download).
 
-The specific rules for this library are [already bundled](src/main/resources/META-INF/proguard/trakt-java.pro) into the jar which can be interpreted by R8 automatically, ProGuard users must manually add the options.
+The specific rules for this library are [already bundled](src/main/resources/META-INF/proguard/trakt-java.pro) into the
+release which can be interpreted by R8 automatically, ProGuard users must manually add the rules.
 
 ## License
 
