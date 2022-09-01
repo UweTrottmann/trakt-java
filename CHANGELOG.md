@@ -1,7 +1,8 @@
 Change Log
 ==========
 
-## next
+## 6.11.2
+_2022-09-01_
 
 * Update bundled R8 rules to remove unused entity classes.
 
