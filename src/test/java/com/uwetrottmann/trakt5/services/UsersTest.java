@@ -60,6 +60,7 @@ public class UsersTest extends BaseTestCase {
         assertThat(settings.account).isNotNull();
         assertThat(settings.connections).isNotNull();
         assertThat(settings.sharing_text).isNotNull();
+        assertThat(settings.limits).isNotNull();
     }
 
     @Test
