@@ -6,5 +6,6 @@ public class Settings {
     public Account account;
     public Connections connections;
     public SharingText sharing_text;
+    public Limits limits;
 
 }
