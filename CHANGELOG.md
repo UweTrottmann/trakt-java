@@ -4,6 +4,7 @@ Change Log
 ## In development
 
 * Add method to reorder lists. Thanks @ZelKami! #131
+* Add limits to user settings.
 
 ## 6.11.2
 _2022-09-01_
