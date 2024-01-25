@@ -7,6 +7,9 @@ public class ListItemRank {
 
     public List<Long> rank;
 
+    /**
+     * Can also be used to reorder lists by passing list IDs.
+     */
     @Nonnull
     public static ListItemRank from(List<Long> rank) {
         ListItemRank listItemRank = new ListItemRank();
