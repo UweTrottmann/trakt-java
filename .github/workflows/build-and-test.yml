@@ -1,11 +1,16 @@
 name: Build and test
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch: # Allow running manually from web UI
 
 jobs:
   package:
     name: Maven Build and Test
     runs-on: ubuntu-latest
+    permissions:
+      checks: write # to publish unit test results
 
     steps:
       - name: Check out
