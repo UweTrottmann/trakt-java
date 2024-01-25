@@ -218,6 +218,23 @@ public class UsersTest extends BaseTestCase {
         assertThat(response.updated).isEqualTo(entries.size());
     }
 
+    @Test
+    public void test_reorderLists() throws IOException {
+        List<TraktList> lists = executeCall(getTrakt().users().lists(UserSlug.ME));
+
+        // reverse order
+        List<Long> newRank = new ArrayList<>();
+        for (int i = lists.size() - 1; i >= 0; i--) {
+            newRank.add(lists.get(i).ids.trakt.longValue());
+        }
+
+        ListReorderResponse response = executeCall(getTrakt().users().reorderLists(
+                UserSlug.ME,
+                ListItemRank.from(newRank)
+        ));
+        assertThat(response.updated).isEqualTo(lists.size());
+    }
+
     @Ignore("Following is now a VIP feature")
     @Test
     public void test_unfollowAndFollow() throws InterruptedException, IOException {
