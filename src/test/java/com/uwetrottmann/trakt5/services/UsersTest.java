@@ -36,6 +36,7 @@ import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.enums.SortBy;
 import com.uwetrottmann.trakt5.enums.SortHow;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.threeten.bp.LocalTime;
 import org.threeten.bp.OffsetDateTime;
@@ -217,6 +218,7 @@ public class UsersTest extends BaseTestCase {
         assertThat(response.updated).isEqualTo(entries.size());
     }
 
+    @Ignore("Following is now a VIP feature")
     @Test
     public void test_unfollowAndFollow() throws InterruptedException, IOException {
         // unfollow first
