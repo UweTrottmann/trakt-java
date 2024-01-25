@@ -135,6 +135,17 @@ public interface Users {
     );
 
     /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Reorder all custom lists by sending the updated rank of list ids.
+     */
+    @POST("users/{username}/lists/reorder")
+    Call<ListReorderResponse> reorderLists(
+            @Path("username") UserSlug userSlug,
+            @Body ListItemRank rank
+    );
+
+    /**
      * <b>OAuth Optional</b>
      *
      * <p> Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
