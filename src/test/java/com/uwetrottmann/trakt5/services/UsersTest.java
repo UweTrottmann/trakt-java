@@ -61,6 +61,11 @@ public class UsersTest extends BaseTestCase {
         assertThat(settings.account).isNotNull();
         assertThat(settings.connections).isNotNull();
         assertThat(settings.sharing_text).isNotNull();
+        assertThat(settings.limits.list.count).isPositive();
+        assertThat(settings.limits.list.item_count).isPositive();
+        assertThat(settings.limits.watchlist.item_count).isPositive();
+        assertThat(settings.limits.favorites.item_count).isPositive();
+        assertThat(settings.limits.recommendations.item_count).isPositive();
     }
 
     @Test
