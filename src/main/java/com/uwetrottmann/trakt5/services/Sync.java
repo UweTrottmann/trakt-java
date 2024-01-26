@@ -2,6 +2,7 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
@@ -13,7 +14,9 @@ import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -129,6 +132,67 @@ public interface Sync {
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies and episodes that the a user has watched, sorted by most recent.
+     *
+     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
+     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
+     * watch}.
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> getHistory(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns movies or episodes (depending on the <code>type</code>) that the a user has watched,
+     * sorted by most recent.
+     *
+     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
+     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
+     * watch}.
+     */
+    @GET("sync/history/{type}")
+    Call<List<HistoryEntry>> getHistory(
+            @Path("type") HistoryType type,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>Returns the history for just the specified item. For example, {@code /sync/history/movies/12601} would return
+     * all watches for TRON: Legacy and {@code /sync/history/shows/1388} would return all watched episodes
+     * for Breaking Bad. If an invalid {@code id} is sent, a 404 error will be returned. If the {@code id} is valid,
+     * but there is no history, an empty array will be returned.
+     *
+     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
+     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
+     * watch}.
+     */
+    @GET("sync/history/{type}/{id}")
+    Call<List<HistoryEntry>> getHistory(
+            @Path("type") HistoryType type,
+            @Path("id") int id,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
     );
 
     /**
