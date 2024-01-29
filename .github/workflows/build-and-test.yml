@@ -24,7 +24,7 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode -show-version --update-snapshots --errors package
       - name: Publish Unit Test Results
-        uses: dorny/test-reporter@afe6793191b75b608954023a46831a3fe10048d4 # v1.7.0
+        uses: dorny/test-reporter@eaa763f6ffc21c7a37837f56cd5f9737f27fc6c8 # v1.8.0
         if: always() # also run if build step failed
         with:
           name: JUnit Report
