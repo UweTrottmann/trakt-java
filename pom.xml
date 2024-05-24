@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.uwetrottmann.trakt5</groupId>
@@ -13,6 +14,7 @@
     <inceptionYear>2013</inceptionYear>
 
     <properties>
+        <versions.okhttp>4.12.0</versions.okhttp>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -43,28 +45,28 @@
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>retrofit</artifactId>
-            <version>2.9.0</version>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>converter-gson</artifactId>
-            <version>2.9.0</version>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.10.0</version>
+            <version>${versions.okhttp}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.9.1</version>
+            <version>2.11.0</version>
         </dependency>
         <!-- https://www.threeten.org/threetenbp/changes-report.html -->
         <dependency>
             <groupId>org.threeten</groupId>
             <artifactId>threetenbp</artifactId>
-            <version>1.6.1</version>
+            <version>1.6.9</version>
         </dependency>
 
         <dependency>
@@ -84,14 +86,14 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version>
+            <version>3.25.3</version>
             <scope>test</scope>
         </dependency>
         <!-- logging-interceptor version should match okhttp dependency -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>logging-interceptor</artifactId>
-            <version>4.10.0</version>
+            <version>${versions.okhttp}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
