@@ -1,8 +1,8 @@
 Change Log
 ==========
-               
-## Next version
-_in development
+
+## 6.13.0
+_2024-05-24_
                
 * Deprecated TV rage ID, it appears to be no longer used.                
 * Add variants of the comments methods that accept a `Cache-Control` header.
