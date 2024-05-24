@@ -21,6 +21,10 @@ import javax.annotation.Nonnull;
 public class PersonIds extends BaseIds {
 
     public String slug;
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     public String tvrage;
 
     @Nonnull

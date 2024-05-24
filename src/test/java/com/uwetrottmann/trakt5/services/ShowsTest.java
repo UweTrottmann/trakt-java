@@ -91,7 +91,6 @@ public class ShowsTest extends BaseTestCase {
         assertThat(show.ids.imdb).isEqualTo(TestData.SHOW_IMDB_ID);
         assertThat(show.ids.tmdb).isEqualTo(TestData.SHOW_TMDB_ID);
         assertThat(show.ids.tvdb).isEqualTo(TestData.SHOW_TVDB_ID);
-        assertThat(show.ids.tvrage).isEqualTo(TestData.SHOW_TVRAGE_ID);
     }
 
     @Test
