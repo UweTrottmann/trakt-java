@@ -4,7 +4,11 @@ Change Log
 ## Next version
 _in development
                
-* Deprecated TV rage ID, it appears to be no longer used.                
+* Deprecated TV rage ID, it appears to be no longer used.  
+* Update retrofit [2.9.0 -> 2.11.0].
+* Update okhttp [4.10.0 -> 4.12.0].
+* Update gson [2.9.1 -> 2.11.0].
+* Update threetenbp [1.6.1 -> 1.6.9].
 
 ## 6.12.0
 _2024-01-25_
