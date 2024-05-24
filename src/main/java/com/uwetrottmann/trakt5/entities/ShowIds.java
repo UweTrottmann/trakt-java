@@ -22,6 +22,10 @@ public class ShowIds extends BaseIds {
 
     public String slug;
     public Integer tvdb;
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     public Integer tvrage;
 
     @Nonnull
@@ -59,6 +63,10 @@ public class ShowIds extends BaseIds {
         return ids;
     }
 
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     @Nonnull
     public static ShowIds tvrage(int tvrage) {
         ShowIds ids = new ShowIds();

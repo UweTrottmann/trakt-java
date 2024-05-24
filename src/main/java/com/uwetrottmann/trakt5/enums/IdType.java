@@ -22,6 +22,10 @@ public enum IdType implements TraktEnum {
     IMDB("imdb"),
     TMDB("tmdb"),
     TVDB("tvdb"),
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     TVRAGE("tvrage");
 
     private final String value;

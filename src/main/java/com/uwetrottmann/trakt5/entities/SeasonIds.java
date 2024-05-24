@@ -21,6 +21,10 @@ public class SeasonIds {
     public Integer tvdb;
     public Integer tmdb;
     public Integer trakt;
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     public Integer tvrage;
 
 }

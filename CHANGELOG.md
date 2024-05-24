@@ -1,5 +1,10 @@
 Change Log
 ==========
+               
+## Next version
+_in development
+               
+* Deprecated TV rage ID, it appears to be no longer used.                
 
 ## 6.12.0
 _2024-01-25_

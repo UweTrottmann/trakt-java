@@ -42,7 +42,6 @@ public interface TestData {
     String SHOW_IMDB_ID = "tt3952222";
     int SHOW_TMDB_ID = 62413;
     int SHOW_TVDB_ID = 281534;
-    int SHOW_TVRAGE_ID = 38299;
     int SHOW_YEAR = 2015;
 
     String EPISODE_TITLE = "Bangarang";

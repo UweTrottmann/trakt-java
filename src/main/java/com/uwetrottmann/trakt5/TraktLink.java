@@ -30,6 +30,10 @@ public class TraktLink {
     private static final String URL_IMDB = TraktV2.SITE_URL + "/search/imdb/";
     private static final String URL_TMDB = TraktV2.SITE_URL + "/search/tmdb/";
     private static final String URL_TVDB = TraktV2.SITE_URL + "/search/tvdb/";
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     private static final String URL_TVRAGE = TraktV2.SITE_URL + "/search/tvrage/";
 
     private static final String PATH_SEASONS = "/seasons/";
@@ -115,7 +119,10 @@ public class TraktLink {
 
     /**
      * Creates a link to a show search for this id.
+     *
+     * @deprecated This appears to be no longer supported.
      */
+    @Deprecated
     public static String tvrage(int tvrageId) {
         return URL_TVRAGE + tvrageId;
     }

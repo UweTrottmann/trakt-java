@@ -21,6 +21,10 @@ import javax.annotation.Nonnull;
 public class EpisodeIds extends BaseIds {
 
     public Integer tvdb;
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     public Integer tvrage;
 
     @Nonnull
@@ -51,6 +55,10 @@ public class EpisodeIds extends BaseIds {
         return ids;
     }
 
+    /**
+     * @deprecated This appears to be no longer supported.
+     */
+    @Deprecated
     @Nonnull
     public static EpisodeIds tvrage(int tvrage) {
         EpisodeIds ids = new EpisodeIds();

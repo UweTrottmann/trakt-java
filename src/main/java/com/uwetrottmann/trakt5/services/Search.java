@@ -91,7 +91,7 @@ public interface Search {
     );
 
     /**
-     * Lookup items by their Trakt, IMDB, TMDB, TVDB, or TVRage ID.
+     * Lookup items by their Trakt, IMDB, TMDB, TVDB ID.
      *
      * @see <a href="http://docs.trakt.apiary.io/#reference/search/id-lookup/get-id-lookup-results">Search - ID Lookup</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/extended-info">Extended</a>
