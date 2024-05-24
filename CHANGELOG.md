@@ -4,7 +4,9 @@ Change Log
 ## Next version
 _in development
                
-* Deprecated TV rage ID, it appears to be no longer used.  
+* Deprecated TV rage ID, it appears to be no longer used.                
+* Add variants of the comments methods that accept a `Cache-Control` header.
+  This can be used to skip the local cache and get the latest comments from the server.
 * Update retrofit [2.9.0 -> 2.11.0].
 * Update okhttp [4.10.0 -> 4.12.0].
 * Update gson [2.9.1 -> 2.11.0].

@@ -24,6 +24,7 @@ import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.enums.Extended;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -65,6 +66,16 @@ public interface Seasons {
     Call<List<Comment>> comments(
             @Path("id") String showId,
             @Path("season") int season
+    );
+
+    /**
+     * Variant that allows changing the Cache-Control header.
+     */
+    @GET("shows/{id}/seasons/{season}/comments")
+    Call<List<Comment>> comments(
+            @Path("id") String showId,
+            @Path("season") int season,
+            @Header("Cache-Control") String cacheControl
     );
 
     /**

@@ -26,6 +26,7 @@ import com.uwetrottmann.trakt5.entities.TrendingMovie;
 import com.uwetrottmann.trakt5.enums.Extended;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -105,6 +106,18 @@ public interface Movies {
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Variant that allows changing the Cache-Control header.
+     */
+    @GET("movies/{id}/comments")
+    Call<List<Comment>> comments(
+            @Path("id") String movieId,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended,
+            @Header("Cache-Control") String cacheControl
     );
 
     /**
