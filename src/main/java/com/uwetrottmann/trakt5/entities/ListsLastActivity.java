@@ -18,10 +18,9 @@ package com.uwetrottmann.trakt5.entities;
 
 import org.threeten.bp.OffsetDateTime;
 
-public class ListsLastActivity {
+public class ListsLastActivity extends LastActivityUpdated {
 
     public OffsetDateTime liked_at;
-    public OffsetDateTime updated_at;
     public OffsetDateTime commented_at;
 
 }

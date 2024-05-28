@@ -23,7 +23,10 @@ import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
+import com.uwetrottmann.trakt5.entities.LastActivityAccount;
+import com.uwetrottmann.trakt5.entities.LastActivityComments;
 import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import com.uwetrottmann.trakt5.entities.LastActivityUpdated;
 import com.uwetrottmann.trakt5.entities.ListsLastActivity;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
@@ -68,7 +71,13 @@ public class SyncTest extends BaseTestCase {
         assertLastActivityMore(lastActivities.episodes);
         assertLastActivity(lastActivities.shows);
         assertLastActivity(lastActivities.seasons);
+        assertLastActivityComments(lastActivities.comments);
         assertListsLastActivity(lastActivities.lists);
+        assertLastActivityUpdated(lastActivities.watchlist);
+        assertLastActivityUpdated(lastActivities.favorites);
+        assertLastActivityAccount(lastActivities.account);
+        assertLastActivityUpdated(lastActivities.saved_filters);
+        assertLastActivityUpdated(lastActivities.notes);
     }
 
     @Test
@@ -139,6 +148,26 @@ public class SyncTest extends BaseTestCase {
         assertThat(activity).isNotNull();
         assertThat(activity.commented_at).isNotNull();
         assertThat(activity.liked_at).isNotNull();
+        assertThat(activity.updated_at).isNotNull();
+    }
+
+    private void assertLastActivityComments(LastActivityComments activity) {
+        assertThat(activity).isNotNull();
+        assertThat(activity.liked_at).isNotNull();
+        assertThat(activity.blocked_at).isNotNull();
+    }
+
+    private void assertLastActivityAccount(LastActivityAccount activity) {
+        assertThat(activity).isNotNull();
+        assertThat(activity.settings_at).isNotNull();
+        assertThat(activity.followed_at).isNotNull();
+        assertThat(activity.following_at).isNotNull();
+        assertThat(activity.pending_at).isNotNull();
+        assertThat(activity.requested_at).isNotNull();
+    }
+
+    private void assertLastActivityUpdated(LastActivityUpdated activity) {
+        assertThat(activity).isNotNull();
         assertThat(activity.updated_at).isNotNull();
     }
 
