@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+## 6.14.0
+_2024-07-12_
+
+* LastActivities: Add missing fields. Thanks @ZelKami! #148
+
 ## 6.13.0
 _2024-05-24_
                
