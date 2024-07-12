@@ -25,6 +25,12 @@ public class LastActivities {
     public LastActivityMore episodes;
     public LastActivity shows;
     public LastActivity seasons;
+    public LastActivityComments comments;
     public ListsLastActivity lists;
+    public LastActivityUpdated watchlist;
+    public LastActivityUpdated favorites;
+    public LastActivityAccount account;
+    public LastActivityUpdated saved_filters;
+    public LastActivityUpdated notes;
 
 }
