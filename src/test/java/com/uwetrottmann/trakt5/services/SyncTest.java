@@ -83,8 +83,8 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_getPlayback() throws IOException, InterruptedException {
         // Make sure there are paused entries.
-        int agentsOfShield = 4420028; /* S01E01 */
-        SyncEpisode episode = new SyncEpisode().id(EpisodeIds.tvdb(agentsOfShield));
+        int agentsOfShield = 74005; /* S01E01 */
+        SyncEpisode episode = new SyncEpisode().id(EpisodeIds.trakt(agentsOfShield));
         ScrobbleProgress episodeProgress = new ScrobbleProgress(episode, 25.0, null, null);
         PlaybackResponse episodeResponse = executeCall(getTrakt().scrobble().pauseWatching(episodeProgress));
         assertThat(episodeResponse.action).isEqualTo("pause");
@@ -109,8 +109,8 @@ public class SyncTest extends BaseTestCase {
         for (PlaybackResponse playback : playbacks) {
             assertThat(playback.type).isNotNull();
 
-            if (playback.episode != null && playback.episode.ids != null && playback.episode.ids.tvdb != null
-                    && playback.episode.ids.tvdb == agentsOfShield) {
+            if (playback.episode != null && playback.episode.ids != null && playback.episode.ids.trakt != null
+                    && playback.episode.ids.trakt == agentsOfShield) {
                 foundEpisode = true;
                 assertThat(playback.paused_at).isNotNull();
                 assertThat(playback.progress).isEqualTo(25.0);
@@ -124,10 +124,17 @@ public class SyncTest extends BaseTestCase {
             }
         }
 
-        if (!foundEpisode) //noinspection ResultOfMethodCallIgnored
+        if (!foundEpisode) {
             fail("Agents of Shield episode not paused.");
-        if (!foundMovie) //noinspection ResultOfMethodCallIgnored
+        }
+        if (!foundMovie) {
             fail("Interstellar movie not paused.");
+        }
+
+        for (PlaybackResponse playback : playbacks) {
+            assertThat(playback.id).isNotNull();
+            executeVoidCall(getTrakt().sync().removePlayback(playback.id));
+        }
     }
 
     private void assertLastActivityMore(LastActivityMore activityMore) {
