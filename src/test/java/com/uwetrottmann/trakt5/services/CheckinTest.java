@@ -95,6 +95,7 @@ public class CheckinTest extends BaseTestCase {
     private void assertEpisodeCheckin(EpisodeCheckinResponse response) {
         assertThat(response).isNotNull();
         // episode should be over in less than an hour
+        assertThat(response.watched_at).isNotNull();
         assertThat(response.watched_at.isBefore(OffsetDateTime.now().plusHours(1))).isTrue();
         assertThat(response.episode).isNotNull();
         assertThat(response.episode.ids).isNotNull();
@@ -128,6 +129,7 @@ public class CheckinTest extends BaseTestCase {
         MovieCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
         assertThat(response).isNotNull();
         // movie should be over in less than 3 hours
+        assertThat(response.watched_at).isNotNull();
         assertThat(response.watched_at.isBefore(OffsetDateTime.now().plusHours(3))).isTrue();
         MoviesTest.assertTestMovie(response.movie);
 
@@ -174,7 +176,7 @@ public class CheckinTest extends BaseTestCase {
     @Test
     public void test_checkin_delete() throws IOException {
         // tries to delete a check in even if none active
-        Response response = getTrakt().checkin().deleteActiveCheckin().execute();
+        Response<Void> response = getTrakt().checkin().deleteActiveCheckin().execute();
         assertSuccessfulResponse(response);
         assertThat(response.code()).isEqualTo(204);
     }
