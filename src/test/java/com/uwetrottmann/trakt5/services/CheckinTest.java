@@ -47,8 +47,7 @@ public class CheckinTest extends BaseTestCase {
     private static final String APP_DATE = "2014-10-15";
 
     @Nonnull
-    @Override
-    public <T> T executeCall(@Nonnull Call<T> call) throws IOException {
+    public <T> T executeCheckInCall(@Nonnull Call<T> call) throws IOException, InterruptedException {
         Response<T> response = call.execute();
         if (!response.isSuccessful()) {
             if (getTrakt().checkForCheckinError(response) != null) {
@@ -62,6 +61,8 @@ public class CheckinTest extends BaseTestCase {
         }
         T body = response.body();
         if (body != null) {
+            // Give the server some time to update its state for next tests
+            Thread.sleep(500);
             return body;
         } else {
             throw new IllegalStateException("Body should not be null for successful response");
@@ -69,10 +70,10 @@ public class CheckinTest extends BaseTestCase {
     }
 
     @Test
-    public void test_checkin_episode() throws IOException {
+    public void test_checkin_episode() throws IOException, InterruptedException {
         EpisodeCheckin checkin = buildEpisodeCheckin();
 
-        EpisodeCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
+        EpisodeCheckinResponse response = executeCheckInCall(getTrakt().checkin().checkin(checkin));
 
         // delete check-in first
         test_checkin_delete();
@@ -81,10 +82,10 @@ public class CheckinTest extends BaseTestCase {
     }
 
     @Test
-    public void test_checkin_episode_without_ids() throws IOException {
+    public void test_checkin_episode_without_ids() throws IOException, InterruptedException {
         EpisodeCheckin checkin = buildEpisodeCheckinWithoutIds();
 
-        EpisodeCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
+        EpisodeCheckinResponse response = executeCheckInCall(getTrakt().checkin().checkin(checkin));
 
         // delete check-in first
         test_checkin_delete();
@@ -123,10 +124,10 @@ public class CheckinTest extends BaseTestCase {
     }
 
     @Test
-    public void test_checkin_movie() throws IOException {
+    public void test_checkin_movie() throws IOException, InterruptedException {
         MovieCheckin checkin = buildMovieCheckin();
 
-        MovieCheckinResponse response = executeCall(getTrakt().checkin().checkin(checkin));
+        MovieCheckinResponse response = executeCheckInCall(getTrakt().checkin().checkin(checkin));
         assertThat(response).isNotNull();
         // movie should be over in less than 3 hours
         assertThat(response.watched_at).isNotNull();
@@ -147,11 +148,11 @@ public class CheckinTest extends BaseTestCase {
     }
 
     @Test
-    public void test_checkin_blocked() throws IOException {
+    public void test_checkin_blocked() throws IOException, InterruptedException {
         Checkin checkin = getTrakt().checkin();
 
         EpisodeCheckin episodeCheckin = buildEpisodeCheckin();
-        EpisodeCheckinResponse response = executeCall(checkin.checkin(episodeCheckin));
+        executeCheckInCall(checkin.checkin(episodeCheckin));
 
         MovieCheckin movieCheckin = buildMovieCheckin();
         Response<MovieCheckinResponse> responseBlocked = checkin.checkin(movieCheckin).execute();
@@ -174,10 +175,12 @@ public class CheckinTest extends BaseTestCase {
 
 
     @Test
-    public void test_checkin_delete() throws IOException {
+    public void test_checkin_delete() throws IOException, InterruptedException {
         // tries to delete a check in even if none active
         Response<Void> response = getTrakt().checkin().deleteActiveCheckin().execute();
         assertSuccessfulResponse(response);
         assertThat(response.code()).isEqualTo(204);
+        // Give the server some time to update its state for next tests
+        Thread.sleep(500);
     }
 }
