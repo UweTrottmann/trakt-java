@@ -32,6 +32,7 @@ import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -135,6 +136,18 @@ public interface Sync {
     @GET("sync/playback/movies")
     Call<List<PlaybackResponse>> getPlaybackMovies(
             @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     * <p>
+     * Remove a playback item from a user's playback progress list. A 404 will be returned if the id is invalid.
+     * <p>
+     * <a href="https://trakt.docs.apiary.io/#reference/sync/remove-playback/remove-a-playback-item">Online documentation</a>
+     */
+    @DELETE("sync/playback/{id}")
+    Call<Void> removePlayback(
+            @Path("id") long id
     );
 
     /**

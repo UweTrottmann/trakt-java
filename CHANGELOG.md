@@ -1,5 +1,9 @@
 Change Log
 ==========
+          
+## next
+
+* Add `Sync.removePlayback(id)`.
 
 ## 6.14.0
 _2024-07-12_
