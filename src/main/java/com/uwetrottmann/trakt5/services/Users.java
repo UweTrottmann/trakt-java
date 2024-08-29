@@ -25,6 +25,7 @@ import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.ListEntry;
 import com.uwetrottmann.trakt5.entities.ListItemRank;
 import com.uwetrottmann.trakt5.entities.ListReorderResponse;
+import com.uwetrottmann.trakt5.entities.NoteResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
 import com.uwetrottmann.trakt5.entities.RatedSeason;
@@ -39,6 +40,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
+import com.uwetrottmann.trakt5.enums.NoteType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
@@ -102,6 +104,22 @@ public interface Users {
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
             @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>VIP Only, OAuth Optional</b>
+     * <p>
+     * Returns the most recently added notes for the user.
+     * <p>
+     * <a href="https://trakt.docs.apiary.io/#reference/users/notes/get-notes">Online documentation</a>
+     */
+    @GET("users/{username}/notes/{type}")
+    Call<List<NoteResponse>> notes(
+            @Path("username") UserSlug userSlug,
+            @Path("type") String type,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
