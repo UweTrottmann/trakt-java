@@ -1,7 +1,8 @@
 Change Log
 ==========
-          
-## next
+
+## 6.15.0
+_2024-08-30_
 
 * `TraktV2.notes()`: support to add, get, update and delete a note.
 * `TraktV2.users().notes(...)`: Support to get all notes for a user.
