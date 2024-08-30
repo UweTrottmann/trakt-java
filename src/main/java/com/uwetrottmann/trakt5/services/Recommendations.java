@@ -49,7 +49,7 @@ public interface Recommendations {
      *
      * <p> Dismiss a movie from getting recommended anymore.
      *
-     * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
+     * @param movieId Trakt ID, Trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
     @DELETE("recommendations/movies/{id}")
     Call<Void> dismissMovie(
@@ -76,7 +76,7 @@ public interface Recommendations {
      *
      * <p> Dismiss a show from getting recommended anymore.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: 922.
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: 922.
      */
     @DELETE("recommendations/shows/{id}")
     Call<Void> dismissShow(

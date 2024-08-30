@@ -34,7 +34,7 @@ public interface Episodes {
     /**
      * Returns a single episode's details.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      * @param episode Episode number.
      */
@@ -49,7 +49,7 @@ public interface Episodes {
     /**
      * Returns all top level comments for an episode. Most recent comments returned first.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      * @param episode Episode number.
      */
@@ -80,7 +80,7 @@ public interface Episodes {
     /**
      * Returns rating (between 0 and 10) and distribution for an episode.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      * @param episode Episode number.
      */

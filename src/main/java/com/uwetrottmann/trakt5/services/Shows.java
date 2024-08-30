@@ -65,7 +65,7 @@ public interface Shows {
     /**
      * Returns a single shows's details.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("shows/{id}")
     Call<Show> summary(
@@ -76,7 +76,7 @@ public interface Shows {
     /**
      * Returns all translations for a show, including language and translated values for title and overview.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("shows/{id}/translations")
     Call<List<Translation>> translations(

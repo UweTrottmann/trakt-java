@@ -17,7 +17,7 @@
 package com.uwetrottmann.trakt5;
 
 /**
- * Build website links to trakt entities.
+ * Build website links to Trakt entities.
  */
 public class TraktLink {
 

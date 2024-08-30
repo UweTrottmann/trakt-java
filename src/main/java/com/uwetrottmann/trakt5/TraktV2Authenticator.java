@@ -45,7 +45,7 @@ public class TraktV2Authenticator implements Authenticator {
     }
 
     /**
-     * If not doing a trakt {@link TraktV2#API_URL} request tries to refresh the access token with the refresh token.
+     * If not doing a Trakt {@link TraktV2#API_URL} request tries to refresh the access token with the refresh token.
      *
      * @param response The response passed to {@link #authenticate(Route, Response)}.
      * @param trakt The {@link TraktV2} instance to get the API key from and to set the updated JSON web token on.
@@ -54,7 +54,7 @@ public class TraktV2Authenticator implements Authenticator {
     @Nullable
     public static Request handleAuthenticate(Response response, TraktV2 trakt) throws IOException {
         if (!trakt.apiHost().equals(response.request().url().host())) {
-            return null; // not a trakt API endpoint (possibly trakt OAuth or other API), give up.
+            return null; // not a Trakt API endpoint (possibly Trakt OAuth or other API), give up.
         }
         if (responseCount(response) >= 2) {
             return null; // failed 2 times, give up.

@@ -56,12 +56,12 @@ import java.lang.annotation.Annotation;
 import java.net.URLEncoder;
 
 /**
- * Helper class for easy usage of the trakt v2 API using retrofit.
+ * Helper class for easy usage of the Trakt v2 API using retrofit.
  */
 public class TraktV2 {
 
     /**
-     * trakt API v2 URL.
+     * Trakt API v2 URL.
      */
     public static final String API_HOST = "api.trakt.tv";
     public static final String API_STAGING_HOST = "api-staging.trakt.tv";
@@ -91,7 +91,7 @@ public class TraktV2 {
     /**
      * Get a new API manager instance.
      *
-     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
+     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
      * @see #TraktV2(java.lang.String, boolean)
      */
     public TraktV2(String apiKey) {
@@ -101,8 +101,8 @@ public class TraktV2 {
     /**
      * Get a new API manager instance capable of calling OAuth2 protected endpoints.
      *
-     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
-     * @param clientSecret The client secret obtained from trakt.
+     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
+     * @param clientSecret The client secret obtained from Trakt.
      * @param redirectUri The redirect URI to use for OAuth2 token requests.
      * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String, boolean)
      */
@@ -113,7 +113,7 @@ public class TraktV2 {
     /**
      * Get a new API manager instance.
      *
-     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
+     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
      * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String)
      */
@@ -125,8 +125,8 @@ public class TraktV2 {
     /**
      * Get a new API manager instance capable of calling OAuth2 protected endpoints.
      *
-     * @param apiKey The API key obtained from trakt, currently equal to the OAuth client id.
-     * @param clientSecret The client secret obtained from trakt.
+     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
+     * @param clientSecret The client secret obtained from Trakt.
      * @param redirectUri The redirect URI to use for OAuth2 token requests.
      * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String)
@@ -262,7 +262,7 @@ public class TraktV2 {
     }
 
     /**
-     * Request a code to start the device authentication process from trakt.
+     * Request a code to start the device authentication process from Trakt.
      *
      * The {@code device_code} and {@code interval} will be used later to poll for the {@code access_token}.
      * The {@code user_code} and {@code verification_url} should be presented to the user.
@@ -274,7 +274,7 @@ public class TraktV2 {
     }
 
     /**
-     * Request an access token from trakt using device authentication.
+     * Request an access token from Trakt using device authentication.
      *
      * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
      * the access token once it has expired.
@@ -296,7 +296,7 @@ public class TraktV2 {
     }
 
     /**
-     * Request an access token from trakt.
+     * Request an access token from Trakt.
      *
      * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
      * the access token once it has expired.
@@ -323,7 +323,7 @@ public class TraktV2 {
     }
 
     /**
-     * Request to refresh an expired access token for trakt. If your app is still authorized, returns a response which
+     * Request to refresh an expired access token for Trakt. If your app is still authorized, returns a response which
      * includes a new access token.
      *
      * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
@@ -467,7 +467,7 @@ public class TraktV2 {
 
     /**
      * Searches can use queries or ID lookups. Queries will search fields like the title and description. ID lookups are
-     * helpful if you have an external ID and want to get the trakt ID and info. This method will search for movies,
+     * helpful if you have an external ID and want to get the Trakt ID and info. This method will search for movies,
      * shows, episodes, people, users, and lists.
      */
     public Search search() {

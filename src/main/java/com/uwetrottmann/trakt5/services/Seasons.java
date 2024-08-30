@@ -35,7 +35,7 @@ public interface Seasons {
     /**
      * Returns all seasons for a show including the number of episodes in each season.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      */
     @GET("shows/{id}/seasons")
     Call<List<Season>> summary(
@@ -46,7 +46,7 @@ public interface Seasons {
     /**
      * Returns all episodes for a specific season of a show.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      */
     @GET("shows/{id}/seasons/{season}")
@@ -59,7 +59,7 @@ public interface Seasons {
     /**
      * Returns all top level comments for a season. Most recent comments returned first.
      *
-     * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
+     * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season Season number.
      */
     @GET("shows/{id}/seasons/{season}/comments")

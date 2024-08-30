@@ -59,7 +59,7 @@ public interface Users {
     /**
      * <b>OAuth Required</b>
      *
-     * <p> Get the user's settings so you can align your app's experience with what they're used to on the trakt
+     * <p> Get the user's settings so you can align your app's experience with what they're used to on the Trakt
      * website.
      */
     @GET("users/settings")

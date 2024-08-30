@@ -39,7 +39,7 @@ public class TraktV2Helper {
         // Note: for enums always add a serializer, GSON does not use .toString() by default like retrofit!
         // Or use @SerializedName as an alternative.
 
-        // trakt exclusively uses ISO 8601 date times with milliseconds and time zone offset
+        // Trakt exclusively uses ISO 8601 date times with milliseconds and time zone offset
         // such as '2011-12-03T10:15:30.000+01:00' or '2011-12-03T10:15:30.000Z'
         builder.registerTypeAdapter(OffsetDateTime.class,
                 (JsonDeserializer<OffsetDateTime>) (json, typeOfT, context) -> OffsetDateTime.parse(json.getAsString()));

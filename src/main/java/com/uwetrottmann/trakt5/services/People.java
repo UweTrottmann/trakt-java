@@ -29,7 +29,7 @@ public interface People {
     /**
      * Returns a single person's details.
      *
-     * @param personId trakt ID, trakt slug, or IMDB ID Example: bryan-cranston.
+     * @param personId Trakt ID, Trakt slug, or IMDB ID Example: bryan-cranston.
      */
     @GET("people/{id}")
     Call<Person> summary(

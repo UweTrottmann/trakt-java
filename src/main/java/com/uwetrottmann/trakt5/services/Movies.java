@@ -63,7 +63,7 @@ public interface Movies {
     /**
      * Returns a single movie's details.
      *
-     * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
+     * @param movieId Trakt ID, Trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
     @GET("movies/{id}")
     Call<Movie> summary(
@@ -74,7 +74,7 @@ public interface Movies {
     /**
      * Returns all translations for a movie, including language and translated values for title, tagline and overview.
      *
-     * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
+     * @param movieId Trakt ID, Trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
     @GET("movies/{id}/translations")
     Call<List<MovieTranslation>> translations(
