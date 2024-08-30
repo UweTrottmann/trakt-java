@@ -4,14 +4,14 @@ Change Log
 ## 6.15.0
 _2024-08-30_
 
-* `TraktV2.notes()`: support to add, get, update and delete a note.
-* `TraktV2.users().notes(...)`: Support to get all notes for a user.
-* Add `Sync.removePlayback(id)`.
+* `TraktV2.notes()`: support to add, get, update and delete a note. [#152](https://github.com/UweTrottmann/trakt-java/pull/152)
+* `TraktV2.users().notes(...)`: Support to get all notes for a user. [#152](https://github.com/UweTrottmann/trakt-java/pull/152)
+* Add `Sync.removePlayback(id)`. [#151](https://github.com/UweTrottmann/trakt-java/pull/151)
 
 ## 6.14.0
 _2024-07-12_
 
-* LastActivities: Add missing fields. Thanks @ZelKami! #148
+* LastActivities: Add missing fields. Thanks @ZelKami! [#148](https://github.com/UweTrottmann/trakt-java/pull/148)
 
 ## 6.13.0
 _2024-05-24_
@@ -27,7 +27,7 @@ _2024-05-24_
 ## 6.12.0
 _2024-01-25_
 
-* Add method to reorder lists. Thanks @ZelKami! #131
+* Add method to reorder lists. Thanks @ZelKami! [#131](https://github.com/UweTrottmann/trakt-java/pull/131)
 * Add limits to user settings.
 
 ## 6.11.2
@@ -44,7 +44,7 @@ _2022-08-25_
 ## 6.11.0
 _2022-08-25_
 
-* Bundle R8 rules into library. Thanks @Goooler! #127
+* Bundle R8 rules into library. Thanks @Goooler! [#127](https://github.com/UweTrottmann/trakt-java/pull/127)
 * Update threetenbp [1.5.1 -> 1.6.1].
 * Add explicit OkHttp dependency [4.10.0].
 
@@ -67,7 +67,7 @@ _2020-10-29_
 * Handle new HTTP 429 Too Many Requests response from Trakt. Note that if you use `TraktV2Interceptor` or its methods
   directly, it now is a regular interceptor (previously network interceptor) as it may retry requests. Details at
   https://trakt.docs.apiary.io/#introduction/rate-limiting.
-* Add more `Audio` types. Via #121 from @riksmith, thanks!
+* Add more `Audio` types. Via [#121](https://github.com/UweTrottmann/trakt-java/pull/121) from @riksmith, thanks!
 * Update threetenbp [1.4.1 -> 1.5.0].
 
 ## 6.7.0
@@ -84,8 +84,8 @@ _2020-06-17_
 ## 6.5.0
 _2020-03-05_
 
-* Add support for [Trakt device authentication](https://trakt.docs.apiary.io/#reference/authentication-devices). #112 Thanks @samicemalone!
-* Update progress endpoints to provide the last episode watched/collected. #111 Thanks @samicemalone!
+* Add support for [Trakt device authentication](https://trakt.docs.apiary.io/#reference/authentication-devices). [#112](https://github.com/UweTrottmann/trakt-java/pull/112) Thanks @samicemalone!
+* Update progress endpoints to provide the last episode watched/collected. [#111](https://github.com/UweTrottmann/trakt-java/pull/111) Thanks @samicemalone!
 * Update retrofit [2.6.1 -> 2.6.4]. Note: if your project is Java 8+ or Android 5+ manually depend on retrofit 2.7.x.
 * Update threetenbp [1.4.0 -> 1.4.1].
 
@@ -272,7 +272,7 @@ _2016-05-27_
 ## 4.6.1
 _2016-05-06_
 
-* Fix `dismissMovie` and `dismissShow` endpoints (#77). Thanks @yacsrk!
+* Fix `dismissMovie` and `dismissShow` endpoints ([#77](https://github.com/UweTrottmann/trakt-java/pull/77)). Thanks @yacsrk!
 * Add tests for untested endpoints.
 
 ## 4.6.0
@@ -309,19 +309,19 @@ _2016-05-06_
 --------------------
 
  * Fix `/user` methods failing for usernames with periods in them. Usernames now have to be passed using
-   `new Username("someuser")`, or for the currently authenticated user `Username.ME`. #70
+   `new Username("someuser")`, or for the currently authenticated user `Username.ME`. [#70](https://github.com/UweTrottmann/trakt-java/pull/70)
  * Update okhttp to 2.5.0.
 
 4.4.0 *(2015-08-17)*
 --------------------
 
- * Allow checking in with show, season and episode without needing EpisodeIds. Thanks @samicemalone! #62
- * Added `last_watched_at` to BaseEpisode. Thanks @mlaggner! #63
- * Support new calendar methods. #64
- * Add shows collected progress method. Update watched progress with new params, properties. #65
- * Add watchlist methods to Users service. #66
- * Support new `/users/:username/history` filters. Added `history` method, removed `historyEpisodes` and `historyMovies`. #67
- * Support removing history items. #68
+ * Allow checking in with show, season and episode without needing EpisodeIds. Thanks @samicemalone! [#62](https://github.com/UweTrottmann/trakt-java/pull/62)
+ * Added `last_watched_at` to BaseEpisode. Thanks @mlaggner! [#63](https://github.com/UweTrottmann/trakt-java/pull/63)
+ * Support new calendar methods. [#64](https://github.com/UweTrottmann/trakt-java/pull/64)
+ * Add shows collected progress method. Update watched progress with new params, properties. [#65](https://github.com/UweTrottmann/trakt-java/pull/65)
+ * Add watchlist methods to Users service. [#66](https://github.com/UweTrottmann/trakt-java/pull/66)
+ * Support new `/users/:username/history` filters. Added `history` method, removed `historyEpisodes` and `historyMovies`. [#67](https://github.com/UweTrottmann/trakt-java/pull/67)
+ * Support removing history items. [#68](https://github.com/UweTrottmann/trakt-java/pull/68)
 
 4.3.1 *(2015-03-10)*
 --------------------
