@@ -8,7 +8,7 @@
     <version>6.14.1-SNAPSHOT</version>
 
     <name>trakt-java</name>
-    <description>trakt-java is a retrofit2 based wrapper around the trakt API v2.</description>
+    <description>trakt-java is a retrofit2 based wrapper around the Trakt API v2.</description>
     <url>https://github.com/UweTrottmann/trakt-java/</url>
     <inceptionYear>2013</inceptionYear>
 
