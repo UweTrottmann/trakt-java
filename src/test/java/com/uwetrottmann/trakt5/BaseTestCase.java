@@ -1,5 +1,9 @@
 /*
- * Copyright 2024 Uwe Trottmann
+ * Copyright 2014-2024 Uwe Trottmann
+ * Copyright 2015 Manuel Laggner
+ * Copyright 2019 Chris Banes
+ * Copyright 2020 Sam Malone
+ * Copyright 2021 DefHead
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
