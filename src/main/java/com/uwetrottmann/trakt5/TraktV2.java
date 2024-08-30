@@ -32,6 +32,7 @@ import com.uwetrottmann.trakt5.services.Comments;
 import com.uwetrottmann.trakt5.services.Episodes;
 import com.uwetrottmann.trakt5.services.Genres;
 import com.uwetrottmann.trakt5.services.Movies;
+import com.uwetrottmann.trakt5.services.Notes;
 import com.uwetrottmann.trakt5.services.People;
 import com.uwetrottmann.trakt5.services.Recommendations;
 import com.uwetrottmann.trakt5.services.Scrobble;
@@ -446,6 +447,10 @@ public class TraktV2 {
 
     public Movies movies() {
         return retrofit().create(Movies.class);
+    }
+
+    public Notes notes() {
+        return retrofit().create(Notes.class);
     }
 
     public People people() {

@@ -3,6 +3,8 @@ Change Log
           
 ## next
 
+* `TraktV2.notes()`: support to add, get, update and delete a note.
+* `TraktV2.users().notes(...)`: Support to get all notes for a user.
 * Add `Sync.removePlayback(id)`.
 
 ## 6.14.0

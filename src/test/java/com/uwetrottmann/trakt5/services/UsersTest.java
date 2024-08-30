@@ -28,6 +28,8 @@ import com.uwetrottmann.trakt5.entities.ListEntry;
 import com.uwetrottmann.trakt5.entities.ListItemRank;
 import com.uwetrottmann.trakt5.entities.ListReorderResponse;
 import com.uwetrottmann.trakt5.entities.MovieIds;
+import com.uwetrottmann.trakt5.entities.Note;
+import com.uwetrottmann.trakt5.entities.NoteResponse;
 import com.uwetrottmann.trakt5.entities.PersonIds;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -48,6 +50,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
+import com.uwetrottmann.trakt5.enums.NoteType;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.enums.SortBy;
@@ -107,6 +110,30 @@ public class UsersTest extends BaseTestCase {
     public void test_collectionShows() throws IOException {
         List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, null));
         assertSyncShows(shows, "collection");
+    }
+
+    @Test
+    public void test_notes() throws IOException {
+        List<NoteResponse> allNotes = executeCall(
+                getTrakt().users().notes(UserSlug.ME, "all", null, null, Extended.FULL));
+        assertThat(allNotes).isNotEmpty();
+        for (NoteResponse noteResponse : allNotes) {
+            assertThat(noteResponse.attached_to).isNotNull();
+            assertThat(noteResponse.attached_to.type).isNotNull();
+            assertThat(noteResponse.note).isNotNull();
+            assertThat(noteResponse.note.id).isPositive();
+            assertThat(noteResponse.note.privacy).isNotNull();
+            assertThat(noteResponse.note.notes).isNotEmpty();
+            assertThat(noteResponse.note.user).isNotNull();
+        }
+
+        List<NoteResponse> showNotes = executeCall(
+                getTrakt().users().notes(UserSlug.ME, "shows", null, null, null));
+        assertThat(showNotes).isNotEmpty();
+        for (NoteResponse noteResponse : showNotes) {
+            assertThat(noteResponse.attached_to).isNotNull();
+            assertThat(noteResponse.attached_to.type).isEqualTo(NoteType.SHOW);
+        }
     }
 
     @Test
