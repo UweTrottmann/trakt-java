@@ -18,6 +18,7 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.CheckinError;
 import com.uwetrottmann.trakt5.entities.EpisodeCheckin;
 import com.uwetrottmann.trakt5.entities.EpisodeCheckinResponse;
@@ -52,7 +53,7 @@ public class CheckinTest extends BaseTestCase {
         if (!response.isSuccessful()) {
             if (getTrakt().checkForCheckinError(response) != null) {
                 fail("Check-in still in progress, may be left over from failed test");
-            } else if (response.code() == 401) {
+            } else if (TraktV2.isUnauthorized(response)) {
                 fail("Authorization required, supply a valid OAuth access token: "
                         + response.code() + " " + response.message());
             } else {
@@ -156,7 +157,7 @@ public class CheckinTest extends BaseTestCase {
 
         MovieCheckin movieCheckin = buildMovieCheckin();
         Response<MovieCheckinResponse> responseBlocked = checkin.checkin(movieCheckin).execute();
-        if (responseBlocked.code() == 401) {
+        if (TraktV2.isUnauthorized(responseBlocked)) {
             fail("Authorization required, supply a valid OAuth access token: "
                     + responseBlocked.code() + " " + responseBlocked.message());
         }

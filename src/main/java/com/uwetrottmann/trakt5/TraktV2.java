@@ -353,6 +353,30 @@ public class TraktV2 {
     }
 
     /**
+     * Checks if the response code is 401, which indicates an {@link #accessToken(String)} needs to be supplied,
+     * or it is no longer valid.
+     */
+    public static boolean isUnauthorized(Response<?> response) {
+        return response.code() == 401;
+    }
+
+    /**
+     * Checks if the response code is 423, which indicates the
+     * <a href="https://trakt.docs.apiary.io/#introduction/locked-user-account">Trakt account is locked</a>.
+     */
+    public static boolean isAccountLocked(Response<?> response) {
+        return response.code() == 423;
+    }
+
+    /**
+     * Checks if the response code is 426, which indicates the
+     * <a href="https://trakt.docs.apiary.io/#introduction/vip-methods">Trakt account is not a VIP</a>.
+     */
+    public static boolean isNotVip(Response<?> response) {
+        return response.code() == 426;
+    }
+
+    /**
      * If the response code is 409 tries to convert the body into a {@link CheckinError}.
      */
     @Nullable

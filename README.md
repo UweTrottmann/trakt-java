@@ -65,7 +65,7 @@ try {
             System.out.println("Title: " + trending.show.title);
         }
     } else {
-        if (response.code() == 401) {
+        if (TraktV2.isUnauthorized(response)) {
             // authorization required, supply a valid OAuth access token
         } else {
             // the request failed for some other reason
