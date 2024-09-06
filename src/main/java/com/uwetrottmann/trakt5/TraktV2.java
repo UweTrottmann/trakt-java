@@ -377,6 +377,34 @@ public class TraktV2 {
     }
 
     /**
+     * If it exists, returns the value of the {@code X-Pagination-Page-Count} header from the response.
+     */
+    @Nullable
+    public static Integer getPageCount(Response<?> response) {
+        return getIntHeaderOrNull(response, "x-pagination-page-count");
+    }
+
+    /**
+     * If it exists, returns the value of the {@code X-Pagination-Item-Count} header from the response.
+     */
+    @Nullable
+    public static Integer getItemCount(Response<?> response) {
+        return getIntHeaderOrNull(response, "x-pagination-item-count");
+    }
+
+    @Nullable
+    private static Integer getIntHeaderOrNull(Response<?> response, String header) {
+        String headerOrNull = response.headers().get(header);
+        if (headerOrNull != null) {
+            try {
+                return Integer.valueOf(headerOrNull);
+            } catch (NumberFormatException ignored) {
+            }
+        }
+        return null;
+    }
+
+    /**
      * If the response code is 409 tries to convert the body into a {@link CheckinError}.
      */
     @Nullable

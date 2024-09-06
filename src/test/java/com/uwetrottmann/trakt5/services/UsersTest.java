@@ -18,6 +18,7 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Followed;
@@ -114,8 +115,13 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_notes() throws IOException {
-        List<NoteResponse> allNotes = executeCall(
+        Response<List<NoteResponse>> response = executeCallWithoutReadingBody(
                 getTrakt().users().notes(UserSlug.ME, "all", null, null, Extended.FULL));
+
+        assertThat(TraktV2.getPageCount(response)).isNotNull();
+        assertThat(TraktV2.getItemCount(response)).isNotNull();
+
+        List<NoteResponse> allNotes = response.body();
         assertThat(allNotes).isNotEmpty();
         for (NoteResponse noteResponse : allNotes) {
             assertThat(noteResponse.attached_to).isNotNull();
