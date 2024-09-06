@@ -141,7 +141,7 @@ public class BaseTestCase {
     }
 
     private <T> void handleFailedResponse(Response<T> response) {
-        if (response.code() == 401) {
+        if (TraktV2.isUnauthorized(response)) {
             fail("Authorization required, supply a valid OAuth access token: "
                     + response.code() + " " + response.message());
         } else {
