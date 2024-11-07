@@ -1,6 +1,6 @@
 # Change Log
 
-## next
+## 6.16.0 - 2024-11-07
 
 * `TraktV2`: add `isUnauthorized(response)`, `isAccountLocked(response)` and `isNotVip(response)` helper methods.
 * `TraktV2`: add `getPageCount(response)` and `getItemCount(response)` helper methods.
