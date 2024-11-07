@@ -118,8 +118,8 @@ public class UsersTest extends BaseTestCase {
         Response<List<NoteResponse>> response = executeCallWithoutReadingBody(
                 getTrakt().users().notes(UserSlug.ME, "all", null, null, Extended.FULL));
 
-        assertThat(TraktV2.getPageCount(response)).isNotNull();
-        assertThat(TraktV2.getItemCount(response)).isNotNull();
+        assertThat(TraktV2.getPageCount(response)).isNotNull().isPositive();
+        assertThat(TraktV2.getItemCount(response)).isNotNull().isPositive();
 
         List<NoteResponse> allNotes = response.body();
         assertThat(allNotes).isNotEmpty();
