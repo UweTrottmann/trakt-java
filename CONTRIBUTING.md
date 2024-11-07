@@ -3,7 +3,7 @@
 **Note:** [This work](README.md) is licensed under the [Apache License 2.0](LICENSE.txt).
 If you contribute any [non-trivial](http://www.gnu.org/prep/maintain/maintain.html#Legally-Significant) patches make sure to read and agree with the license.
 
-#### Would you like to contribute code?
+## Would you like to contribute code?
 
 Keep your pull requests small, otherwise it is less likely they will get merged.
 
@@ -13,7 +13,8 @@ Keep your pull requests small, otherwise it is less likely they will get merged.
    - If you make non-trivial changes (see above), make sure to add a copyright line at the top of the file. 
 3. [Start a pull request](https://github.com/UweTrottmann/trakt-java/compare) against `main`.
 
-#### No code!
+## No code!
+
 * You can [discuss or submit bug reports](https://github.com/UweTrottmann/trakt-java/issues)!
 
 ## Setup
