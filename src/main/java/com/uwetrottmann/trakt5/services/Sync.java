@@ -18,6 +18,7 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
@@ -30,6 +31,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -121,7 +123,29 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      *
-     * <p> Returns all playbacks;
+     * <p> Returns playbacks for a given period;
+     */
+    @GET("sync/playback")
+    Call<List<PlaybackResponse>> getPlaybackPeriod(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns playbacks since a date;
+     */
+    @GET("sync/playback")
+    Call<List<PlaybackResponse>> getPlaybackSince(
+            @Query("start_at") OffsetDateTime startAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p> Returns all episodes playbacks;
      */
     @GET("sync/playback/episodes")
     Call<List<PlaybackResponse>> getPlaybackEpisodes(
@@ -131,11 +155,58 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      *
-     * <p> Returns all playbacks;
+     * <p>
+     * Returns episodes playbacks for a given period;
+     */
+    @GET("sync/playback/episodes")
+    Call<List<PlaybackResponse>> getPlaybackEpisodesPeriod(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns episodes playbacks for a since a date;
+     */
+    @GET("sync/playback/episodes")
+    Call<List<PlaybackResponse>> getPlaybackEpisodesSince(
+            @Query("limit") Integer limit,
+            @Query("start_at") OffsetDateTime startAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns all movies playbacks;
      */
     @GET("sync/playback/movies")
     Call<List<PlaybackResponse>> getPlaybackMovies(
-            @Query("limit") Integer limit
+            @Query("limit") Integer limit);
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns movies playbacks for a given period;
+     */
+    @GET("sync/playback/movies")
+    Call<List<PlaybackResponse>> getPlaybackMoviesPeriod(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns movies playbacks since a date;
+     */
+    @GET("sync/playback/movies")
+    Call<List<PlaybackResponse>> getPlaybackMoviesSince(
+            @Query("start_at") OffsetDateTime startAt
     );
 
     /**
@@ -158,6 +229,108 @@ public interface Sync {
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns watch history;
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> getWatchedHistory(
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns watch history since a date;
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> getWatchedHistorySince(
+            @Query("start_at") OffsetDateTime startAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns watch history for a given period;
+     */
+    @GET("sync/history")
+    Call<List<HistoryEntry>> getWatchedHistoryPeriod(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns movies watch history;
+     */
+    @GET("sync/history/movies")
+    Call<List<HistoryEntry>> getWatchedHistoryMovies(
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns movies watch history since a date;
+     */
+    @GET("sync/history/movies")
+    Call<List<HistoryEntry>> getWatchedHistoryMoviesSince(
+            @Query("start_at") OffsetDateTime startAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns movies watch history for a given period;
+     */
+    @GET("sync/history/movies")
+    Call<List<HistoryEntry>> getWatchedHistoryMoviesPeriod(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns episodes watch history;
+     */
+    @GET("sync/history/episodes")
+    Call<List<HistoryEntry>> getWatchedHistoryEpisodes(
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns episodes watch history since a date;
+     */
+    @GET("sync/history/episodes")
+    Call<List<HistoryEntry>> getWatchedHistoryEpisodesSince(
+            @Query("start_at") OffsetDateTime startAt
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     *
+     * <p>
+     * Returns episodes watch history for a given period;
+     */
+    @GET("sync/history/episodes")
+    Call<List<HistoryEntry>> getWatchedHistoryEpisodesPeriod(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt
     );
 
     /**
