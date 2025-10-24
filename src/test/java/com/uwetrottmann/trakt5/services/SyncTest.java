@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
 import com.uwetrottmann.trakt5.entities.LastActivityAccount;
@@ -622,6 +623,144 @@ public class SyncTest extends BaseTestCase {
 
     private ShowIds buildShowIds() {
         return ShowIds.slug("the-walking-dead");
+    }
+
+    // Tests for new playback period/since methods
+
+    @Test
+    public void test_getPlaybackPeriod() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+        OffsetDateTime endAt = OffsetDateTime.now();
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlaybackPeriod(startAt, endAt));
+        assertThat(playbacks).isNotNull();
+        assertPlaybackResponses(playbacks);
+    }
+
+    @Test
+    public void test_getPlaybackSince() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlaybackSince(startAt));
+        assertThat(playbacks).isNotNull();
+        assertPlaybackResponses(playbacks);
+    }
+
+    @Test
+    public void test_getPlaybackEpisodesPeriod() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+        OffsetDateTime endAt = OffsetDateTime.now();
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlaybackEpisodesPeriod(startAt, endAt));
+        assertThat(playbacks).isNotNull();
+        assertPlaybackResponses(playbacks);
+    }
+
+    @Test
+    public void test_getPlaybackEpisodesSince() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlaybackEpisodesSince(10, startAt));
+        assertThat(playbacks).isNotNull();
+        assertPlaybackResponses(playbacks);
+    }
+
+    @Test
+    public void test_getPlaybackMoviesPeriod() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+        OffsetDateTime endAt = OffsetDateTime.now();
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlaybackMoviesPeriod(startAt, endAt));
+        assertThat(playbacks).isNotNull();
+        assertPlaybackResponses(playbacks);
+    }
+
+    @Test
+    public void test_getPlaybackMoviesSince() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlaybackMoviesSince(startAt));
+        assertThat(playbacks).isNotNull();
+        assertPlaybackResponses(playbacks);
+    }
+
+    // Tests for new watched history period/since methods
+
+    @Test
+    public void test_getWatchedHistorySince() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+
+        List<HistoryEntry> history = executeCall(getTrakt().sync().getWatchedHistorySince(startAt));
+        assertThat(history).isNotNull();
+        assertHistoryEntries(history);
+    }
+
+    @Test
+    public void test_getWatchedHistoryPeriod() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+        OffsetDateTime endAt = OffsetDateTime.now();
+
+        List<HistoryEntry> history = executeCall(getTrakt().sync().getWatchedHistoryPeriod(startAt, endAt));
+        assertThat(history).isNotNull();
+        assertHistoryEntries(history);
+    }
+
+    @Test
+    public void test_getWatchedHistoryMoviesSince() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+
+        List<HistoryEntry> history = executeCall(getTrakt().sync().getWatchedHistoryMoviesSince(startAt));
+        assertThat(history).isNotNull();
+        assertHistoryEntries(history);
+    }
+
+    @Test
+    public void test_getWatchedHistoryMoviesPeriod() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+        OffsetDateTime endAt = OffsetDateTime.now();
+
+        List<HistoryEntry> history = executeCall(getTrakt().sync().getWatchedHistoryMoviesPeriod(startAt, endAt));
+        assertThat(history).isNotNull();
+        assertHistoryEntries(history);
+    }
+
+    @Test
+    public void test_getWatchedHistoryEpisodesSince() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+
+        List<HistoryEntry> history = executeCall(getTrakt().sync().getWatchedHistoryEpisodesSince(startAt));
+        assertThat(history).isNotNull();
+        assertHistoryEntries(history);
+    }
+
+    @Test
+    public void test_getWatchedHistoryEpisodesPeriod() throws IOException {
+        OffsetDateTime startAt = OffsetDateTime.now().minusDays(30);
+        OffsetDateTime endAt = OffsetDateTime.now();
+
+        List<HistoryEntry> history = executeCall(getTrakt().sync().getWatchedHistoryEpisodesPeriod(startAt, endAt));
+        assertThat(history).isNotNull();
+        assertHistoryEntries(history);
+    }
+
+    // Helper methods for assertions
+
+    private void assertPlaybackResponses(List<PlaybackResponse> playbacks) {
+        for (PlaybackResponse playback : playbacks) {
+            assertThat(playback.id).isNotNull();
+            assertThat(playback.progress).isNotNull();
+            assertThat(playback.paused_at).isNotNull();
+            assertThat(playback.type).isNotNull();
+        }
+    }
+
+    private void assertHistoryEntries(List<HistoryEntry> history) {
+        for (HistoryEntry entry : history) {
+            assertThat(entry.id).isNotNull();
+            assertThat(entry.watched_at).isNotNull();
+            assertThat(entry.action).isNotNull();
+            assertThat(entry.type).isNotNull();
+        }
     }
 
 }
