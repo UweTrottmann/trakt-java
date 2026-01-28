@@ -1,0 +1,29 @@
+# Releasing tmdb-java to Maven Central
+
+## Local testing
+
+```bash
+./mwnw clean install -P release,heyuwe-sign
+```
+
+## Preparing a release and deploying it to Maven Central
+       
+- Finalize [changelog](CHANGELOG.md)
+- Update versions in [README](README.md)
+
+```bash
+git commit --all --message "Prepare for release 6.16.0"
+```
+
+Then from IDE run tasks (TODO: figure out how to use GUI pin entry from Git Bash):
+
+- release:prepare
+- release:perform
+                   
+Push to GitHub:
+                                                                                      
+```bash
+git push origin main --tags
+```
+
+And [create a GitHub release](https://github.com/UweTrottmann/trakt-java/releases/new).
