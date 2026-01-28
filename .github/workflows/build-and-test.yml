@@ -12,7 +12,7 @@ jobs:
     # Only run on pushes or if pull request from fork
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     permissions:
-      checks: write # to publish unit test results
+      contents: read
 
     steps:
       - name: Check out
@@ -24,11 +24,8 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: Build with Maven
+        # --batch-mode: Disable interactive input, making logs cleaner for CI.
+        # -show-version: Print Maven and JDK version info.
+        # --update-snapshots: Force update of snapshot dependencies.
+        # --errors: Show full error stack traces on failure.
         run: mvn --batch-mode -show-version --update-snapshots --errors package
-      - name: Publish Unit Test Results
-        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5 # v1.9.1
-        if: always() # also run if build step failed
-        with:
-          name: JUnit Report
-          path: target/surefire-reports/*.xml
-          reporter: java-junit
