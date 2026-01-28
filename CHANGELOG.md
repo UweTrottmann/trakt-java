@@ -1,4 +1,6 @@
-# Change Log
+# Changelog
+
+## Next release
 
 ## 6.16.0 - 2024-11-07
 
