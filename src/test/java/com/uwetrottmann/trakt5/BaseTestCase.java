@@ -39,17 +39,29 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import javax.annotation.Nullable;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 public class BaseTestCase {
 
-    protected static final String TEST_CLIENT_ID = "35a671df22d3d98b09aab1c0bc52977e902e696a7704cab94f4d12c2672041e4";
-    public static final String TEST_ACCESS_TOKEN = "11cd70c14c432a7c834fdd57a3e81f3d774d98de645b598adb33b1da457b4bfa"; // "sgtest" on production
-    public static final String TEST_REFRESH_TOKEN = "df5b571e11c55e933867838f524fce7e37b5e19038f9b9af6a509f9ba3f23fbf"; // "sgtest" on production
+    private static final String TEST_CLIENT_ID;
+    private static final String TEST_ACCESS_TOKEN;
+
+    static {
+        Properties secrets = tryToloadSecrets();
+
+        TEST_CLIENT_ID = getVarFromEnvOrProperties(secrets, "TEST_CLIENT_ID");
+        TEST_ACCESS_TOKEN = getVarFromEnvOrProperties(secrets, "TEST_ACCESS_TOKEN");
+
+        checkVarNotEmpty(TEST_CLIENT_ID, "TEST_CLIENT_ID");
+        checkVarNotEmpty(TEST_ACCESS_TOKEN, "TEST_ACCESS_TOKEN");
+    }
 
     private static final boolean DEBUG = true;
 
@@ -306,6 +318,32 @@ public class BaseTestCase {
         System.out.println("Retrieved refresh token: " + response.body().refresh_token);
         System.out.println("Retrieved scope: " + response.body().scope);
         System.out.println("Retrieved expires in: " + response.body().expires_in + " seconds");
+    }
+
+    private static Properties tryToloadSecrets() {
+        Properties properties = new Properties();
+
+        try (InputStream input = new FileInputStream("secrets.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            // File not found or cannot be read, will try environment variables
+        }
+
+        return properties;
+    }
+
+    private static String getVarFromEnvOrProperties(Properties properties, String key) {
+        String value = System.getenv(key);
+        if (value != null && !value.isEmpty()) {
+            return value;
+        }
+        return properties.getProperty(key);
+    }
+
+    private static void checkVarNotEmpty(String value, String name) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalStateException(name + " must be set via environment variable or secrets.properties file");
+        }
     }
 
 }
