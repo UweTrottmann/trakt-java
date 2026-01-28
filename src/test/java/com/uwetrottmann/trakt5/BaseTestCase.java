@@ -66,7 +66,6 @@ public class BaseTestCase {
 
         public TestTraktV2(String apiKey, String clientSecret, String redirectUri) {
             super(apiKey, clientSecret, redirectUri);
-            refreshToken(TEST_REFRESH_TOKEN);
         }
 
         @Override
@@ -89,17 +88,25 @@ public class BaseTestCase {
         }
     }
 
+    protected String getClientId() {
+        return TEST_CLIENT_ID;
+    }
+
+    protected String getAccessToken() {
+        return TEST_ACCESS_TOKEN;
+    }
+
     protected TraktV2 getTrakt() {
         if (trakt == null) {
-            trakt = new TestTraktV2(TEST_CLIENT_ID);
-            trakt.accessToken(TEST_ACCESS_TOKEN);
+            trakt = new TestTraktV2(getClientId());
+            trakt.accessToken(getAccessToken());
         }
         return trakt;
     }
 
     protected TraktV2 getUnauthenticatedTrakt() {
         if (traktNoAuth == null) {
-            traktNoAuth = new TestTraktV2(TEST_CLIENT_ID);
+            traktNoAuth = new TestTraktV2(getClientId());
         }
         return traktNoAuth;
     }

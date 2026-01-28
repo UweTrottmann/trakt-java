@@ -36,16 +36,19 @@ public class DeviceAuthTest extends BaseTestCase {
     // Set the default as the out-of-band URI used during standard OAuth.
     private static final String TEST_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 
-    private static final TraktV2 trakt = new TestTraktV2(TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
+    private static TraktV2 trakt;
 
     @Override
     protected TraktV2 getTrakt() {
+        if (trakt == null) {
+            trakt = new TestTraktV2(getClientId(), TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
+        }
         return trakt;
     }
 
     @Test
     public void test_generateDeviceCode() throws IOException {
-        if (TEST_CLIENT_ID.isEmpty()) {
+        if (getClientId().isEmpty()) {
             System.out.print("Skipping test_generateDeviceCode test, no valid client id");
             return;
         }
