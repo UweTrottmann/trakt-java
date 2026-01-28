@@ -57,7 +57,10 @@ public interface Sync {
      * <p>
      * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
      * physical media.
+     *
+     * @deprecated Use {@link #collectionMovies(int, int, Extended)} instead.
      */
+    @Deprecated
     @GET("sync/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
             @Query(value = "extended", encoded = true) Extended extended
@@ -66,11 +69,46 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
+     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
+     * physical media.
+     *
+     * @param page  Number of page of results to be returned.
+     * @param limit Number of results to return per page.
+     */
+    @GET("sync/collection/movies")
+    Call<List<BaseMovie>> collectionMovies(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     * <p>
      * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
      * physical media.
+     *
+     * @deprecated Use {@link #collectionShows(int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("sync/collection/shows")
+    Call<List<BaseShow>> collectionShows(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     * <p>
+     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
+     * physical media.
+     *
+     * @param page  Number of page of results to be returned.
+     * @param limit Number of results to return per page.
      */
     @GET("sync/collection/shows")
     Call<List<BaseShow>> collectionShows(
+            @Query("page") int page,
+            @Query("limit") int limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

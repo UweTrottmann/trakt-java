@@ -2,6 +2,10 @@
 
 ## Next release
 
+* Add paginated variants of `Sync.collectionMovies()`, `Sync.collectionShows()`, `Users.collectionMovies()` 
+  and `Users.collectionShows()` with required `page` and `limit` parameters. The original methods without pagination 
+  parameters are deprecated.
+
 ## 6.16.0 - 2024-11-07
 
 * `TraktV2`: add `isUnauthorized(response)`, `isAccountLocked(response)` and `isNotVip(response)` helper methods.

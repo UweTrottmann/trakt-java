@@ -180,13 +180,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(null));
+        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(1, 1000, null));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(null));
+        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(1, 1000, null));
         assertSyncShows(shows, "collection");
     }
 

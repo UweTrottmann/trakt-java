@@ -102,13 +102,13 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_collectionMovies() throws IOException {
         List<BaseMovie> movies = executeCall(
-                getTrakt().users().collectionMovies(TestData.USER_SLUG, null));
+                getTrakt().users().collectionMovies(TestData.USER_SLUG, 1, 1000, null));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, null));
+        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, 1, 1000, null));
         assertSyncShows(shows, "collection");
     }
 

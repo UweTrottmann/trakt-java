@@ -84,9 +84,45 @@ public interface Users {
      * physical media.
      *
      * @param userSlug Example: "sean".
+     * @deprecated Use {@link #collectionMovies(UserSlug, int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/collection/movies")
+    Call<List<BaseMovie>> collectionMovies(
+            @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Optional</b>
+     * <p>
+     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
+     * physical media.
+     *
+     * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
      */
     @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Optional</b>
+     * <p>
+     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
+     * physical media.
+     *
+     * @param userSlug Example: "sean".
+     * @deprecated Use {@link #collectionShows(UserSlug, int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/collection/shows")
+    Call<List<BaseShow>> collectionShows(
             @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
@@ -98,10 +134,14 @@ public interface Users {
      * physical media.
      *
      * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
      */
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
             @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
