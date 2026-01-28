@@ -30,3 +30,7 @@ jobs:
         # --update-snapshots: Force update of snapshot dependencies.
         # --errors: Show full error stack traces on failure.
         run: ./mvnw --batch-mode -show-version --update-snapshots --errors package
+        env:
+          # Supply via environment variables so dependabot merge requests can access them
+          TEST_CLIENT_ID: ${{ vars.TEST_CLIENT_ID }}
+          TEST_ACCESS_TOKEN: ${{ vars.TEST_ACCESS_TOKEN }}
