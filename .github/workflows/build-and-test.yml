@@ -29,4 +29,4 @@ jobs:
         # -show-version: Print Maven and JDK version info.
         # --update-snapshots: Force update of snapshot dependencies.
         # --errors: Show full error stack traces on failure.
-        run: mvn --batch-mode -show-version --update-snapshots --errors package
+        run: ./mvnw --batch-mode -show-version --update-snapshots --errors package
