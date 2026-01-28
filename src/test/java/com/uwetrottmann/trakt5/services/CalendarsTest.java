@@ -64,52 +64,31 @@ public class CalendarsTest extends BaseTestCase {
 
     @Test
     public void test_shows() throws IOException {
-        // do unauthenticated call
-        getTrakt().accessToken(null);
-
-        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().shows(START_DATE_ALL, TEST_DAYS));
+        List<CalendarShowEntry> response = executeCall(
+                getUnauthenticatedTrakt().calendars().shows(START_DATE_ALL, TEST_DAYS));
         assertShowCalendar(response);
-
-        // restore auth
-        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     @Test
     public void test_newShows() throws IOException {
-        // do unauthenticated call
-        getTrakt().accessToken(null);
-
-        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().newShows(START_DATE_ALL,
+        List<CalendarShowEntry> response = executeCall(getUnauthenticatedTrakt().calendars().newShows(START_DATE_ALL,
                 TEST_DAYS));
         assertShowCalendar(response);
-
-        // restore auth
-        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     @Test
     public void test_seasonPremieres() throws IOException {
-        // do unauthenticated call
-        getTrakt().accessToken(null);
-
-        List<CalendarShowEntry> response = executeCall(getTrakt().calendars().seasonPremieres(START_DATE_ALL,
-                TEST_DAYS));
+        List<CalendarShowEntry> response = executeCall(
+                getUnauthenticatedTrakt().calendars().seasonPremieres(START_DATE_ALL,
+                        TEST_DAYS));
         assertShowCalendar(response);
-
-        // restore auth
-        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     @Test
     public void test_movies() throws IOException {
-        // do unauthenticated call
-        getTrakt().accessToken(null);
-
-        List<CalendarMovieEntry> response = executeCall(getTrakt().calendars().movies(START_DATE_ALL, 30));
+        List<CalendarMovieEntry> response = executeCall(
+                getUnauthenticatedTrakt().calendars().movies(START_DATE_ALL, 30));
         assertMovieCalendar(response);
-
-        // restore auth
-        getTrakt().accessToken(TEST_ACCESS_TOKEN);
     }
 
     private void assertShowCalendar(List<CalendarShowEntry> shows) {

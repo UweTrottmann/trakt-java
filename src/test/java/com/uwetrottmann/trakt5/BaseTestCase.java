@@ -35,7 +35,6 @@ import com.uwetrottmann.trakt5.entities.TraktError;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.junit.BeforeClass;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -54,8 +53,10 @@ public class BaseTestCase {
 
     private static final boolean DEBUG = true;
 
-    private static final TraktV2 trakt = new TestTraktV2(TEST_CLIENT_ID);
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
+
+    private static TraktV2 trakt;
+    private static TraktV2 traktNoAuth;
 
     static class TestTraktV2 extends TraktV2 {
 
@@ -88,13 +89,19 @@ public class BaseTestCase {
         }
     }
 
-    @BeforeClass
-    public static void setUpOnce() {
-        trakt.accessToken(TEST_ACCESS_TOKEN);
+    protected TraktV2 getTrakt() {
+        if (trakt == null) {
+            trakt = new TestTraktV2(TEST_CLIENT_ID);
+            trakt.accessToken(TEST_ACCESS_TOKEN);
+        }
+        return trakt;
     }
 
-    protected TraktV2 getTrakt() {
-        return trakt;
+    protected TraktV2 getUnauthenticatedTrakt() {
+        if (traktNoAuth == null) {
+            traktNoAuth = new TestTraktV2(TEST_CLIENT_ID);
+        }
+        return traktNoAuth;
     }
 
     /**
