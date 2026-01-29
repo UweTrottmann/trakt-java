@@ -221,11 +221,103 @@ public interface Users {
      * <b>OAuth Optional</b>
      * <p>
      * Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
+     *
+     * @deprecated Use {@link #listItems(UserSlug, String, int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/lists/{id}/items")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth Optional</b>
+     * <p>
+     * Get all items on a personal list. Items can be a movie, show, season, episode, or person. Use
+     * {@link #listItems(UserSlug, String, String, int, int, Extended)} to specify the type parameter with a single
+     * value or comma-delimited string for multiple item types.
+     * <p>
+     * Notes: Each list item contains a notes field with text entered by the user.
+     * <p>
+     * Sorting: Default sorting is based on the list defaults and sent in the X-Sort-By and X-Sort-How headers. Use
+     * {@link #listItems(UserSlug, String, String, String, String, int, int, Extended)} to specify a custom sort order.
      */
     @GET("users/{username}/lists/{id}/items")
     Call<List<ListEntry>> listItems(
             @Path("username") UserSlug userSlug,
             @Path("id") String id,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #listItems(UserSlug, String, int, int, Extended)}, but you can specify a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/lists/{id}/items/{sort_by}/{sort_how}")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Path("sort_by") String sortBy,
+            @Path("sort_how") String sortHow,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #listItems(UserSlug, String, int, int, Extended)}, but you can specify the type parameter with a
+     * single value or comma-delimited string for multiple item types.
+     *
+     * @param type Filter for a specific item type. Example: {@code movie,show}. Possible values: movie, show, season,
+     *             episode, person.
+     */
+    @GET("users/{username}/lists/{id}/items/{type}")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Path("type") String type,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #listItems(UserSlug, String, String, int, int, Extended)}, but you can specify a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param type    Filter for a specific item type. Example: {@code movie,show}. Possible values: movie, show,
+     *                season, episode, person.
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released, runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/lists/{id}/items/{type}/{sort_by}/{sort_how}")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Path("type") String type,
+            @Path("sort_by") String sortBy,
+            @Path("sort_how") String sortHow,
+            @Query("page") int page,
+            @Query("limit") int limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

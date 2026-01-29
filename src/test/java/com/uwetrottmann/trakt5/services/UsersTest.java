@@ -213,9 +213,45 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_listItems() throws IOException {
-        List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
-                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                null));
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    @Test
+    public void test_listItems_sortOrder() throws IOException {
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                        "title", "asc", 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    @Test
+    public void test_listItems_type() throws IOException {
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                        "movie,show", 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    @Test
+    public void test_listItems_typeAndsortOrder() throws IOException {
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                        "movie,show", "title", "asc", 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    private static void assertListEntries(List<ListEntry> entries) {
+        assertThat(entries).isNotEmpty();
         for (ListEntry entry : entries) {
             assertThat(entry.listed_at).isNotNull();
             assertThat(entry.id).isNotNull();
@@ -257,7 +293,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_reorderListItems() throws IOException {
         List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
-                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), 1, 1000,
                 null));
 
         // reverse order

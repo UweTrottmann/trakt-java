@@ -8,6 +8,8 @@
 * Add history endpoints to `Sync`. Thanks @defhead! [#125](https://github.com/UweTrottmann/trakt-java/pull/125)
 * Add `Sync.playback()` that also accepts start and end times and supports pagination. The existing `getPlayback()`
   methods are deprecated.
+* Add `Users.listItems()` variants that requires pagination and support type and sort order parameters. The original 
+  method is deprecated.
 
 ## 6.16.0 - 2024-11-07
 
