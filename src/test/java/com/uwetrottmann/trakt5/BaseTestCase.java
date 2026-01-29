@@ -47,6 +47,7 @@ import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assume.assumeTrue;
 
 public class BaseTestCase {
 
@@ -320,7 +321,7 @@ public class BaseTestCase {
         System.out.println("Retrieved expires in: " + response.body().expires_in + " seconds");
     }
 
-    private static Properties tryToloadSecrets() {
+    protected static Properties tryToloadSecrets() {
         Properties properties = new Properties();
 
         try (InputStream input = new FileInputStream("secrets.properties")) {
@@ -332,7 +333,7 @@ public class BaseTestCase {
         return properties;
     }
 
-    private static String getVarFromEnvOrProperties(Properties properties, String key) {
+    protected static String getVarFromEnvOrProperties(Properties properties, String key) {
         String value = System.getenv(key);
         if (value != null && !value.isEmpty()) {
             return value;
@@ -344,6 +345,15 @@ public class BaseTestCase {
         if (value == null || value.isEmpty()) {
             throw new IllegalStateException(name + " must be set via environment variable or secrets.properties file");
         }
+    }
+
+    protected String getClientSecretFromEnvOrPropertiesOrIgnoreTest(Properties properties) {
+        String clientSecret = getVarFromEnvOrProperties(properties, "TEST_CLIENT_SECRET");
+        boolean hasClientSecret = clientSecret != null && !clientSecret.isEmpty();
+        assumeTrue(
+                "TEST_CLIENT_SECRET must be set via environment variable or secrets.properties file",
+                hasClientSecret);
+        return clientSecret;
     }
 
 }

@@ -22,38 +22,29 @@ import org.junit.Test;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assume.assumeTrue;
 
 /**
- * This test should NOT be run with the regular test suite. It requires a valid, temporary (!) auth code to be set.
+ * This test requires {@code TEST_CLIENT_SECRET} and {@code TEST_DEVICE_CODE} to be set as environment variables or
+ * in secrets.properties. See the tests for details.
  */
 public class DeviceAuthTest extends BaseTestCase {
 
-    private static final String TEST_CLIENT_SECRET = "";
-    private static final String TEST_DEVICE_CODE = "";
     // The Redirect URI is not used in OAuth device authentication.
     // Set the default as the out-of-band URI used during standard OAuth.
     private static final String TEST_REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob";
 
-    private static TraktV2 trakt;
-
-    @Override
-    protected TraktV2 getTrakt() {
-        if (trakt == null) {
-            trakt = new TestTraktV2(getClientId(), TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
-        }
-        return trakt;
-    }
-
     @Test
     public void test_generateDeviceCode() throws IOException {
-        if (getClientId().isEmpty()) {
-            System.out.print("Skipping test_generateDeviceCode test, no valid client id");
-            return;
-        }
+        Properties secrets = tryToloadSecrets();
+        String clientSecret = getClientSecretFromEnvOrPropertiesOrIgnoreTest(secrets);
 
-        Response<DeviceCode> codeResponse = getTrakt().generateDeviceCode();
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), clientSecret, TEST_REDIRECT_URI);
+
+        Response<DeviceCode> codeResponse = trakt.generateDeviceCode();
         assertSuccessfulResponse(codeResponse);
         DeviceCode deviceCode = codeResponse.body();
         assertThat(deviceCode.device_code).isNotEmpty();
@@ -70,12 +61,15 @@ public class DeviceAuthTest extends BaseTestCase {
 
     @Test
     public void test_getAccessToken() throws IOException {
-        if (TEST_CLIENT_SECRET.isEmpty() || TEST_DEVICE_CODE.isEmpty()) {
-            System.out.print("Skipping test_getAccessToken test, no valid auth data");
-            return;
-        }
+        Properties secrets = tryToloadSecrets();
+        String clientSecret = getClientSecretFromEnvOrPropertiesOrIgnoreTest(secrets);
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), clientSecret, TEST_REDIRECT_URI);
 
-        Response<AccessToken> response = getTrakt().exchangeDeviceCodeForAccessToken(TEST_DEVICE_CODE);
+        String deviceCode = getVarFromEnvOrProperties(secrets, "TEST_DEVICE_CODE");
+        boolean hasDeviceCode = deviceCode != null && !deviceCode.isEmpty();
+        assumeTrue("TEST_DEVICE_CODE must be set via environment variable or secrets.properties file", hasDeviceCode);
+
+        Response<AccessToken> response = trakt.exchangeDeviceCodeForAccessToken(deviceCode);
         assertAccessTokenResponse(response);
     }
 
