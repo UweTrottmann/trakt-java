@@ -88,37 +88,37 @@ public class SyncEpisode {
     }
 
     @Nonnull
-    public SyncEpisode mediaType(MediaType media_type){
+    public SyncEpisode mediaType(MediaType media_type) {
         this.media_type = media_type;
         return this;
     }
 
     @Nonnull
-    public SyncEpisode resolution(Resolution resolution){
+    public SyncEpisode resolution(Resolution resolution) {
         this.resolution = resolution;
         return this;
     }
 
     @Nonnull
-    public SyncEpisode hdr(Hdr hdr){
+    public SyncEpisode hdr(Hdr hdr) {
         this.hdr = hdr;
         return this;
     }
 
     @Nonnull
-    public SyncEpisode audio(Audio audio){
+    public SyncEpisode audio(Audio audio) {
         this.audio = audio;
         return this;
     }
 
     @Nonnull
-    public SyncEpisode audioChannels(AudioChannels audio_channels){
+    public SyncEpisode audioChannels(AudioChannels audio_channels) {
         this.audio_channels = audio_channels;
         return this;
     }
 
     @Nonnull
-    public SyncEpisode is3d(Boolean is3d){
+    public SyncEpisode is3d(Boolean is3d) {
         this.is3d = is3d;
         return this;
     }

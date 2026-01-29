@@ -74,37 +74,37 @@ public class SyncMovie {
     }
 
     @Nonnull
-    public SyncMovie mediaType(MediaType media_type){
+    public SyncMovie mediaType(MediaType media_type) {
         this.media_type = media_type;
         return this;
     }
 
     @Nonnull
-    public SyncMovie resolution(Resolution resolution){
+    public SyncMovie resolution(Resolution resolution) {
         this.resolution = resolution;
         return this;
     }
 
     @Nonnull
-    public SyncMovie hdr(Hdr hdr){
+    public SyncMovie hdr(Hdr hdr) {
         this.hdr = hdr;
         return this;
     }
 
     @Nonnull
-    public SyncMovie audio(Audio audio){
+    public SyncMovie audio(Audio audio) {
         this.audio = audio;
         return this;
     }
 
     @Nonnull
-    public SyncMovie audioChannels(AudioChannels audio_channels){
+    public SyncMovie audioChannels(AudioChannels audio_channels) {
         this.audio_channels = audio_channels;
         return this;
     }
 
     @Nonnull
-    public SyncMovie is3d(Boolean is3d){
+    public SyncMovie is3d(Boolean is3d) {
         this.is3d = is3d;
         return this;
     }
