@@ -2,14 +2,15 @@
 
 ## Next release
 
-* Add paginated variants of `Sync.collectionMovies()`, `Sync.collectionShows()`, `Users.collectionMovies()` 
-  and `Users.collectionShows()` with required `page` and `limit` parameters. The original methods without pagination 
-  parameters are deprecated.
+* Address [Trakt requiring pagination](https://github.com/trakt/trakt-api/discussions/681) for lists and library
+  (formerly collection) endpoints:
+  * Add paginated variants of `Sync.collectionMovies()`, `Sync.collectionShows()`, `Users.collectionMovies()`
+    and `Users.collectionShows()` with required `page` and `limit` parameters. The original methods are deprecated.
+  * Add `Users.listItems()` variants that require pagination and support type and sort order parameters. The original
+    method is deprecated.
 * Add history endpoints to `Sync`. Thanks @defhead! [#125](https://github.com/UweTrottmann/trakt-java/pull/125)
 * Add `Sync.playback()` that also accepts start and end times and supports pagination. The existing `getPlayback()`
   methods are deprecated.
-* Add `Users.listItems()` variants that requires pagination and support type and sort order parameters. The original 
-  method is deprecated.
 * Add warnings to `watched_at` fields
   that [Trakt will only store and return minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
 
