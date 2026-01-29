@@ -49,7 +49,11 @@ public class AuthTest extends BaseTestCase {
         String authUrl = trakt.buildAuthorizationUrl(sampleState);
 
         assertThat(authUrl).isNotEmpty();
-        assertThat(authUrl).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
+        assertThat(authUrl).isEqualTo(
+                TraktV2.OAUTH2_AUTHORIZATION_URL + "?response_type=code" +
+                        "&client_id=" + getClientId() +
+                        "&redirect_uri=http%3A%2F%2Flocalhost" +
+                        "&state=" + sampleState);
         // trakt does not support scopes, so don't send one (server sets default scope)
         assertThat(authUrl).doesNotContain("scope");
 
