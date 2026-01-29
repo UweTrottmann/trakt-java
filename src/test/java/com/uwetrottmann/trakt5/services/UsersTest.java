@@ -67,6 +67,9 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertEpisodeHistory;
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertHistory;
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertMovieHistory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsersTest extends BaseTestCase {
@@ -333,70 +336,46 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
-    public void test_historyEpisodesAndMovies() throws IOException {
+    public void test_history() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USER_SLUG, 1,
                         DEFAULT_PAGE_SIZE, null,
                         null, null));
-        for (HistoryEntry entry : history) {
-            assertThat(entry.id).isGreaterThan(0);
-            assertThat(entry.watched_at).isNotNull();
-            assertThat(entry.action).isNotEmpty();
-            assertThat(entry.type).isNotEmpty();
-            if ("episode".equals(entry.type)) {
-                assertThat(entry.episode).isNotNull();
-                assertThat(entry.show).isNotNull();
-            } else if ("movie".equals(entry.type)) {
-                assertThat(entry.movie).isNotNull();
-            }
-        }
+        assertHistory(history);
     }
 
     @Test
-    public void test_historyEpisodes() throws IOException {
+    public void test_history_episodes() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USER_SLUG, HistoryType.EPISODES, 1,
                         DEFAULT_PAGE_SIZE, null,
                         null, null));
-        for (HistoryEntry entry : history) {
-            assertThat(entry.id).isGreaterThan(0);
-            assertThat(entry.watched_at).isNotNull();
-            assertThat(entry.action).isNotEmpty();
-            assertThat(entry.type).isEqualTo("episode");
-            assertThat(entry.episode).isNotNull();
-            assertThat(entry.show).isNotNull();
-            System.out.println(
-                    "Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
-        }
+
+        assertEpisodeHistory(history);
     }
 
     @Test
-    public void test_historyMovies() throws IOException {
+    public void test_history_movies() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES, 1,
                         DEFAULT_PAGE_SIZE, null,
                         null, null));
+
         assertMovieHistory(history);
     }
 
     @Test
-    public void test_historyItem() throws IOException {
-        List<HistoryEntry> history = executeCall(getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
-                TestData.MOVIE_WATCHED_TRAKT_ID, 1,
-                DEFAULT_PAGE_SIZE, null,
-                OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
-                OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC)));
+    public void test_history_item() throws IOException {
+        List<HistoryEntry> history = executeCall(
+                getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
+                        TestData.MOVIE_WATCHED_TRAKT_ID, 1,
+                        DEFAULT_PAGE_SIZE, null,
+                        OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
+                        OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC))
+        );
+
         assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);
-    }
-
-    private void assertMovieHistory(List<HistoryEntry> history) {
-        for (HistoryEntry entry : history) {
-            assertThat(entry.watched_at).isNotNull();
-            assertThat(entry.action).isNotEmpty();
-            assertThat(entry.type).isEqualTo("movie");
-            assertThat(entry.movie).isNotNull();
-        }
     }
 
     @Test

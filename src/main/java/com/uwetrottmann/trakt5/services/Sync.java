@@ -27,6 +27,7 @@ import com.uwetrottmann.trakt5.entities.RatedSeason;
 import com.uwetrottmann.trakt5.entities.RatedShow;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
+import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
@@ -204,15 +205,13 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
+     * <p>
+     * Like {@link Users#history(UserSlug, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}.
      *
-     * <p> Returns movies and episodes that the a user has watched, sorted by most recent.
-     *
-     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
-     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
-     * watch}.
+     * @see Sync#history(HistoryType, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("sync/history")
-    Call<List<HistoryEntry>> getHistory(
+    Call<List<HistoryEntry>> history(
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended,
@@ -222,16 +221,15 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
+     * <p>
+     * Like {@link #history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}, but allows to set a type to
+     * only return movies or episodes.
      *
-     * <p> Returns movies or episodes (depending on the <code>type</code>) that the a user has watched,
-     * sorted by most recent.
-     *
-     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
-     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
-     * watch}.
+     * @see Users#history(UserSlug, HistoryType, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
+     * @see Sync#history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("sync/history/{type}")
-    Call<List<HistoryEntry>> getHistory(
+    Call<List<HistoryEntry>> history(
             @Path("type") HistoryType type,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
@@ -242,18 +240,12 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p>Returns the history for just the specified item. For example, {@code /sync/history/movies/12601} would return
-     * all watches for TRON: Legacy and {@code /sync/history/shows/1388} would return all watched episodes
-     * for Breaking Bad. If an invalid {@code id} is sent, a 404 error will be returned. If the {@code id} is valid,
-     * but there is no history, an empty array will be returned.
-     *
-     * <p>The {@code id} uniquely identifies each history event and can be used to remove events individually using the
-     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or {@code
-     * watch}.
+     * <p>
+     * Like
+     * {@link Users#history(UserSlug, HistoryType, int, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}.
      */
     @GET("sync/history/{type}/{id}")
-    Call<List<HistoryEntry>> getHistory(
+    Call<List<HistoryEntry>> history(
             @Path("type") HistoryType type,
             @Path("id") int id,
             @Query("page") Integer page,

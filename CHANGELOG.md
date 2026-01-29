@@ -5,6 +5,7 @@
 * Add paginated variants of `Sync.collectionMovies()`, `Sync.collectionShows()`, `Users.collectionMovies()` 
   and `Users.collectionShows()` with required `page` and `limit` parameters. The original methods without pagination 
   parameters are deprecated.
+* Add history endpoints to `Sync`. Thanks @defhead! [#125](https://github.com/UweTrottmann/trakt-java/pull/125)
 
 ## 6.16.0 - 2024-11-07
 

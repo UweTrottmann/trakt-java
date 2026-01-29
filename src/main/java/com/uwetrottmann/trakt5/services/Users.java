@@ -332,6 +332,7 @@ public interface Users {
      * {@code watch}.
      *
      * @param userSlug Example: "sean".
+     * @see Sync#history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("users/{username}/history")
     Call<List<HistoryEntry>> history(
@@ -346,13 +347,11 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Returns movies or episodes that a user has watched, sorted by most recent.
-     * <p>
-     * The {@code id} uniquely identifies each history event and can be used to remove events individually using the
-     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or
-     * {@code watch}.
+     * Like {@link #history(UserSlug, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}, but allows to set a
+     * type to only return movies or episodes.
      *
      * @param userSlug Example: "sean".
+     * @see Sync#history(HistoryType, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("users/{username}/history/{type}")
     Call<List<HistoryEntry>> history(
@@ -378,6 +377,7 @@ public interface Users {
      * {@code watch}.
      *
      * @param userSlug Example: "sean".
+     * @see Sync#history(HistoryType, int, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("users/{username}/history/{type}/{id}")
     Call<List<HistoryEntry>> history(
