@@ -13,6 +13,8 @@
   methods are deprecated.
 * Add warnings to `watched_at` fields
   that [Trakt will only store and return minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
+* Add `TraktV2.isAccountLimitExceeded()`, `TraktV2.isRateLimitExceeded()` and `TraktV2.isServerError()` methods to help
+  inspect `Response` objects for more common Trakt HTTP status codes.
 
 ## 6.16.0 - 2024-11-07
 
