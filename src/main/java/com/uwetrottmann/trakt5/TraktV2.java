@@ -120,7 +120,7 @@ public class TraktV2 {
      * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String)
      */
-    public TraktV2(String apiKey, boolean staging){
+    public TraktV2(String apiKey, boolean staging) {
         this.apiKey = apiKey;
         apiBaseUrl = HttpUrl.get(staging ? API_STAGING_URL : API_URL);
     }
@@ -140,7 +140,7 @@ public class TraktV2 {
         this.redirectUri = redirectUri;
     }
 
-    public String apiHost(){
+    public String apiHost() {
         return apiBaseUrl.host();
     }
 
@@ -545,7 +545,9 @@ public class TraktV2 {
         return retrofit().create(Sync.class);
     }
 
-    public Scrobble scrobble() { return retrofit().create(Scrobble.class); }
+    public Scrobble scrobble() {
+        return retrofit().create(Scrobble.class);
+    }
 
     public Users users() {
         return retrofit().create(Users.class);

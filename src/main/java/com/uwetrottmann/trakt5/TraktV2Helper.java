@@ -45,7 +45,8 @@ public class TraktV2Helper {
         // Trakt exclusively uses ISO 8601 date times with milliseconds and time zone offset
         // such as '2011-12-03T10:15:30.000+01:00' or '2011-12-03T10:15:30.000Z'
         builder.registerTypeAdapter(OffsetDateTime.class,
-                (JsonDeserializer<OffsetDateTime>) (json, typeOfT, context) -> OffsetDateTime.parse(json.getAsString()));
+                (JsonDeserializer<OffsetDateTime>) (json, typeOfT, context) -> OffsetDateTime.parse(
+                        json.getAsString()));
         builder.registerTypeAdapter(OffsetDateTime.class,
                 (JsonSerializer<OffsetDateTime>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
         // dates are in ISO 8601 format as well
@@ -64,7 +65,8 @@ public class TraktV2Helper {
 
         // progress last activity
         builder.registerTypeAdapter(ProgressLastActivity.class,
-                (JsonDeserializer<ProgressLastActivity>) (json, typeOfT, context) -> ProgressLastActivity.fromValue(json.getAsString()));
+                (JsonDeserializer<ProgressLastActivity>) (json, typeOfT, context) -> ProgressLastActivity.fromValue(
+                        json.getAsString()));
 
         // media type
         builder.registerTypeAdapter(MediaType.class,
@@ -94,7 +96,8 @@ public class TraktV2Helper {
         builder.registerTypeAdapter(AudioChannels.class,
                 (JsonSerializer<AudioChannels>) (src, typeOfSrc, context) -> new JsonPrimitive(src.toString()));
         builder.registerTypeAdapter(AudioChannels.class,
-                (JsonDeserializer<AudioChannels>) (json, typeOfT, context) -> AudioChannels.fromValue(json.getAsString()));
+                (JsonDeserializer<AudioChannels>) (json, typeOfT, context) -> AudioChannels.fromValue(
+                        json.getAsString()));
 
         return builder;
     }
