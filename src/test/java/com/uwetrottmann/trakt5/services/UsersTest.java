@@ -29,7 +29,6 @@ import com.uwetrottmann.trakt5.entities.ListEntry;
 import com.uwetrottmann.trakt5.entities.ListItemRank;
 import com.uwetrottmann.trakt5.entities.ListReorderResponse;
 import com.uwetrottmann.trakt5.entities.MovieIds;
-import com.uwetrottmann.trakt5.entities.Note;
 import com.uwetrottmann.trakt5.entities.NoteResponse;
 import com.uwetrottmann.trakt5.entities.PersonIds;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;

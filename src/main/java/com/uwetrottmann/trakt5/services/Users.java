@@ -40,7 +40,6 @@ import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
-import com.uwetrottmann.trakt5.enums.NoteType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;

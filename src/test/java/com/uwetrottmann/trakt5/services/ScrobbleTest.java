@@ -17,7 +17,6 @@
 package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
-import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
