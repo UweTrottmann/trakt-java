@@ -29,6 +29,5 @@ public class Episode extends BaseEntity {
     public OffsetDateTime first_aired;
     public Integer comment_count;
     public Integer runtime;
-    
 
 }
