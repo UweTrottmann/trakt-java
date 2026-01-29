@@ -31,10 +31,10 @@ public interface Recommendations {
 
     /**
      * <b>OAuth Required</b>
+     * <p>
+     * Personalized movie recommendations for a user. Results returned with the top recommendation first.
      *
-     * <p> Personalized movie recommendations for a user. Results returned with the top recommendation first.
-     *
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param page  Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("recommendations/movies")
@@ -46,8 +46,8 @@ public interface Recommendations {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Dismiss a movie from getting recommended anymore.
+     * <p>
+     * Dismiss a movie from getting recommended anymore.
      *
      * @param movieId Trakt ID, Trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      */
@@ -58,10 +58,10 @@ public interface Recommendations {
 
     /**
      * <b>OAuth Required</b>
+     * <p>
+     * Personalized show recommendations for a user. Results returned with the top recommendation first.
      *
-     * <p> Personalized show recommendations for a user. Results returned with the top recommendation first.
-     *
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param page  Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("recommendations/shows")
@@ -73,8 +73,8 @@ public interface Recommendations {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Dismiss a show from getting recommended anymore.
+     * <p>
+     * Dismiss a show from getting recommended anymore.
      *
      * @param showId Trakt ID, Trakt slug, or IMDB ID. Example: 922.
      */

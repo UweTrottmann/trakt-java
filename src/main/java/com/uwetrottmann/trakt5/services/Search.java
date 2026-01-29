@@ -30,9 +30,11 @@ import java.util.List;
 public interface Search {
 
     /**
-     * Search all text fields that a media object contains (i.e. title, overview, etc). Results are ordered by the most relevant score.
+     * Search all text fields that a media object contains (i.e. title, overview, etc). Results are ordered by the most
+     * relevant score.
      *
-     * @see <a href="http://docs.trakt.apiary.io/#reference/search/text-query/get-text-query-results">Search - Text Query</a>
+     * @see <a href="http://docs.trakt.apiary.io/#reference/search/text-query/get-text-query-results">Search - Text
+     * Query</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/filters">Filters</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/extended-info">Extended</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/pagination">Pagination</a>
@@ -93,7 +95,8 @@ public interface Search {
     /**
      * Lookup items by their Trakt, IMDB, TMDB, TVDB ID.
      *
-     * @see <a href="http://docs.trakt.apiary.io/#reference/search/id-lookup/get-id-lookup-results">Search - ID Lookup</a>
+     * @see <a href="http://docs.trakt.apiary.io/#reference/search/id-lookup/get-id-lookup-results">Search - ID
+     * Lookup</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/extended-info">Extended</a>
      * @see <a href="http://docs.trakt.apiary.io/#introduction/pagination">Pagination</a>
      */

@@ -104,9 +104,9 @@ public class TraktV2 {
     /**
      * Get a new API manager instance capable of calling OAuth2 protected endpoints.
      *
-     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
+     * @param apiKey       The API key obtained from Trakt, currently equal to the OAuth client id.
      * @param clientSecret The client secret obtained from Trakt.
-     * @param redirectUri The redirect URI to use for OAuth2 token requests.
+     * @param redirectUri  The redirect URI to use for OAuth2 token requests.
      * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String, boolean)
      */
     public TraktV2(String apiKey, String clientSecret, String redirectUri) {
@@ -116,7 +116,7 @@ public class TraktV2 {
     /**
      * Get a new API manager instance.
      *
-     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
+     * @param apiKey  The API key obtained from Trakt, currently equal to the OAuth client id.
      * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String)
      */
@@ -128,10 +128,10 @@ public class TraktV2 {
     /**
      * Get a new API manager instance capable of calling OAuth2 protected endpoints.
      *
-     * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
+     * @param apiKey       The API key obtained from Trakt, currently equal to the OAuth client id.
      * @param clientSecret The client secret obtained from Trakt.
-     * @param redirectUri The redirect URI to use for OAuth2 token requests.
-     * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
+     * @param redirectUri  The redirect URI to use for OAuth2 token requests.
+     * @param staging      Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String)
      */
     public TraktV2(String apiKey, String clientSecret, String redirectUri, boolean staging) {
@@ -160,8 +160,8 @@ public class TraktV2 {
 
     /**
      * Sets the OAuth 2.0 access token to be appended to requests.
-     *
-     * <p> If set, some methods will return user-specific data.
+     * <p>
+     * If set, some methods will return user-specific data.
      *
      * @param accessToken A valid access token, obtained via e.g. {@link #exchangeCodeForAccessToken(String)}.
      */
@@ -213,7 +213,8 @@ public class TraktV2 {
     }
 
     /**
-     * Adds {@link TraktV2Interceptor} as an application interceptor and {@link TraktV2Authenticator} as an authenticator.
+     * Adds {@link TraktV2Interceptor} as an application interceptor and {@link TraktV2Authenticator} as an
+     * authenticator.
      */
     protected void setOkHttpClientDefaults(OkHttpClient.Builder builder) {
         builder.addInterceptor(new TraktV2Interceptor(this));
@@ -232,11 +233,11 @@ public class TraktV2 {
 
     /**
      * Build an OAuth 2.0 authorization URL to obtain an authorization code.
-     *
-     * <p>Send the user to the URL. Once the user authorized your app, the server will redirect to {@code redirectUri}
-     * with the authorization code and the sent state in the query parameter {@code code}.
-     *
-     * <p>Ensure the state matches, then supply the authorization code to {@link #exchangeCodeForAccessToken} to get an
+     * <p>
+     * Send the user to the URL. Once the user authorized your app, the server will redirect to {@code redirectUri} with
+     * the authorization code and the sent state in the query parameter {@code code}.
+     * <p>
+     * Ensure the state matches, then supply the authorization code to {@link #exchangeCodeForAccessToken} to get an
      * access token.
      *
      * @param state State variable to prevent request forgery attacks.
@@ -266,9 +267,9 @@ public class TraktV2 {
 
     /**
      * Request a code to start the device authentication process from Trakt.
-     *
-     * The {@code device_code} and {@code interval} will be used later to poll for the {@code access_token}.
-     * The {@code user_code} and {@code verification_url} should be presented to the user.
+     * <p>
+     * The {@code device_code} and {@code interval} will be used later to poll for the {@code access_token}. The
+     * {@code user_code} and {@code verification_url} should be presented to the user.
      */
     public Response<DeviceCode> generateDeviceCode() throws IOException {
         ClientId clientId = new ClientId();
@@ -278,11 +279,11 @@ public class TraktV2 {
 
     /**
      * Request an access token from Trakt using device authentication.
-     *
-     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
-     * the access token once it has expired.
-     *
-     * <p>On failure re-authorization of your app is required (see {@link #generateDeviceCode()}).
+     * <p>
+     * Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh the
+     * access token once it has expired.
+     * <p>
+     * On failure re-authorization of your app is required (see {@link #generateDeviceCode()}).
      *
      * @param deviceCode A valid device code (see {@link #generateDeviceCode()}).
      */
@@ -300,11 +301,11 @@ public class TraktV2 {
 
     /**
      * Request an access token from Trakt.
-     *
-     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
-     * the access token once it has expired.
-     *
-     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
+     * <p>
+     * Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh the
+     * access token once it has expired.
+     * <p>
+     * On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
      *
      * @param authCode A valid authorization code (see {@link #buildAuthorizationUrl(String)}).
      */
@@ -328,11 +329,11 @@ public class TraktV2 {
     /**
      * Request to refresh an expired access token for Trakt. If your app is still authorized, returns a response which
      * includes a new access token.
-     *
-     * <p>Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh
-     * the access token once it has expired.
-     *
-     * <p>On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
+     * <p>
+     * Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh the
+     * access token once it has expired.
+     * <p>
+     * On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
      */
     public Response<AccessToken> refreshAccessToken(String refreshToken) throws IOException {
         if (clientSecret == null) {
@@ -353,8 +354,8 @@ public class TraktV2 {
     }
 
     /**
-     * Checks if the response code is 401, which indicates an {@link #accessToken(String)} needs to be supplied,
-     * or it is no longer valid.
+     * Checks if the response code is 401, which indicates an {@link #accessToken(String)} needs to be supplied, or it
+     * is no longer valid.
      */
     public static boolean isUnauthorized(Response<?> response) {
         return response.code() == 401;
@@ -441,8 +442,8 @@ public class TraktV2 {
     }
 
     /**
-     * If the {@link Authentication} response is not successful,
-     * tries to parse the error body into a {@link TraktOAuthError}.
+     * If the {@link Authentication} response is not successful, tries to parse the error body into a
+     * {@link TraktOAuthError}.
      */
     @Nullable
     public TraktOAuthError checkForTraktOAuthError(Response<?> response) {

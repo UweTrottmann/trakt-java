@@ -44,9 +44,9 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> This method is a useful first step in the syncing process. We recommended caching these dates locally, then
-     * you can compare to know exactly what data has changed recently. This can greatly optimize your syncs so you don't
+     * <p>
+     * This method is a useful first step in the syncing process. We recommended caching these dates locally, then you
+     * can compare to know exactly what data has changed recently. This can greatly optimize your syncs so you don't
      * pull down a ton of data only to see nothing has actually changed.
      */
     @GET("sync/last_activities")
@@ -54,9 +54,9 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Get all collected movies in a user's collection. A collected item indicates availability to watch digitally
-     * or on physical media.
+     * <p>
+     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
+     * physical media.
      */
     @GET("sync/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
@@ -65,9 +65,9 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or
-     * on physical media.
+     * <p>
+     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
+     * physical media.
      */
     @GET("sync/collection/shows")
     Call<List<BaseShow>> collectionShows(
@@ -76,8 +76,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Add one or more items to a user's collection including the format of the item.
+     * <p>
+     * Add one or more items to a user's collection including the format of the item.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -88,8 +88,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Remove one or more items from a user's collection.
+     * <p>
+     * Remove one or more items from a user's collection.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -100,8 +100,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all movies a user has watched.
+     * <p>
+     * Returns all movies a user has watched.
      */
     @GET("sync/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
@@ -110,8 +110,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all playbacks;
+     * <p>
+     * Returns all playbacks;
      */
     @GET("sync/playback")
     Call<List<PlaybackResponse>> getPlayback(
@@ -120,8 +120,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all playbacks;
+     * <p>
+     * Returns all playbacks;
      */
     @GET("sync/playback/episodes")
     Call<List<PlaybackResponse>> getPlaybackEpisodes(
@@ -130,8 +130,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all playbacks;
+     * <p>
+     * Returns all playbacks;
      */
     @GET("sync/playback/movies")
     Call<List<PlaybackResponse>> getPlaybackMovies(
@@ -143,7 +143,8 @@ public interface Sync {
      * <p>
      * Remove a playback item from a user's playback progress list. A 404 will be returned if the id is invalid.
      * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/sync/remove-playback/remove-a-playback-item">Online documentation</a>
+     * <a href="https://trakt.docs.apiary.io/#reference/sync/remove-playback/remove-a-playback-item">Online
+     * documentation</a>
      */
     @DELETE("sync/playback/{id}")
     Call<Void> removePlayback(
@@ -152,8 +153,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all shows a user has watched.
+     * <p>
+     * Returns all shows a user has watched.
      */
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
@@ -162,8 +163,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Add items to a user's watch history. Accepts shows, seasons, episodes and movies. If only a show is passed,
+     * <p>
+     * Add items to a user's watch history. Accepts shows, seasons, episodes and movies. If only a show is passed,
      * assumes all seasons are to be marked watched. Same for seasons. Send a <code>watched_at</code> UTC datetime to
      * mark items as watched in the past. This is useful for syncing past watches from a media center.
      *
@@ -176,10 +177,10 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Remove items from a user's watch history including all watches, scrobbles, and checkins. Accepts shows,
-     * seasons, episodes and movies. If only a show is passed, assumes all seasons are to be removed from history. Same
-     * for seasons.
+     * <p>
+     * Remove items from a user's watch history including all watches, scrobbles, and checkins. Accepts shows, seasons,
+     * episodes and movies. If only a show is passed, assumes all seasons are to be removed from history. Same for
+     * seasons.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -190,8 +191,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
+     * <p>
+     * Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
      * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
@@ -209,8 +210,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
+     * <p>
+     * Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
      * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
@@ -228,8 +229,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
+     * <p>
+     * Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
      * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
@@ -247,8 +248,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
+     * <p>
+     * Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
      *
      * @param filter Filter for a specific rating.
      * @param page   Number of page of results to be returned. If {@code null} but {@code limit} is provided defaults to
@@ -266,8 +267,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Rate one or more items.
+     * <p>
+     * Rate one or more items.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -278,8 +279,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Delete ratings for one or more items.
+     * <p>
+     * Delete ratings for one or more items.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -291,8 +292,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
+     * <p>
+     * Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("sync/watchlist/movies")
@@ -302,8 +303,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
+     * <p>
+     * Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
      * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("sync/watchlist/shows")
@@ -313,9 +314,9 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be
-     * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * <p>
+     * Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("sync/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
@@ -324,9 +325,9 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be
-     * automatically removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * <p>
+     * Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be automatically
+     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
      */
     @GET("sync/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
@@ -335,8 +336,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Add one of more items to a user's watchlist.
+     * <p>
+     * Add one of more items to a user's watchlist.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -347,8 +348,8 @@ public interface Sync {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> Delete one or more items from a user's watchlist.
+     * <p>
+     * Delete one or more items from a user's watchlist.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */

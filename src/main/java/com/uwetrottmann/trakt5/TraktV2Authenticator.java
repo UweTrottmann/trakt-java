@@ -27,9 +27,9 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 
 /**
- * If required tries to obtain a new access and refresh tokens if a refresh token is available.
- * If so, replaces the existing tokens and updates the authentication header of the request.
- * See {@link #handleAuthenticate(Response, TraktV2)}.
+ * If required tries to obtain a new access and refresh tokens if a refresh token is available. If so, replaces the
+ * existing tokens and updates the authentication header of the request. See
+ * {@link #handleAuthenticate(Response, TraktV2)}.
  */
 public class TraktV2Authenticator implements Authenticator {
 
@@ -49,7 +49,7 @@ public class TraktV2Authenticator implements Authenticator {
      * If not doing a Trakt {@link TraktV2#API_URL} request tries to refresh the access token with the refresh token.
      *
      * @param response The response passed to {@link #authenticate(Route, Response)}.
-     * @param trakt The {@link TraktV2} instance to get the API key from and to set the updated JSON web token on.
+     * @param trakt    The {@link TraktV2} instance to get the API key from and to set the updated JSON web token on.
      * @return A request with updated authorization header or null if no auth is possible.
      */
     @Nullable

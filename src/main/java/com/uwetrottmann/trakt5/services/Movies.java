@@ -37,7 +37,7 @@ public interface Movies {
     /**
      * Returns the most popular movies. Popularity is calculated using the rating percentage and the number of ratings.
      *
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param page  Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("movies/popular")
@@ -50,7 +50,7 @@ public interface Movies {
     /**
      * Returns all movies being watched right now. Movies with the most users are returned first.
      *
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param page  Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("movies/trending")
@@ -84,7 +84,7 @@ public interface Movies {
     /**
      * Returns a single translation for a movie. If the translation does not exist, the returned list will be empty.
      *
-     * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
+     * @param movieId  trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      * @param language 2-letter language code (ISO 639-1).
      */
     @GET("movies/{id}/translations/{language}")
@@ -97,8 +97,8 @@ public interface Movies {
      * Returns all top level comments for a movie. Most recent comments returned first.
      *
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
-     * @param page Number of page of results to be returned. If {@code null} defaults to 1.
-     * @param limit Number of results to return per page. If {@code null} defaults to 10.
+     * @param page    Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit   Number of results to return per page. If {@code null} defaults to 10.
      */
     @GET("movies/{id}/comments")
     Call<List<Comment>> comments(

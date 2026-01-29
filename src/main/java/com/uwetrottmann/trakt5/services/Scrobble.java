@@ -23,10 +23,10 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface Scrobble {
-	/**
+    /**
      * <b>OAuth Required</b>
-     *
-     * <p> User starts a video
+     * <p>
+     * User starts a video
      */
     @POST("scrobble/start")
     Call<PlaybackResponse> startWatching(
@@ -35,18 +35,18 @@ public interface Scrobble {
 
     /**
      * <b>OAuth Required</b>
-     *
-     * <p> User pauses a video
+     * <p>
+     * User pauses a video
      */
     @POST("scrobble/pause")
     Call<PlaybackResponse> pauseWatching(
             @Body ScrobbleProgress prog
     );
 
-	/**
+    /**
      * <b>OAuth Required</b>
-     *
-     * <p> User stops a video
+     * <p>
+     * User stops a video
      */
     @POST("scrobble/stop")
     Call<PlaybackResponse> stopWatching(

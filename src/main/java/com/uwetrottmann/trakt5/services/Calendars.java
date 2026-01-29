@@ -74,7 +74,7 @@ public interface Calendars {
      * Returns all shows airing during the time period specified.
      *
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
-     * @param days Number of days to display. Example: 7.
+     * @param days      Number of days to display. Example: 7.
      */
     @GET("calendars/all/shows/{startdate}/{days}")
     Call<List<CalendarShowEntry>> shows(
@@ -86,7 +86,7 @@ public interface Calendars {
      * Returns all new show premieres (season 1, episode 1) airing during the time period specified.
      *
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
-     * @param days Number of days to display. Example: 7.
+     * @param days      Number of days to display. Example: 7.
      */
     @GET("calendars/all/shows/new/{startdate}/{days}")
     Call<List<CalendarShowEntry>> newShows(
@@ -98,7 +98,7 @@ public interface Calendars {
      * Returns all show premieres (any season, episode 1) airing during the time period specified.
      *
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
-     * @param days Number of days to display. Example: 7.
+     * @param days      Number of days to display. Example: 7.
      */
     @GET("calendars/all/shows/premieres/{startdate}/{days}")
     Call<List<CalendarShowEntry>> seasonPremieres(
@@ -110,7 +110,7 @@ public interface Calendars {
      * Returns all movies with a release date during the time period specified.
      *
      * @param startDate Start the calendar on this date. Example: 2014-09-01.
-     * @param days Number of days to display. Example: 7.
+     * @param days      Number of days to display. Example: 7.
      */
     @GET("calendars/all/movies/{startdate}/{days}")
     Call<List<CalendarMovieEntry>> movies(
