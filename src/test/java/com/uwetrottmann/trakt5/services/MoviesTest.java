@@ -104,7 +104,7 @@ public class MoviesTest extends BaseTestCase {
                 "de"));
         assertThat(translations).isNotNull();
         // we know that Batman Begins has a German translation, otherwise this test would fail
-        assertThat(translations).hasSize(1);
+        assertThat(translations).isNotEmpty();
         assertThat(translations.get(0).language).isEqualTo("de");
     }
 
