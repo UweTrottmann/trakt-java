@@ -11,9 +11,7 @@ bin
 
 #IntelliJ IDEA
 *.iml
-!.idea/
 .idea/*
-!.idea/codeStyleSettings.xml
 
 # Secrets
 secrets.properties
