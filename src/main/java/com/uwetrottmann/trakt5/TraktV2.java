@@ -249,9 +249,9 @@ public class TraktV2 {
         @SuppressWarnings("StringBufferReplaceableByString")
         StringBuilder authUrl = new StringBuilder(OAUTH2_AUTHORIZATION_URL);
         authUrl.append("?").append("response_type=code");
+        authUrl.append("&").append("client_id=").append(urlEncode(apiKey()));
         authUrl.append("&").append("redirect_uri=").append(urlEncode(redirectUri));
         authUrl.append("&").append("state=").append(urlEncode(state));
-        authUrl.append("&").append("client_id=").append(urlEncode(apiKey()));
         return authUrl.toString();
     }
 

@@ -15,9 +15,5 @@ bin
 .idea/*
 !.idea/codeStyleSettings.xml
 
-#############
-## Android
-#############
-# generated files
-bin/
-gen/
+# Secrets
+secrets.properties

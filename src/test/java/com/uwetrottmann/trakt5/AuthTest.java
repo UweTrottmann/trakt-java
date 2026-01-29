@@ -24,34 +24,36 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assume.assumeTrue;
 
 /**
- * This test should NOT be run with the regular test suite. It requires a valid, temporary (!) auth code to be set.
+ * The access and refresh token tests require {@code TEST_CLIENT_SECRET} and either {@code TEST_AUTH_CODE} or
+ * {@code TEST_REFRESH_TOKEN} to be set as environment variables or in secrets.properties. See the tests for details.
+ * <p>
+ * It can also be used to build an authorization URL ({@link #test_getAuthorizationRequest()}) to obtain an auth code to
+ * then obtain an access token ({@link #test_getAccessToken()}) to use as {@code TEST_ACCESS_TOKEN}.
  */
 public class AuthTest extends BaseTestCase {
 
-    private static final String TEST_CLIENT_SECRET = "";
-    private static final String TEST_AUTH_CODE = "";
-    private static final String TEST_REFRESH_TOKEN = "";
     private static final String TEST_REDIRECT_URI = "http://localhost";
-
-    private static final TraktV2 trakt = new TestTraktV2(TEST_CLIENT_ID, TEST_CLIENT_SECRET, TEST_REDIRECT_URI);
-
-    @Override
-    protected TraktV2 getTrakt() {
-        return trakt;
-    }
 
     @Test
     public void test_getAuthorizationRequest() {
+        // client secret not required for this test
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), null, TEST_REDIRECT_URI);
         String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
 
-        String authUrl = getTrakt().buildAuthorizationUrl(sampleState);
+        String authUrl = trakt.buildAuthorizationUrl(sampleState);
 
         assertThat(authUrl).isNotEmpty();
-        assertThat(authUrl).startsWith(TraktV2.OAUTH2_AUTHORIZATION_URL);
+        assertThat(authUrl).isEqualTo(
+                TraktV2.OAUTH2_AUTHORIZATION_URL + "?response_type=code" +
+                        "&client_id=" + getClientId() +
+                        "&redirect_uri=http%3A%2F%2Flocalhost" +
+                        "&state=" + sampleState);
         // trakt does not support scopes, so don't send one (server sets default scope)
         assertThat(authUrl).doesNotContain("scope");
 
@@ -60,23 +62,30 @@ public class AuthTest extends BaseTestCase {
 
     @Test
     public void test_getAccessToken() throws IOException {
-        if (TEST_CLIENT_SECRET.isEmpty() || TEST_AUTH_CODE.isEmpty()) {
-            System.out.print("Skipping test_getAccessTokenRequest test, no valid auth data");
-            return;
-        }
+        Properties secrets = tryToloadSecrets();
+        String clientSecret = getClientSecretFromEnvOrPropertiesOrIgnoreTest(secrets);
+        String authCode = getVarFromEnvOrProperties(secrets, "TEST_AUTH_CODE");
+        boolean hasAuthCode = authCode != null && !authCode.isEmpty();
+        assumeTrue("TEST_AUTH_CODE must be set via environment variable or secrets.properties file", hasAuthCode);
 
-        Response<AccessToken> response = getTrakt().exchangeCodeForAccessToken(TEST_AUTH_CODE);
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), clientSecret, TEST_REDIRECT_URI);
+
+        Response<AccessToken> response = trakt.exchangeCodeForAccessToken(authCode);
         assertAccessTokenResponse(response);
     }
 
     @Test
     public void test_refreshAccessToken() throws IOException {
-        if (TEST_CLIENT_SECRET.isEmpty() || TEST_REFRESH_TOKEN.isEmpty()) {
-            System.out.print("Skipping test_refreshAccessToken test, no valid auth data");
-            return;
-        }
+        Properties secrets = tryToloadSecrets();
+        String clientSecret = getClientSecretFromEnvOrPropertiesOrIgnoreTest(secrets);
+        String refreshToken = getVarFromEnvOrProperties(secrets, "TEST_REFRESH_TOKEN");
+        boolean hasRefreshToken = refreshToken != null && !refreshToken.isEmpty();
+        assumeTrue("TEST_REFRESH_TOKEN must be set via environment variable or secrets.properties file",
+                hasRefreshToken);
 
-        Response<AccessToken> response = getTrakt().refreshAccessToken(getTrakt().refreshToken());
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), clientSecret, TEST_REDIRECT_URI);
+
+        Response<AccessToken> response = trakt.refreshAccessToken(refreshToken);
         assertAccessTokenResponse(response);
     }
 

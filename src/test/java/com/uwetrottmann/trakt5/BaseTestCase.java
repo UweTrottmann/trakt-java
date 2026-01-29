@@ -35,27 +35,41 @@ import com.uwetrottmann.trakt5.entities.TraktError;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import org.junit.BeforeClass;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import javax.annotation.Nullable;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assume.assumeTrue;
 
 public class BaseTestCase {
 
-    protected static final String TEST_CLIENT_ID = "35a671df22d3d98b09aab1c0bc52977e902e696a7704cab94f4d12c2672041e4";
-    public static final String TEST_ACCESS_TOKEN = "11cd70c14c432a7c834fdd57a3e81f3d774d98de645b598adb33b1da457b4bfa"; // "sgtest" on production
-    public static final String TEST_REFRESH_TOKEN = "df5b571e11c55e933867838f524fce7e37b5e19038f9b9af6a509f9ba3f23fbf"; // "sgtest" on production
+    private static final String TEST_CLIENT_ID;
+    private static final String TEST_ACCESS_TOKEN;
+
+    static {
+        Properties secrets = tryToloadSecrets();
+
+        TEST_CLIENT_ID = getVarFromEnvOrProperties(secrets, "TEST_CLIENT_ID");
+        TEST_ACCESS_TOKEN = getVarFromEnvOrProperties(secrets, "TEST_ACCESS_TOKEN");
+
+        checkVarNotEmpty(TEST_CLIENT_ID, "TEST_CLIENT_ID");
+        checkVarNotEmpty(TEST_ACCESS_TOKEN, "TEST_ACCESS_TOKEN");
+    }
 
     private static final boolean DEBUG = true;
 
-    private static final TraktV2 trakt = new TestTraktV2(TEST_CLIENT_ID);
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
+
+    private static TraktV2 trakt;
+    private static TraktV2 traktNoAuth;
 
     static class TestTraktV2 extends TraktV2 {
 
@@ -65,7 +79,6 @@ public class BaseTestCase {
 
         public TestTraktV2(String apiKey, String clientSecret, String redirectUri) {
             super(apiKey, clientSecret, redirectUri);
-            refreshToken(TEST_REFRESH_TOKEN);
         }
 
         @Override
@@ -88,13 +101,27 @@ public class BaseTestCase {
         }
     }
 
-    @BeforeClass
-    public static void setUpOnce() {
-        trakt.accessToken(TEST_ACCESS_TOKEN);
+    protected String getClientId() {
+        return TEST_CLIENT_ID;
+    }
+
+    protected String getAccessToken() {
+        return TEST_ACCESS_TOKEN;
     }
 
     protected TraktV2 getTrakt() {
+        if (trakt == null) {
+            trakt = new TestTraktV2(getClientId());
+            trakt.accessToken(getAccessToken());
+        }
         return trakt;
+    }
+
+    protected TraktV2 getUnauthenticatedTrakt() {
+        if (traktNoAuth == null) {
+            traktNoAuth = new TestTraktV2(getClientId());
+        }
+        return traktNoAuth;
     }
 
     /**
@@ -292,6 +319,41 @@ public class BaseTestCase {
         System.out.println("Retrieved refresh token: " + response.body().refresh_token);
         System.out.println("Retrieved scope: " + response.body().scope);
         System.out.println("Retrieved expires in: " + response.body().expires_in + " seconds");
+    }
+
+    protected static Properties tryToloadSecrets() {
+        Properties properties = new Properties();
+
+        try (InputStream input = new FileInputStream("secrets.properties")) {
+            properties.load(input);
+        } catch (IOException e) {
+            // File not found or cannot be read, will try environment variables
+        }
+
+        return properties;
+    }
+
+    protected static String getVarFromEnvOrProperties(Properties properties, String key) {
+        String value = System.getenv(key);
+        if (value != null && !value.isEmpty()) {
+            return value;
+        }
+        return properties.getProperty(key);
+    }
+
+    private static void checkVarNotEmpty(String value, String name) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalStateException(name + " must be set via environment variable or secrets.properties file");
+        }
+    }
+
+    protected String getClientSecretFromEnvOrPropertiesOrIgnoreTest(Properties properties) {
+        String clientSecret = getVarFromEnvOrProperties(properties, "TEST_CLIENT_SECRET");
+        boolean hasClientSecret = clientSecret != null && !clientSecret.isEmpty();
+        assumeTrue(
+                "TEST_CLIENT_SECRET must be set via environment variable or secrets.properties file",
+                hasClientSecret);
+        return clientSecret;
     }
 
 }
