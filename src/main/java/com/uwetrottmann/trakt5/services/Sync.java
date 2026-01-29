@@ -60,8 +60,8 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all movies in a user's library (formerly collection). A collected item indicates availability to watch
+     * digitally or on physical media.
      *
      * @deprecated Use {@link #collectionMovies(int, int, Extended)} instead.
      */
@@ -74,11 +74,7 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
-     *
-     * @param page  Number of page of results to be returned.
-     * @param limit Number of results to return per page.
+     * Like {@link Users#collectionMovies(UserSlug, int, int, Extended)}.
      */
     @GET("sync/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
@@ -90,8 +86,8 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all shows in a user's library (formerly collection). A collected item indicates availability to watch
+     * digitally or on physical media.
      *
      * @deprecated Use {@link #collectionShows(int, int, Extended)} instead.
      */
@@ -104,11 +100,7 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
-     *
-     * @param page  Number of page of results to be returned.
-     * @param limit Number of results to return per page.
+     * Like {@link Users#collectionShows(UserSlug, int, int, Extended)}.
      */
     @GET("sync/collection/shows")
     Call<List<BaseShow>> collectionShows(
@@ -120,7 +112,7 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Add one or more items to a user's collection including the format of the item.
+     * Add one or more items to a user's library (formerly collection) including the format of the item.
      *
      * @param items A list of movies, shows, seasons or episodes.
      */
@@ -132,7 +124,7 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Remove one or more items from a user's collection.
+     * Remove one or more items from a user's library (formerly collection).
      *
      * @param items A list of movies, shows, seasons or episodes.
      */

@@ -80,8 +80,8 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all movies in a user's library (formerly collection). A collected item indicates availability to watch
+     * digitally or on physical media.
      *
      * @param userSlug Example: "sean".
      * @deprecated Use {@link #collectionMovies(UserSlug, int, int, Extended)} instead.
@@ -96,12 +96,12 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all movies in a user's library (formerly collection).
      *
      * @param userSlug Example: "sean".
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
+     * @see Sync#collectionMovies(int, int, Extended)
      */
     @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
@@ -114,8 +114,8 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all shows in a user's library (formerly collection). A collected item indicates availability to watch
+     * digitally or on physical media.
      *
      * @param userSlug Example: "sean".
      * @deprecated Use {@link #collectionShows(UserSlug, int, int, Extended)} instead.
@@ -130,12 +130,12 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all shows in a user's library (formerly collection).
      *
      * @param userSlug Example: "sean".
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
+     * @see Sync#collectionShows(int, int, Extended)
      */
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
