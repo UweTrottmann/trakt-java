@@ -32,6 +32,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
+import com.uwetrottmann.trakt5.enums.PlaybackType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
@@ -153,8 +154,53 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Returns all playbacks;
+     * Whenever a scrobble is paused, the playback progress is saved. Use this progress to sync up playback across
+     * different media centers or apps. For example, you can start watching a movie in a media center, stop it, then
+     * resume on your tablet from the same spot. Each item will have the progress percentage between 0 and 100.
+     * <p>
+     * Use {@link #playback(PlaybackType, OffsetDateTime, OffsetDateTime, Integer, Integer)} to specify a type to only
+     * get movies or episodes.
+     * <p>
+     * By default, all results will be returned. Pagination is optional and can be used for something like an "on deck"
+     * feature, or if you only need a limited data set.
+     * <p>
+     * Note: Trakt only saves playback progress for the last 6 months.
+     *
+     * @see #playback(PlaybackType, OffsetDateTime, OffsetDateTime, Integer, Integer)
      */
+    @GET("sync/playback")
+    Call<List<PlaybackResponse>> playback(
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     * <p>
+     * Like {@link #playback(OffsetDateTime, OffsetDateTime, Integer, Integer)}, but allows to specify a type to only
+     * get movies or episodes.
+     *
+     * @see #playback(OffsetDateTime, OffsetDateTime, Integer, Integer)
+     */
+    @GET("sync/playback/{type}")
+    Call<List<PlaybackResponse>> playback(
+            @Path("type") PlaybackType type,
+            @Query("start_at") OffsetDateTime startAt,
+            @Query("end_at") OffsetDateTime endAt,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit
+    );
+
+    /**
+     * <b>OAuth Required</b>
+     * <p>
+     * Returns all playbacks;
+     *
+     * @deprecated Use {@link #playback(OffsetDateTime, OffsetDateTime, Integer, Integer)} instead.
+     */
+    @Deprecated
     @GET("sync/playback")
     Call<List<PlaybackResponse>> getPlayback(
             @Query("limit") Integer limit
@@ -164,7 +210,10 @@ public interface Sync {
      * <b>OAuth Required</b>
      * <p>
      * Returns all playbacks;
+     *
+     * @deprecated Use {@link #playback(PlaybackType, OffsetDateTime, OffsetDateTime, Integer, Integer)} instead.
      */
+    @Deprecated
     @GET("sync/playback/episodes")
     Call<List<PlaybackResponse>> getPlaybackEpisodes(
             @Query("limit") Integer limit
@@ -174,7 +223,10 @@ public interface Sync {
      * <b>OAuth Required</b>
      * <p>
      * Returns all playbacks;
+     *
+     * @deprecated Use {@link #playback(PlaybackType, OffsetDateTime, OffsetDateTime, Integer, Integer)} instead.
      */
+    @Deprecated
     @GET("sync/playback/movies")
     Call<List<PlaybackResponse>> getPlaybackMovies(
             @Query("limit") Integer limit

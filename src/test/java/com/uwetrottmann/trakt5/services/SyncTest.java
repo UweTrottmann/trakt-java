@@ -106,7 +106,7 @@ public class SyncTest extends BaseTestCase {
         // Give the server some time to process the request.
         Thread.sleep(1500);
 
-        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlayback(10));
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().playback(null, null, null, 10));
         assertThat(playbacks).isNotNull();
         boolean foundEpisode = false;
         boolean foundMovie = false;

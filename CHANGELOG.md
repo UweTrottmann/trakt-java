@@ -6,6 +6,8 @@
   and `Users.collectionShows()` with required `page` and `limit` parameters. The original methods without pagination 
   parameters are deprecated.
 * Add history endpoints to `Sync`. Thanks @defhead! [#125](https://github.com/UweTrottmann/trakt-java/pull/125)
+* Add `Sync.playback()` that also accepts start and end times and supports pagination. The existing `getPlayback()`
+  methods are deprecated.
 
 ## 6.16.0 - 2024-11-07
 
