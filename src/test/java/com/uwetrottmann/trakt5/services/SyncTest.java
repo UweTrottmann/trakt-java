@@ -52,6 +52,7 @@ import org.junit.Test;
 import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.temporal.ChronoUnit;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -324,16 +325,17 @@ public class SyncTest extends BaseTestCase {
     public void test_addItemsToWatchedHistory() throws IOException {
         // movie
         SyncMovie movie = new SyncMovie();
-        movie.watched_at = OffsetDateTime.now().minusHours(1);
+        // Trakt only stores minute precision for watched_at
+        movie.watched_at = OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusHours(1);
         movie.ids = buildMovieIds();
 
         // episode
         SyncEpisode episode = new SyncEpisode();
         episode.number = TestData.EPISODE_NUMBER;
-        episode.watched_at = OffsetDateTime.now().minusHours(1);
+        episode.watched_at = OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusHours(1);
         SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
-        episode2.watched_at = OffsetDateTime.now().minusMinutes(30);
+        episode2.watched_at = OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusMinutes(30);
         // season
         SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;

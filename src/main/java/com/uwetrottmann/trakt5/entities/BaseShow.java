@@ -33,6 +33,10 @@ public class BaseShow {
     public OffsetDateTime listed_at;
     /** watched */
     public Integer plays;
+    /**
+     * Warning: Trakt is planning to only store and return minute-precision timestamps for watched_at. So seconds and
+     * nanoseconds will always be zero.
+     */
     public OffsetDateTime last_watched_at;
     public OffsetDateTime last_updated_at;
     public OffsetDateTime reset_at;

@@ -10,6 +10,8 @@
   methods are deprecated.
 * Add `Users.listItems()` variants that requires pagination and support type and sort order parameters. The original 
   method is deprecated.
+* Add warnings to `watched_at` fields
+  that [Trakt will only store and return minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
 
 ## 6.16.0 - 2024-11-07
 

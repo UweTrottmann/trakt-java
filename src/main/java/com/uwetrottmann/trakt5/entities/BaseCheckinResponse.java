@@ -21,6 +21,10 @@ import org.threeten.bp.OffsetDateTime;
 
 public abstract class BaseCheckinResponse {
 
+    /**
+     * Warning: Trakt is planning to only store and return minute-precision timestamps for watched_at. So seconds and
+     * nanoseconds will always be zero.
+     */
     public OffsetDateTime watched_at;
     public ShareSettings sharing;
 
