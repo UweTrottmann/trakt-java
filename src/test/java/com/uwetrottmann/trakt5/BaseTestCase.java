@@ -308,6 +308,17 @@ public class BaseTestCase {
         }
     }
 
+    /**
+     * Checks that the promised pagination headers are returned and that the supplied page and limit parameters were
+     * used.
+     */
+    public static void assertPaginationHeaders(Response<?> response, int expectedPage, int expectedLimit) {
+        assertThat(TraktV2.getPageCount(response)).isNotNull();
+        assertThat(TraktV2.getItemCount(response)).isNotNull();
+        assertThat(response.headers().get("X-Pagination-Page")).isEqualTo(String.valueOf(expectedPage));
+        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo(String.valueOf(expectedLimit));
+    }
+
     protected void assertAccessTokenResponse(Response<AccessToken> response) {
         assertSuccessfulResponse(response);
         assertThat(response.body().access_token).isNotEmpty();

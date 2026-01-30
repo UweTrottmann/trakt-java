@@ -391,10 +391,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsMovies_with_pagination() throws IOException {
-        Call<List<RatedMovie>> call = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 1, 2);
+        int page = 1;
+        int limit = 2;
+        Call<List<RatedMovie>> call = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedMovie>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -405,10 +407,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsShows_with_pagination() throws IOException {
-        Call<List<RatedShow>> call = getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 1, 2);
+        int page = 1;
+        int limit = 2;
+        Call<List<RatedShow>> call = getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedShow>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -420,10 +424,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsSeasons_with_pagination() throws IOException {
-        Call<List<RatedSeason>> call = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 1, 5);
+        int page = 1;
+        int limit = 5;
+        Call<List<RatedSeason>> call = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedSeason>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -435,10 +441,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsEpisodes_with_pagination() throws IOException {
-        Call<List<RatedEpisode>> call = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, 1, 2);
+        int page = 1;
+        int limit = 2;
+        Call<List<RatedEpisode>> call = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedEpisode>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -632,17 +640,17 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_history_withPagination() throws IOException {
-        Call<List<HistoryEntry>> call = getTrakt().sync().history(1, 5, null, null, null);
+        int page = 1;
+        int limit = 5;
+        Call<List<HistoryEntry>> call = getTrakt().sync().history(page, limit, null, null, null);
         Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
 
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo("5");
+        assertPaginationHeaders(response, page, limit);
+
         List<HistoryEntry> body = response.body();
         if (body == null) {
             throw new IllegalStateException("Body should not be null for successful response");
         }
-
         assertHistory(body);
     }
 
