@@ -190,7 +190,7 @@ public class UsersTest extends BaseTestCase {
         assertThat(createdList.sort_how).isEqualTo(SortHow.DESC); // Note: created list is always desc, even on web.
 
         // ...and delete it again
-        Response deleteResponse = getTrakt().users().deleteList(UserSlug.ME,
+        Response<Void> deleteResponse = getTrakt().users().deleteList(UserSlug.ME,
                 String.valueOf(createdList.ids.trakt)).execute();
         assertSuccessfulResponse(deleteResponse);
         assertThat(deleteResponse.code()).isEqualTo(204);
@@ -332,7 +332,7 @@ public class UsersTest extends BaseTestCase {
     public void test_unfollowAndFollow() throws InterruptedException, IOException {
         // unfollow first
         UserSlug userToFollow = new UserSlug(TestData.USER_TO_FOLLOW);
-        Response response = getTrakt().users().unfollow(userToFollow).execute();
+        Response<Void> response = getTrakt().users().unfollow(userToFollow).execute();
         assertSuccessfulResponse(response);
         assertThat(response.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
 
