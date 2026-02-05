@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.ScrobbleProgress;
 import retrofit2.Call;
@@ -24,7 +25,7 @@ import retrofit2.http.POST;
 
 public interface Scrobble {
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * User starts a video
      */
@@ -34,7 +35,7 @@ public interface Scrobble {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * User pauses a video
      */
@@ -44,7 +45,7 @@ public interface Scrobble {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * User stops a video
      */

@@ -2,6 +2,21 @@
 
 ## Next release
 
+* Address [Trakt requiring pagination](https://github.com/trakt/trakt-api/discussions/681) for lists and library
+  (formerly collection) endpoints:
+  * Add paginated variants of `Sync.collectionMovies()`, `Sync.collectionShows()`, `Users.collectionMovies()`
+    and `Users.collectionShows()` with required `page` and `limit` parameters. The original methods are deprecated.
+  * Add `Users.listItems()` variants that require pagination and support type and sort order parameters. The original
+    method is deprecated.
+* Add history endpoints to `Sync`. Thanks @defhead! [#125](https://github.com/UweTrottmann/trakt-java/pull/125)
+* Add `Sync.playback()` that also accepts start and end times and supports pagination. The existing `getPlayback()`
+  methods are deprecated.
+* Add warnings to `watched_at` fields
+  that [Trakt will only store and return minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
+* Add `TraktV2.isAccountLimitExceeded()`, `TraktV2.isRateLimitExceeded()` and `TraktV2.isServerError()` methods to help
+  inspect `Response` objects for more common Trakt HTTP status codes.
+* Add variants of the watchlist methods that support pagination and sort order parameters.
+
 ## 6.16.0 - 2024-11-07
 
 * `TraktV2`: add `isUnauthorized(response)`, `isAccountLocked(response)` and `isNotVip(response)` helper methods.

@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt5.TestData;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
+import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
 import com.uwetrottmann.trakt5.entities.LastActivity;
 import com.uwetrottmann.trakt5.entities.LastActivityAccount;
@@ -44,12 +45,14 @@ import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
+import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.junit.Test;
 import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.temporal.ChronoUnit;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -57,6 +60,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertEpisodeHistory;
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertHistory;
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertMovieHistory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -101,7 +107,7 @@ public class SyncTest extends BaseTestCase {
         // Give the server some time to process the request.
         Thread.sleep(1500);
 
-        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().getPlayback(10));
+        List<PlaybackResponse> playbacks = executeCall(getTrakt().sync().playback(null, null, null, 10));
         assertThat(playbacks).isNotNull();
         boolean foundEpisode = false;
         boolean foundMovie = false;
@@ -180,13 +186,13 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(null));
+        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(1, 1000, null));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(null));
+        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(1, 1000, null));
         assertSyncShows(shows, "collection");
     }
 
@@ -319,16 +325,17 @@ public class SyncTest extends BaseTestCase {
     public void test_addItemsToWatchedHistory() throws IOException {
         // movie
         SyncMovie movie = new SyncMovie();
-        movie.watched_at = OffsetDateTime.now().minusHours(1);
+        // Trakt only stores minute precision for watched_at
+        movie.watched_at = OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusHours(1);
         movie.ids = buildMovieIds();
 
         // episode
         SyncEpisode episode = new SyncEpisode();
         episode.number = TestData.EPISODE_NUMBER;
-        episode.watched_at = OffsetDateTime.now().minusHours(1);
+        episode.watched_at = OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusHours(1);
         SyncEpisode episode2 = new SyncEpisode();
         episode2.number = 2;
-        episode2.watched_at = OffsetDateTime.now().minusMinutes(30);
+        episode2.watched_at = OffsetDateTime.now().truncatedTo(ChronoUnit.MINUTES).minusMinutes(30);
         // season
         SyncSeason season = new SyncSeason();
         season.number = TestData.EPISODE_SEASON;
@@ -384,10 +391,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsMovies_with_pagination() throws IOException {
-        Call<List<RatedMovie>> call = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, 1, 2);
+        int page = 1;
+        int limit = 2;
+        Call<List<RatedMovie>> call = getTrakt().sync().ratingsMovies(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedMovie>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -398,10 +407,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsShows_with_pagination() throws IOException {
-        Call<List<RatedShow>> call = getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, 1, 2);
+        int page = 1;
+        int limit = 2;
+        Call<List<RatedShow>> call = getTrakt().sync().ratingsShows(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedShow>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -413,10 +424,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsSeasons_with_pagination() throws IOException {
-        Call<List<RatedSeason>> call = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, 1, 5);
+        int page = 1;
+        int limit = 5;
+        Call<List<RatedSeason>> call = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedSeason>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+        
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -428,10 +441,12 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_ratingsEpisodes_with_pagination() throws IOException {
-        Call<List<RatedEpisode>> call = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, 1, 2);
+        int page = 1;
+        int limit = 2;
+        Call<List<RatedEpisode>> call = getTrakt().sync().ratingsEpisodes(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedEpisode>> response = executeCallWithoutReadingBody(call);
-        assertThat(response.headers().get("X-Pagination-Page-Count")).isNotEmpty();
-        assertThat(response.headers().get("X-Pagination-Item-Count")).isNotEmpty();
+
+        assertPaginationHeaders(response, page, limit);
     }
 
     @Test
@@ -515,35 +530,77 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistMovies_pagination() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistMovies(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistMovies_sortOrder() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistMovies("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistShows() throws IOException {
         List<BaseShow> shows = executeCall(getTrakt().sync().watchlistShows(null));
-        assertThat(shows).isNotNull();
-        for (BaseShow show : shows) {
-            assertThat(show.show).isNotNull();
-            assertThat(show.listed_at).isNotNull();
-        }
+        assertWatchlistShows(shows);
+    }
+
+    @Test
+    public void test_watchlistShows_pagination() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistShows(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistShows_sortOrder() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistShows("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
     }
 
     @Test
     public void test_watchlistSeasons() throws IOException {
         List<WatchlistedSeason> seasons = executeCall(getTrakt().sync().watchlistSeasons(null));
-        assertThat(seasons).isNotNull();
-        for (WatchlistedSeason season : seasons) {
-            assertThat(season.season).isNotNull();
-            assertThat(season.show).isNotNull();
-            assertThat(season.listed_at).isNotNull();
-        }
+        assertWatchlistSeasons(seasons);
+    }
+
+    @Test
+    public void test_watchlistSeasons_pagination() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistSeasons(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistSeasons_sortOrder() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistSeasons("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
     }
 
     @Test
     public void test_watchlistEpisodes() throws IOException {
         List<WatchlistedEpisode> episodes = executeCall(getTrakt().sync().watchlistEpisodes(null));
-        assertThat(episodes).isNotNull();
-        for (WatchlistedEpisode episode : episodes) {
-            assertThat(episode.episode).isNotNull();
-            assertThat(episode.show).isNotNull();
-            assertThat(episode.listed_at).isNotNull();
-        }
+        assertWatchlistEpisodes(episodes);
+    }
+
+    @Test
+    public void test_watchlistEpisodes_pagination() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistEpisodes(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistEpisodes_sortOrder() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistEpisodes("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
     }
 
     @Test
@@ -613,6 +670,60 @@ public class SyncTest extends BaseTestCase {
         SyncResponse requestResponse = executeCall(getTrakt().sync().deleteItemsFromWatchlist(
                 buildItemsForDeletion()));
         assertSyncResponseDelete(requestResponse);
+    }
+
+    @Test
+    public void test_history() throws IOException {
+        List<HistoryEntry> history = executeCall(
+                getTrakt().sync().history(null, null, null, null, null)
+        );
+        assertHistory(history);
+    }
+
+    @Test
+    public void test_history_withPagination() throws IOException {
+        int page = 1;
+        int limit = 5;
+        Call<List<HistoryEntry>> call = getTrakt().sync().history(page, limit, null, null, null);
+        Response<List<HistoryEntry>> response = executeCallWithoutReadingBody(call);
+
+        assertPaginationHeaders(response, page, limit);
+
+        List<HistoryEntry> body = response.body();
+        if (body == null) {
+            throw new IllegalStateException("Body should not be null for successful response");
+        }
+        assertHistory(body);
+    }
+
+    @Test
+    public void test_history_episodes() throws IOException {
+        List<HistoryEntry> history = executeCall(
+                getTrakt().sync().history(HistoryType.EPISODES, null, null, null, null, null)
+        );
+
+        assertEpisodeHistory(history);
+    }
+
+    @Test
+    public void test_history_movies() throws IOException {
+        List<HistoryEntry> history = executeCall(
+                getTrakt().sync().history(HistoryType.MOVIES, null, null, null, null, null));
+
+        assertMovieHistory(history);
+    }
+
+    @Test
+    public void test_history_item() throws IOException {
+        List<HistoryEntry> history = executeCall(
+                getTrakt().sync().history(HistoryType.MOVIES,
+                        TestData.MOVIE_WATCHED_TRAKT_ID, null, null, null,
+                        OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
+                        OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC))
+        );
+
+        assertThat(history.size()).isGreaterThan(0);
+        assertMovieHistory(history);
     }
 
 

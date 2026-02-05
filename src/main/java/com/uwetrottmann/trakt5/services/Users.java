@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Followed;
@@ -51,12 +52,13 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface Users {
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get the user's settings so you can align your app's experience with what they're used to on the Trakt website.
      */
@@ -64,7 +66,7 @@ public interface Users {
     Call<Settings> settings();
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's profile information. If the user is private, info will only be returned if you send OAuth and are
      * either that user or an approved follower.
@@ -78,13 +80,15 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Get all collected movies in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all movies in a user's library (formerly collection). A collected item indicates availability to watch
+     * digitally or on physical media.
      *
      * @param userSlug Example: "sean".
+     * @deprecated Use {@link #collectionMovies(UserSlug, int, int, Extended)} instead.
      */
+    @Deprecated
     @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
             @Path("username") UserSlug userSlug,
@@ -92,13 +96,33 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Get all collected shows in a user's collection. A collected item indicates availability to watch digitally or on
-     * physical media.
+     * Get all movies in a user's library (formerly collection).
      *
      * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
+     * @see Sync#collectionMovies(int, int, Extended)
      */
+    @GET("users/{username}/collection/movies")
+    Call<List<BaseMovie>> collectionMovies(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Get all shows in a user's library (formerly collection). A collected item indicates availability to watch
+     * digitally or on physical media.
+     *
+     * @param userSlug Example: "sean".
+     * @deprecated Use {@link #collectionShows(UserSlug, int, int, Extended)} instead.
+     */
+    @Deprecated
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
             @Path("username") UserSlug userSlug,
@@ -106,7 +130,25 @@ public interface Users {
     );
 
     /**
-     * <b>VIP Only, OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Get all shows in a user's library (formerly collection).
+     *
+     * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
+     * @see Sync#collectionShows(int, int, Extended)
+     */
+    @GET("users/{username}/collection/shows")
+    Call<List<BaseShow>> collectionShows(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns the most recently added notes for the user.
      * <p>
@@ -122,7 +164,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all custom lists for a user.
      */
@@ -132,7 +174,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
      */
@@ -143,7 +185,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Update a custom list by sending 1 or more parameters. If you update the list name, the original slug will still
      * be retained so existing references to this list won't break.
@@ -156,7 +198,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove a custom list and all items it contains.
      */
@@ -167,7 +209,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Reorder all custom lists by sending the updated rank of list ids.
      */
@@ -178,10 +220,13 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
+     *
+     * @deprecated Use {@link #listItems(UserSlug, String, int, int, Extended)} instead.
      */
+    @Deprecated
     @GET("users/{username}/lists/{id}/items")
     Call<List<ListEntry>> listItems(
             @Path("username") UserSlug userSlug,
@@ -190,7 +235,96 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Get all items on a personal list. Items can be a movie, show, season, episode, or person. Use
+     * {@link #listItems(UserSlug, String, String, int, int, Extended)} to specify the type parameter with a single
+     * value or comma-delimited string for multiple item types.
+     * <p>
+     * Notes: Each list item contains a notes field with text entered by the user.
+     * <p>
+     * Sorting: Default sorting is based on the list defaults and sent in the X-Sort-By and X-Sort-How headers. Use
+     * {@link #listItems(UserSlug, String, String, String, String, int, int, Extended)} to specify a custom sort order.
+     */
+    @GET("users/{username}/lists/{id}/items")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #listItems(UserSlug, String, int, int, Extended)}, but you can specify a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/lists/{id}/items/{sort_by}/{sort_how}")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Path("sort_by") String sortBy,
+            @Path("sort_how") String sortHow,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #listItems(UserSlug, String, int, int, Extended)}, but you can specify the type parameter with a
+     * single value or comma-delimited string for multiple item types.
+     *
+     * @param type Filter for a specific item type. Example: {@code movie,show}. Possible values: movie, show, season,
+     *             episode, person.
+     */
+    @GET("users/{username}/lists/{id}/items/{type}")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Path("type") String type,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #listItems(UserSlug, String, String, int, int, Extended)}, but you can specify a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param type    Filter for a specific item type. Example: {@code movie,show}. Possible values: movie, show,
+     *                season, episode, person.
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released, runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/lists/{id}/items/{type}/{sort_by}/{sort_how}")
+    Call<List<ListEntry>> listItems(
+            @Path("username") UserSlug userSlug,
+            @Path("id") String id,
+            @Path("type") String type,
+            @Path("sort_by") String sortBy,
+            @Path("sort_how") String sortHow,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add one or more items to a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
@@ -202,7 +336,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove one or more items from a custom list.
      */
@@ -214,7 +348,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Reorder all items on a list by sending the updated rank of list item ids.
      */
@@ -226,7 +360,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * If the user has a private profile, the follow request will require approval (approved_at will be null). If a user
      * is public, they will be followed immediately (approved_at will have a date).
@@ -239,7 +373,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Unfollow someone you already follow.
      */
@@ -249,7 +383,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all followers including when the relationship began.
      */
@@ -260,7 +394,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all user's they follow including when the relationship began.
      */
@@ -271,7 +405,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship where
      * each user follows the other.
@@ -283,7 +417,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns movies and episodes that a user has watched, sorted by most recent.
      * <p>
@@ -292,6 +426,7 @@ public interface Users {
      * {@code watch}.
      *
      * @param userSlug Example: "sean".
+     * @see Sync#history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("users/{username}/history")
     Call<List<HistoryEntry>> history(
@@ -304,15 +439,13 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns movies or episodes that a user has watched, sorted by most recent.
-     * <p>
-     * The {@code id} uniquely identifies each history event and can be used to remove events individually using the
-     * {@code POST /sync/history/remove method}. The action will be set to {@code scrobble}, {@code checkin}, or
-     * {@code watch}.
+     * Like {@link #history(UserSlug, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}, but allows to set a
+     * type to only return movies or episodes.
      *
      * @param userSlug Example: "sean".
+     * @see Sync#history(HistoryType, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("users/{username}/history/{type}")
     Call<List<HistoryEntry>> history(
@@ -326,7 +459,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns the history for just the specified item. For example, {@code /history/movies/12601} would return all
      * watches for TRON: Legacy and {@code /history/shows/1388} would return all watched episodes for Breaking Bad. If
@@ -338,6 +471,7 @@ public interface Users {
      * {@code watch}.
      *
      * @param userSlug Example: "sean".
+     * @see Sync#history(HistoryType, int, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
     @GET("users/{username}/history/{type}/{id}")
     Call<List<HistoryEntry>> history(
@@ -352,7 +486,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
      *
@@ -367,7 +501,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
      *
@@ -382,7 +516,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
      *
@@ -397,7 +531,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
      *
@@ -412,55 +546,227 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Returns all items in a user's watchlist filtered by movies.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistMovies(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * Like {@link #watchlistMovies(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/movies")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistMovies(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
      * <p>
-     * Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/movies/{sort_by}/{sort_how}")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all items in a user's watchlist filtered by shows.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistShows(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * Like {@link #watchlistShows(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/shows")
+    Call<List<BaseShow>> watchlistShows(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistShows(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
      * <p>
-     * Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/shows/{sort_by}/{sort_how}")
+    Call<List<BaseShow>> watchlistShows(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all items in a user's watchlist filtered by seasons.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistSeasons(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * Like {@link #watchlistSeasons(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/seasons")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistSeasons(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
      * <p>
-     * Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/seasons/{sort_by}/{sort_how}")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all items in a user's watchlist filtered by episodes.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistEpisodes(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * Like {@link #watchlistEpisodes(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/episodes")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistEpisodes(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/episodes/{sort_by}/{sort_how}")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all movies or shows a user has watched sorted by most plays.
      *
@@ -473,7 +779,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all movies or shows a user has watched sorted by most plays.
      *

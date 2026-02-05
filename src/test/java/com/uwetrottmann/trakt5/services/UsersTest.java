@@ -67,6 +67,9 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertEpisodeHistory;
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertHistory;
+import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertMovieHistory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UsersTest extends BaseTestCase {
@@ -102,13 +105,13 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_collectionMovies() throws IOException {
         List<BaseMovie> movies = executeCall(
-                getTrakt().users().collectionMovies(TestData.USER_SLUG, null));
+                getTrakt().users().collectionMovies(TestData.USER_SLUG, 1, 1000, null));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, null));
+        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, 1, 1000, null));
         assertSyncShows(shows, "collection");
     }
 
@@ -187,7 +190,7 @@ public class UsersTest extends BaseTestCase {
         assertThat(createdList.sort_how).isEqualTo(SortHow.DESC); // Note: created list is always desc, even on web.
 
         // ...and delete it again
-        Response deleteResponse = getTrakt().users().deleteList(UserSlug.ME,
+        Response<Void> deleteResponse = getTrakt().users().deleteList(UserSlug.ME,
                 String.valueOf(createdList.ids.trakt)).execute();
         assertSuccessfulResponse(deleteResponse);
         assertThat(deleteResponse.code()).isEqualTo(204);
@@ -210,9 +213,45 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_listItems() throws IOException {
-        List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
-                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                null));
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    @Test
+    public void test_listItems_sortOrder() throws IOException {
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                        "title", "asc", 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    @Test
+    public void test_listItems_type() throws IOException {
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                        "movie,show", 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    @Test
+    public void test_listItems_typeAndsortOrder() throws IOException {
+        List<ListEntry> entries = executeCall(
+                getTrakt().users().listItems(UserSlug.ME,
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                        "movie,show", "title", "asc", 1, 1000, null)
+        );
+        assertListEntries(entries);
+    }
+
+    private static void assertListEntries(List<ListEntry> entries) {
+        assertThat(entries).isNotEmpty();
         for (ListEntry entry : entries) {
             assertThat(entry.listed_at).isNotNull();
             assertThat(entry.id).isNotNull();
@@ -254,7 +293,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_reorderListItems() throws IOException {
         List<ListEntry> entries = executeCall(getTrakt().users().listItems(UserSlug.ME,
-                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
+                String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), 1, 1000,
                 null));
 
         // reverse order
@@ -293,7 +332,7 @@ public class UsersTest extends BaseTestCase {
     public void test_unfollowAndFollow() throws InterruptedException, IOException {
         // unfollow first
         UserSlug userToFollow = new UserSlug(TestData.USER_TO_FOLLOW);
-        Response response = getTrakt().users().unfollow(userToFollow).execute();
+        Response<Void> response = getTrakt().users().unfollow(userToFollow).execute();
         assertSuccessfulResponse(response);
         assertThat(response.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
 
@@ -333,70 +372,46 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
-    public void test_historyEpisodesAndMovies() throws IOException {
+    public void test_history() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USER_SLUG, 1,
                         DEFAULT_PAGE_SIZE, null,
                         null, null));
-        for (HistoryEntry entry : history) {
-            assertThat(entry.id).isGreaterThan(0);
-            assertThat(entry.watched_at).isNotNull();
-            assertThat(entry.action).isNotEmpty();
-            assertThat(entry.type).isNotEmpty();
-            if ("episode".equals(entry.type)) {
-                assertThat(entry.episode).isNotNull();
-                assertThat(entry.show).isNotNull();
-            } else if ("movie".equals(entry.type)) {
-                assertThat(entry.movie).isNotNull();
-            }
-        }
+        assertHistory(history);
     }
 
     @Test
-    public void test_historyEpisodes() throws IOException {
+    public void test_history_episodes() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(TestData.USER_SLUG, HistoryType.EPISODES, 1,
                         DEFAULT_PAGE_SIZE, null,
                         null, null));
-        for (HistoryEntry entry : history) {
-            assertThat(entry.id).isGreaterThan(0);
-            assertThat(entry.watched_at).isNotNull();
-            assertThat(entry.action).isNotEmpty();
-            assertThat(entry.type).isEqualTo("episode");
-            assertThat(entry.episode).isNotNull();
-            assertThat(entry.show).isNotNull();
-            System.out.println(
-                    "Episode watched at date: " + entry.watched_at + entry.watched_at.toInstant().toEpochMilli());
-        }
+
+        assertEpisodeHistory(history);
     }
 
     @Test
-    public void test_historyMovies() throws IOException {
+    public void test_history_movies() throws IOException {
         List<HistoryEntry> history = executeCall(
                 getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES, 1,
                         DEFAULT_PAGE_SIZE, null,
                         null, null));
+
         assertMovieHistory(history);
     }
 
     @Test
-    public void test_historyItem() throws IOException {
-        List<HistoryEntry> history = executeCall(getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
-                TestData.MOVIE_WATCHED_TRAKT_ID, 1,
-                DEFAULT_PAGE_SIZE, null,
-                OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
-                OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC)));
+    public void test_history_item() throws IOException {
+        List<HistoryEntry> history = executeCall(
+                getTrakt().users().history(UserSlug.ME, HistoryType.MOVIES,
+                        TestData.MOVIE_WATCHED_TRAKT_ID, 1,
+                        DEFAULT_PAGE_SIZE, null,
+                        OffsetDateTime.of(2016, 8, 3, 9, 0, 0, 0, ZoneOffset.UTC),
+                        OffsetDateTime.of(2016, 8, 3, 10, 0, 0, 0, ZoneOffset.UTC))
+        );
+
         assertThat(history.size()).isGreaterThan(0);
         assertMovieHistory(history);
-    }
-
-    private void assertMovieHistory(List<HistoryEntry> history) {
-        for (HistoryEntry entry : history) {
-            assertThat(entry.watched_at).isNotNull();
-            assertThat(entry.action).isNotEmpty();
-            assertThat(entry.type).isEqualTo("movie");
-            assertThat(entry.movie).isNotNull();
-        }
     }
 
     @Test
@@ -450,37 +465,78 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistMovies_pagination() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistMovies(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistMovies_sortOrder() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistMovies(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().watchlistShows(UserSlug.ME,
-                null));
-        for (BaseShow show : shows) {
-            assertThat(show.show).isNotNull();
-            assertThat(show.listed_at).isNotNull();
-        }
+        List<BaseShow> shows = executeCall(getTrakt().users().watchlistShows(UserSlug.ME, null));
+        assertWatchlistShows(shows);
+    }
+
+    @Test
+    public void test_watchlistShows_pagination() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistShows(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistShows_sortOrder() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistShows(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
     }
 
     @Test
     public void test_watchlistSeasons() throws IOException {
-        List<WatchlistedSeason> seasons = executeCall(getTrakt().users().watchlistSeasons(UserSlug.ME,
-                null));
-        for (WatchlistedSeason season : seasons) {
-            assertThat(season.season).isNotNull();
-            assertThat(season.show).isNotNull();
-            assertThat(season.listed_at).isNotNull();
-        }
+        List<WatchlistedSeason> seasons = executeCall(getTrakt().users().watchlistSeasons(UserSlug.ME, null));
+        assertWatchlistSeasons(seasons);
+    }
+
+    @Test
+    public void test_watchlistSeasons_pagination() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistSeasons(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistSeasons_sortOrder() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistSeasons(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
     }
 
     @Test
     public void test_watchlistEpisodes() throws IOException {
-        List<WatchlistedEpisode> episodes = executeCall(getTrakt().users().watchlistEpisodes(UserSlug.ME,
-                null));
-        for (WatchlistedEpisode episode : episodes) {
-            assertThat(episode.episode).isNotNull();
-            assertThat(episode.show).isNotNull();
-            assertThat(episode.listed_at).isNotNull();
-        }
+        List<WatchlistedEpisode> episodes = executeCall(getTrakt().users().watchlistEpisodes(UserSlug.ME, null));
+        assertWatchlistEpisodes(episodes);
     }
 
+    @Test
+    public void test_watchlistEpisodes_pagination() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistEpisodes(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistEpisodes_sortOrder() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistEpisodes(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
 
     @Test
     public void test_watchedMovies() throws IOException {

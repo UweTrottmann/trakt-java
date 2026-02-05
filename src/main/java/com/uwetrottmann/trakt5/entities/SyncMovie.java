@@ -32,6 +32,10 @@ public class SyncMovie {
     public MovieIds ids;
 
     public OffsetDateTime collected_at;
+    /**
+     * Warning: Trakt is planning to only store and return minute-precision timestamps for watched_at. So seconds and
+     * nanoseconds will always be zero. Using {@code .truncatedTo(ChronoUnit.MINUTES)} can be helpful.
+     */
     public OffsetDateTime watched_at;
     public OffsetDateTime rated_at;
     public Rating rating;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Uwe Trottmann
+ * Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package com.uwetrottmann.trakt5.entities;
+package com.uwetrottmann.trakt5.enums;
 
-import org.threeten.bp.OffsetDateTime;
+public enum PlaybackType implements TraktEnum {
 
-public class BaseMovie {
+    MOVIES("movies"),
+    EPISODES("episodes");
 
-    public Movie movie;
+    private final String value;
 
-    public OffsetDateTime collected_at;
-    /**
-     * Warning: Trakt is planning to only store and return minute-precision timestamps for watched_at. So seconds and
-     * nanoseconds will always be zero.
-     */
-    public OffsetDateTime last_watched_at;
-    public OffsetDateTime last_updated_at;
-    public OffsetDateTime listed_at;
-    public int plays;
+    PlaybackType(String value) {
+        this.value = value;
+    }
 
-    public Metadata metadata;
+    @Override
+    public String toString() {
+        return value;
+    }
 
 }

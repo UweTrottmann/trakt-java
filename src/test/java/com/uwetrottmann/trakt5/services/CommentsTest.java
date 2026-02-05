@@ -49,7 +49,7 @@ public class CommentsTest extends BaseTestCase {
         Thread.sleep(3000);
 
         // delete the comment again
-        Response response = getTrakt().comments().delete(commentResponse.id).execute();
+        Response<Void> response = getTrakt().comments().delete(commentResponse.id).execute();
         assertSuccessfulResponse(response);
         assertThat(response.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
     }
@@ -64,7 +64,7 @@ public class CommentsTest extends BaseTestCase {
         Thread.sleep(3000);
 
         // delete the comment again
-        Response response = getTrakt().comments().delete(commentResponse.id).execute();
+        Response<Void> response = getTrakt().comments().delete(commentResponse.id).execute();
         assertSuccessfulResponse(response);
         assertThat(response.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
     }
@@ -95,7 +95,7 @@ public class CommentsTest extends BaseTestCase {
         }
 
         // delete the comment and replies (does this work?)
-        Response deleteResponse = getTrakt().comments().delete(response.id).execute();
+        Response<Void> deleteResponse = getTrakt().comments().delete(response.id).execute();
         assertSuccessfulResponse(deleteResponse);
         assertThat(deleteResponse.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
     }
