@@ -546,11 +546,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistShows() throws IOException {
         List<BaseShow> shows = executeCall(getTrakt().sync().watchlistShows(null));
-        assertThat(shows).isNotEmpty();
-        for (BaseShow show : shows) {
-            assertThat(show.show).isNotNull();
-            assertThat(show.listed_at).isNotNull();
-        }
+        assertWatchlistShows(shows);
     }
 
     @Test
@@ -570,12 +566,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistSeasons() throws IOException {
         List<WatchlistedSeason> seasons = executeCall(getTrakt().sync().watchlistSeasons(null));
-        assertThat(seasons).isNotEmpty();
-        for (WatchlistedSeason season : seasons) {
-            assertThat(season.season).isNotNull();
-            assertThat(season.show).isNotNull();
-            assertThat(season.listed_at).isNotNull();
-        }
+        assertWatchlistSeasons(seasons);
     }
 
     @Test
@@ -595,12 +586,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistEpisodes() throws IOException {
         List<WatchlistedEpisode> episodes = executeCall(getTrakt().sync().watchlistEpisodes(null));
-        assertThat(episodes).isNotEmpty();
-        for (WatchlistedEpisode episode : episodes) {
-            assertThat(episode.episode).isNotNull();
-            assertThat(episode.show).isNotNull();
-            assertThat(episode.listed_at).isNotNull();
-        }
+        assertWatchlistEpisodes(episodes);
     }
 
     @Test

@@ -32,6 +32,8 @@ import com.uwetrottmann.trakt5.entities.CrewMember;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.TraktError;
+import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
+import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -253,6 +255,32 @@ public class BaseTestCase {
                     }
                 }
             }
+        }
+    }
+
+    public static void assertWatchlistShows(List<BaseShow> shows) {
+        assertThat(shows).isNotEmpty();
+        for (BaseShow show : shows) {
+            assertThat(show.show).isNotNull();
+            assertThat(show.listed_at).isNotNull();
+        }
+    }
+
+    public static void assertWatchlistSeasons(List<WatchlistedSeason> seasons) {
+        assertThat(seasons).isNotEmpty();
+        for (WatchlistedSeason season : seasons) {
+            assertThat(season.season).isNotNull();
+            assertThat(season.show).isNotNull();
+            assertThat(season.listed_at).isNotNull();
+        }
+    }
+
+    public static void assertWatchlistEpisodes(List<WatchlistedEpisode> episodes) {
+        assertThat(episodes).isNotEmpty();
+        for (WatchlistedEpisode episode : episodes) {
+            assertThat(episode.episode).isNotNull();
+            assertThat(episode.show).isNotNull();
+            assertThat(episode.listed_at).isNotNull();
         }
     }
 
