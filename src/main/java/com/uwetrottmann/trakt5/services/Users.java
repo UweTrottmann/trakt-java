@@ -148,7 +148,7 @@ public interface Users {
     );
 
     /**
-     * <b>VIP Only, OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns the most recently added notes for the user.
      * <p>
