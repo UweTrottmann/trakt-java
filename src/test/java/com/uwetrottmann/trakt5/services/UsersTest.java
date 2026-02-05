@@ -465,9 +465,23 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistMovies_pagination() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistMovies(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistMovies_sortOrder() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistMovies(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().watchlistShows(UserSlug.ME,
-                null));
+        List<BaseShow> shows = executeCall(getTrakt().users().watchlistShows(UserSlug.ME, null));
+        assertThat(shows).isNotEmpty();
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
             assertThat(show.listed_at).isNotNull();
@@ -475,9 +489,23 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistShows_pagination() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistShows(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistShows_sortOrder() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistShows(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistSeasons() throws IOException {
-        List<WatchlistedSeason> seasons = executeCall(getTrakt().users().watchlistSeasons(UserSlug.ME,
-                null));
+        List<WatchlistedSeason> seasons = executeCall(getTrakt().users().watchlistSeasons(UserSlug.ME, null));
+        assertThat(seasons).isNotEmpty();
         for (WatchlistedSeason season : seasons) {
             assertThat(season.season).isNotNull();
             assertThat(season.show).isNotNull();
@@ -486,9 +514,23 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistSeasons_pagination() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistSeasons(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistSeasons_sortOrder() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistSeasons(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistEpisodes() throws IOException {
-        List<WatchlistedEpisode> episodes = executeCall(getTrakt().users().watchlistEpisodes(UserSlug.ME,
-                null));
+        List<WatchlistedEpisode> episodes = executeCall(getTrakt().users().watchlistEpisodes(UserSlug.ME, null));
+        assertThat(episodes).isNotEmpty();
         for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.episode).isNotNull();
             assertThat(episode.show).isNotNull();
@@ -496,6 +538,19 @@ public class UsersTest extends BaseTestCase {
         }
     }
 
+    @Test
+    public void test_watchlistEpisodes_pagination() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistEpisodes(UserSlug.ME, 1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistEpisodes_sortOrder() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchlistEpisodes(UserSlug.ME, "title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
 
     @Test
     public void test_watchedMovies() throws IOException {

@@ -51,6 +51,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface Users {
@@ -546,48 +547,220 @@ public interface Users {
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Returns all items in a user's watchlist filtered by movies.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistMovies(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistMovies(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/movies")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistMovies(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/movies/{sort_by}/{sort_how}")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Returns all items in a user's watchlist filtered by shows.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistShows(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistShows(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/shows")
+    Call<List<BaseShow>> watchlistShows(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistShows(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/shows/{sort_by}/{sort_how}")
+    Call<List<BaseShow>> watchlistShows(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Returns all items in a user's watchlist filtered by seasons.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistSeasons(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistSeasons(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/seasons")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistSeasons(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/seasons/{sort_by}/{sort_how}")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
      * <b>OAuth Optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Returns all items in a user's watchlist filtered by episodes.
+     * <p>
+     * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
+     * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
+     * <p>
+     * <b>Auto Removal</b>
+     * <p>
+     * When an item is watched, it will be automatically removed from the watchlist. For shows and seasons, watching 1
+     * episode will remove the entire show or season.
+     *
+     * @see #watchlistEpisodes(UserSlug, String, String, Integer, Integer, Extended)
      */
     @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Path("username") UserSlug userSlug,
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistEpisodes(UserSlug, Extended)}, but you can specify pagination parameters.
+     */
+    @GET("users/{username}/watchlist/episodes")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link #watchlistEpisodes(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * <p>
+     * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
+     * <p>
+     * Some sort_by options are VIP Only including imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore,
+     * votes, imdb_votes, and tmdb_votes. If sent for a non VIP, the items will fall back to rank.
+     *
+     * @param sortBy  Sort by a specific property. Possible values: rank, added, title, released , runtime, popularity,
+     *                random, percentage, imdb_rating, tmdb_rating, rt_tomatometer, rt_audience, metascore, votes,
+     *                imdb_votes, tmdb_votes, my_rating, watched, collected.
+     * @param sortHow Sort direction. Possible values: asc, desc.
+     */
+    @GET("users/{username}/watchlist/episodes/{sort_by}/{sort_how}")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

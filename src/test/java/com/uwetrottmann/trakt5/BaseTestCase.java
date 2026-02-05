@@ -210,6 +210,7 @@ public class BaseTestCase {
     }
 
     protected static void assertSyncMovies(List<BaseMovie> movies, String type) {
+        assertThat(movies).isNotEmpty();
         for (BaseMovie movie : movies) {
             assertThat(movie.movie).isNotNull();
             switch (type) {
@@ -317,6 +318,11 @@ public class BaseTestCase {
         assertThat(TraktV2.getItemCount(response)).isNotNull();
         assertThat(response.headers().get("X-Pagination-Page")).isEqualTo(String.valueOf(expectedPage));
         assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo(String.valueOf(expectedLimit));
+    }
+
+    public static void assertSortOrderHeaders(Response<?> response, String expectedSortBy, String expectedSortHow) {
+        assertThat(response.headers().get("x-applied-sort-by")).isEqualTo(expectedSortBy);
+        assertThat(response.headers().get("x-applied-sort-how")).isEqualTo(expectedSortHow);
     }
 
     protected void assertAccessTokenResponse(Response<AccessToken> response) {
