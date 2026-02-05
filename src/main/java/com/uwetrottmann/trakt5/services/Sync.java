@@ -43,6 +43,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface Sync {
@@ -431,8 +432,7 @@ public interface Sync {
     /**
      * <b>OAuth Required</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by movies. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Like {@link Users#watchlistMovies(UserSlug, Extended)}.
      */
     @GET("sync/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
@@ -440,10 +440,31 @@ public interface Sync {
     );
 
     /**
+     * Like {@link Users#watchlistMovies(UserSlug, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/movies")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link Users#watchlistMovies(UserSlug, String, String, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/movies/{sort_by}/{sort_how}")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth Required</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by shows. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Like {@link Users#watchlistShows(UserSlug, Extended)}.
      */
     @GET("sync/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
@@ -451,10 +472,31 @@ public interface Sync {
     );
 
     /**
+     * Like {@link Users#watchlistShows(UserSlug, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/shows")
+    Call<List<BaseShow>> watchlistShows(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link Users#watchlistShows(UserSlug, String, String, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/shows/{sort_by}/{sort_how}")
+    Call<List<BaseShow>> watchlistShows(
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth Required</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by seasons. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Like {@link Users#watchlistSeasons(UserSlug, Extended)}.
      */
     @GET("sync/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
@@ -462,13 +504,56 @@ public interface Sync {
     );
 
     /**
+     * Like {@link Users#watchlistSeasons(UserSlug, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/seasons")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link Users#watchlistSeasons(UserSlug, String, String, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/seasons/{sort_by}/{sort_how}")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth Required</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by episodes. When an item is watched, it will be automatically
-     * removed from the watchlist. To track what the user is actively watching, use the progress APIs.
+     * Like {@link Users#watchlistEpisodes(UserSlug, Extended)}.
      */
     @GET("sync/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link Users#watchlistEpisodes(UserSlug, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/episodes")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * Like {@link Users#watchlistEpisodes(UserSlug, String, String, Integer, Integer, Extended)}.
+     */
+    @GET("sync/watchlist/episodes/{sort_by}/{sort_how}")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Nonnull @Path("sort_by") String sortBy,
+            @Nonnull @Path("sort_how") String sortHow,
+            @Query("page") Integer page,
+            @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

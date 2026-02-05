@@ -530,9 +530,23 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistMovies_pagination() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistMovies(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistMovies_sortOrder() throws IOException {
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistMovies("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistShows() throws IOException {
         List<BaseShow> shows = executeCall(getTrakt().sync().watchlistShows(null));
-        assertThat(shows).isNotNull();
+        assertThat(shows).isNotEmpty();
         for (BaseShow show : shows) {
             assertThat(show.show).isNotNull();
             assertThat(show.listed_at).isNotNull();
@@ -540,9 +554,23 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistShows_pagination() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistShows(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistShows_sortOrder() throws IOException {
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistShows("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistSeasons() throws IOException {
         List<WatchlistedSeason> seasons = executeCall(getTrakt().sync().watchlistSeasons(null));
-        assertThat(seasons).isNotNull();
+        assertThat(seasons).isNotEmpty();
         for (WatchlistedSeason season : seasons) {
             assertThat(season.season).isNotNull();
             assertThat(season.show).isNotNull();
@@ -551,14 +579,42 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchlistSeasons_pagination() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistSeasons(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistSeasons_sortOrder() throws IOException {
+        Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistSeasons("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
+    }
+
+    @Test
     public void test_watchlistEpisodes() throws IOException {
         List<WatchlistedEpisode> episodes = executeCall(getTrakt().sync().watchlistEpisodes(null));
-        assertThat(episodes).isNotNull();
+        assertThat(episodes).isNotEmpty();
         for (WatchlistedEpisode episode : episodes) {
             assertThat(episode.episode).isNotNull();
             assertThat(episode.show).isNotNull();
             assertThat(episode.listed_at).isNotNull();
         }
+    }
+
+    @Test
+    public void test_watchlistEpisodes_pagination() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistEpisodes(1, 10, null));
+        assertPaginationHeaders(response, 1, 10);
+    }
+
+    @Test
+    public void test_watchlistEpisodes_sortOrder() throws IOException {
+        Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchlistEpisodes("title", "asc", null, null, null));
+        assertSortOrderHeaders(response, "title", "asc");
     }
 
     @Test
