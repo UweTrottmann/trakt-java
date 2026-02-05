@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AddNoteRequest;
 import com.uwetrottmann.trakt5.entities.Note;
 import com.uwetrottmann.trakt5.entities.UpdateNoteRequest;
@@ -30,7 +31,7 @@ import retrofit2.http.Path;
 public interface Notes {
 
     /**
-     * <b>VIP Only, OAuth Required</b>
+     * <b>VIP Only, OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add a note (maximum 500 characters). Note: this also replaces an existing note.
      * <p>
@@ -42,7 +43,7 @@ public interface Notes {
     );
 
     /**
-     * <b>VIP Only, OAuth Required</b>
+     * <b>VIP Only, OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get a note.
      * <p>
@@ -54,7 +55,7 @@ public interface Notes {
     );
 
     /**
-     * <b>VIP Only, OAuth Required</b>
+     * <b>VIP Only, OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Update a note (maximum 500 characters).
      * <p>
@@ -67,7 +68,7 @@ public interface Notes {
     );
 
     /**
-     * <b>VIP Only, OAuth Required</b>
+     * <b>VIP Only, OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Delete a note.
      * <p>

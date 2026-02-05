@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Followed;
@@ -57,7 +58,7 @@ import java.util.List;
 public interface Users {
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get the user's settings so you can align your app's experience with what they're used to on the Trakt website.
      */
@@ -65,7 +66,7 @@ public interface Users {
     Call<Settings> settings();
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's profile information. If the user is private, info will only be returned if you send OAuth and are
      * either that user or an approved follower.
@@ -79,7 +80,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all movies in a user's library (formerly collection). A collected item indicates availability to watch
      * digitally or on physical media.
@@ -95,7 +96,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all movies in a user's library (formerly collection).
      *
@@ -113,7 +114,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all shows in a user's library (formerly collection). A collected item indicates availability to watch
      * digitally or on physical media.
@@ -129,7 +130,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all shows in a user's library (formerly collection).
      *
@@ -147,7 +148,7 @@ public interface Users {
     );
 
     /**
-     * <b>VIP Only, OAuth Optional</b>
+     * <b>VIP Only, OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns the most recently added notes for the user.
      * <p>
@@ -163,7 +164,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all custom lists for a user.
      */
@@ -173,7 +174,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
      */
@@ -184,7 +185,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Update a custom list by sending 1 or more parameters. If you update the list name, the original slug will still
      * be retained so existing references to this list won't break.
@@ -197,7 +198,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove a custom list and all items it contains.
      */
@@ -208,7 +209,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Reorder all custom lists by sending the updated rank of list ids.
      */
@@ -219,7 +220,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all items on a custom list. Items can be movies, shows, seasons, episodes, or people.
      *
@@ -234,7 +235,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get all items on a personal list. Items can be a movie, show, season, episode, or person. Use
      * {@link #listItems(UserSlug, String, String, int, int, Extended)} to specify the type parameter with a single
@@ -323,7 +324,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add one or more items to a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
@@ -335,7 +336,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove one or more items from a custom list.
      */
@@ -347,7 +348,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Reorder all items on a list by sending the updated rank of list item ids.
      */
@@ -359,7 +360,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * If the user has a private profile, the follow request will require approval (approved_at will be null). If a user
      * is public, they will be followed immediately (approved_at will have a date).
@@ -372,7 +373,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Unfollow someone you already follow.
      */
@@ -382,7 +383,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all followers including when the relationship began.
      */
@@ -393,7 +394,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all user's they follow including when the relationship began.
      */
@@ -404,7 +405,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship where
      * each user follows the other.
@@ -416,7 +417,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns movies and episodes that a user has watched, sorted by most recent.
      * <p>
@@ -438,7 +439,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Like {@link #history(UserSlug, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}, but allows to set a
      * type to only return movies or episodes.
@@ -458,7 +459,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns the history for just the specified item. For example, {@code /history/movies/12601} would return all
      * watches for TRON: Legacy and {@code /history/shows/1388} would return all watched episodes for Breaking Bad. If
@@ -485,7 +486,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
      *
@@ -500,7 +501,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
      *
@@ -515,7 +516,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
      *
@@ -530,7 +531,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
      *
@@ -545,7 +546,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all items in a user's watchlist filtered by movies.
      * <p>
@@ -600,7 +601,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all items in a user's watchlist filtered by shows.
      * <p>
@@ -655,7 +656,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all items in a user's watchlist filtered by seasons.
      * <p>
@@ -710,7 +711,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all items in a user's watchlist filtered by episodes.
      * <p>
@@ -765,7 +766,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all movies or shows a user has watched sorted by most plays.
      *
@@ -778,7 +779,7 @@ public interface Users {
     );
 
     /**
-     * <b>OAuth Optional</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns all movies or shows a user has watched sorted by most plays.
      *

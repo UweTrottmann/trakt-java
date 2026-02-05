@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Comment;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,7 +31,7 @@ import java.util.List;
 public interface Comments {
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add a new comment to a movie, show, episode, or list. If you add a review, it needs to be at least 200 words.
      * Also make sure to allow and encourage spoilers to be indicated in your app.
@@ -44,7 +45,7 @@ public interface Comments {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns a single comment and indicates how many replies it has. Use GET /comments/:id/replies to get the actual
      * replies.
@@ -57,7 +58,7 @@ public interface Comments {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Update a single comment created within the last hour. The OAuth user must match the author of the comment in
      * order to update it.
@@ -72,7 +73,7 @@ public interface Comments {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Delete a single comment created within the last hour. This also effectively removes any replies this comment has.
      * The OAuth user must match the author of the comment in order to delete it.
@@ -85,7 +86,7 @@ public interface Comments {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all replies for a comment. It is possible these replies could have replies themselves, so in that case
      * you would just call GET /comment/:id/replies again with the new comment_id.
@@ -98,7 +99,7 @@ public interface Comments {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add a new reply to an existing comment. Also make sure to allow and encourage spoilers to be indicated in your
      * app.

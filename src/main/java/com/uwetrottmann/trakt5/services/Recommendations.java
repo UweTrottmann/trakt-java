@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
@@ -30,7 +31,7 @@ import java.util.List;
 public interface Recommendations {
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Personalized movie recommendations for a user. Results returned with the top recommendation first.
      *
@@ -45,7 +46,7 @@ public interface Recommendations {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Dismiss a movie from getting recommended anymore.
      *
@@ -57,7 +58,7 @@ public interface Recommendations {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Personalized show recommendations for a user. Results returned with the top recommendation first.
      *
@@ -72,7 +73,7 @@ public interface Recommendations {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Dismiss a show from getting recommended anymore.
      *

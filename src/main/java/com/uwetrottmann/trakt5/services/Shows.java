@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Credits;
@@ -123,7 +124,7 @@ public interface Shows {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns collection progress for show including details on all seasons and episodes. The {@code next_episode} will
      * be the next episode the user should collect, if there are no upcoming episodes it will be set to {@code null}.
@@ -162,7 +163,7 @@ public interface Shows {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns watched progress for show including details on all seasons and episodes. The {@code next_episode} will be
      * the next episode the user should watch, if there are no upcoming episodes it will be set to {@code null}. If not

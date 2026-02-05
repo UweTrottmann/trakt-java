@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.CalendarMovieEntry;
 import com.uwetrottmann.trakt5.entities.CalendarShowEntry;
 import retrofit2.Call;
@@ -27,7 +28,7 @@ import java.util.List;
 public interface Calendars {
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      *
      * @see #shows(String, int)
      */
@@ -38,7 +39,7 @@ public interface Calendars {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      *
      * @see #newShows(String, int)
      */
@@ -49,7 +50,7 @@ public interface Calendars {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      *
      * @see #seasonPremieres(String, int)
      */
@@ -60,7 +61,7 @@ public interface Calendars {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      *
      * @see #movies(String, int)
      */

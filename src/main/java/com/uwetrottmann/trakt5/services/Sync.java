@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
@@ -49,7 +50,7 @@ import java.util.List;
 public interface Sync {
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * This method is a useful first step in the syncing process. We recommended caching these dates locally, then you
      * can compare to know exactly what data has changed recently. This can greatly optimize your syncs so you don't
@@ -59,7 +60,7 @@ public interface Sync {
     Call<LastActivities> lastActivities();
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get all movies in a user's library (formerly collection). A collected item indicates availability to watch
      * digitally or on physical media.
@@ -73,7 +74,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#collectionMovies(UserSlug, int, int, Extended)}.
      */
@@ -85,7 +86,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get all shows in a user's library (formerly collection). A collected item indicates availability to watch
      * digitally or on physical media.
@@ -99,7 +100,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#collectionShows(UserSlug, int, int, Extended)}.
      */
@@ -111,7 +112,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add one or more items to a user's library (formerly collection) including the format of the item.
      *
@@ -123,7 +124,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove one or more items from a user's library (formerly collection).
      *
@@ -135,7 +136,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all movies a user has watched.
      */
@@ -145,7 +146,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Whenever a scrobble is paused, the playback progress is saved. Use this progress to sync up playback across
      * different media centers or apps. For example, you can start watching a movie in a media center, stop it, then
@@ -170,7 +171,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link #playback(OffsetDateTime, OffsetDateTime, Integer, Integer)}, but allows to specify a type to only
      * get movies or episodes.
@@ -187,7 +188,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all playbacks;
      *
@@ -200,7 +201,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all playbacks;
      *
@@ -213,7 +214,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all playbacks;
      *
@@ -226,7 +227,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove a playback item from a user's playback progress list. A 404 will be returned if the id is invalid.
      * <p>
@@ -239,7 +240,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all shows a user has watched.
      */
@@ -249,7 +250,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#history(UserSlug, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}.
      *
@@ -265,7 +266,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link #history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}, but allows to set a type to
      * only return movies or episodes.
@@ -284,7 +285,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like
      * {@link Users#history(UserSlug, HistoryType, int, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}.
@@ -301,7 +302,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add items to a user's watch history. Accepts shows, seasons, episodes and movies. If only a show is passed,
      * assumes all seasons are to be marked watched. Same for seasons. Send a <code>watched_at</code> UTC datetime to
@@ -315,7 +316,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove items from a user's watch history including all watches, scrobbles, and checkins. Accepts shows, seasons,
      * episodes and movies. If only a show is passed, assumes all seasons are to be removed from history. Same for
@@ -329,7 +330,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get a user's ratings filtered by movies. You can filter for a specific rating between 1 and 10.
      *
@@ -348,7 +349,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get a user's ratings filtered by shows. You can filter for a specific rating between 1 and 10.
      *
@@ -367,7 +368,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get a user's ratings filtered by seasons. You can filter for a specific rating between 1 and 10.
      *
@@ -386,7 +387,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get a user's ratings filtered by episodes. You can filter for a specific rating between 1 and 10.
      *
@@ -405,7 +406,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Rate one or more items.
      *
@@ -417,7 +418,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Delete ratings for one or more items.
      *
@@ -430,7 +431,7 @@ public interface Sync {
 
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchlistMovies(UserSlug, Extended)}.
      */
@@ -462,7 +463,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchlistShows(UserSlug, Extended)}.
      */
@@ -494,7 +495,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchlistSeasons(UserSlug, Extended)}.
      */
@@ -526,7 +527,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchlistEpisodes(UserSlug, Extended)}.
      */
@@ -558,7 +559,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add one of more items to a user's watchlist.
      *
@@ -570,7 +571,7 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth Required</b>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Delete one or more items from a user's watchlist.
      *
