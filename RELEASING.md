@@ -18,7 +18,7 @@ Note: on Windows, avoid Git Bash. It uses its own `gpg`.
 - Update versions in [README](README.md)
 
 ```bash
-git commit --all --message "Prepare for release 6.16.0"
+git commit --all --message "Prepare for release 6.17.0"
 ```
 
 Then from IDE run tasks (TODO: figure out how to use GUI pin entry from Git Bash):

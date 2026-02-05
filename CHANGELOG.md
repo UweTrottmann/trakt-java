@@ -1,6 +1,6 @@
 # Changelog
 
-## Next release
+## 6.17.0 - 2026-02-05
 
 * Address [Trakt requiring pagination](https://github.com/trakt/trakt-api/discussions/681) for lists and library
   (formerly collection) endpoints:
