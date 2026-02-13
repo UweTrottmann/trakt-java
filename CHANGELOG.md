@@ -1,5 +1,10 @@
 # Changelog
 
+## Next release
+
+* Add warnings to `watchedAt()` setters, update existing warnings
+  that [Trakt already only stores and returns minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
+
 ## 6.17.0 - 2026-02-05
 
 * Address [Trakt requiring pagination](https://github.com/trakt/trakt-api/discussions/681) for lists and library

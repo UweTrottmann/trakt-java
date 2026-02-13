@@ -30,7 +30,7 @@ public class SyncSeason {
 
     public OffsetDateTime collected_at;
     /**
-     * Warning: Trakt is planning to only store and return minute-precision timestamps for watched_at. So seconds and
+     * Warning: Trakt only stores and returns minute-precision timestamps for the watched at time. So seconds and
      * nanoseconds will always be zero. Using {@code .truncatedTo(ChronoUnit.MINUTES)} can be helpful.
      */
     public OffsetDateTime watched_at;
@@ -62,6 +62,10 @@ public class SyncSeason {
         return this;
     }
 
+    /**
+     * Warning: Trakt only stores and returns minute-precision timestamps for the watched at time. So seconds and
+     * nanoseconds will always be zero. Using {@code .truncatedTo(ChronoUnit.MINUTES)} can be helpful.
+     */
     @Nonnull
     public SyncSeason watchedAt(OffsetDateTime watchedAt) {
         this.watched_at = watchedAt;
