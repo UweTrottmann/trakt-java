@@ -104,15 +104,24 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(
-                getTrakt().users().collectionMovies(TestData.USER_SLUG, 1, 1000, null));
-        assertSyncMovies(movies, "collection");
+        int page = 1;
+        int limit = 1000;
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().users().collectionMovies(TestData.USER_SLUG, page, limit, null));
+
+        assertPaginationHeaders(response, page, limit);
+        assertSyncMovies(response.body(), "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, 1, 1000, null));
-        assertSyncShows(shows, "collection");
+        int page = 1;
+        int limit = 1000;
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().users().collectionShows(TestData.USER_SLUG, page, limit, null));
+
+        assertPaginationHeaders(response, page, limit);
+        assertSyncShows(response.body(), "collection");
     }
 
     @Test
@@ -235,9 +244,7 @@ public class UsersTest extends BaseTestCase {
                         sortBy, sortHow, page, limit, null));
 
         assertPaginationHeaders(response, page, limit);
-        // 2026-02-19: despite being documented, the sort order is not applied and the X-Applied-Sort-By and
-        // X-Applied-Sort-How headers are not returned.
-        // assertSortOrderHeaders(response, sortBy, sortHow);
+        assertSortOrderHeaders(response, sortBy, sortHow);
         assertListEntries(response.body());
     }
 

@@ -186,14 +186,24 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(1, 1000, null));
-        assertSyncMovies(movies, "collection");
+        int page = 1;
+        int limit = 1000;
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().collectionMovies(page, limit, null));
+
+        assertPaginationHeaders(response, page, limit);
+        assertSyncMovies(response.body(), "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(1, 1000, null));
-        assertSyncShows(shows, "collection");
+        int page = 1;
+        int limit = 1000;
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().collectionShows(page, limit, null));
+
+        assertPaginationHeaders(response, page, limit);
+        assertSyncShows(response.body(), "collection");
     }
 
     @Test
