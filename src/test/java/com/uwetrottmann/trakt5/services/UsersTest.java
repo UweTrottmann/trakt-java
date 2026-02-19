@@ -244,9 +244,7 @@ public class UsersTest extends BaseTestCase {
                         sortBy, sortHow, page, limit, null));
 
         assertPaginationHeaders(response, page, limit);
-        // 2026-02-19: despite being documented, the sort order is not applied and the X-Applied-Sort-By and
-        // X-Applied-Sort-How headers are not returned.
-        // assertSortOrderHeaders(response, sortBy, sortHow);
+        assertSortOrderHeaders(response, sortBy, sortHow);
         assertListEntries(response.body());
     }
 
