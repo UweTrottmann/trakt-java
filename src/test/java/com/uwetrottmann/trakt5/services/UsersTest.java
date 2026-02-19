@@ -213,21 +213,32 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_listItems() throws IOException {
-        List<ListEntry> entries = executeCall(
+        int page = 1;
+        int limit = 1000;
+        Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
-                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), 1, 1000, null)
-        );
-        assertListEntries(entries);
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), page, limit, null));
+
+        assertPaginationHeaders(response, page, limit);
+        assertListEntries(response.body());
     }
 
     @Test
     public void test_listItems_sortOrder() throws IOException {
-        List<ListEntry> entries = executeCall(
+        int page = 1;
+        int limit = 1000;
+        String sortBy = "title";
+        String sortHow = "asc";
+        Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
                         String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                        "title", "asc", 1, 1000, null)
-        );
-        assertListEntries(entries);
+                        sortBy, sortHow, page, limit, null));
+
+        assertPaginationHeaders(response, page, limit);
+        // 2026-02-19: despite being documented, the sort order is not applied and the X-Applied-Sort-By and
+        // X-Applied-Sort-How headers are not returned.
+        // assertSortOrderHeaders(response, sortBy, sortHow);
+        assertListEntries(response.body());
     }
 
     @Test
