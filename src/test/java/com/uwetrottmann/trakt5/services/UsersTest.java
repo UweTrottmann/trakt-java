@@ -227,17 +227,19 @@ public class UsersTest extends BaseTestCase {
     public void test_listItems_sortOrder() throws IOException {
         int page = 1;
         int limit = 1000;
-        String sortBy = "title";
-        String sortHow = "asc";
+        String sortBy = "added";
+        String sortHow = "desc";
         Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
                         String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
                         sortBy, sortHow, page, limit, null));
 
         assertPaginationHeaders(response, page, limit);
-        // 2026-02-19: despite being documented, the sort order is not applied and the X-Applied-Sort-By and
-        // X-Applied-Sort-How headers are not returned.
+        // The list items are ordered as requested, but no X-Applied headers are returned, instead the X-Sort headers
+        // update with nonsensical values.
         // assertSortOrderHeaders(response, sortBy, sortHow);
+        assertThat(response.headers().get("x-sort-by")).isEqualTo("desc");
+        assertThat(response.headers().get("x-sort-how")).isEqualTo("asc");
         assertListEntries(response.body());
     }
 
@@ -253,12 +255,23 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_listItems_typeAndsortOrder() throws IOException {
-        List<ListEntry> entries = executeCall(
+        int page = 1;
+        int limit = 1000;
+        String sortBy = "title";
+        String sortHow = "desc";
+        Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
                         String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                        "movie,show", "title", "asc", 1, 1000, null)
+                        "movie,show", sortBy, sortHow, page, limit, null)
         );
-        assertListEntries(entries);
+
+        assertPaginationHeaders(response, page, limit);
+        // The list items are ordered as requested, but no X-Applied headers are returned, instead the X-Sort headers
+        // update to the requested by and how values.
+//         assertSortOrderHeaders(response, sortBy, sortHow);
+        assertThat(response.headers().get("x-sort-by")).isEqualTo(sortBy);
+        assertThat(response.headers().get("x-sort-how")).isEqualTo(sortHow);
+        assertListEntries(response.body());
     }
 
     private static void assertListEntries(List<ListEntry> entries) {
