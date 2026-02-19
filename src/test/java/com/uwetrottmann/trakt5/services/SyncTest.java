@@ -428,7 +428,7 @@ public class SyncTest extends BaseTestCase {
         int limit = 5;
         Call<List<RatedSeason>> call = getTrakt().sync().ratingsSeasons(RatingsFilter.ALL, null, page, limit);
         Response<List<RatedSeason>> response = executeCallWithoutReadingBody(call);
-        
+
         assertPaginationHeaders(response, page, limit);
     }
 
