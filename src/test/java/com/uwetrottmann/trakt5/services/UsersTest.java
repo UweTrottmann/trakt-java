@@ -104,15 +104,21 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(
-                getTrakt().users().collectionMovies(TestData.USER_SLUG, 1, 1000, null));
-        assertSyncMovies(movies, "collection");
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().users().collectionMovies(TestData.USER_SLUG, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertSyncMovies(response.body(), "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().collectionShows(TestData.USER_SLUG, 1, 1000, null));
-        assertSyncShows(shows, "collection");
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().users().collectionShows(TestData.USER_SLUG, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        // As of 2026-03-06, when filtering to shows pagination appears to be not supported (yet?)
+        // assertListPaginationHeaders(response);
+        assertSyncShows(response.body(), "collection");
     }
 
     @Test

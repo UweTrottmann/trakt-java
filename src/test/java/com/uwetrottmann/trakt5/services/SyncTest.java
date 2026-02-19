@@ -189,16 +189,23 @@ public class SyncTest extends BaseTestCase {
     public void test_collectionMovies() throws IOException {
         // Get metadata to assert it can be parsed.
         // On the test account, Star Wars: The Force Awakens has all properties set.
-        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(1, 1000, Extended.METADATA));
-        assertSyncMovies(movies, "collection");
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().collectionMovies(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, Extended.METADATA));
+
+        assertListPaginationHeaders(response);
+        assertSyncMovies(response.body(), "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
         // Get metadata to assert it can be parsed.
         // On the test account, episode 1x08 of Start Trek: Starfleet Academy has all properties set.
-        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(1, 1000, Extended.METADATA));
-        assertSyncShows(shows, "collection");
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().collectionShows(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, Extended.METADATA));
+
+        // As of 2026-03-06, when filtering to shows pagination appears to be not supported (yet?)
+        // assertListPaginationHeaders(response);
+        assertSyncShows(response.body(), "collection");
     }
 
     @Test
