@@ -213,28 +213,24 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_listItems() throws IOException {
-        int page = 1;
-        int limit = 1000;
         Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
-                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), page, limit, null));
+                        String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID), PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
 
-        assertPaginationHeaders(response, page, limit);
+        assertListPaginationHeaders(response);
         assertListEntries(response.body());
     }
 
     @Test
     public void test_listItems_sortOrder() throws IOException {
-        int page = 1;
-        int limit = 1000;
         String sortBy = "added";
         String sortHow = "desc";
         Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
                         String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                        sortBy, sortHow, page, limit, null));
+                        sortBy, sortHow, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
 
-        assertPaginationHeaders(response, page, limit);
+        assertListPaginationHeaders(response);
         // The list items are ordered as requested, but no X-Applied headers are returned, instead the X-Sort headers
         // update with nonsensical values.
         // assertSortOrderHeaders(response, sortBy, sortHow);
@@ -255,17 +251,15 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_listItems_typeAndsortOrder() throws IOException {
-        int page = 1;
-        int limit = 1000;
         String sortBy = "title";
         String sortHow = "desc";
         Response<List<ListEntry>> response = executeCallWithoutReadingBody(
                 getTrakt().users().listItems(UserSlug.ME,
                         String.valueOf(TEST_LIST_WITH_ITEMS_TRAKT_ID),
-                        "movie,show", sortBy, sortHow, page, limit, null)
+                        "movie,show", sortBy, sortHow, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null)
         );
 
-        assertPaginationHeaders(response, page, limit);
+        assertListPaginationHeaders(response);
         // The list items are ordered as requested, but no X-Applied headers are returned, instead the X-Sort headers
         // update to the requested by and how values.
 //         assertSortOrderHeaders(response, sortBy, sortHow);
