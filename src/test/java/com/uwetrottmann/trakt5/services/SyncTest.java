@@ -203,8 +203,7 @@ public class SyncTest extends BaseTestCase {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().sync().collectionShows(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, Extended.METADATA));
 
-        // As of 2026-03-06, when filtering to shows pagination appears to be not supported (yet?)
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "collection");
     }
 
