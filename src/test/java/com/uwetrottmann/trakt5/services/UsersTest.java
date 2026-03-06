@@ -120,8 +120,7 @@ public class UsersTest extends BaseTestCase {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().users().collectionShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, null));
 
-        // As of 2026-03-06, when filtering to shows pagination appears to be not supported (yet?)
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "collection");
     }
 
