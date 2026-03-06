@@ -45,6 +45,7 @@ import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
+import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
@@ -186,13 +187,17 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_collectionMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(1, 1000, null));
+        // Get metadata to assert it can be parsed.
+        // On the test account, Star Wars: The Force Awakens has all properties set.
+        List<BaseMovie> movies = executeCall(getTrakt().sync().collectionMovies(1, 1000, Extended.METADATA));
         assertSyncMovies(movies, "collection");
     }
 
     @Test
     public void test_collectionShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(1, 1000, null));
+        // Get metadata to assert it can be parsed.
+        // On the test account, episode 1x08 of Start Trek: Starfleet Academy has all properties set.
+        List<BaseShow> shows = executeCall(getTrakt().sync().collectionShows(1, 1000, Extended.METADATA));
         assertSyncShows(shows, "collection");
     }
 
