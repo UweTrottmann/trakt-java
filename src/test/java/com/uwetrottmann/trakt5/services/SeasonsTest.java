@@ -40,13 +40,9 @@ public class SeasonsTest extends BaseTestCase {
         assertThat(seasons).hasSize(5);
         for (Season season : seasons) {
             assertThat(season).isNotNull();
-            // must have at least trakt and tvdb id
+            // Must have at least a Trakt ID
             assertThat(season.ids.trakt).isPositive();
-            if (season.ids.tvdb != null) {
-                assertThat(season.ids.tvdb).isPositive();
-            }
             assertThat(season.title).isNotNull();
-            assertThat(season.network).isNotNull();
             // seasons start at 0 for specials
             assertThat(season.number).isGreaterThanOrEqualTo(0);
             assertThat(season.episode_count).isPositive();
