@@ -362,9 +362,13 @@ public class BaseTestCase {
         assertPaginationHeaders(response, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT);
     }
 
+    /**
+     * Note that in contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers
+     * return the applied sort order.
+     */
     public static void assertSortOrderHeaders(Response<?> response, String expectedSortBy, String expectedSortHow) {
-        assertThat(response.headers().get("x-applied-sort-by")).isEqualTo(expectedSortBy);
-        assertThat(response.headers().get("x-applied-sort-how")).isEqualTo(expectedSortHow);
+        assertThat(response.headers().get("x-sort-by")).isEqualTo(expectedSortBy);
+        assertThat(response.headers().get("x-sort-how")).isEqualTo(expectedSortHow);
     }
 
     protected void assertAccessTokenResponse(Response<AccessToken> response) {

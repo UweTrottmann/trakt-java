@@ -237,11 +237,9 @@ public class UsersTest extends BaseTestCase {
                         sortBy, sortHow, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
 
         assertListPaginationHeaders(response);
-        // The list items are ordered as requested, but no X-Applied headers are returned, instead the X-Sort headers
-        // update with nonsensical values.
+        // The list items are ordered as requested, but the X-Sort headers update with nonsensical values.
         // assertSortOrderHeaders(response, sortBy, sortHow);
-        assertThat(response.headers().get("x-sort-by")).isEqualTo("desc");
-        assertThat(response.headers().get("x-sort-how")).isEqualTo("asc");
+        assertSortOrderHeaders(response, "desc", "asc");
         assertListEntries(response.body());
     }
 
@@ -266,11 +264,7 @@ public class UsersTest extends BaseTestCase {
         );
 
         assertListPaginationHeaders(response);
-        // The list items are ordered as requested, but no X-Applied headers are returned, instead the X-Sort headers
-        // update to the requested by and how values.
-//         assertSortOrderHeaders(response, sortBy, sortHow);
-        assertThat(response.headers().get("x-sort-by")).isEqualTo(sortBy);
-        assertThat(response.headers().get("x-sort-how")).isEqualTo(sortHow);
+        assertSortOrderHeaders(response, sortBy, sortHow);
         assertListEntries(response.body());
     }
 
