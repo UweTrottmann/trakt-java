@@ -193,7 +193,7 @@ public class UsersTest extends BaseTestCase {
         assertThat(createdList.allow_comments).isEqualTo(false);
         assertThat(createdList.display_numbers).isEqualTo(false);
         assertThat(createdList.sort_by).isEqualTo(SortBy.ADDED);
-        assertThat(createdList.sort_how).isEqualTo(SortHow.DESC); // Note: created list is always desc, even on web.
+        assertThat(createdList.sort_how).isEqualTo(SortHow.ASC);
 
         // ...and delete it again
         Response<Void> deleteResponse = getTrakt().users().deleteList(UserSlug.ME,
