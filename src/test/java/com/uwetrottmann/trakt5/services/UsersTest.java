@@ -483,16 +483,11 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_watchlistMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().users().watchlistMovies(UserSlug.ME,
-                null));
-        assertSyncMovies(movies, "watchlist");
-    }
-
-    @Test
-    public void test_watchlistMovies_pagination() throws IOException {
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchlistMovies(UserSlug.ME, 1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().users().watchlistMovies(UserSlug.ME, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertSyncMovies(response.body(), "watchlist");
     }
 
     @Test
@@ -504,15 +499,11 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_watchlistShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().users().watchlistShows(UserSlug.ME, null));
-        assertWatchlistShows(shows);
-    }
-
-    @Test
-    public void test_watchlistShows_pagination() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchlistShows(UserSlug.ME, 1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().users().watchlistShows(UserSlug.ME, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertWatchlistShows(response.body());
     }
 
     @Test
@@ -524,15 +515,11 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_watchlistSeasons() throws IOException {
-        List<WatchlistedSeason> seasons = executeCall(getTrakt().users().watchlistSeasons(UserSlug.ME, null));
-        assertWatchlistSeasons(seasons);
-    }
-
-    @Test
-    public void test_watchlistSeasons_pagination() throws IOException {
         Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchlistSeasons(UserSlug.ME, 1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().users().watchlistSeasons(UserSlug.ME, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertWatchlistSeasons(response.body());
     }
 
     @Test
@@ -544,15 +531,11 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_watchlistEpisodes() throws IOException {
-        List<WatchlistedEpisode> episodes = executeCall(getTrakt().users().watchlistEpisodes(UserSlug.ME, null));
-        assertWatchlistEpisodes(episodes);
-    }
-
-    @Test
-    public void test_watchlistEpisodes_pagination() throws IOException {
         Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchlistEpisodes(UserSlug.ME, 1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().users().watchlistEpisodes(UserSlug.ME, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertWatchlistEpisodes(response.body());
     }
 
     @Test

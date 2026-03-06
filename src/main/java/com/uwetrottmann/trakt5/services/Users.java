@@ -546,9 +546,19 @@ public interface Users {
     );
 
     /**
+     * @deprecated Use {@link #watchlistMovies(UserSlug, Integer, Integer, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/watchlist/movies")
+    Call<List<BaseMovie>> watchlistMovies(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by movies.
+     * Returns a page of items in a user's watchlist filtered by movies.
      * <p>
      * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
      * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
@@ -563,22 +573,13 @@ public interface Users {
     @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
-    );
-
-    /**
-     * Like {@link #watchlistMovies(UserSlug, Extended)}, but you can specify pagination parameters.
-     */
-    @GET("users/{username}/watchlist/movies")
-    Call<List<BaseMovie>> watchlistMovies(
-            @Nonnull @Path("username") UserSlug userSlug,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * Like {@link #watchlistMovies(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * Like {@link #watchlistMovies(UserSlug, Integer, Integer, Extended)}, but you can specify a sort order.
      * <p>
      * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
      * <p>
@@ -601,9 +602,19 @@ public interface Users {
     );
 
     /**
+     * @deprecated Use {@link #watchlistShows(UserSlug, Integer, Integer, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/watchlist/shows")
+    Call<List<BaseShow>> watchlistShows(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by shows.
+     * Returns a page of items in a user's watchlist filtered by shows.
      * <p>
      * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
      * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
@@ -618,22 +629,13 @@ public interface Users {
     @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
-    );
-
-    /**
-     * Like {@link #watchlistShows(UserSlug, Extended)}, but you can specify pagination parameters.
-     */
-    @GET("users/{username}/watchlist/shows")
-    Call<List<BaseShow>> watchlistShows(
-            @Nonnull @Path("username") UserSlug userSlug,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * Like {@link #watchlistShows(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * Like {@link #watchlistShows(UserSlug, Integer, Integer, Extended)}, but you can specify a sort order.
      * <p>
      * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
      * <p>
@@ -656,9 +658,19 @@ public interface Users {
     );
 
     /**
+     * @deprecated Use {@link #watchlistSeasons(UserSlug, Integer, Integer, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/watchlist/seasons")
+    Call<List<WatchlistedSeason>> watchlistSeasons(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by seasons.
+     * Returns a page of items in a user's watchlist filtered by seasons.
      * <p>
      * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
      * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
@@ -673,22 +685,13 @@ public interface Users {
     @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
-    );
-
-    /**
-     * Like {@link #watchlistSeasons(UserSlug, Extended)}, but you can specify pagination parameters.
-     */
-    @GET("users/{username}/watchlist/seasons")
-    Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Nonnull @Path("username") UserSlug userSlug,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * Like {@link #watchlistSeasons(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * Like {@link #watchlistSeasons(UserSlug, Integer, Integer, Extended)}, but you can specify a sort order.
      * <p>
      * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
      * <p>
@@ -711,9 +714,19 @@ public interface Users {
     );
 
     /**
+     * @deprecated Use {@link #watchlistEpisodes(UserSlug, Integer, Integer, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/watchlist/episodes")
+    Call<List<WatchlistedEpisode>> watchlistEpisodes(
+            @Nonnull @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all items in a user's watchlist filtered by episodes.
+     * Returns a page of items in a user's watchlist filtered by episodes.
      * <p>
      * The watchlist should not be used as a list of what the user is actively watching. Use a combination of the
      * /sync/watched and /shows/:id/progress methods to get what the user is actively watching.
@@ -728,22 +741,13 @@ public interface Users {
     @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
-    );
-
-    /**
-     * Like {@link #watchlistEpisodes(UserSlug, Extended)}, but you can specify pagination parameters.
-     */
-    @GET("users/{username}/watchlist/episodes")
-    Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Nonnull @Path("username") UserSlug userSlug,
             @Query("page") Integer page,
             @Query("limit") Integer limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
-     * Like {@link #watchlistEpisodes(UserSlug, Extended)}, but you can specify pagination parameters and a sort order.
+     * Like {@link #watchlistEpisodes(UserSlug, Integer, Integer, Extended)}, but you can specify a sort order.
      * <p>
      * The specified order will be sent in the X-Applied-Sort-By and X-Applied-Sort-How headers.
      * <p>

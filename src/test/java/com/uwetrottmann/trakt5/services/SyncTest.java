@@ -525,15 +525,11 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistMovies() throws IOException {
-        List<BaseMovie> movies = executeCall(getTrakt().sync().watchlistMovies(null));
-        assertSyncMovies(movies, "watchlist");
-    }
-
-    @Test
-    public void test_watchlistMovies_pagination() throws IOException {
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistMovies(1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().sync().watchlistMovies(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertSyncMovies(response.body(), "watchlist");
     }
 
     @Test
@@ -545,15 +541,11 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistShows() throws IOException {
-        List<BaseShow> shows = executeCall(getTrakt().sync().watchlistShows(null));
-        assertWatchlistShows(shows);
-    }
-
-    @Test
-    public void test_watchlistShows_pagination() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistShows(1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().sync().watchlistShows(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertWatchlistShows(response.body());
     }
 
     @Test
@@ -565,15 +557,11 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistSeasons() throws IOException {
-        List<WatchlistedSeason> seasons = executeCall(getTrakt().sync().watchlistSeasons(null));
-        assertWatchlistSeasons(seasons);
-    }
-
-    @Test
-    public void test_watchlistSeasons_pagination() throws IOException {
         Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistSeasons(1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().sync().watchlistSeasons(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertWatchlistSeasons(response.body());
     }
 
     @Test
@@ -585,15 +573,11 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchlistEpisodes() throws IOException {
-        List<WatchlistedEpisode> episodes = executeCall(getTrakt().sync().watchlistEpisodes(null));
-        assertWatchlistEpisodes(episodes);
-    }
-
-    @Test
-    public void test_watchlistEpisodes_pagination() throws IOException {
         Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistEpisodes(1, 10, null));
-        assertPaginationHeaders(response, 1, 10);
+                getTrakt().sync().watchlistEpisodes(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+
+        assertListPaginationHeaders(response);
+        assertWatchlistEpisodes(response.body());
     }
 
     @Test

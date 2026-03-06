@@ -68,7 +68,13 @@ public class BaseTestCase {
 
     private static final boolean DEBUG = true;
 
+    protected static final int PAGE_ONE = 1;
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
+    /**
+     * 1000 is the maximum limit according to the
+     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates discussion</a>.
+     */
+    protected static final int LIST_AND_COLLECTION_MAX_LIMIT = 1000;
 
     private static TraktV2 trakt;
     private static TraktV2 traktNoAuth;
@@ -346,6 +352,14 @@ public class BaseTestCase {
         assertThat(TraktV2.getItemCount(response)).isNotNull();
         assertThat(response.headers().get("X-Pagination-Page")).isEqualTo(String.valueOf(expectedPage));
         assertThat(response.headers().get("X-Pagination-Limit")).isEqualTo(String.valueOf(expectedLimit));
+    }
+
+    /**
+     * Like {@link #assertPaginationHeaders(Response, int, int)}, but uses {@link #PAGE_ONE} and
+     * {@link #LIST_AND_COLLECTION_MAX_LIMIT}.
+     */
+    public static void assertListPaginationHeaders(Response<?> response) {
+        assertPaginationHeaders(response, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT);
     }
 
     public static void assertSortOrderHeaders(Response<?> response, String expectedSortBy, String expectedSortHow) {

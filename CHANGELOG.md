@@ -2,6 +2,7 @@
 
 ## Next release
 
+* Watchlist endpoints require pagination: deprecate the variants that don't accept page and limit parameters.
 * Add warnings to `watchedAt()` setters, update existing warnings
   that [Trakt already only stores and returns minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
 

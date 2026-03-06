@@ -431,16 +431,17 @@ public interface Sync {
 
 
     /**
-     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
-     * <p>
-     * Like {@link Users#watchlistMovies(UserSlug, Extended)}.
+     * @deprecated Use {@link #watchlistMovies(Integer, Integer, Extended)} instead.
      */
+    @Deprecated
     @GET("sync/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistMovies(UserSlug, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/movies")
@@ -451,6 +452,8 @@ public interface Sync {
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistMovies(UserSlug, String, String, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/movies/{sort_by}/{sort_how}")
@@ -463,16 +466,17 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
-     * <p>
-     * Like {@link Users#watchlistShows(UserSlug, Extended)}.
+     * @deprecated Use {@link #watchlistShows(Integer, Integer, Extended)} instead.
      */
+    @Deprecated
     @GET("sync/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistShows(UserSlug, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/shows")
@@ -483,6 +487,8 @@ public interface Sync {
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistShows(UserSlug, String, String, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/shows/{sort_by}/{sort_how}")
@@ -495,16 +501,17 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
-     * <p>
-     * Like {@link Users#watchlistSeasons(UserSlug, Extended)}.
+     * @deprecated Use {@link #watchlistSeasons(Integer, Integer, Extended)} instead.
      */
+    @Deprecated
     @GET("sync/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistSeasons(UserSlug, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/seasons")
@@ -515,6 +522,8 @@ public interface Sync {
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistSeasons(UserSlug, String, String, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/seasons/{sort_by}/{sort_how}")
@@ -527,16 +536,17 @@ public interface Sync {
     );
 
     /**
-     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
-     * <p>
-     * Like {@link Users#watchlistEpisodes(UserSlug, Extended)}.
+     * @deprecated Use {@link #watchlistEpisodes(Integer, Integer, Extended)} instead.
      */
+    @Deprecated
     @GET("sync/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Query(value = "extended", encoded = true) Extended extended
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistEpisodes(UserSlug, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/episodes")
@@ -547,6 +557,8 @@ public interface Sync {
     );
 
     /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchlistEpisodes(UserSlug, String, String, Integer, Integer, Extended)}.
      */
     @GET("sync/watchlist/episodes/{sort_by}/{sort_how}")
