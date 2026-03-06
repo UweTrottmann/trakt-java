@@ -35,7 +35,36 @@ public class Metadata {
     public Hdr hdr;
     public Audio audio;
     public AudioChannels audio_channels;
-    @SerializedName("3d")
+
+    /**
+     * Since 2026-03 the 3d property appears to be a number for movies.
+     * <p>
+     * This field is kept to avoid a breaking change, but its value will always be {@code null} for movies.
+     *
+     * @deprecated Use {@link #is3D()} instead.
+     */
+    @Deprecated
     public Boolean is3d;
+
+    /**
+     * Since 2026-03 appears to be 1 or null for movies. Or true and false for episodes.
+     *
+     * @see #is3D()
+     */
+    @SerializedName("3d")
+    public Object _is3D;
+
+    public boolean is3D() {
+        if (_is3D != null) {
+            if (_is3D instanceof Boolean) {
+                return (Boolean) _is3D;
+            }
+            // Numbers are deserialized by default to Double
+            if (_is3D instanceof Double) {
+                return (Double) _is3D == 1.0;
+            }
+        }
+        return false;
+    }
 
 }

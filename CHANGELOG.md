@@ -5,6 +5,8 @@
 * Watchlist endpoints require pagination: deprecate the variants that don't accept page and limit parameters.
 * Add warnings to `watchedAt()` setters, update existing warnings
   that [Trakt already only stores and returns minute-precision timestamps](https://github.com/trakt/trakt-api/discussions/694).
+* The 3D `Metadata` property of movies in a collection is now a number, so added `boolean is3D()` and deprecated
+  `Boolean is3d`.
 
 ## 6.17.0 - 2026-02-05
 
