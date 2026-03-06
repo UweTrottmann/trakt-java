@@ -32,6 +32,9 @@ public class BaseMovie {
     public OffsetDateTime listed_at;
     public int plays;
 
+    /**
+     * Only returned by collection endpoints.
+     */
     public Metadata metadata;
 
 }

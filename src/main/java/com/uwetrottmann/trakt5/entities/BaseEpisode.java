@@ -34,5 +34,8 @@ public class BaseEpisode {
     /** progress */
     public Boolean completed;
 
+    /**
+     * Only returned by collection endpoints.
+     */
     public Metadata metadata;
 }

@@ -23,6 +23,11 @@ import com.uwetrottmann.trakt5.enums.Hdr;
 import com.uwetrottmann.trakt5.enums.MediaType;
 import com.uwetrottmann.trakt5.enums.Resolution;
 
+/**
+ * Metadata of a collection item.
+ * <p>
+ * All but {@link #media_type} and {@link #resolution} are optional values.
+ */
 public class Metadata {
 
     public MediaType media_type;
