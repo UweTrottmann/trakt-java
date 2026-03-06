@@ -1,6 +1,6 @@
 # Changelog
 
-## Next release
+## 6.18.0 - 2026-03-06
 
 * Watchlist endpoints require pagination: deprecate the variants that don't accept page and limit parameters.
 * Add warnings to `watchedAt()` setters, update existing warnings
