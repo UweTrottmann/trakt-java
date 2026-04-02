@@ -23,61 +23,43 @@ sure to read and agree with the license.
 
 ## Setting up Test Credentials
 
-The tests require two credentials to run:
+The tests require at least two credentials to run:
 
-- `TEST_CLIENT_ID`: Your Trakt API client ID
-- `TEST_ACCESS_TOKEN`: Your Trakt API access token
+- `TEST_CLIENT_ID`: A Trakt API client ID
+- `TEST_ACCESS_TOKEN`: A Trakt API access token
 
-### Option 1: Environment Variables (Recommended for CI/CD)
+They can be set either 
 
-Set environment variables in your shell:
-
-**Windows (PowerShell):**
-
-```powershell
-$env:TEST_CLIENT_ID="your_client_id_here"
-$env:TEST_ACCESS_TOKEN="your_access_token_here"
-```
-
-**Linux/Mac:**
-
-```bash
-export TEST_CLIENT_ID="your_client_id_here"
-export TEST_ACCESS_TOKEN="your_access_token_here"
-```
-
-### Option 2: secrets.properties File (Recommended for Local Development)
-
-1. Copy the sample file:
-
-   ```
-   cp secrets.properties.sample secrets.properties
-   ```
-
-2. Edit `secrets.properties` and add your credentials:
-
-   ```properties
-   TEST_CLIENT_ID=your_client_id_here
-   TEST_ACCESS_TOKEN=your_access_token_here
-   ```
-
-3. The `secrets.properties` file is automatically ignored by git and will not be committed.
-
-### Priority
+- in a `secrets.properties` file (a template is available in [secrets.properties.template](secrets.properties.template))
+- or as environment variables.
 
 If both are set, environment variables take precedence over the properties file.
 
 ### Getting Credentials
 
-To obtain your Trakt API credentials:
+To obtain Trakt API credentials:
 
-1. Create a Trakt account at https://trakt.tv
-2. Register your application at https://trakt.tv/oauth/applications
-3. Use the provided Client ID and generate an access token.
-   For example, add the `http://localhost` URI and use the "Authorize" button on the Trakt API apps website.
-   Then use the `code` in the redirect URL to obtain an access token using `AuthTest.test_getAccessToken` (set client 
-   secret and code first).
+1. Create a Trakt account at https://trakt.tv (⚠️ Tests do modify data of the Trakt account, don't use your personal account!)
+2. Register an application at https://trakt.tv/oauth/applications
+3. Copy the Client ID and set it as `TEST_CLIENT_ID`
+4. Copy the Client Secret and set it as `TEST_CLIENT_SECRET`
+5. Add `http://localhost` to the Redirect URIs
+6. Click the "Authorize" button next to the localhost redirect URI and authorize access (alternatively, run `test_getAuthorizationRequest()` in [AuthTest][] and visit the URL it prints)
+7. Extract the value of `code` from the redirect URI and set it as `TEST_AUTH_CODE`
+8. Run `test_getAccessToken()` in [AuthTest][]
+9. Copy the printed access and refresh token and set them as `TEST_ACCESS_TOKEN` and `TEST_REFRESH_TOKEN`
+
+### Refreshing the Access Token
+
+If `TEST_ACCESS_TOKEN` is expired, but `TEST_REFRESH_TOKEN` isn't:
+
+1. Run `test_refreshAccessToken()` in [AuthTest][]
+2. Copy the printed access and refresh token and set them as `TEST_ACCESS_TOKEN` and `TEST_REFRESH_TOKEN`
+
+Otherwise, repeat steps 6 and following from above.
 
 ## No code!
 
 You can [discuss or submit bug reports](https://github.com/UweTrottmann/trakt-java/issues)!
+
+[AuthTest]: src/test/java/com/uwetrottmann/trakt5/AuthTest.java
