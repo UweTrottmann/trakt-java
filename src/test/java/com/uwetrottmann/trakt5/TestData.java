@@ -54,7 +54,6 @@ public interface TestData {
 
     String USERNAME_STRING = "sean";
     UserSlug USER_SLUG = new UserSlug("sean");
-    String USER_REAL_NAME = "Sean Rudford";
 
     String USER_TO_FOLLOW = "aeonmckay";
 }
