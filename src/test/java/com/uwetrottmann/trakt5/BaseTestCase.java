@@ -72,11 +72,12 @@ public class BaseTestCase {
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
     /**
      * 250 is the maximum limit as of June 15, 2026 according to the
-     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates discussion</a>.
+     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates
+     * discussion</a>.
      * <p>
      * Previously, it was 1000.
      */
-    protected static final int LIST_AND_COLLECTION_MAX_LIMIT = 250;
+    protected static final int LIMIT_MAX = 250;
 
     private static TraktV2 trakt;
     private static TraktV2 traktNoAuth;
@@ -357,11 +358,10 @@ public class BaseTestCase {
     }
 
     /**
-     * Like {@link #assertPaginationHeaders(Response, int, int)}, but uses {@link #PAGE_ONE} and
-     * {@link #LIST_AND_COLLECTION_MAX_LIMIT}.
+     * Like {@link #assertPaginationHeaders(Response, int, int)}, but uses {@link #PAGE_ONE} and {@link #LIMIT_MAX}.
      */
     public static void assertListPaginationHeaders(Response<?> response) {
-        assertPaginationHeaders(response, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT);
+        assertPaginationHeaders(response, PAGE_ONE, LIMIT_MAX);
     }
 
     /**
@@ -375,12 +375,13 @@ public class BaseTestCase {
     }
 
     /**
-     * In contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers
-     * return the applied sort order.
+     * In contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers return the
+     * applied sort order.
      *
      * @see #assertSortOrderHeaders(Response, String, String)
      */
-    public static void assertSortOrderHeadersBroken(Response<?> response, String expectedSortBy, String expectedSortHow) {
+    public static void assertSortOrderHeadersBroken(Response<?> response, String expectedSortBy,
+            String expectedSortHow) {
         assertThat(response.headers().get("x-sort-by")).isEqualTo(expectedSortBy);
         assertThat(response.headers().get("x-sort-how")).isEqualTo(expectedSortHow);
     }

@@ -190,7 +190,7 @@ public class SyncTest extends BaseTestCase {
         // Get metadata to assert it can be parsed.
         // On the test account, Star Wars: The Force Awakens has all properties set.
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().collectionMovies(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, Extended.METADATA));
+                getTrakt().sync().collectionMovies(PAGE_ONE, LIMIT_MAX, Extended.METADATA));
 
         assertListPaginationHeaders(response);
         assertSyncMovies(response.body(), "collection");
@@ -201,7 +201,7 @@ public class SyncTest extends BaseTestCase {
         // Get metadata to assert it can be parsed.
         // On the test account, episode 1x08 of Start Trek: Starfleet Academy has all properties set.
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().collectionShows(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, Extended.METADATA));
+                getTrakt().sync().collectionShows(PAGE_ONE, LIMIT_MAX, Extended.METADATA));
 
         // As of 2026-03-06, when filtering to shows pagination appears to be not supported (yet?)
         // assertListPaginationHeaders(response);
@@ -538,7 +538,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistMovies() throws IOException {
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistMovies(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+                getTrakt().sync().watchlistMovies(PAGE_ONE, LIMIT_MAX, null));
 
         assertListPaginationHeaders(response);
         assertSyncMovies(response.body(), "watchlist");
@@ -554,7 +554,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistShows(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+                getTrakt().sync().watchlistShows(PAGE_ONE, LIMIT_MAX, null));
 
         assertListPaginationHeaders(response);
         assertWatchlistShows(response.body());
@@ -570,7 +570,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistSeasons() throws IOException {
         Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistSeasons(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+                getTrakt().sync().watchlistSeasons(PAGE_ONE, LIMIT_MAX, null));
 
         assertListPaginationHeaders(response);
         assertWatchlistSeasons(response.body());
@@ -586,7 +586,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchlistEpisodes() throws IOException {
         Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchlistEpisodes(PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT, null));
+                getTrakt().sync().watchlistEpisodes(PAGE_ONE, LIMIT_MAX, null));
 
         assertListPaginationHeaders(response);
         assertWatchlistEpisodes(response.body());
