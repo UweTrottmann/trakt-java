@@ -71,10 +71,12 @@ public class BaseTestCase {
     protected static final int PAGE_ONE = 1;
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
     /**
-     * 1000 is the maximum limit according to the
+     * 250 is the maximum limit as of June 15, 2026 according to the
      * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates discussion</a>.
+     * <p>
+     * Previously, it was 1000.
      */
-    protected static final int LIST_AND_COLLECTION_MAX_LIMIT = 1000;
+    protected static final int LIST_AND_COLLECTION_MAX_LIMIT = 250;
 
     private static TraktV2 trakt;
     private static TraktV2 traktNoAuth;
