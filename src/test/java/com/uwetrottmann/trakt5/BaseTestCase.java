@@ -365,10 +365,22 @@ public class BaseTestCase {
     }
 
     /**
-     * Note that in contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers
-     * return the applied sort order.
+     * Checks the x-applied-sort-by and x-applied-sort-how headers return the applied sort order.
+     *
+     * @see #assertSortOrderHeadersBroken(Response, String, String)
      */
     public static void assertSortOrderHeaders(Response<?> response, String expectedSortBy, String expectedSortHow) {
+        assertThat(response.headers().get("x-applied-sort-by")).isEqualTo(expectedSortBy);
+        assertThat(response.headers().get("x-applied-sort-how")).isEqualTo(expectedSortHow);
+    }
+
+    /**
+     * In contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers
+     * return the applied sort order.
+     *
+     * @see #assertSortOrderHeaders(Response, String, String)
+     */
+    public static void assertSortOrderHeadersBroken(Response<?> response, String expectedSortBy, String expectedSortHow) {
         assertThat(response.headers().get("x-sort-by")).isEqualTo(expectedSortBy);
         assertThat(response.headers().get("x-sort-how")).isEqualTo(expectedSortHow);
     }

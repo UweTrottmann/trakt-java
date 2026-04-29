@@ -238,8 +238,8 @@ public class UsersTest extends BaseTestCase {
 
         assertListPaginationHeaders(response);
         // The list items are ordered as requested, but the X-Sort headers update with nonsensical values.
-        // assertSortOrderHeaders(response, sortBy, sortHow);
-        assertSortOrderHeaders(response, "desc", "asc");
+        // assertSortOrderHeadersBroken(response, sortBy, sortHow);
+        assertSortOrderHeadersBroken(response, "desc", "asc");
         assertListEntries(response.body());
     }
 
@@ -264,7 +264,7 @@ public class UsersTest extends BaseTestCase {
         );
 
         assertListPaginationHeaders(response);
-        assertSortOrderHeaders(response, sortBy, sortHow);
+        assertSortOrderHeadersBroken(response, sortBy, sortHow);
         assertListEntries(response.body());
     }
 
@@ -488,7 +488,7 @@ public class UsersTest extends BaseTestCase {
     public void test_watchlistMovies_sortOrder() throws IOException {
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchlistMovies(UserSlug.ME, "title", "asc", null, null, null));
-        assertSortOrderHeaders(response, "title", "asc");
+        assertSortOrderHeadersBroken(response, "title", "asc");
     }
 
     @Test
@@ -504,7 +504,7 @@ public class UsersTest extends BaseTestCase {
     public void test_watchlistShows_sortOrder() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchlistShows(UserSlug.ME, "title", "asc", null, null, null));
-        assertSortOrderHeaders(response, "title", "asc");
+        assertSortOrderHeadersBroken(response, "title", "asc");
     }
 
     @Test
@@ -520,7 +520,7 @@ public class UsersTest extends BaseTestCase {
     public void test_watchlistSeasons_sortOrder() throws IOException {
         Response<List<WatchlistedSeason>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchlistSeasons(UserSlug.ME, "title", "asc", null, null, null));
-        assertSortOrderHeaders(response, "title", "asc");
+        assertSortOrderHeadersBroken(response, "title", "asc");
     }
 
     @Test
@@ -536,7 +536,7 @@ public class UsersTest extends BaseTestCase {
     public void test_watchlistEpisodes_sortOrder() throws IOException {
         Response<List<WatchlistedEpisode>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchlistEpisodes(UserSlug.ME, "title", "asc", null, null, null));
-        assertSortOrderHeaders(response, "title", "asc");
+        assertSortOrderHeadersBroken(response, "title", "asc");
     }
 
     @Test
