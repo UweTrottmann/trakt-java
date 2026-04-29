@@ -139,9 +139,24 @@ public interface Sync {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all movies a user has watched.
+     *
+     * @deprecated Use {@link #watchedMovies(int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("sync/watched/movies")
+    Call<List<BaseMovie>> watchedMovies(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Like {@link Users#watchedMovies(UserSlug, int, int, Extended)}.
      */
     @GET("sync/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
+            @Query("page") int page,
+            @Query("limit") int limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 
@@ -243,9 +258,24 @@ public interface Sync {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Returns all shows a user has watched.
+     *
+     * @deprecated Use {@link #watchedShows(int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("sync/watched/shows")
+    Call<List<BaseShow>> watchedShows(
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Like {@link Users#watchedShows(UserSlug, int, int, Extended)}.
      */
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
+            @Query("page") int page,
+            @Query("limit") int limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

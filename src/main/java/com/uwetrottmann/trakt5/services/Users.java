@@ -772,10 +772,12 @@ public interface Users {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all movies or shows a user has watched sorted by most plays.
+     * Returns all movies a user has watched sorted by most plays.
      *
      * @param userSlug Example: "sean".
+     * @deprecated Use {@link #watchedMovies(UserSlug, int, int, Extended)} instead.
      */
+    @Deprecated
     @GET("users/{username}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
             @Path("username") UserSlug userSlug,
@@ -785,13 +787,49 @@ public interface Users {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all movies or shows a user has watched sorted by most plays.
+     * Returns all movies a user has watched sorted by most plays.
      *
      * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
+     */
+    @GET("users/{username}/watched/movies")
+    Call<List<BaseMovie>> watchedMovies(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all shows a user has watched sorted by most plays.
+     *
+     * @param userSlug Example: "sean".
+     * @deprecated Use {@link #watchedShows(UserSlug, int, int, Extended)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/watched/shows")
+    Call<List<BaseShow>> watchedShows(
+            @Path("username") UserSlug userSlug,
+            @Query(value = "extended", encoded = true) Extended extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all shows a user has watched sorted by most plays.
+     *
+     * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
      */
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
             @Query(value = "extended", encoded = true) Extended extended
     );
 

@@ -323,14 +323,22 @@ public class SyncTest extends BaseTestCase {
 
     @Test
     public void test_watchedMovies() throws IOException {
-        List<BaseMovie> watchedMovies = executeCall(getTrakt().sync().watchedMovies(null));
-        assertSyncMovies(watchedMovies, "watched");
+        Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchedMovies(PAGE_ONE, LIMIT_MAX, null));
+
+        // As of 2026-04-29, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        assertSyncMovies(response.body(), "watched");
     }
 
     @Test
     public void test_watchedShows() throws IOException {
-        List<BaseShow> watchedShows = executeCall(getTrakt().sync().watchedShows(null));
-        assertSyncShows(watchedShows, "watched");
+        Response<List<BaseShow>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, null));
+
+        // As of 2026-04-29, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        assertSyncShows(response.body(), "watched");
     }
 
     @Test
