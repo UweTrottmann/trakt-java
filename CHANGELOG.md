@@ -5,6 +5,7 @@
 * Address upcoming [Trakt pagination requirements](https://github.com/trakt/trakt-api/discussions/775) for watched methods:
   * Add paginated variants of `Sync.watchedMovies()`, `Sync.watchedShows()`, `Users.watchedMovies()` and 
     `Users.watchedShows()` with required `page` and `limit` parameters. The original methods are deprecated.
+* Add `Sync.watchedEpisodes()` 
 
 ## 6.18.0 - 2026-03-06
 

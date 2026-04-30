@@ -29,9 +29,11 @@ import com.uwetrottmann.trakt5.entities.RatedShow;
 import com.uwetrottmann.trakt5.entities.SyncItems;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.UserSlug;
+import com.uwetrottmann.trakt5.entities.WatchedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedEpisodesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
@@ -279,6 +281,21 @@ public interface Sync {
             @Query("page") int page,
             @Query("limit") int limit,
             @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns all episodes a user has watched.
+     *
+     * @param page  Number of page of results to be returned.
+     * @param limit Number of results to return per page.
+     */
+    @GET("sync/watched/episodes")
+    Call<List<WatchedEpisode>> watchedEpisodes(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) ExtendedEpisodesWatched extended
     );
 
     /**

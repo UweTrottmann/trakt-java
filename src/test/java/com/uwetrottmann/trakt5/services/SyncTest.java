@@ -43,9 +43,11 @@ import com.uwetrottmann.trakt5.entities.SyncMovie;
 import com.uwetrottmann.trakt5.entities.SyncResponse;
 import com.uwetrottmann.trakt5.entities.SyncSeason;
 import com.uwetrottmann.trakt5.entities.SyncShow;
+import com.uwetrottmann.trakt5.entities.WatchedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedEpisodesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
@@ -360,6 +362,34 @@ public class SyncTest extends BaseTestCase {
                         ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS)));
 
         assertWatchedShowsFullNoSeasons(shows);
+    }
+
+    @Test
+    public void test_watchedEpisodes() throws IOException {
+        Response<List<WatchedEpisode>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchedEpisodes(PAGE_ONE, LIMIT_MAX, null));
+
+        // As of 2026-04-29, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        assertThat(response.body())
+                .isNotEmpty()
+                .allSatisfy(episode -> {
+                    assertThat(episode.plays).isPositive();
+                    assertThat(episode.episode).isNotNull();
+                });
+    }
+
+    @Test
+    public void test_watchedEpisodes_extended() throws IOException {
+        List<WatchedEpisode> episodes = executeCall(
+                getTrakt().sync().watchedEpisodes(PAGE_ONE, LIMIT_MAX, ExtendedEpisodesWatched.FULL));
+
+        assertThat(episodes)
+                .isNotEmpty()
+                .allSatisfy(episode -> {
+                    assertThat(episode.episode).isNotNull();
+                    assertThat(episode.episode.rating).isNotNull();
+                });
     }
 
     @Test
