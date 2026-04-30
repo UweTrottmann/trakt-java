@@ -135,6 +135,21 @@
                     <release>8</release>
                 </configuration>
             </plugin>
+            <!-- Also install sources for non-release builds (to get API docs in IDEs) -->
+            <!-- https://github.com/apache/maven-source-plugin/releases -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.4.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- https://github.com/apache/maven-release/releases -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -212,20 +227,6 @@
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- https://github.com/apache/maven-source-plugin/releases -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.4.0</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
                                 </goals>
                             </execution>
                         </executions>
