@@ -46,6 +46,7 @@ import com.uwetrottmann.trakt5.entities.SyncShow;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
@@ -334,7 +335,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, null));
+                getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
 
         // As of 2026-04-29, pagination is not supported, yet
         // assertListPaginationHeaders(response);

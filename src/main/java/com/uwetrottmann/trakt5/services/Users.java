@@ -40,6 +40,8 @@ import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
+import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import org.threeten.bp.OffsetDateTime;
@@ -775,7 +777,7 @@ public interface Users {
      * Returns all movies a user has watched sorted by most plays.
      *
      * @param userSlug Example: "sean".
-     * @deprecated Use {@link #watchedMovies(UserSlug, int, int, Extended)} instead.
+     * @deprecated Use {@link #watchedMovies(UserSlug, int, int, ExtendedMoviesWatched)} instead.
      */
     @Deprecated
     @GET("users/{username}/watched/movies")
@@ -798,7 +800,7 @@ public interface Users {
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) ExtendedMoviesWatched extended
     );
 
     /**
@@ -807,7 +809,7 @@ public interface Users {
      * Returns all shows a user has watched sorted by most plays.
      *
      * @param userSlug Example: "sean".
-     * @deprecated Use {@link #watchedShows(UserSlug, int, int, Extended)} instead.
+     * @deprecated Use {@link #watchedShows(UserSlug, int, int, ExtendedShowsWatched)} instead.
      */
     @Deprecated
     @GET("users/{username}/watched/shows")
@@ -830,7 +832,7 @@ public interface Users {
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
     );
 
 }

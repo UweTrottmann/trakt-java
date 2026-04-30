@@ -32,6 +32,8 @@ import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
+import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.PlaybackType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
@@ -140,7 +142,7 @@ public interface Sync {
      * <p>
      * Returns all movies a user has watched.
      *
-     * @deprecated Use {@link #watchedMovies(int, int, Extended)} instead.
+     * @deprecated Use {@link #watchedMovies(int, int, ExtendedMoviesWatched)} instead.
      */
     @Deprecated
     @GET("sync/watched/movies")
@@ -151,13 +153,13 @@ public interface Sync {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
-     * Like {@link Users#watchedMovies(UserSlug, int, int, Extended)}.
+     * Like {@link Users#watchedMovies(UserSlug, int, int, ExtendedMoviesWatched)}.
      */
     @GET("sync/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) ExtendedMoviesWatched extended
     );
 
     /**
@@ -259,7 +261,7 @@ public interface Sync {
      * <p>
      * Returns all shows a user has watched.
      *
-     * @deprecated Use {@link #watchedShows(int, int, Extended)} instead.
+     * @deprecated Use {@link #watchedShows(int, int, ExtendedShowsWatched)} instead.
      */
     @Deprecated
     @GET("sync/watched/shows")
@@ -270,13 +272,13 @@ public interface Sync {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
-     * Like {@link Users#watchedShows(UserSlug, int, int, Extended)}.
+     * Like {@link Users#watchedShows(UserSlug, int, int, ExtendedShowsWatched)}.
      */
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
     );
 
     /**

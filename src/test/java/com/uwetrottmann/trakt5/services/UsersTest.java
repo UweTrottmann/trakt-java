@@ -48,6 +48,7 @@ import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
 import com.uwetrottmann.trakt5.enums.NoteType;
@@ -552,7 +553,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, null));
+                getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
 
         // As of 2026-04-29, pagination is not supported, yet
         // assertListPaginationHeaders(response);
