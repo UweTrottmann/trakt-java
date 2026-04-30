@@ -48,6 +48,7 @@ import com.uwetrottmann.trakt5.entities.UserSlug;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
+import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.ListPrivacy;
@@ -551,6 +552,15 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchedMovies_extended() throws IOException {
+        // Note: Starting 2026-05-30 this extended value will be the default
+        List<BaseMovie> movies = executeCall(
+                getTrakt().users().watchedMovies(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, ExtendedMoviesWatched.FULL));
+
+        assertWatchedMoviesFull(movies);
+    }
+
+    @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
@@ -558,6 +568,16 @@ public class UsersTest extends BaseTestCase {
         // As of 2026-04-29, pagination is not supported, yet
         // assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "watched");
+    }
+
+    @Test
+    public void test_watchedShows_extended() throws IOException {
+        // Note: Starting 2026-05-30 these extended values will be the default
+        List<BaseShow> shows = executeCall(
+                getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX,
+                        ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS)));
+
+        assertWatchedShowsFullNoSeasons(shows);
     }
 
 }

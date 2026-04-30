@@ -16,7 +16,10 @@
 
 package com.uwetrottmann.trakt5.enums;
 
-public enum ExtendedMoviesWatched implements TraktEnum {
+/**
+ * Extended info options for the watched movies endpoint.
+ */
+public class ExtendedMoviesWatched implements TraktEnum {
 
     /**
      * Return movie details, like overview and rating.
@@ -26,11 +29,11 @@ public enum ExtendedMoviesWatched implements TraktEnum {
      * Extended Defaults</a> discussion for details and updates.
      */
     @Deprecated
-    FULL("full");
+    public static final ExtendedMoviesWatched FULL = new ExtendedMoviesWatched("full");
 
     private final String value;
 
-    ExtendedMoviesWatched(String value) {
+    private ExtendedMoviesWatched(String value) {
         this.value = value;
     }
 

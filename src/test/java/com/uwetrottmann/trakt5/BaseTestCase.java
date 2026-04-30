@@ -267,6 +267,27 @@ public class BaseTestCase {
         }
     }
 
+    public static void assertWatchedMoviesFull(List<BaseMovie> movies) {
+        assertThat(movies)
+                .isNotEmpty()
+                .allSatisfy(movie -> {
+                    assertThat(movie.movie).isNotNull();
+                    assertThat(movie.movie.rating).isNotNull();
+                });
+    }
+
+    public static void assertWatchedShowsFullNoSeasons(List<BaseShow> shows) {
+        assertThat(shows)
+                .isNotEmpty()
+                .allSatisfy(show -> {
+                    // Check it returns full show info
+                    assertThat(show.show).isNotNull();
+                    assertThat(show.show.rating).isNotNull();
+                    // Check on season info is returned
+                    assertThat(show.seasons).isNull();
+                });
+    }
+
     public static void assertWatchlistShows(List<BaseShow> shows) {
         assertThat(shows).isNotEmpty();
         for (BaseShow show : shows) {

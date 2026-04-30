@@ -16,7 +16,14 @@
 
 package com.uwetrottmann.trakt5.enums;
 
-public enum ExtendedShowsWatched implements TraktEnum {
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+/**
+ * Extended info options for the watched shows endpoint. Use {@link #of(ExtendedShowsWatched...)}
+ * to combine multiple values into a comma-separated parameter.
+ */
+public class ExtendedShowsWatched implements TraktEnum {
 
     /**
      * Return show details, like overview and rating.
@@ -26,7 +33,7 @@ public enum ExtendedShowsWatched implements TraktEnum {
      * Extended Defaults</a> discussion for details and updates.
      */
     @Deprecated
-    FULL("full"),
+    public static final ExtendedShowsWatched FULL = new ExtendedShowsWatched("full");
 
     /**
      * Exclude watched info for seasons and episodes.
@@ -36,7 +43,7 @@ public enum ExtendedShowsWatched implements TraktEnum {
      * Extended Defaults</a> discussion for details and updates.
      */
     @Deprecated
-    NOSEASONS("noseasons"),
+    public static final ExtendedShowsWatched NOSEASONS = new ExtendedShowsWatched("noseasons");
 
     /**
      * Include season progress information.
@@ -45,11 +52,25 @@ public enum ExtendedShowsWatched implements TraktEnum {
      * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination &
      * Extended Defaults</a> discussion for details and updates.
      */
-    PROGRESS("progress");
+    public static final ExtendedShowsWatched PROGRESS = new ExtendedShowsWatched("progress");
+
+    /**
+     * Combine multiple extended values into a single comma-separated parameter.
+     * <p>
+     * Example: {@code ExtendedShowsWatched.of(FULL, NOSEASONS)} produces {@code "full,noseasons"}.
+     */
+    public static ExtendedShowsWatched of(ExtendedShowsWatched... values) {
+        if (values == null || values.length == 0) {
+            throw new IllegalArgumentException("At least one value is required.");
+        }
+        return new ExtendedShowsWatched(
+                Arrays.stream(values).map(ExtendedShowsWatched::toString).collect(Collectors.joining(","))
+        );
+    }
 
     private final String value;
 
-    ExtendedShowsWatched(String value) {
+    private ExtendedShowsWatched(String value) {
         this.value = value;
     }
 
