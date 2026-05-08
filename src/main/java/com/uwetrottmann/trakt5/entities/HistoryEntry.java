@@ -22,7 +22,7 @@ public class HistoryEntry {
 
     public Long id;
     /**
-     * Warning: Trakt is planning to only store and return minute-precision timestamps for watched_at. So seconds and
+     * Warning: Trakt only stores and returns minute-precision timestamps for watched_at. So seconds and
      * nanoseconds will always be zero.
      */
     public OffsetDateTime watched_at;
