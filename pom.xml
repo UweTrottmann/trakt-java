@@ -135,6 +135,26 @@
                     <release>8</release>
                 </configuration>
             </plugin>
+            <!-- Also build javadoc to catch errors early -->
+            <!-- https://github.com/apache/maven-javadoc-plugin/releases -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.12.0</version>
+                <configuration>
+                    <source>8</source>
+                    <!-- Disable checks for missing Javadoc comments -->
+                    <doclint>all,-missing</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Also install sources for non-release builds (to get API docs in IDEs) -->
             <!-- https://github.com/apache/maven-source-plugin/releases -->
             <plugin>
@@ -208,25 +228,6 @@
                                 <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!-- https://github.com/apache/maven-javadoc-plugin/releases -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.12.0</version>
-                        <configuration>
-                            <source>8</source>
-                            <!-- Disable checks for missing Javadoc comments -->
-                            <doclint>all,-missing</doclint>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
