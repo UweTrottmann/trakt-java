@@ -20,8 +20,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 /**
- * Extended info options for the watched shows endpoint. Use {@link #of(ExtendedShowsWatched...)}
- * to combine multiple values into a comma-separated parameter.
+ * Extended info options for the watched shows endpoint. Use {@link #of(ExtendedShowsWatched...)} to combine multiple
+ * values into a comma-separated parameter.
  */
 public class ExtendedShowsWatched implements TraktEnum {
 
@@ -29,8 +29,8 @@ public class ExtendedShowsWatched implements TraktEnum {
      * Return show details, like overview and rating.
      *
      * @deprecated Starting 2026-05-30, this will be the default. See the
-     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination &
-     * Extended Defaults</a> discussion for details and updates.
+     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination
+     * &amp; Extended Defaults</a> discussion for details and updates.
      */
     @Deprecated
     public static final ExtendedShowsWatched FULL = new ExtendedShowsWatched("full");
@@ -39,8 +39,8 @@ public class ExtendedShowsWatched implements TraktEnum {
      * Exclude watched info for seasons and episodes.
      *
      * @deprecated Starting 2026-05-30, this will be the default. See the
-     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination &
-     * Extended Defaults</a> discussion for details and updates.
+     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination
+     * &amp; Extended Defaults</a> discussion for details and updates.
      */
     @Deprecated
     public static final ExtendedShowsWatched NOSEASONS = new ExtendedShowsWatched("noseasons");
@@ -49,8 +49,8 @@ public class ExtendedShowsWatched implements TraktEnum {
      * Include season progress information.
      * <p>
      * Note: until 2026-05-30 this is the default and won't have any effect. See the
-     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination &
-     * Extended Defaults</a> discussion for details and updates.
+     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination
+     * &amp; Extended Defaults</a> discussion for details and updates.
      */
     public static final ExtendedShowsWatched PROGRESS = new ExtendedShowsWatched("progress");
 

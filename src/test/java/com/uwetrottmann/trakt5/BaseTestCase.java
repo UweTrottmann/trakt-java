@@ -74,8 +74,8 @@ public class BaseTestCase {
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
     /**
      * 250 is the maximum limit as of June 15, 2026 according to the
-     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates
-     * discussion</a>.
+     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination &amp; Sorting
+     * Updates discussion</a>.
      * <p>
      * Previously, it was 1000.
      */

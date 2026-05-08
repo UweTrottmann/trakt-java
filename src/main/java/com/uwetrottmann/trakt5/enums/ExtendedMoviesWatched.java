@@ -25,8 +25,8 @@ public class ExtendedMoviesWatched implements TraktEnum {
      * Return movie details, like overview and rating.
      *
      * @deprecated Starting 2026-05-30, this will be the default. See the
-     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination &
-     * Extended Defaults</a> discussion for details and updates.
+     * <a href="https://github.com/trakt/trakt-api/discussions/775">Upcoming API Changes: Watched Endpoints Pagination
+     * &amp; Extended Defaults</a> discussion for details and updates.
      */
     @Deprecated
     public static final ExtendedMoviesWatched FULL = new ExtendedMoviesWatched("full");
