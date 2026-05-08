@@ -33,7 +33,6 @@ import com.uwetrottmann.trakt5.entities.WatchedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedEpisode;
 import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Extended;
-import com.uwetrottmann.trakt5.enums.ExtendedEpisodesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
@@ -294,8 +293,7 @@ public interface Sync {
     @GET("sync/watched/episodes")
     Call<List<WatchedEpisode>> watchedEpisodes(
             @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedEpisodesWatched extended
+            @Query("limit") int limit
     );
 
     /**
