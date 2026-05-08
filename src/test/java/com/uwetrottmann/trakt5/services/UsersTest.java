@@ -68,6 +68,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertEpisodeHistory;
 import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertHistory;
@@ -561,6 +562,17 @@ public class UsersTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchedMoviesMin() throws IOException {
+        Response<Map<String, List<OffsetDateTime>>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchedMoviesMin(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX));
+
+        // As of 2026-05-08, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        OffsetDateTime backIn1996 = OffsetDateTime.of(1970, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        assertWatchedMoviesMin(response.body(), backIn1996);
+    }
+
+    @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
@@ -578,6 +590,17 @@ public class UsersTest extends BaseTestCase {
                         ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS)));
 
         assertWatchedShowsFullNoSeasons(shows);
+    }
+
+    @Test
+    public void test_watchedShowsMin() throws IOException {
+        Response<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> response = executeCallWithoutReadingBody(
+                getTrakt().users().watchedShowsMin(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX));
+
+        // As of 2026-05-08, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        OffsetDateTime backIn1996 = OffsetDateTime.of(1996, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        assertWatchedShowsMin(response.body(), backIn1996);
     }
 
 }

@@ -37,6 +37,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -45,6 +46,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -285,6 +287,50 @@ public class BaseTestCase {
                     assertThat(show.show.rating).isNotNull();
                     // Check on season info is returned
                     assertThat(show.seasons).isNull();
+                });
+    }
+
+    public static void assertWatchedMoviesMin(
+            Map<String, List<OffsetDateTime>> watchedMovies,
+            OffsetDateTime watchedAtAfter) {
+        assertThat(watchedMovies)
+                .isNotEmpty()
+                .allSatisfy((movieId, watchedTimestamps) -> {
+                    assertThat(movieId).isNotEmpty();
+                    assertThat(watchedTimestamps)
+                            .isNotEmpty()
+                            .allSatisfy(offsetDateTime -> {
+                                assertThat(offsetDateTime)
+                                        .isNotNull()
+                                        .isGreaterThan(watchedAtAfter);
+                            });
+                });
+    }
+
+    public static void assertWatchedShowsMin(
+            Map<String, Map<String, Map<String, List<OffsetDateTime>>>> watchedShows,
+            OffsetDateTime watchedAtAfter) {
+        assertThat(watchedShows)
+                .isNotEmpty()
+                .allSatisfy((showId, seasons) -> {
+                    assertThat(showId).isNotEmpty();
+                    assertThat(seasons)
+                            .isNotEmpty()
+                            .allSatisfy((seasonId, episodes) -> {
+                                assertThat(seasonId).isNotEmpty();
+                                assertThat(episodes)
+                                        .isNotEmpty()
+                                        .allSatisfy((episodesId, watchedTimestamps) -> {
+                                            assertThat(episodesId).isNotEmpty();
+                                            assertThat(watchedTimestamps)
+                                                    .isNotEmpty()
+                                                    .allSatisfy(offsetDateTime -> {
+                                                        assertThat(offsetDateTime)
+                                                                .isNotNull()
+                                                                .isGreaterThan(watchedAtAfter);
+                                                    });
+                                        });
+                            });
                 });
     }
 

@@ -49,6 +49,7 @@ import retrofit2.http.Query;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Map;
 
 public interface Sync {
 
@@ -161,6 +162,17 @@ public interface Sync {
             @Query("page") int page,
             @Query("limit") int limit,
             @Query(value = "extended", encoded = true) ExtendedMoviesWatched extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Like {@link Users#watchedMoviesMin(UserSlug, int, int)}.
+     */
+    @GET("sync/watched/movies?extended=min")
+    Call<Map<String, List<OffsetDateTime>>> watchedMoviesMin(
+            @Query("page") int page,
+            @Query("limit") int limit
     );
 
     /**
@@ -285,6 +297,17 @@ public interface Sync {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
+     * Like {@link Users#watchedShowsMin(UserSlug, int, int)}.
+     */
+    @GET("sync/watched/shows?extended=min")
+    Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
+            @Query("page") int page,
+            @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Returns all episodes a user has watched.
      *
      * @param page  Number of page of results to be returned.
@@ -292,6 +315,28 @@ public interface Sync {
      */
     @GET("sync/watched/episodes")
     Call<List<WatchedEpisode>> watchedEpisodes(
+            @Query("page") int page,
+            @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns episode Trakt IDs mapped to a list of watched at timestamps.
+     * <p>
+     * An example for an equivalent JSON for a single episode with three watched at timestamps:
+     * <pre>
+     * {
+     *   "73482": [
+     *     "2015-02-10T09:04:00.000Z",
+     *     "2015-02-10T15:42:00.000Z",
+     *     "2015-02-24T05:51:00.000Z"
+     *   ]
+     * }
+     * </pre>
+     */
+    @GET("sync/watched/episodes?extended=min")
+    Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query("page") int page,
             @Query("limit") int limit
     );

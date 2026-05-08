@@ -63,6 +63,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertEpisodeHistory;
 import static com.uwetrottmann.trakt5.services.HistoryAssertions.assertHistory;
@@ -344,6 +345,17 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchedMoviesMin() throws IOException {
+        Response<Map<String, List<OffsetDateTime>>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchedMoviesMin(PAGE_ONE, LIMIT_MAX));
+
+        // As of 2026-05-08, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        OffsetDateTime backIn2013 = OffsetDateTime.of(2013, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        assertWatchedMoviesMin(response.body(), backIn2013);
+    }
+
+    @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
@@ -364,6 +376,17 @@ public class SyncTest extends BaseTestCase {
     }
 
     @Test
+    public void test_watchedShowsMin() throws IOException {
+        Response<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchedShowsMin(PAGE_ONE, LIMIT_MAX));
+
+        // As of 2026-05-08, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        OffsetDateTime backIn2011 = OffsetDateTime.of(2011, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        assertWatchedShowsMin(response.body(), backIn2011);
+    }
+
+    @Test
     public void test_watchedEpisodes() throws IOException {
         Response<List<WatchedEpisode>> response = executeCallWithoutReadingBody(
                 getTrakt().sync().watchedEpisodes(PAGE_ONE, LIMIT_MAX));
@@ -375,6 +398,28 @@ public class SyncTest extends BaseTestCase {
                 .allSatisfy(episode -> {
                     assertThat(episode.plays).isPositive();
                     assertThat(episode.episode).isNotNull();
+                });
+    }
+
+    @Test
+    public void test_watchedEpisodesMin() throws IOException {
+        Response<Map<String, List<OffsetDateTime>>> response = executeCallWithoutReadingBody(
+                getTrakt().sync().watchedEpisodesMin(PAGE_ONE, LIMIT_MAX));
+
+        // As of 2026-05-08, pagination is not supported, yet
+        // assertListPaginationHeaders(response);
+        OffsetDateTime watchedAtAfter = OffsetDateTime.of(2011, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        assertThat(response.body())
+                .isNotEmpty()
+                .allSatisfy((episodeId, watchedTimestamps) -> {
+                    assertThat(episodeId).isNotEmpty();
+                    assertThat(watchedTimestamps)
+                            .isNotEmpty()
+                            .allSatisfy(offsetDateTime -> {
+                                assertThat(offsetDateTime)
+                                        .isNotNull()
+                                        .isGreaterThan(watchedAtAfter);
+                            });
                 });
     }
 
