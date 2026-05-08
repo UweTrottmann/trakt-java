@@ -37,6 +37,7 @@ import com.uwetrottmann.trakt5.entities.WatchlistedSeason;
 import com.uwetrottmann.trakt5.enums.Type;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -45,6 +46,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,11 +74,12 @@ public class BaseTestCase {
     protected static final Integer DEFAULT_PAGE_SIZE = 10;
     /**
      * 250 is the maximum limit as of June 15, 2026 according to the
-     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates discussion</a>.
+     * <a href="https://github.com/trakt/trakt-api/discussions/681">Upcoming API Changes: Pagination & Sorting Updates
+     * discussion</a>.
      * <p>
      * Previously, it was 1000.
      */
-    protected static final int LIST_AND_COLLECTION_MAX_LIMIT = 250;
+    protected static final int LIMIT_MAX = 250;
 
     private static TraktV2 trakt;
     private static TraktV2 traktNoAuth;
@@ -266,6 +269,71 @@ public class BaseTestCase {
         }
     }
 
+    public static void assertWatchedMoviesFull(List<BaseMovie> movies) {
+        assertThat(movies)
+                .isNotEmpty()
+                .allSatisfy(movie -> {
+                    assertThat(movie.movie).isNotNull();
+                    assertThat(movie.movie.rating).isNotNull();
+                });
+    }
+
+    public static void assertWatchedShowsFullNoSeasons(List<BaseShow> shows) {
+        assertThat(shows)
+                .isNotEmpty()
+                .allSatisfy(show -> {
+                    // Check it returns full show info
+                    assertThat(show.show).isNotNull();
+                    assertThat(show.show.rating).isNotNull();
+                    // Check on season info is returned
+                    assertThat(show.seasons).isNull();
+                });
+    }
+
+    public static void assertWatchedMoviesMin(
+            Map<String, List<OffsetDateTime>> watchedMovies,
+            OffsetDateTime watchedAtAfter) {
+        assertThat(watchedMovies)
+                .isNotEmpty()
+                .allSatisfy((movieId, watchedTimestamps) -> {
+                    assertThat(movieId).isNotEmpty();
+                    assertThat(watchedTimestamps)
+                            .isNotEmpty()
+                            .allSatisfy(offsetDateTime -> {
+                                assertThat(offsetDateTime)
+                                        .isNotNull()
+                                        .isGreaterThan(watchedAtAfter);
+                            });
+                });
+    }
+
+    public static void assertWatchedShowsMin(
+            Map<String, Map<String, Map<String, List<OffsetDateTime>>>> watchedShows,
+            OffsetDateTime watchedAtAfter) {
+        assertThat(watchedShows)
+                .isNotEmpty()
+                .allSatisfy((showId, seasons) -> {
+                    assertThat(showId).isNotEmpty();
+                    assertThat(seasons)
+                            .isNotEmpty()
+                            .allSatisfy((seasonId, episodes) -> {
+                                assertThat(seasonId).isNotEmpty();
+                                assertThat(episodes)
+                                        .isNotEmpty()
+                                        .allSatisfy((episodesId, watchedTimestamps) -> {
+                                            assertThat(episodesId).isNotEmpty();
+                                            assertThat(watchedTimestamps)
+                                                    .isNotEmpty()
+                                                    .allSatisfy(offsetDateTime -> {
+                                                        assertThat(offsetDateTime)
+                                                                .isNotNull()
+                                                                .isGreaterThan(watchedAtAfter);
+                                                    });
+                                        });
+                            });
+                });
+    }
+
     public static void assertWatchlistShows(List<BaseShow> shows) {
         assertThat(shows).isNotEmpty();
         for (BaseShow show : shows) {
@@ -357,11 +425,10 @@ public class BaseTestCase {
     }
 
     /**
-     * Like {@link #assertPaginationHeaders(Response, int, int)}, but uses {@link #PAGE_ONE} and
-     * {@link #LIST_AND_COLLECTION_MAX_LIMIT}.
+     * Like {@link #assertPaginationHeaders(Response, int, int)}, but uses {@link #PAGE_ONE} and {@link #LIMIT_MAX}.
      */
     public static void assertListPaginationHeaders(Response<?> response) {
-        assertPaginationHeaders(response, PAGE_ONE, LIST_AND_COLLECTION_MAX_LIMIT);
+        assertPaginationHeaders(response, PAGE_ONE, LIMIT_MAX);
     }
 
     /**
@@ -375,12 +442,13 @@ public class BaseTestCase {
     }
 
     /**
-     * In contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers
-     * return the applied sort order.
+     * In contrast to what the API documentation promises, actually the x-sort-by and x-sort-how headers return the
+     * applied sort order.
      *
      * @see #assertSortOrderHeaders(Response, String, String)
      */
-    public static void assertSortOrderHeadersBroken(Response<?> response, String expectedSortBy, String expectedSortHow) {
+    public static void assertSortOrderHeadersBroken(Response<?> response, String expectedSortBy,
+            String expectedSortHow) {
         assertThat(response.headers().get("x-sort-by")).isEqualTo(expectedSortBy);
         assertThat(response.headers().get("x-sort-how")).isEqualTo(expectedSortHow);
     }

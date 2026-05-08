@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Uwe Trottmann
+ * Copyright © 2026 Uwe Trottmann <uwe@uwetrottmann.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-package com.uwetrottmann.trakt5.enums;
+package com.uwetrottmann.trakt5.entities;
 
-/**
- * Warning: GSON does not use {@link #toString()} to serialize enums, but the key value.
- * Use @SerializedName for these enums (or register both serializer and deserializer in TraktV2Helper).
- */
-public interface TraktEnum {
 
+import org.threeten.bp.OffsetDateTime;
+
+public class WatchedEpisode {
+
+    public Integer plays;
     /**
-     * Return the value to be used by retrofit when building a request.
+     * Warning: Trakt only stores and returns minute-precision timestamps for watched_at. So seconds and
+     * nanoseconds will always be zero.
      */
-    String toString();
+    public OffsetDateTime last_watched_at;
+    public OffsetDateTime last_updated_at;
+
+    public Episode episode;
 
 }
