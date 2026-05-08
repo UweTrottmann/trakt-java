@@ -1,6 +1,6 @@
 # Changelog
 
-## Next release
+## 6.19.0 - 2026-05-08
 
 * Address upcoming [Trakt pagination requirements](https://github.com/trakt/trakt-api/discussions/775) for watched methods:
   * Add paginated variants of `Sync.watchedMovies()`, `Sync.watchedShows()`, `Users.watchedMovies()` and 
