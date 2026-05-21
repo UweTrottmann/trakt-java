@@ -1,4 +1,8 @@
 # Changelog
+        
+## Next release
+
+* Add variants of watched methods that have an option to include special episodes. Deprecated the original variants.
 
 ## 6.19.0 - 2026-05-08
 

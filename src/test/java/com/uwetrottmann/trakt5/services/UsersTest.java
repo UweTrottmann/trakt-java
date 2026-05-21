@@ -57,6 +57,7 @@ import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
 import com.uwetrottmann.trakt5.enums.SortBy;
 import com.uwetrottmann.trakt5.enums.SortHow;
+import com.uwetrottmann.trakt5.enums.Specials;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.threeten.bp.LocalTime;
@@ -575,7 +576,7 @@ public class UsersTest extends BaseTestCase {
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX,
-                        ExtendedShowsWatched.PROGRESS));
+                        ExtendedShowsWatched.PROGRESS, Specials.TRUE));
 
         assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "watched");
@@ -586,7 +587,8 @@ public class UsersTest extends BaseTestCase {
         // Note: Starting 2026-05-30 these extended values will be the default
         List<BaseShow> shows = executeCall(
                 getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX,
-                        ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS)));
+                        ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS),
+                        Specials.TRUE));
 
         assertWatchedShowsFullNoSeasons(shows);
     }
@@ -594,7 +596,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchedShowsMin() throws IOException {
         Response<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchedShowsMin(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX));
+                getTrakt().users().watchedShowsMin(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, Specials.TRUE));
 
         // As of 2026-05-08, pagination is not supported, yet
         // assertListPaginationHeaders(response);

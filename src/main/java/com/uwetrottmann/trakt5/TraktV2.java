@@ -81,6 +81,8 @@ public class TraktV2 {
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
 
+    public static final String QUERY_PARAM_SPECIALS = "specials";
+
     @Nullable private OkHttpClient okHttpClient;
     @Nullable private Retrofit retrofit;
 

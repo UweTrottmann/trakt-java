@@ -38,6 +38,7 @@ import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.PlaybackType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import com.uwetrottmann.trakt5.enums.Specials;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -286,7 +287,10 @@ public interface Sync {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchedShows(UserSlug, int, int, ExtendedShowsWatched)}.
+     *
+     * @deprecated Use {@link #watchedShows(int, int, ExtendedShowsWatched, Specials)} instead.
      */
+    @Deprecated
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Query("page") int page,
@@ -297,10 +301,55 @@ public interface Sync {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
+     * Like {@link Users#watchedShows(UserSlug, int, int, ExtendedShowsWatched, Specials)}.
+     */
+    @GET("sync/watched/shows")
+    Call<List<BaseShow>> watchedShows(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
      * Like {@link Users#watchedShowsMin(UserSlug, int, int)}.
+     *
+     * @deprecated Use {@link #watchedShowsMin(int, int, Specials)} instead.
+     */
+    @Deprecated
+    @GET("sync/watched/shows?extended=min")
+    Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
+            @Query("page") int page,
+            @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Like {@link Users#watchedShowsMin(UserSlug, int, int, Specials)}.
      */
     @GET("sync/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns all episodes a user has watched.
+     *
+     * @param page  Number of page of results to be returned.
+     * @param limit Number of results to return per page.
+     *
+     * @deprecated Use {@link #watchedEpisodes(int, int, Specials)} instead.
+     */
+    @Deprecated
+    @GET("sync/watched/episodes")
+    Call<List<WatchedEpisode>> watchedEpisodes(
             @Query("page") int page,
             @Query("limit") int limit
     );
@@ -315,6 +364,32 @@ public interface Sync {
      */
     @GET("sync/watched/episodes")
     Call<List<WatchedEpisode>> watchedEpisodes(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns episode Trakt IDs mapped to a list of watched at timestamps.
+     * <p>
+     * An example for an equivalent JSON for a single episode with three watched at timestamps:
+     * <pre>
+     * {
+     *   "73482": [
+     *     "2015-02-10T09:04:00.000Z",
+     *     "2015-02-10T15:42:00.000Z",
+     *     "2015-02-24T05:51:00.000Z"
+     *   ]
+     * }
+     * </pre>
+     *
+     * @deprecated Use {@link #watchedEpisodesMin(int, int, Specials)} instead.
+     */
+    @Deprecated
+    @GET("sync/watched/episodes?extended=min")
+    Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query("page") int page,
             @Query("limit") int limit
     );
@@ -338,7 +413,8 @@ public interface Sync {
     @GET("sync/watched/episodes?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query("page") int page,
-            @Query("limit") int limit
+            @Query("limit") int limit,
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**

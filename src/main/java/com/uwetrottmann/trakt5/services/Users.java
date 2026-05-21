@@ -44,6 +44,7 @@ import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import com.uwetrottmann.trakt5.enums.Specials;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -850,13 +851,65 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
+     *
+     * @deprecated Use {@link #watchedShows(UserSlug, int, int, ExtendedShowsWatched, Specials)} instead.
      */
+    @Deprecated
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
             @Query("limit") int limit,
             @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all shows a user has watched sorted by most plays.
+     *
+     * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
+     */
+    @GET("users/{username}/watched/shows")
+    Call<List<BaseShow>> watchedShows(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
+            @Query(value = "specials", encoded = true) Specials specials
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns show Trakt IDs mapped to season Trakt IDs, mapped to episode Trakt IDs mapped to a list of watched at
+     * timestamps.
+     * <p>
+     * An example for an equivalent JSON for a single show, season and episode with three watched at timestamps:
+     * <pre>
+     * {
+     *   "77712": {
+     *     "95726": {
+     *       "1498291": [
+     *         "2026-04-29T17:54:00.000Z",
+     *         "2026-04-29T17:57:00.000Z",
+     *         "2026-05-08T02:38:00.000Z"
+     *       ]
+     *     }
+     *   }
+     * }
+     * </pre>
+     *
+     * @deprecated Use {@link #watchedShowsMin(UserSlug, int, int, Specials)} instead.
+     */
+    @Deprecated
+    @GET("users/{username}/watched/shows?extended=min")
+    Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit
     );
 
     /**
@@ -884,7 +937,8 @@ public interface Users {
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
-            @Query("limit") int limit
+            @Query("limit") int limit,
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
 }
