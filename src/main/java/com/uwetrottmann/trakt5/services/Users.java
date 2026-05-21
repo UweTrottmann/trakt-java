@@ -68,6 +68,13 @@ import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_START_AT;
 
 public interface Users {
 
+    String PATH_USERNAME = "username";
+    String PATH_TYPE = "type";
+    String PATH_ID = "id";
+    String PATH_SORT_BY = "sort_by";
+    String PATH_SORT_HOW = "sort_how";
+    String PATH_RATING = "rating";
+
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
@@ -84,9 +91,9 @@ public interface Users {
      *
      * @param userSlug Example: "sean".
      */
-    @GET("users/{username}")
+    @GET("users/{" + PATH_USERNAME + "}")
     Call<User> profile(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -100,9 +107,9 @@ public interface Users {
      * @deprecated Use {@link #collectionMovies(UserSlug, int, int, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/collection/movies")
+    @GET("users/{" + PATH_USERNAME + "}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -116,9 +123,9 @@ public interface Users {
      * @param limit    Number of results to return per page.
      * @see Sync#collectionMovies(int, int, Extended)
      */
-    @GET("users/{username}/collection/movies")
+    @GET("users/{" + PATH_USERNAME + "}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -134,9 +141,9 @@ public interface Users {
      * @deprecated Use {@link #collectionShows(UserSlug, int, int, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/collection/shows")
+    @GET("users/{" + PATH_USERNAME + "}/collection/shows")
     Call<List<BaseShow>> collectionShows(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -150,9 +157,9 @@ public interface Users {
      * @param limit    Number of results to return per page.
      * @see Sync#collectionShows(int, int, Extended)
      */
-    @GET("users/{username}/collection/shows")
+    @GET("users/{" + PATH_USERNAME + "}/collection/shows")
     Call<List<BaseShow>> collectionShows(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -165,10 +172,10 @@ public interface Users {
      * <p>
      * <a href="https://trakt.docs.apiary.io/#reference/users/notes/get-notes">Online documentation</a>
      */
-    @GET("users/{username}/notes/{type}")
+    @GET("users/{" + PATH_USERNAME + "}/notes/{" + PATH_TYPE + "}")
     Call<List<NoteResponse>> notes(
-            @Path("username") UserSlug userSlug,
-            @Path("type") String type,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_TYPE) String type,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -179,9 +186,9 @@ public interface Users {
      * <p>
      * Returns all custom lists for a user.
      */
-    @GET("users/{username}/lists")
+    @GET("users/{" + PATH_USERNAME + "}/lists")
     Call<List<TraktList>> lists(
-            @Path("username") UserSlug userSlug
+            @Path(PATH_USERNAME) UserSlug userSlug
     );
 
     /**
@@ -189,9 +196,9 @@ public interface Users {
      * <p>
      * Create a new custom list. The name is the only required field, but the other info is recommended to ask for.
      */
-    @POST("users/{username}/lists")
+    @POST("users/{" + PATH_USERNAME + "}/lists")
     Call<TraktList> createList(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Body TraktList list
     );
 
@@ -201,10 +208,10 @@ public interface Users {
      * Update a custom list by sending 1 or more parameters. If you update the list name, the original slug will still
      * be retained so existing references to this list won't break.
      */
-    @PUT("users/{username}/lists/{id}")
+    @PUT("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}")
     Call<TraktList> updateList(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
             @Body TraktList list
     );
 
@@ -213,10 +220,10 @@ public interface Users {
      * <p>
      * Remove a custom list and all items it contains.
      */
-    @DELETE("users/{username}/lists/{id}")
+    @DELETE("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}")
     Call<Void> deleteList(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id
     );
 
     /**
@@ -224,9 +231,9 @@ public interface Users {
      * <p>
      * Reorder all custom lists by sending the updated rank of list ids.
      */
-    @POST("users/{username}/lists/reorder")
+    @POST("users/{" + PATH_USERNAME + "}/lists/reorder")
     Call<ListReorderResponse> reorderLists(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Body ListItemRank rank
     );
 
@@ -238,10 +245,10 @@ public interface Users {
      * @deprecated Use {@link #listItems(UserSlug, String, int, int, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/lists/{id}/items")
+    @GET("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items")
     Call<List<ListEntry>> listItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -257,10 +264,10 @@ public interface Users {
      * Sorting: Default sorting is based on the list defaults and sent in the X-Sort-By and X-Sort-How headers. Use
      * {@link #listItems(UserSlug, String, String, String, String, int, int, Extended)} to specify a custom sort order.
      */
-    @GET("users/{username}/lists/{id}/items")
+    @GET("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items")
     Call<List<ListEntry>> listItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -279,12 +286,12 @@ public interface Users {
      *                imdb_votes, tmdb_votes, my_rating, watched, collected.
      * @param sortHow Sort direction. Possible values: asc, desc.
      */
-    @GET("users/{username}/lists/{id}/items/{sort_by}/{sort_how}")
+    @GET("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<ListEntry>> listItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
-            @Path("sort_by") String sortBy,
-            @Path("sort_how") String sortHow,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
+            @Path(PATH_SORT_BY) String sortBy,
+            @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -297,11 +304,11 @@ public interface Users {
      * @param type Filter for a specific item type. Example: {@code movie,show}. Possible values: movie, show, season,
      *             episode, person.
      */
-    @GET("users/{username}/lists/{id}/items/{type}")
+    @GET("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items/{" + PATH_TYPE + "}")
     Call<List<ListEntry>> listItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
-            @Path("type") String type,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
+            @Path(PATH_TYPE) String type,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -322,13 +329,13 @@ public interface Users {
      *                imdb_votes, tmdb_votes, my_rating, watched, collected.
      * @param sortHow Sort direction. Possible values: asc, desc.
      */
-    @GET("users/{username}/lists/{id}/items/{type}/{sort_by}/{sort_how}")
+    @GET("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items/{" + PATH_TYPE + "}/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<ListEntry>> listItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
-            @Path("type") String type,
-            @Path("sort_by") String sortBy,
-            @Path("sort_how") String sortHow,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
+            @Path(PATH_TYPE) String type,
+            @Path(PATH_SORT_BY) String sortBy,
+            @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -339,10 +346,10 @@ public interface Users {
      * <p>
      * Add one or more items to a custom list. Items can be movies, shows, seasons, episodes, or people.
      */
-    @POST("users/{username}/lists/{id}/items")
+    @POST("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items")
     Call<SyncResponse> addListItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
             @Body SyncItems items
     );
 
@@ -351,10 +358,10 @@ public interface Users {
      * <p>
      * Remove one or more items from a custom list.
      */
-    @POST("users/{username}/lists/{id}/items/remove")
+    @POST("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items/remove")
     Call<SyncResponse> deleteListItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
             @Body SyncItems items
     );
 
@@ -363,10 +370,10 @@ public interface Users {
      * <p>
      * Reorder all items on a list by sending the updated rank of list item ids.
      */
-    @POST("users/{username}/lists/{id}/items/reorder")
+    @POST("users/{" + PATH_USERNAME + "}/lists/{" + PATH_ID + "}/items/reorder")
     Call<ListReorderResponse> reorderListItems(
-            @Path("username") UserSlug userSlug,
-            @Path("id") String id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_ID) String id,
             @Body ListItemRank rank
     );
 
@@ -378,9 +385,9 @@ public interface Users {
      * <p>
      * Note: If this user is already being followed, a 409 HTTP status code will returned.
      */
-    @POST("users/{username}/follow")
+    @POST("users/{" + PATH_USERNAME + "}/follow")
     Call<Followed> follow(
-            @Path("username") UserSlug userSlug
+            @Path(PATH_USERNAME) UserSlug userSlug
     );
 
     /**
@@ -388,9 +395,9 @@ public interface Users {
      * <p>
      * Unfollow someone you already follow.
      */
-    @DELETE("users/{username}/follow")
+    @DELETE("users/{" + PATH_USERNAME + "}/follow")
     Call<Void> unfollow(
-            @Path("username") UserSlug userSlug
+            @Path(PATH_USERNAME) UserSlug userSlug
     );
 
     /**
@@ -398,9 +405,9 @@ public interface Users {
      * <p>
      * Returns all followers including when the relationship began.
      */
-    @GET("users/{username}/followers")
+    @GET("users/{" + PATH_USERNAME + "}/followers")
     Call<List<Follower>> followers(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -409,9 +416,9 @@ public interface Users {
      * <p>
      * Returns all user's they follow including when the relationship began.
      */
-    @GET("users/{username}/following")
+    @GET("users/{" + PATH_USERNAME + "}/following")
     Call<List<Follower>> following(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -421,9 +428,9 @@ public interface Users {
      * Returns all friends for a user including when the relationship began. Friendship is a 2 way relationship where
      * each user follows the other.
      */
-    @GET("users/{username}/friends")
+    @GET("users/{" + PATH_USERNAME + "}/friends")
     Call<List<Friend>> friends(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -439,9 +446,9 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @see Sync#history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
-    @GET("users/{username}/history")
+    @GET("users/{" + PATH_USERNAME + "}/history")
     Call<List<HistoryEntry>> history(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
@@ -458,10 +465,10 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @see Sync#history(HistoryType, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
-    @GET("users/{username}/history/{type}")
+    @GET("users/{" + PATH_USERNAME + "}/history/{" + PATH_TYPE + "}")
     Call<List<HistoryEntry>> history(
-            @Path("username") UserSlug userSlug,
-            @Path("type") HistoryType type,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_TYPE) HistoryType type,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
@@ -484,11 +491,11 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @see Sync#history(HistoryType, int, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
-    @GET("users/{username}/history/{type}/{id}")
+    @GET("users/{" + PATH_USERNAME + "}/history/{" + PATH_TYPE + "}/{" + PATH_ID + "}")
     Call<List<HistoryEntry>> history(
-            @Path("username") UserSlug userSlug,
-            @Path("type") HistoryType type,
-            @Path("id") int id,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(PATH_TYPE) HistoryType type,
+            @Path(PATH_ID) int id,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
@@ -504,10 +511,10 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param filter   Filter for a specific rating.
      */
-    @GET("users/{username}/ratings/movies{rating}")
+    @GET("users/{" + PATH_USERNAME + "}/ratings/movies{" + PATH_RATING + "}")
     Call<List<RatedMovie>> ratingsMovies(
-            @Path("username") UserSlug userSlug,
-            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(value = PATH_RATING, encoded = true) RatingsFilter filter,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -519,10 +526,10 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param filter   Filter for a specific rating.
      */
-    @GET("users/{username}/ratings/shows{rating}")
+    @GET("users/{" + PATH_USERNAME + "}/ratings/shows{" + PATH_RATING + "}")
     Call<List<RatedShow>> ratingsShows(
-            @Path("username") UserSlug userSlug,
-            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(value = PATH_RATING, encoded = true) RatingsFilter filter,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -534,10 +541,10 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param filter   Filter for a specific rating.
      */
-    @GET("users/{username}/ratings/seasons{rating}")
+    @GET("users/{" + PATH_USERNAME + "}/ratings/seasons{" + PATH_RATING + "}")
     Call<List<RatedSeason>> ratingsSeasons(
-            @Path("username") UserSlug userSlug,
-            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(value = PATH_RATING, encoded = true) RatingsFilter filter,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -549,10 +556,10 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param filter   Filter for a specific rating.
      */
-    @GET("users/{username}/ratings/episodes{rating}")
+    @GET("users/{" + PATH_USERNAME + "}/ratings/episodes{" + PATH_RATING + "}")
     Call<List<RatedEpisode>> ratingsEpisodes(
-            @Path("username") UserSlug userSlug,
-            @Path(value = "rating", encoded = true) RatingsFilter filter,
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Path(value = PATH_RATING, encoded = true) RatingsFilter filter,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -560,9 +567,9 @@ public interface Users {
      * @deprecated Use {@link #watchlistMovies(UserSlug, Integer, Integer, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watchlist/movies")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -581,9 +588,9 @@ public interface Users {
      *
      * @see #watchlistMovies(UserSlug, String, String, Integer, Integer, Extended)
      */
-    @GET("users/{username}/watchlist/movies")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -602,11 +609,11 @@ public interface Users {
      *                imdb_votes, tmdb_votes, my_rating, watched, collected.
      * @param sortHow Sort direction. Possible values: asc, desc.
      */
-    @GET("users/{username}/watchlist/movies/{sort_by}/{sort_how}")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/movies/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<BaseMovie>> watchlistMovies(
-            @Nonnull @Path("username") UserSlug userSlug,
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -616,9 +623,9 @@ public interface Users {
      * @deprecated Use {@link #watchlistShows(UserSlug, Integer, Integer, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watchlist/shows")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -637,9 +644,9 @@ public interface Users {
      *
      * @see #watchlistShows(UserSlug, String, String, Integer, Integer, Extended)
      */
-    @GET("users/{username}/watchlist/shows")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -658,11 +665,11 @@ public interface Users {
      *                imdb_votes, tmdb_votes, my_rating, watched, collected.
      * @param sortHow Sort direction. Possible values: asc, desc.
      */
-    @GET("users/{username}/watchlist/shows/{sort_by}/{sort_how}")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/shows/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<BaseShow>> watchlistShows(
-            @Nonnull @Path("username") UserSlug userSlug,
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -672,9 +679,9 @@ public interface Users {
      * @deprecated Use {@link #watchlistSeasons(UserSlug, Integer, Integer, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watchlist/seasons")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -693,9 +700,9 @@ public interface Users {
      *
      * @see #watchlistSeasons(UserSlug, String, String, Integer, Integer, Extended)
      */
-    @GET("users/{username}/watchlist/seasons")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -714,11 +721,11 @@ public interface Users {
      *                imdb_votes, tmdb_votes, my_rating, watched, collected.
      * @param sortHow Sort direction. Possible values: asc, desc.
      */
-    @GET("users/{username}/watchlist/seasons/{sort_by}/{sort_how}")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/seasons/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Nonnull @Path("username") UserSlug userSlug,
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -728,9 +735,9 @@ public interface Users {
      * @deprecated Use {@link #watchlistEpisodes(UserSlug, Integer, Integer, Extended)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watchlist/episodes")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -749,9 +756,9 @@ public interface Users {
      *
      * @see #watchlistEpisodes(UserSlug, String, String, Integer, Integer, Extended)
      */
-    @GET("users/{username}/watchlist/episodes")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Nonnull @Path("username") UserSlug userSlug,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -770,11 +777,11 @@ public interface Users {
      *                imdb_votes, tmdb_votes, my_rating, watched, collected.
      * @param sortHow Sort direction. Possible values: asc, desc.
      */
-    @GET("users/{username}/watchlist/episodes/{sort_by}/{sort_how}")
+    @GET("users/{" + PATH_USERNAME + "}/watchlist/episodes/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Nonnull @Path("username") UserSlug userSlug,
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_USERNAME) UserSlug userSlug,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -789,9 +796,9 @@ public interface Users {
      * @deprecated Use {@link #watchedMovies(UserSlug, int, int, ExtendedMoviesWatched)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watched/movies")
+    @GET("users/{" + PATH_USERNAME + "}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -804,9 +811,9 @@ public interface Users {
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
      */
-    @GET("users/{username}/watched/movies")
+    @GET("users/{" + PATH_USERNAME + "}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedMoviesWatched extended
@@ -828,9 +835,9 @@ public interface Users {
      * }
      * </pre>
      */
-    @GET("users/{username}/watched/movies?extended=min")
+    @GET("users/{" + PATH_USERNAME + "}/watched/movies?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedMoviesMin(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit
     );
@@ -844,9 +851,9 @@ public interface Users {
      * @deprecated Use {@link #watchedShows(UserSlug, int, int, ExtendedShowsWatched)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watched/shows")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
@@ -858,13 +865,12 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
-     *
      * @deprecated Use {@link #watchedShows(UserSlug, int, int, ExtendedShowsWatched, Specials)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watched/shows")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedShowsWatched extended
@@ -879,9 +885,9 @@ public interface Users {
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
      */
-    @GET("users/{username}/watched/shows")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedShowsWatched extended,
@@ -912,9 +918,9 @@ public interface Users {
      * @deprecated Use {@link #watchedShowsMin(UserSlug, int, int, Specials)} instead.
      */
     @Deprecated
-    @GET("users/{username}/watched/shows?extended=min")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit
     );
@@ -940,9 +946,9 @@ public interface Users {
      * }
      * </pre>
      */
-    @GET("users/{username}/watched/shows?extended=min")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
-            @Path("username") UserSlug userSlug,
+            @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
             @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials

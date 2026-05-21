@@ -61,6 +61,11 @@ import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_START_AT;
 
 public interface Sync {
 
+    String PATH_TYPE = "type";
+    String PATH_ID = "id";
+    String PATH_SORT_BY = "sort_by";
+    String PATH_SORT_HOW = "sort_how";
+
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
@@ -216,9 +221,9 @@ public interface Sync {
      *
      * @see #playback(OffsetDateTime, OffsetDateTime, Integer, Integer)
      */
-    @GET("sync/playback/{type}")
+    @GET("sync/playback/{" + PATH_TYPE + "}")
     Call<List<PlaybackResponse>> playback(
-            @Path("type") PlaybackType type,
+            @Path(PATH_TYPE) PlaybackType type,
             @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
             @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt,
             @Query(QUERY_PARAM_PAGE) Integer page,
@@ -272,9 +277,9 @@ public interface Sync {
      * <a href="https://trakt.docs.apiary.io/#reference/sync/remove-playback/remove-a-playback-item">Online
      * documentation</a>
      */
-    @DELETE("sync/playback/{id}")
+    @DELETE("sync/playback/{" + PATH_ID + "}")
     Call<Void> removePlayback(
-            @Path("id") long id
+            @Path(PATH_ID) long id
     );
 
     /**
@@ -448,9 +453,9 @@ public interface Sync {
      * @see Users#history(UserSlug, HistoryType, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      * @see Sync#history(Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)
      */
-    @GET("sync/history/{type}")
+    @GET("sync/history/{" + PATH_TYPE + "}")
     Call<List<HistoryEntry>> history(
-            @Path("type") HistoryType type,
+            @Path(PATH_TYPE) HistoryType type,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
@@ -464,10 +469,10 @@ public interface Sync {
      * Like
      * {@link Users#history(UserSlug, HistoryType, int, Integer, Integer, Extended, OffsetDateTime, OffsetDateTime)}.
      */
-    @GET("sync/history/{type}/{id}")
+    @GET("sync/history/{" + PATH_TYPE + "}/{" + PATH_ID + "}")
     Call<List<HistoryEntry>> history(
-            @Path("type") HistoryType type,
-            @Path("id") int id,
+            @Path(PATH_TYPE) HistoryType type,
+            @Path(PATH_ID) int id,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
@@ -630,10 +635,10 @@ public interface Sync {
      * <p>
      * Like {@link Users#watchlistMovies(UserSlug, String, String, Integer, Integer, Extended)}.
      */
-    @GET("sync/watchlist/movies/{sort_by}/{sort_how}")
+    @GET("sync/watchlist/movies/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<BaseMovie>> watchlistMovies(
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -665,10 +670,10 @@ public interface Sync {
      * <p>
      * Like {@link Users#watchlistShows(UserSlug, String, String, Integer, Integer, Extended)}.
      */
-    @GET("sync/watchlist/shows/{sort_by}/{sort_how}")
+    @GET("sync/watchlist/shows/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<BaseShow>> watchlistShows(
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -700,10 +705,10 @@ public interface Sync {
      * <p>
      * Like {@link Users#watchlistSeasons(UserSlug, String, String, Integer, Integer, Extended)}.
      */
-    @GET("sync/watchlist/seasons/{sort_by}/{sort_how}")
+    @GET("sync/watchlist/seasons/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
@@ -735,10 +740,10 @@ public interface Sync {
      * <p>
      * Like {@link Users#watchlistEpisodes(UserSlug, String, String, Integer, Integer, Extended)}.
      */
-    @GET("sync/watchlist/episodes/{sort_by}/{sort_how}")
+    @GET("sync/watchlist/episodes/{" + PATH_SORT_BY + "}/{" + PATH_SORT_HOW + "}")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Nonnull @Path("sort_by") String sortBy,
-            @Nonnull @Path("sort_how") String sortHow,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Nonnull @Path(PATH_SORT_HOW) String sortHow,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
