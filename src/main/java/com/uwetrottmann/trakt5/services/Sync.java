@@ -54,6 +54,7 @@ import java.util.Map;
 
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_END_AT;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED_MIN;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_SPECIALS;
@@ -182,7 +183,7 @@ public interface Sync {
      * <p>
      * Like {@link Users#watchedMoviesMin(UserSlug, int, int)}.
      */
-    @GET("sync/watched/movies?extended=min")
+    @GET("sync/watched/movies?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, List<OffsetDateTime>>> watchedMoviesMin(
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit
@@ -331,7 +332,7 @@ public interface Sync {
      * @deprecated Use {@link #watchedShowsMin(int, int, Specials)} instead.
      */
     @Deprecated
-    @GET("sync/watched/shows?extended=min")
+    @GET("sync/watched/shows?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit
@@ -342,7 +343,7 @@ public interface Sync {
      * <p>
      * Like {@link Users#watchedShowsMin(UserSlug, int, int, Specials)}.
      */
-    @GET("sync/watched/shows?extended=min")
+    @GET("sync/watched/shows?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,
@@ -399,7 +400,7 @@ public interface Sync {
      * @deprecated Use {@link #watchedEpisodesMin(int, int, Specials)} instead.
      */
     @Deprecated
-    @GET("sync/watched/episodes?extended=min")
+    @GET("sync/watched/episodes?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit
@@ -421,7 +422,7 @@ public interface Sync {
      * }
      * </pre>
      */
-    @GET("sync/watched/episodes?extended=min")
+    @GET("sync/watched/episodes?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query(QUERY_PARAM_PAGE) int page,
             @Query(QUERY_PARAM_LIMIT) int limit,

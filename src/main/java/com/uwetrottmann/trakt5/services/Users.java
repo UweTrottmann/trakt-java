@@ -61,6 +61,7 @@ import java.util.Map;
 
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_END_AT;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED_MIN;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_SPECIALS;
@@ -835,7 +836,7 @@ public interface Users {
      * }
      * </pre>
      */
-    @GET("users/{" + PATH_USERNAME + "}/watched/movies?extended=min")
+    @GET("users/{" + PATH_USERNAME + "}/watched/movies?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, List<OffsetDateTime>>> watchedMoviesMin(
             @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
@@ -918,7 +919,7 @@ public interface Users {
      * @deprecated Use {@link #watchedShowsMin(UserSlug, int, int, Specials)} instead.
      */
     @Deprecated
-    @GET("users/{" + PATH_USERNAME + "}/watched/shows?extended=min")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
@@ -946,7 +947,7 @@ public interface Users {
      * }
      * </pre>
      */
-    @GET("users/{" + PATH_USERNAME + "}/watched/shows?extended=min")
+    @GET("users/{" + PATH_USERNAME + "}/watched/shows?" + QUERY_PARAM_EXTENDED_MIN)
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Path(PATH_USERNAME) UserSlug userSlug,
             @Query(QUERY_PARAM_PAGE) int page,
