@@ -330,8 +330,7 @@ public class SyncTest extends BaseTestCase {
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
                 getTrakt().sync().watchedMovies(PAGE_ONE, LIMIT_MAX, null));
 
-        // As of 2026-04-29, pagination is not supported, yet
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertSyncMovies(response.body(), "watched");
     }
 
@@ -360,8 +359,7 @@ public class SyncTest extends BaseTestCase {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
                 getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
 
-        // As of 2026-04-29, pagination is not supported, yet
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "watched");
     }
 
@@ -391,8 +389,7 @@ public class SyncTest extends BaseTestCase {
         Response<List<WatchedEpisode>> response = executeCallWithoutReadingBody(
                 getTrakt().sync().watchedEpisodes(PAGE_ONE, LIMIT_MAX));
 
-        // As of 2026-04-29, pagination is not supported, yet
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertThat(response.body())
                 .isNotEmpty()
                 .allSatisfy(episode -> {

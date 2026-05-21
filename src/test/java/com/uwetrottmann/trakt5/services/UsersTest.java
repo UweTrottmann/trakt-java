@@ -547,8 +547,7 @@ public class UsersTest extends BaseTestCase {
         Response<List<BaseMovie>> response = executeCallWithoutReadingBody(
                 getTrakt().users().watchedMovies(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, null));
 
-        // As of 2026-04-29, pagination is not supported, yet
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertSyncMovies(response.body(), "watched");
     }
 
@@ -575,10 +574,10 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
+                getTrakt().users().watchedShows(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX,
+                        ExtendedShowsWatched.PROGRESS));
 
-        // As of 2026-04-29, pagination is not supported, yet
-        // assertListPaginationHeaders(response);
+        assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "watched");
     }
 
