@@ -44,6 +44,7 @@ import com.uwetrottmann.trakt5.enums.ExtendedMoviesWatched;
 import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import com.uwetrottmann.trakt5.enums.Specials;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -850,13 +851,34 @@ public interface Users {
      * @param userSlug Example: "sean".
      * @param page     Number of page of results to be returned.
      * @param limit    Number of results to return per page.
+     *
+     * @deprecated Use {@link #watchedShows(UserSlug, int, int, ExtendedShowsWatched, Specials)} instead.
      */
+    @Deprecated
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
             @Query("limit") int limit,
             @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all shows a user has watched sorted by most plays.
+     *
+     * @param userSlug Example: "sean".
+     * @param page     Number of page of results to be returned.
+     * @param limit    Number of results to return per page.
+     */
+    @GET("users/{username}/watched/shows")
+    Call<List<BaseShow>> watchedShows(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
+            @Query(value = "specials", encoded = true) Specials specials
     );
 
     /**

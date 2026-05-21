@@ -38,6 +38,7 @@ import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.PlaybackType;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import com.uwetrottmann.trakt5.enums.Specials;
 import org.threeten.bp.OffsetDateTime;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -286,12 +287,28 @@ public interface Sync {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchedShows(UserSlug, int, int, ExtendedShowsWatched)}.
+     *
+     * @deprecated Use {@link #watchedShows(int, int, ExtendedShowsWatched, Specials)} instead.
      */
+    @Deprecated
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Query("page") int page,
             @Query("limit") int limit,
             @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Like {@link Users#watchedShows(UserSlug, int, int, ExtendedShowsWatched, Specials)}.
+     */
+    @GET("sync/watched/shows")
+    Call<List<BaseShow>> watchedShows(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
+            @Query(value = "specials", encoded = true) Specials specials
     );
 
     /**

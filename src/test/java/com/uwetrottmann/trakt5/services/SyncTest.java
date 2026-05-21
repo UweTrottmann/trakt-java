@@ -52,6 +52,7 @@ import com.uwetrottmann.trakt5.enums.ExtendedShowsWatched;
 import com.uwetrottmann.trakt5.enums.HistoryType;
 import com.uwetrottmann.trakt5.enums.Rating;
 import com.uwetrottmann.trakt5.enums.RatingsFilter;
+import com.uwetrottmann.trakt5.enums.Specials;
 import org.junit.Test;
 import org.threeten.bp.Instant;
 import org.threeten.bp.OffsetDateTime;
@@ -357,7 +358,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchedShows() throws IOException {
         Response<List<BaseShow>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS));
+                getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX, ExtendedShowsWatched.PROGRESS, Specials.TRUE));
 
         assertListPaginationHeaders(response);
         assertSyncShows(response.body(), "watched");
@@ -368,7 +369,8 @@ public class SyncTest extends BaseTestCase {
         // Note: Starting 2026-05-30 these extended values will be the default
         List<BaseShow> shows = executeCall(
                 getTrakt().sync().watchedShows(PAGE_ONE, LIMIT_MAX,
-                        ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS)));
+                        ExtendedShowsWatched.of(ExtendedShowsWatched.FULL, ExtendedShowsWatched.NOSEASONS),
+                        Specials.TRUE));
 
         assertWatchedShowsFullNoSeasons(shows);
     }
