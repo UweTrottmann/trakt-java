@@ -938,7 +938,7 @@ public interface Users {
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "specials", encoded = true) Specials specials
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
 }

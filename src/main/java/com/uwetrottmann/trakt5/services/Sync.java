@@ -308,7 +308,7 @@ public interface Sync {
             @Query("page") int page,
             @Query("limit") int limit,
             @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
-            @Query(value = "specials", encoded = true) Specials specials
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -334,7 +334,7 @@ public interface Sync {
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "specials", encoded = true) Specials specials
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -366,7 +366,7 @@ public interface Sync {
     Call<List<WatchedEpisode>> watchedEpisodes(
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "specials", encoded = true) Specials specials
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -414,7 +414,7 @@ public interface Sync {
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query("page") int page,
             @Query("limit") int limit,
-            @Query(value = "specials", encoded = true) Specials specials
+            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
