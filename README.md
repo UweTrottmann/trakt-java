@@ -2,7 +2,7 @@
 
 **[Pull requests](CONTRIBUTING.md) (e.g. support for more API endpoints, bug fixes) are welcome!**
 
-An (unofficial) Java library to use the [Trakt v2 API](https://trakt.docs.apiary.io/) built with [retrofit 2](https://square.github.io/retrofit/).
+An (unofficial) Java library to use the [Trakt API](https://trakt.docs.apiary.io/) built with [retrofit 2](https://square.github.io/retrofit/).
 
 Trakt API methods are grouped into [service objects](src/main/java/com/uwetrottmann/trakt5/services) 
 which can be centrally managed by a [TraktV2](src/main/java/com/uwetrottmann/trakt5/TraktV2.java) instance.
@@ -18,7 +18,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```kotlin
-implementation("com.uwetrottmann.trakt5:trakt-java:6.19.0")
+implementation("com.uwetrottmann.trakt5:trakt-java:6.20.0")
 ```
 
 Or for Maven:
@@ -27,7 +27,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>6.19.0</version>
+  <version>6.20.0</version>
 </dependency>
 ```
 
