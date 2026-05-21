@@ -315,11 +315,26 @@ public interface Sync {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Like {@link Users#watchedShowsMin(UserSlug, int, int)}.
+     *
+     * @deprecated Use {@link #watchedShowsMin(int, int, Specials)} instead.
      */
+    @Deprecated
     @GET("sync/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Query("page") int page,
             @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Like {@link Users#watchedShowsMin(UserSlug, int, int, Specials)}.
+     */
+    @GET("sync/watched/shows?extended=min")
+    Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "specials", encoded = true) Specials specials
     );
 
     /**
@@ -369,11 +384,37 @@ public interface Sync {
      *   ]
      * }
      * </pre>
+     *
+     * @deprecated Use {@link #watchedEpisodesMin(int, int, Specials)} instead.
      */
+    @Deprecated
     @GET("sync/watched/episodes?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
             @Query("page") int page,
             @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns episode Trakt IDs mapped to a list of watched at timestamps.
+     * <p>
+     * An example for an equivalent JSON for a single episode with three watched at timestamps:
+     * <pre>
+     * {
+     *   "73482": [
+     *     "2015-02-10T09:04:00.000Z",
+     *     "2015-02-10T15:42:00.000Z",
+     *     "2015-02-24T05:51:00.000Z"
+     *   ]
+     * }
+     * </pre>
+     */
+    @GET("sync/watched/episodes?extended=min")
+    Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "specials", encoded = true) Specials specials
     );
 
     /**

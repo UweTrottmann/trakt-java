@@ -378,7 +378,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchedShowsMin() throws IOException {
         Response<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchedShowsMin(PAGE_ONE, LIMIT_MAX));
+                getTrakt().sync().watchedShowsMin(PAGE_ONE, LIMIT_MAX, Specials.TRUE));
 
         // As of 2026-05-08, pagination is not supported, yet
         // assertListPaginationHeaders(response);
@@ -403,7 +403,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchedEpisodesMin() throws IOException {
         Response<Map<String, List<OffsetDateTime>>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchedEpisodesMin(PAGE_ONE, LIMIT_MAX));
+                getTrakt().sync().watchedEpisodesMin(PAGE_ONE, LIMIT_MAX, Specials.TRUE));
 
         // As of 2026-05-08, pagination is not supported, yet
         // assertListPaginationHeaders(response);

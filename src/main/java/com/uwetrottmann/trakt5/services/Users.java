@@ -901,12 +901,44 @@ public interface Users {
      *   }
      * }
      * </pre>
+     *
+     * @deprecated Use {@link #watchedShowsMin(UserSlug, int, int, Specials)} instead.
      */
+    @Deprecated
     @GET("users/{username}/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Path("username") UserSlug userSlug,
             @Query("page") int page,
             @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns show Trakt IDs mapped to season Trakt IDs, mapped to episode Trakt IDs mapped to a list of watched at
+     * timestamps.
+     * <p>
+     * An example for an equivalent JSON for a single show, season and episode with three watched at timestamps:
+     * <pre>
+     * {
+     *   "77712": {
+     *     "95726": {
+     *       "1498291": [
+     *         "2026-04-29T17:54:00.000Z",
+     *         "2026-04-29T17:57:00.000Z",
+     *         "2026-05-08T02:38:00.000Z"
+     *       ]
+     *     }
+     *   }
+     * }
+     * </pre>
+     */
+    @GET("users/{username}/watched/shows?extended=min")
+    Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
+            @Path("username") UserSlug userSlug,
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "specials", encoded = true) Specials specials
     );
 
 }

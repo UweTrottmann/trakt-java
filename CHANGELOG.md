@@ -2,7 +2,7 @@
         
 ## Next release
 
-* Add variants of `Sync.watchedShows`, `Users.watchedShows` and `Sync.watchedEpisodes` that have an option to include special episodes. Deprecated the original variants.
+* Add variants of watched methods that have an option to include special episodes. Deprecated the original variants.
 
 ## 6.19.0 - 2026-05-08
 

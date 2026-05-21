@@ -596,7 +596,7 @@ public class UsersTest extends BaseTestCase {
     @Test
     public void test_watchedShowsMin() throws IOException {
         Response<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> response = executeCallWithoutReadingBody(
-                getTrakt().users().watchedShowsMin(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX));
+                getTrakt().users().watchedShowsMin(TestData.USER_SLUG, PAGE_ONE, LIMIT_MAX, Specials.TRUE));
 
         // As of 2026-05-08, pagination is not supported, yet
         // assertListPaginationHeaders(response);
