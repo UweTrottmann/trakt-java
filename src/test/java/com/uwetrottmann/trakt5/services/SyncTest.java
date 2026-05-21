@@ -389,7 +389,7 @@ public class SyncTest extends BaseTestCase {
     @Test
     public void test_watchedEpisodes() throws IOException {
         Response<List<WatchedEpisode>> response = executeCallWithoutReadingBody(
-                getTrakt().sync().watchedEpisodes(PAGE_ONE, LIMIT_MAX));
+                getTrakt().sync().watchedEpisodes(PAGE_ONE, LIMIT_MAX, Specials.TRUE));
 
         assertListPaginationHeaders(response);
         assertThat(response.body())

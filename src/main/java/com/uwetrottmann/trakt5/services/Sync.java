@@ -329,11 +329,29 @@ public interface Sync {
      *
      * @param page  Number of page of results to be returned.
      * @param limit Number of results to return per page.
+     *
+     * @deprecated Use {@link #watchedEpisodes(int, int, Specials)} instead.
      */
+    @Deprecated
     @GET("sync/watched/episodes")
     Call<List<WatchedEpisode>> watchedEpisodes(
             @Query("page") int page,
             @Query("limit") int limit
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns all episodes a user has watched.
+     *
+     * @param page  Number of page of results to be returned.
+     * @param limit Number of results to return per page.
+     */
+    @GET("sync/watched/episodes")
+    Call<List<WatchedEpisode>> watchedEpisodes(
+            @Query("page") int page,
+            @Query("limit") int limit,
+            @Query(value = "specials", encoded = true) Specials specials
     );
 
     /**

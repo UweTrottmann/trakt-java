@@ -17,7 +17,7 @@
 package com.uwetrottmann.trakt5.enums;
 
 /**
- * Option to include special episodes for the watched shows endpoint.
+ * Option to include special episodes for the watched shows and watched episodes endpoint.
  */
 public class Specials implements TraktEnum {
 
