@@ -24,6 +24,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+
 public interface People {
 
     /**
@@ -34,7 +36,7 @@ public interface People {
     @GET("people/{id}")
     Call<Person> summary(
             @Path("id") String personId,
-            @Query("extended") Extended extended
+            @Query(QUERY_PARAM_EXTENDED) Extended extended
     );
 
     @GET("people/{id}/movies")

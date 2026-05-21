@@ -27,6 +27,10 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
+
 public interface Search {
 
     /**
@@ -49,9 +53,9 @@ public interface Search {
             @Query("countries") String countries,
             @Query("runtimes") String runtimes,
             @Query("ratings") String ratings,
-            @Query("extended") Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_EXTENDED) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -67,9 +71,9 @@ public interface Search {
             @Query("runtimes") String runtimes,
             @Query("ratings") String ratings,
             @Query("certifications") String certifications,
-            @Query("extended") Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_EXTENDED) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -87,9 +91,9 @@ public interface Search {
             @Query("certifications") String certifications,
             @Query("networks") String networks,
             @Query("status") String status,
-            @Query("extended") Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_EXTENDED) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -105,9 +109,9 @@ public interface Search {
             @Path(value = "id_type", encoded = true) IdType idType,
             @Path(value = "id", encoded = true) String id,
             @Query("type") Type type,
-            @Query("extended") Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_EXTENDED) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
 }

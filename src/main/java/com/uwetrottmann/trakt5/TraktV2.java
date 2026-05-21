@@ -81,7 +81,12 @@ public class TraktV2 {
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
 
+    public static final String QUERY_PARAM_PAGE = "page";
+    public static final String QUERY_PARAM_LIMIT = "limit";
+    public static final String QUERY_PARAM_EXTENDED = "extended";
     public static final String QUERY_PARAM_SPECIALS = "specials";
+    public static final String QUERY_PARAM_START_AT = "start_at";
+    public static final String QUERY_PARAM_END_AT = "end_at";
 
     @Nullable private OkHttpClient okHttpClient;
     @Nullable private Retrofit retrofit;

@@ -30,6 +30,8 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+
 public interface Seasons {
 
     /**
@@ -40,7 +42,7 @@ public interface Seasons {
     @GET("shows/{id}/seasons")
     Call<List<Season>> summary(
             @Path("id") String showId,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -53,7 +55,7 @@ public interface Seasons {
     Call<List<Episode>> season(
             @Path("id") String showId,
             @Path("season") int season,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**

@@ -32,6 +32,10 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
+
 public interface Movies {
 
     /**
@@ -42,9 +46,9 @@ public interface Movies {
      */
     @GET("movies/popular")
     Call<List<Movie>> popular(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -55,9 +59,9 @@ public interface Movies {
      */
     @GET("movies/trending")
     Call<List<TrendingMovie>> trending(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -68,7 +72,7 @@ public interface Movies {
     @GET("movies/{id}")
     Call<Movie> summary(
             @Path("id") String movieId,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -103,9 +107,9 @@ public interface Movies {
     @GET("movies/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String movieId,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -114,9 +118,9 @@ public interface Movies {
     @GET("movies/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String movieId,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
             @Header("Cache-Control") String cacheControl
     );
 

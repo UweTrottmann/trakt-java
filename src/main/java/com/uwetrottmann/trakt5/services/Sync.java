@@ -52,6 +52,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_END_AT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_SPECIALS;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_START_AT;
+
 public interface Sync {
 
     /**
@@ -75,7 +82,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -85,9 +92,9 @@ public interface Sync {
      */
     @GET("sync/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -101,7 +108,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/collection/shows")
     Call<List<BaseShow>> collectionShows(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -111,9 +118,9 @@ public interface Sync {
      */
     @GET("sync/collection/shows")
     Call<List<BaseShow>> collectionShows(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -150,7 +157,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -160,9 +167,9 @@ public interface Sync {
      */
     @GET("sync/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedMoviesWatched extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedMoviesWatched extended
     );
 
     /**
@@ -172,8 +179,8 @@ public interface Sync {
      */
     @GET("sync/watched/movies?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedMoviesMin(
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit
     );
 
     /**
@@ -195,10 +202,10 @@ public interface Sync {
      */
     @GET("sync/playback")
     Call<List<PlaybackResponse>> playback(
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -212,10 +219,10 @@ public interface Sync {
     @GET("sync/playback/{type}")
     Call<List<PlaybackResponse>> playback(
             @Path("type") PlaybackType type,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -228,7 +235,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/playback")
     Call<List<PlaybackResponse>> getPlayback(
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -241,7 +248,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/playback/episodes")
     Call<List<PlaybackResponse>> getPlaybackEpisodes(
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -254,7 +261,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/playback/movies")
     Call<List<PlaybackResponse>> getPlaybackMovies(
-            @Query("limit") Integer limit
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -280,7 +287,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -293,9 +300,9 @@ public interface Sync {
     @Deprecated
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedShowsWatched extended
     );
 
     /**
@@ -305,10 +312,10 @@ public interface Sync {
      */
     @GET("sync/watched/shows")
     Call<List<BaseShow>> watchedShows(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
-            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedShowsWatched extended,
+            @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -321,8 +328,8 @@ public interface Sync {
     @Deprecated
     @GET("sync/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit
     );
 
     /**
@@ -332,9 +339,9 @@ public interface Sync {
      */
     @GET("sync/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -344,14 +351,13 @@ public interface Sync {
      *
      * @param page  Number of page of results to be returned.
      * @param limit Number of results to return per page.
-     *
      * @deprecated Use {@link #watchedEpisodes(int, int, Specials)} instead.
      */
     @Deprecated
     @GET("sync/watched/episodes")
     Call<List<WatchedEpisode>> watchedEpisodes(
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit
     );
 
     /**
@@ -364,9 +370,9 @@ public interface Sync {
      */
     @GET("sync/watched/episodes")
     Call<List<WatchedEpisode>> watchedEpisodes(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -390,8 +396,8 @@ public interface Sync {
     @Deprecated
     @GET("sync/watched/episodes?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit
     );
 
     /**
@@ -412,9 +418,9 @@ public interface Sync {
      */
     @GET("sync/watched/episodes?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedEpisodesMin(
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -426,11 +432,11 @@ public interface Sync {
      */
     @GET("sync/history")
     Call<List<HistoryEntry>> history(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt
     );
 
     /**
@@ -445,11 +451,11 @@ public interface Sync {
     @GET("sync/history/{type}")
     Call<List<HistoryEntry>> history(
             @Path("type") HistoryType type,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt
     );
 
     /**
@@ -462,11 +468,11 @@ public interface Sync {
     Call<List<HistoryEntry>> history(
             @Path("type") HistoryType type,
             @Path("id") int id,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt
     );
 
     /**
@@ -511,9 +517,9 @@ public interface Sync {
     @GET("sync/ratings/movies{rating}")
     Call<List<RatedMovie>> ratingsMovies(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -530,9 +536,9 @@ public interface Sync {
     @GET("sync/ratings/shows{rating}")
     Call<List<RatedShow>> ratingsShows(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -549,9 +555,9 @@ public interface Sync {
     @GET("sync/ratings/seasons{rating}")
     Call<List<RatedSeason>> ratingsSeasons(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -568,9 +574,9 @@ public interface Sync {
     @GET("sync/ratings/episodes{rating}")
     Call<List<RatedEpisode>> ratingsEpisodes(
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit
     );
 
     /**
@@ -604,7 +610,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -614,9 +620,9 @@ public interface Sync {
      */
     @GET("sync/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -628,9 +634,9 @@ public interface Sync {
     Call<List<BaseMovie>> watchlistMovies(
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -639,7 +645,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -649,9 +655,9 @@ public interface Sync {
      */
     @GET("sync/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -663,9 +669,9 @@ public interface Sync {
     Call<List<BaseShow>> watchlistShows(
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -674,7 +680,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -684,9 +690,9 @@ public interface Sync {
      */
     @GET("sync/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -698,9 +704,9 @@ public interface Sync {
     Call<List<WatchlistedSeason>> watchlistSeasons(
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -709,7 +715,7 @@ public interface Sync {
     @Deprecated
     @GET("sync/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -719,9 +725,9 @@ public interface Sync {
      */
     @GET("sync/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -733,9 +739,9 @@ public interface Sync {
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**

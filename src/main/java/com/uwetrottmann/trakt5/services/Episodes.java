@@ -29,6 +29,10 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
+
 public interface Episodes {
 
     /**
@@ -43,7 +47,7 @@ public interface Episodes {
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -58,9 +62,9 @@ public interface Episodes {
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -71,9 +75,9 @@ public interface Episodes {
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
             @Header("Cache-Control") String cacheControl
     );
 

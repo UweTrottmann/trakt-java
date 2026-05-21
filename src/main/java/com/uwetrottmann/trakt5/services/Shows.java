@@ -35,6 +35,10 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
+
 public interface Shows {
 
     /**
@@ -45,9 +49,9 @@ public interface Shows {
      */
     @GET("shows/popular")
     Call<List<Show>> popular(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -58,9 +62,9 @@ public interface Shows {
      */
     @GET("shows/trending")
     Call<List<TrendingShow>> trending(
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -71,7 +75,7 @@ public interface Shows {
     @GET("shows/{id}")
     Call<Show> summary(
             @Path("id") String showId,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -106,9 +110,9 @@ public interface Shows {
     @GET("shows/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -117,9 +121,9 @@ public interface Shows {
     @GET("shows/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
             @Header("Cache-Control") String cacheControl
     );
 
@@ -159,7 +163,7 @@ public interface Shows {
             @Query("specials") Boolean specials,
             @Query("count_specials") Boolean countSpecials,
             @Query("last_activity") ProgressLastActivity lastActivity,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -200,7 +204,7 @@ public interface Shows {
             @Query("specials") Boolean specials,
             @Query("count_specials") Boolean countSpecials,
             @Query("last_activity") ProgressLastActivity lastActivity,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -237,9 +241,9 @@ public interface Shows {
     @GET("shows/{id}/related")
     Call<List<Show>> related(
             @Path("id") String showId,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
 }

@@ -59,6 +59,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_END_AT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_SPECIALS;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_START_AT;
+
 public interface Users {
 
     /**
@@ -80,7 +87,7 @@ public interface Users {
     @GET("users/{username}")
     Call<User> profile(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -96,7 +103,7 @@ public interface Users {
     @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -112,9 +119,9 @@ public interface Users {
     @GET("users/{username}/collection/movies")
     Call<List<BaseMovie>> collectionMovies(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -130,7 +137,7 @@ public interface Users {
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -146,9 +153,9 @@ public interface Users {
     @GET("users/{username}/collection/shows")
     Call<List<BaseShow>> collectionShows(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -162,9 +169,9 @@ public interface Users {
     Call<List<NoteResponse>> notes(
             @Path("username") UserSlug userSlug,
             @Path("type") String type,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -235,7 +242,7 @@ public interface Users {
     Call<List<ListEntry>> listItems(
             @Path("username") UserSlug userSlug,
             @Path("id") String id,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -254,9 +261,9 @@ public interface Users {
     Call<List<ListEntry>> listItems(
             @Path("username") UserSlug userSlug,
             @Path("id") String id,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -278,9 +285,9 @@ public interface Users {
             @Path("id") String id,
             @Path("sort_by") String sortBy,
             @Path("sort_how") String sortHow,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -295,9 +302,9 @@ public interface Users {
             @Path("username") UserSlug userSlug,
             @Path("id") String id,
             @Path("type") String type,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -322,9 +329,9 @@ public interface Users {
             @Path("type") String type,
             @Path("sort_by") String sortBy,
             @Path("sort_how") String sortHow,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -394,7 +401,7 @@ public interface Users {
     @GET("users/{username}/followers")
     Call<List<Follower>> followers(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -405,7 +412,7 @@ public interface Users {
     @GET("users/{username}/following")
     Call<List<Follower>> following(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -417,7 +424,7 @@ public interface Users {
     @GET("users/{username}/friends")
     Call<List<Friend>> friends(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -435,11 +442,11 @@ public interface Users {
     @GET("users/{username}/history")
     Call<List<HistoryEntry>> history(
             @Path("username") UserSlug userSlug,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt
     );
 
     /**
@@ -455,11 +462,11 @@ public interface Users {
     Call<List<HistoryEntry>> history(
             @Path("username") UserSlug userSlug,
             @Path("type") HistoryType type,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt
     );
 
     /**
@@ -482,11 +489,11 @@ public interface Users {
             @Path("username") UserSlug userSlug,
             @Path("type") HistoryType type,
             @Path("id") int id,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended,
-            @Query("start_at") OffsetDateTime startAt,
-            @Query("end_at") OffsetDateTime endAt
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Query(QUERY_PARAM_START_AT) OffsetDateTime startAt,
+            @Query(QUERY_PARAM_END_AT) OffsetDateTime endAt
     );
 
     /**
@@ -501,7 +508,7 @@ public interface Users {
     Call<List<RatedMovie>> ratingsMovies(
             @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -516,7 +523,7 @@ public interface Users {
     Call<List<RatedShow>> ratingsShows(
             @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -531,7 +538,7 @@ public interface Users {
     Call<List<RatedSeason>> ratingsSeasons(
             @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -546,7 +553,7 @@ public interface Users {
     Call<List<RatedEpisode>> ratingsEpisodes(
             @Path("username") UserSlug userSlug,
             @Path(value = "rating", encoded = true) RatingsFilter filter,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -556,7 +563,7 @@ public interface Users {
     @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -577,9 +584,9 @@ public interface Users {
     @GET("users/{username}/watchlist/movies")
     Call<List<BaseMovie>> watchlistMovies(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -600,9 +607,9 @@ public interface Users {
             @Nonnull @Path("username") UserSlug userSlug,
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -612,7 +619,7 @@ public interface Users {
     @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -633,9 +640,9 @@ public interface Users {
     @GET("users/{username}/watchlist/shows")
     Call<List<BaseShow>> watchlistShows(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -656,9 +663,9 @@ public interface Users {
             @Nonnull @Path("username") UserSlug userSlug,
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -668,7 +675,7 @@ public interface Users {
     @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -689,9 +696,9 @@ public interface Users {
     @GET("users/{username}/watchlist/seasons")
     Call<List<WatchlistedSeason>> watchlistSeasons(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -712,9 +719,9 @@ public interface Users {
             @Nonnull @Path("username") UserSlug userSlug,
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -724,7 +731,7 @@ public interface Users {
     @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -745,9 +752,9 @@ public interface Users {
     @GET("users/{username}/watchlist/episodes")
     Call<List<WatchlistedEpisode>> watchlistEpisodes(
             @Nonnull @Path("username") UserSlug userSlug,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -768,9 +775,9 @@ public interface Users {
             @Nonnull @Path("username") UserSlug userSlug,
             @Nonnull @Path("sort_by") String sortBy,
             @Nonnull @Path("sort_how") String sortHow,
-            @Query("page") Integer page,
-            @Query("limit") Integer limit,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -785,7 +792,7 @@ public interface Users {
     @GET("users/{username}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -800,9 +807,9 @@ public interface Users {
     @GET("users/{username}/watched/movies")
     Call<List<BaseMovie>> watchedMovies(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedMoviesWatched extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedMoviesWatched extended
     );
 
     /**
@@ -824,8 +831,8 @@ public interface Users {
     @GET("users/{username}/watched/movies?extended=min")
     Call<Map<String, List<OffsetDateTime>>> watchedMoviesMin(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit
     );
 
     /**
@@ -840,7 +847,7 @@ public interface Users {
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") UserSlug userSlug,
-            @Query(value = "extended", encoded = true) Extended extended
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**
@@ -858,9 +865,9 @@ public interface Users {
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedShowsWatched extended
     );
 
     /**
@@ -875,10 +882,10 @@ public interface Users {
     @GET("users/{username}/watched/shows")
     Call<List<BaseShow>> watchedShows(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = "extended", encoded = true) ExtendedShowsWatched extended,
-            @Query(value = "specials", encoded = true) Specials specials
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) ExtendedShowsWatched extended,
+            @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
     /**
@@ -908,8 +915,8 @@ public interface Users {
     @GET("users/{username}/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit
     );
 
     /**
@@ -936,9 +943,9 @@ public interface Users {
     @GET("users/{username}/watched/shows?extended=min")
     Call<Map<String, Map<String, Map<String, List<OffsetDateTime>>>>> watchedShowsMin(
             @Path("username") UserSlug userSlug,
-            @Query("page") int page,
-            @Query("limit") int limit,
-            @Query(value = TraktV2.QUERY_PARAM_SPECIALS, encoded = true) Specials specials
+            @Query(QUERY_PARAM_PAGE) int page,
+            @Query(QUERY_PARAM_LIMIT) int limit,
+            @Query(value = QUERY_PARAM_SPECIALS, encoded = true) Specials specials
     );
 
 }
