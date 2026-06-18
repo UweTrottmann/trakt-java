@@ -16,6 +16,8 @@
 
 package com.uwetrottmann.trakt5.enums;
 
+import javax.annotation.Nullable;
+
 public enum Rating implements TraktEnum {
 
     WEAKSAUCE(1),
@@ -29,14 +31,20 @@ public enum Rating implements TraktEnum {
     SUPERB(9),
     TOTALLYNINJA(10);
 
-    public int value;
+    public final int value;
 
     Rating(int value) {
         this.value = value;
     }
 
+    @Nullable
     public static Rating fromValue(int value) {
-        return Rating.values()[value - 1];
+        for (Rating rating : Rating.values()) {
+            if (rating.value == value) {
+                return rating;
+            }
+        }
+        return null; // Return null instead of an unknown enum value
     }
 
     @Override

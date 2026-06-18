@@ -2,6 +2,8 @@
 
 ## Next release
 
+* When parsing a `Rating` with an unknown value, return `null` instead of throwing `ArrayIndexOutOfBoundsException`. Background: the Trakt API was seen returning `0` as a rating value.
+
 ## 6.20.0 - 2026-05-21
 
 * Add variants of watched methods that have an option to include special episodes. Deprecated the original variants.
