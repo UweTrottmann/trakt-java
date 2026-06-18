@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.enums;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +56,7 @@ public enum Audio implements TraktEnum {
         }
     }
 
+    @Nullable
     public static Audio fromValue(String value) {
         return STRING_MAPPING.get(value);
     }

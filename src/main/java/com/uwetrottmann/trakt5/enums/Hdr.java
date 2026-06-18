@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.enums;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ public enum Hdr implements TraktEnum {
         }
     }
 
+    @Nullable
     public static Hdr fromValue(String value) {
         return STRING_MAPPING.get(value);
     }

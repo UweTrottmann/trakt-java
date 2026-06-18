@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.enums;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -41,6 +42,7 @@ public enum Status implements TraktEnum {
         }
     }
 
+    @Nullable
     public static Status fromValue(String value) {
         return STRING_MAPPING.get(value.toUpperCase(Locale.ROOT));
     }

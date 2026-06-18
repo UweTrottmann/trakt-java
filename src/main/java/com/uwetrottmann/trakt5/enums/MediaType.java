@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.enums;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +45,7 @@ public enum MediaType implements TraktEnum {
         }
     }
 
+    @Nullable
     public static MediaType fromValue(String value) {
         return STRING_MAPPING.get(value);
     }
