@@ -18,7 +18,9 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
+import com.uwetrottmann.trakt5.entities.Movie;
 import com.uwetrottmann.trakt5.entities.SearchResult;
+import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.IdType;
 import com.uwetrottmann.trakt5.enums.Type;
@@ -86,16 +88,32 @@ public class SearchTest extends BaseTestCase {
     @Test
     public void test_idLookup() throws IOException {
         List<SearchResult> results = executeCall(
-                getTrakt().search().idLookup(IdType.TVDB, String.valueOf(TestData.SHOW_TVDB_ID), Type.SHOW,
-                        Extended.FULL, 1, DEFAULT_PAGE_SIZE));
+                getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.SHOW_TMDB_ID), Type.SHOW,
+                        Extended.FULL, 1, 1));
         assertThat(results).isNotNull();
         assertThat(results).hasSize(1);
+        Show show = results.get(0).show;
+        assertThat(show).isNotNull();
+        // Assert that values SeriesGuide uses are returned
+        assertThat(show.ids).isNotNull();
+        assertThat(show.ids.trakt).isEqualTo(TestData.SHOW_TRAKT_ID);
+        assertThat(show.airs).isNotNull();
+        assertThat(show.airs.day).isNotEmpty();
+        assertThat(show.airs.time).isNotEmpty();
+        assertThat(show.airs.timezone).isNotEmpty();
+        assertThat(show.country).isNotEmpty();
+        assertThat(show.first_aired).isNotNull();
 
         results = executeCall(
                 getTrakt().search().idLookup(IdType.TMDB, String.valueOf(TestData.MOVIE_TMDB_ID), Type.MOVIE,
-                        null, 1, DEFAULT_PAGE_SIZE));
+                        null, 1, 1));
         assertThat(results).isNotNull();
         assertThat(results).hasSize(1);
+        Movie movie = results.get(0).movie;
+        assertThat(movie).isNotNull();
+        // Assert that values SeriesGuide uses are returned
+        assertThat(movie.ids).isNotNull();
+        assertThat(movie.ids.trakt).isEqualTo(TestData.MOVIE_TRAKT_ID);
     }
 
 }
