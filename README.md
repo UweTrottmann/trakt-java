@@ -13,7 +13,7 @@ API key (OAuth client id) and optionally a given user access token.
 
 <a href="https://central.sonatype.com/search?q=g:com.uwetrottmann.trakt5">Available on Maven Central</a>
 
-[Change Log](CHANGELOG.md)
+[Changelog](CHANGELOG.md)
 
 Add the following dependency to your Gradle project:
 
