@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2024 Uwe Trottmann
+ * Copyright 2014 Uwe Trottmann
  * Copyright 2019 Marc de Courville
  * Copyright 2020 Sam Malone
  * Copyright 2020 srggsf
@@ -79,7 +79,7 @@ public class TraktV2 {
     public static final String AUTH_URL = "https://auth.trakt.tv/";
     public static final String OAUTH2_AUTHORIZATION_URL = AUTH_URL + "oauth/authorize";
 
-    public static final String SITE_URL = "https://trakt.tv";
+    public static final String SITE_URL = "https://app.trakt.tv";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
