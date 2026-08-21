@@ -16,6 +16,7 @@
 
 package com.uwetrottmann.trakt5.services;
 
+import com.uwetrottmann.trakt5.TraktV2;
 import com.uwetrottmann.trakt5.entities.AccessToken;
 import com.uwetrottmann.trakt5.entities.AccessTokenRefreshRequest;
 import com.uwetrottmann.trakt5.entities.AccessTokenRequest;
@@ -28,12 +29,12 @@ import retrofit2.http.POST;
 
 public interface Authentication {
 
-    @POST("oauth/token")
+    @POST(TraktV2.AUTH_URL + "oauth/token")
     Call<AccessToken> exchangeCodeForAccessToken(
             @Body AccessTokenRequest tokenRequest
     );
 
-    @POST("oauth/token")
+    @POST(TraktV2.AUTH_URL + "oauth/token")
     Call<AccessToken> refreshAccessToken(
             @Body AccessTokenRefreshRequest refreshRequest
     );
@@ -45,7 +46,7 @@ public interface Authentication {
      *
      * @param clientId Application Client Id
      */
-    @POST("oauth/device/code")
+    @POST(TraktV2.AUTH_URL + "oauth/device/code")
     Call<DeviceCode> generateDeviceCode(
             @Body ClientId clientId
     );
@@ -62,7 +63,7 @@ public interface Authentication {
      *
      * @param deviceCodeAccessTokenRequest Device Code
      */
-    @POST("oauth/device/token")
+    @POST(TraktV2.AUTH_URL + "oauth/device/token")
     Call<AccessToken> exchangeDeviceCodeForAccessToken(
             @Body DeviceCodeAccessTokenRequest deviceCodeAccessTokenRequest
     );

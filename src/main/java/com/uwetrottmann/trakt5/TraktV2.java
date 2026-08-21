@@ -72,8 +72,14 @@ public class TraktV2 {
     public static final String API_STAGING_URL = "https://" + API_STAGING_HOST + "/";
     public static final String API_VERSION = "2";
 
+    /**
+     * As recommended by the <a href="https://docs.trakt.tv/reference/getoauthauthorize">"Authorize Application" docs</a>
+     * use a different host for authentication requests.
+     */
+    public static final String AUTH_URL = "https://auth.trakt.tv/";
+    public static final String OAUTH2_AUTHORIZATION_URL = AUTH_URL + "oauth/authorize";
+
     public static final String SITE_URL = "https://trakt.tv";
-    public static final String OAUTH2_AUTHORIZATION_URL = SITE_URL + "/oauth/authorize";
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
