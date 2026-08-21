@@ -1,6 +1,6 @@
 # Changelog
 
-## Next release
+## 6.21.0 - 2026-08-21
 
 * Add paginated variant of `Users.lists`. The original method is deprecated.
 * Change to `https://auth.trakt.tv` for authentication requests as recommended by https://docs.trakt.tv/reference/getoauthauthorize.

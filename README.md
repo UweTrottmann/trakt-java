@@ -18,7 +18,7 @@ API key (OAuth client id) and optionally a given user access token.
 Add the following dependency to your Gradle project:
 
 ```kotlin
-implementation("com.uwetrottmann.trakt5:trakt-java:6.20.1")
+implementation("com.uwetrottmann.trakt5:trakt-java:6.21.0")
 ```
 
 Or for Maven:
@@ -27,7 +27,7 @@ Or for Maven:
 <dependency>
   <groupId>com.uwetrottmann.trakt5</groupId>
   <artifactId>trakt-java</artifactId>
-  <version>6.20.1</version>
+  <version>6.21.0</version>
 </dependency>
 ```
 
