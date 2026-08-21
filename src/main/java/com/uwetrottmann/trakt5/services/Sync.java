@@ -21,6 +21,7 @@ import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
 import com.uwetrottmann.trakt5.entities.LastActivities;
+import com.uwetrottmann.trakt5.entities.LastActivities2;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
 import com.uwetrottmann.trakt5.entities.RatedMovie;
@@ -73,9 +74,21 @@ public interface Sync {
      * This method is a useful first step in the syncing process. We recommended caching these dates locally, then you
      * can compare to know exactly what data has changed recently. This can greatly optimize your syncs so you don't
      * pull down a ton of data only to see nothing has actually changed.
+     *
+     * @deprecated Use {@link #lastActivities2()} instead.
      */
+    @Deprecated
     @GET("sync/last_activities")
     Call<LastActivities> lastActivities();
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
+     * <p>
+     * Returns the latest activity timestamps for the authenticated user. Cache these dates locally and compare them
+     * before syncing to avoid fetching data that has not changed.
+     */
+    @GET("sync/last_activities")
+    Call<LastActivities2> lastActivities2();
 
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>

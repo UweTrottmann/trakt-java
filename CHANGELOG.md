@@ -5,6 +5,7 @@
 * Add paginated variant of `Users.lists`. The original method is deprecated.
 * Change to `https://auth.trakt.tv` for authentication requests as recommended by https://docs.trakt.tv/reference/getoauthauthorize.
 * Change `TraktLink` to link to the new web app at `https://app.trakt.tv`. Deprecate no longer working external ID, season and episode links.
+* Add `Sync.lastActivities2` that adds new activity timestamps. Deprecate the old method.
 
 ## 6.20.1 - 2026-06-18
 

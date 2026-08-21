@@ -1,5 +1,4 @@
 /*
- * Copyright 2024 ZelKami
  * Copyright 2026 Uwe Trottmann <uwe@uwetrottmann.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,10 +18,10 @@ package com.uwetrottmann.trakt5.entities;
 
 import org.threeten.bp.OffsetDateTime;
 
-public class LastActivityComments {
+public class LastActivityMovies extends LastActivityEpisodes {
 
-    public OffsetDateTime liked_at;
-    public OffsetDateTime reacted_at;
-    public OffsetDateTime blocked_at;
+    public OffsetDateTime favorited_at;
+    public OffsetDateTime recommendations_at;
+    public OffsetDateTime hidden_at;
 
 }

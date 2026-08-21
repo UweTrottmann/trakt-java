@@ -22,13 +22,10 @@ import com.uwetrottmann.trakt5.entities.BaseMovie;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.EpisodeIds;
 import com.uwetrottmann.trakt5.entities.HistoryEntry;
-import com.uwetrottmann.trakt5.entities.LastActivities;
+import com.uwetrottmann.trakt5.entities.LastActivities2;
 import com.uwetrottmann.trakt5.entities.LastActivity;
-import com.uwetrottmann.trakt5.entities.LastActivityAccount;
-import com.uwetrottmann.trakt5.entities.LastActivityComments;
-import com.uwetrottmann.trakt5.entities.LastActivityMore;
+import com.uwetrottmann.trakt5.entities.LastActivityEpisodes;
 import com.uwetrottmann.trakt5.entities.LastActivityUpdated;
-import com.uwetrottmann.trakt5.entities.ListsLastActivity;
 import com.uwetrottmann.trakt5.entities.MovieIds;
 import com.uwetrottmann.trakt5.entities.PlaybackResponse;
 import com.uwetrottmann.trakt5.entities.RatedEpisode;
@@ -75,21 +72,74 @@ import static org.assertj.core.api.Assertions.fail;
 public class SyncTest extends BaseTestCase {
 
     @Test
-    public void test_lastActivites() throws IOException {
-        LastActivities lastActivities = executeCall(getTrakt().sync().lastActivities());
+    public void test_lastActivities() throws IOException {
+        LastActivities2 lastActivities = executeCall(getTrakt().sync().lastActivities2());
         assertThat(lastActivities).isNotNull();
         assertThat(lastActivities.all).isNotNull();
-        assertLastActivityMore(lastActivities.movies);
-        assertLastActivityMore(lastActivities.episodes);
+
+        assertLastActivityWatchable(lastActivities.movies);
+        assertThat(lastActivities.movies).isNotNull();
+        assertThat(lastActivities.movies.favorited_at).isNotNull();
+        assertThat(lastActivities.movies.recommendations_at).isNotNull();
+        assertThat(lastActivities.movies.hidden_at).isNotNull();
+
+        assertLastActivityWatchable(lastActivities.episodes);
+
+        assertThat(lastActivities.shows).isNotNull();
+        assertThat(lastActivities.shows.favorited_at).isNotNull();
+        assertThat(lastActivities.shows.recommendations_at).isNotNull();
+        assertThat(lastActivities.shows.hidden_at).isNotNull();
+        assertThat(lastActivities.shows.dropped_at).isNotNull();
         assertLastActivity(lastActivities.shows);
+
+        assertThat(lastActivities.seasons).isNotNull();
+        assertThat(lastActivities.seasons.hidden_at).isNotNull();
         assertLastActivity(lastActivities.seasons);
-        assertLastActivityComments(lastActivities.comments);
-        assertListsLastActivity(lastActivities.lists);
+
+        assertThat(lastActivities.comments).isNotNull();
+        assertThat(lastActivities.comments.liked_at).isNotNull();
+        assertThat(lastActivities.comments.reacted_at).isNotNull();
+        assertThat(lastActivities.comments.blocked_at).isNotNull();
+
+        assertLastActivityUpdated(lastActivities.lists);
+        assertThat(lastActivities.lists).isNotNull();
+        assertThat(lastActivities.lists.liked_at).isNotNull();
+        assertThat(lastActivities.lists.reacted_at).isNotNull();
+        assertThat(lastActivities.lists.commented_at).isNotNull();
+
         assertLastActivityUpdated(lastActivities.watchlist);
         assertLastActivityUpdated(lastActivities.favorites);
-        assertLastActivityAccount(lastActivities.account);
+        assertLastActivityUpdated(lastActivities.recommendations);
+        assertLastActivityUpdated(lastActivities.collaborations);
+
+        assertThat(lastActivities.account).isNotNull();
+        assertThat(lastActivities.account.settings_at).isNotNull();
+        assertThat(lastActivities.account.followed_at).isNotNull();
+        assertThat(lastActivities.account.following_at).isNotNull();
+        assertThat(lastActivities.account.pending_at).isNotNull();
+        assertThat(lastActivities.account.requested_at).isNotNull();
+
         assertLastActivityUpdated(lastActivities.saved_filters);
         assertLastActivityUpdated(lastActivities.notes);
+    }
+
+    private void assertLastActivityWatchable(LastActivityEpisodes activity) {
+        assertLastActivity(activity);
+        assertThat(activity.watched_at).isNotNull();
+        assertThat(activity.collected_at).isNotNull();
+        assertThat(activity.paused_at).isNotNull();
+    }
+
+    private void assertLastActivity(LastActivity activity) {
+        assertThat(activity).isNotNull();
+        assertThat(activity.rated_at).isNotNull();
+        assertThat(activity.watchlisted_at).isNotNull();
+        assertThat(activity.commented_at).isNotNull();
+    }
+
+    private void assertLastActivityUpdated(LastActivityUpdated activity) {
+        assertThat(activity).isNotNull();
+        assertThat(activity.updated_at).isNotNull();
     }
 
     @Test
@@ -147,47 +197,6 @@ public class SyncTest extends BaseTestCase {
             assertThat(playback.id).isNotNull();
             executeVoidCall(getTrakt().sync().removePlayback(playback.id));
         }
-    }
-
-    private void assertLastActivityMore(LastActivityMore activityMore) {
-        assertLastActivity(activityMore);
-        assertThat(activityMore.paused_at).isNotNull();
-        assertThat(activityMore.collected_at).isNotNull();
-        assertThat(activityMore.watched_at).isNotNull();
-    }
-
-    private void assertLastActivity(LastActivity activity) {
-        assertThat(activity).isNotNull();
-        assertThat(activity.commented_at).isNotNull();
-        assertThat(activity.rated_at).isNotNull();
-        assertThat(activity.watchlisted_at).isNotNull();
-    }
-
-    private void assertListsLastActivity(ListsLastActivity activity) {
-        assertThat(activity).isNotNull();
-        assertThat(activity.commented_at).isNotNull();
-        assertThat(activity.liked_at).isNotNull();
-        assertThat(activity.updated_at).isNotNull();
-    }
-
-    private void assertLastActivityComments(LastActivityComments activity) {
-        assertThat(activity).isNotNull();
-        assertThat(activity.liked_at).isNotNull();
-        assertThat(activity.blocked_at).isNotNull();
-    }
-
-    private void assertLastActivityAccount(LastActivityAccount activity) {
-        assertThat(activity).isNotNull();
-        assertThat(activity.settings_at).isNotNull();
-        assertThat(activity.followed_at).isNotNull();
-        assertThat(activity.following_at).isNotNull();
-        assertThat(activity.pending_at).isNotNull();
-        assertThat(activity.requested_at).isNotNull();
-    }
-
-    private void assertLastActivityUpdated(LastActivityUpdated activity) {
-        assertThat(activity).isNotNull();
-        assertThat(activity.updated_at).isNotNull();
     }
 
     @Test
