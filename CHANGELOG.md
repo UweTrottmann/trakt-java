@@ -1,5 +1,7 @@
 # Changelog
 
+## Next release
+
 ## 6.20.1 - 2026-06-18
 
 * When parsing a `Rating` with an unknown value, return `null` instead of throwing `ArrayIndexOutOfBoundsException`. Background: the Trakt API was seen returning `0` as a rating value.
