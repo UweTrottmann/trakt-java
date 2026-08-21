@@ -185,11 +185,28 @@ public interface Users {
     /**
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
-     * Returns all custom lists for a user.
+     * Returns all personal lists for a user.
+     *
+     * @deprecated Use {@link #lists(UserSlug, Integer, Integer, Extended)} instead.
      */
+    @Deprecated
     @GET("users/{" + PATH_USERNAME + "}/lists")
     Call<List<TraktList>> lists(
             @Path(PATH_USERNAME) UserSlug userSlug
+    );
+
+    /**
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * Returns all personal lists for a user. Use the {@link #listItems(UserSlug, String, int, int, Extended)} method to
+     * get the actual items a specific list contains.
+     */
+    @GET("users/{" + PATH_USERNAME + "}/lists")
+    Call<List<TraktList>> lists(
+            @Path(PATH_USERNAME) UserSlug userSlug,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended
     );
 
     /**

@@ -155,7 +155,13 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_lists() throws IOException {
-        List<TraktList> lists = executeCall(getTrakt().users().lists(UserSlug.ME));
+        Response<List<TraktList>> response = executeCallWithoutReadingBody(getTrakt().users()
+                .lists(UserSlug.ME, PAGE_ONE, LIMIT_MAX, null));
+
+        assertListPaginationHeaders(response);
+
+        List<TraktList> lists = response.body();
+        assertThat(lists).isNotEmpty();
         for (TraktList list : lists) {
             // ensure id and a title
             assertThat(list.ids).isNotNull();
