@@ -89,6 +89,7 @@ public class TraktV2 {
 
     public static final String QUERY_PARAM_PAGE = "page";
     public static final String QUERY_PARAM_LIMIT = "limit";
+    public static final String QUERY_PARAM_LANGUAGE = "language";
     public static final String QUERY_PARAM_EXTENDED = "extended";
     public static final String QUERY_PARAM_EXTENDED_MIN = QUERY_PARAM_EXTENDED + "=min";
     public static final String QUERY_PARAM_SPECIALS = "specials";

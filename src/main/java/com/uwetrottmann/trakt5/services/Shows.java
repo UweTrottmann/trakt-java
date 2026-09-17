@@ -36,6 +36,7 @@ import retrofit2.http.Query;
 import java.util.List;
 
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
+import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LANGUAGE;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
 
@@ -97,7 +98,7 @@ public interface Shows {
     @GET("shows/{id}/translations/{language}")
     Call<List<Translation>> translation(
             @Path("id") String showId,
-            @Path("language") String language
+            @Path(QUERY_PARAM_LANGUAGE) String language
     );
 
     /**
