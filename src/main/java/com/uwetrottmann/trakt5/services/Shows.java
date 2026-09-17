@@ -33,6 +33,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
@@ -41,6 +42,8 @@ import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_PAGE;
 
 public interface Shows {
+
+    String PATH_SORT_BY = "sort_by";
 
     /**
      * Returns the most popular shows. Popularity is calculated using the rating percentage and the number of ratings.
@@ -107,7 +110,10 @@ public interface Shows {
      * @param showId trakt ID, trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param page   Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit  Number of results to return per page. If {@code null} defaults to 10.
+     *
+     * @deprecated Use {@link #comments(String, String, Integer, Integer, String, Extended, String)} instead.
      */
+    @Deprecated
     @GET("shows/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
@@ -118,12 +124,41 @@ public interface Shows {
 
     /**
      * Variant that allows changing the Cache-Control header.
+     *
+     * @deprecated Use {@link #comments(String, String, Integer, Integer, String, Extended, String)} instead.
      */
+    @Deprecated
     @GET("shows/{id}/comments")
     Call<List<Comment>> comments(
             @Path("id") String showId,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
+            @Header("Cache-Control") String cacheControl
+    );
+
+    /**
+     * Returns all top-level comments for a show.
+     * <p>
+     * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
+     * <p>
+     * If you send OAuth, comments from blocked users will be automatically filtered out.
+     *
+     * @param showId       The id/slug of the show.
+     * @param sortBy       Can be one of newest, oldest, likes, replies, highest, lowest or plays.
+     * @param page         Number of page of results to be returned. If {@code null} defaults to 1.
+     * @param limit        Number of results to return per page. If {@code null} defaults to 10.
+     * @param language     Filter comments to a 2-letter language code (ISO 639-1).
+     * @param extended     Extended information to include in the response.
+     * @param cacheControl Optionally, allows changing the Cache-Control header.
+     */
+    @GET("shows/{id}/comments/{" + PATH_SORT_BY + "}")
+    Call<List<Comment>> comments(
+            @Path("id") String showId,
+            @Nonnull @Path(PATH_SORT_BY) String sortBy,
+            @Query(QUERY_PARAM_PAGE) Integer page,
+            @Query(QUERY_PARAM_LIMIT) Integer limit,
+            @Query(QUERY_PARAM_LANGUAGE) String language,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
             @Header("Cache-Control") String cacheControl
     );

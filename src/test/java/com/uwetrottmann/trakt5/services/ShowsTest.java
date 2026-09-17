@@ -31,6 +31,7 @@ import com.uwetrottmann.trakt5.entities.TrendingShow;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -113,10 +114,19 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_comments() throws IOException {
-        List<Comment> comments = executeCall(getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null,
-                null));
-        assertThat(comments).isNotNull();
-        assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+        Response<List<Comment>> response = executeCallWithoutReadingBody(
+                getTrakt().shows().comments(TestData.SHOW_SLUG, "newest", PAGE_ONE, LIMIT_MAX,
+                        LANGUAGE_EN, null, null));
+
+        assertListPaginationHeaders(response);
+
+        // As of 2026-09-17 doesn't return a x-applied-sort-by header like other modernized methods,
+        // so manually verify sort order is applied.
+        List<Comment> comments = response.body();
+        assertThat(comments).isNotEmpty();
+        assertThat(comments.get(0).created_at).isGreaterThan(comments.get(comments.size() - 1).created_at);
+
+        assertThat(comments).allMatch(c -> LANGUAGE_EN.equals(c.language));
     }
 
     @Test

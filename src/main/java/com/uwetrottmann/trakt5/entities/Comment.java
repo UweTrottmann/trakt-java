@@ -29,6 +29,7 @@ public class Comment {
     public Boolean review;
     public Integer replies;
     public Integer likes;
+    public String language;
     public Integer user_rating;
     public User user;
 
