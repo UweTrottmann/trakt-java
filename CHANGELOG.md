@@ -2,6 +2,8 @@
 
 ## Next release
 
+* Make list IDs 64-bit (`Long` instead of `Integer`) as they are globally unique.
+
 ## 6.21.0 - 2026-08-21
 
 * Add paginated variant of `Users.lists`. The original method is deprecated.

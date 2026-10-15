@@ -20,11 +20,15 @@ import javax.annotation.Nonnull;
 
 public class ListIds {
 
-    public Integer trakt;
+    /**
+     * List IDs are globally unique and as Trakt uses JavaScript it's possible this will exceed 32-bit integers, so
+     * just use 64-bit ones.
+     */
+    public Long trakt;
     public String slug;
 
     @Nonnull
-    public static ListIds trakt(int trakt) {
+    public static ListIds trakt(long trakt) {
         ListIds ids = new ListIds();
         ids.trakt = trakt;
         return ids;
