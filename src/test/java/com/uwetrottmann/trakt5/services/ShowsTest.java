@@ -28,9 +28,11 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -104,19 +106,19 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_translation() throws IOException {
-        List<Translation> translations = executeCall(getTrakt().shows().translation("breaking-bad", "de"));
+        List<Translation> translations = executeCall(getTrakt().shows().translation("breaking-bad", LANGUAGE_DE));
         // we know that Breaking Bad has a German translation, otherwise this test would fail
         assertThat(translations).isNotNull();
         assertThat(translations).hasSize(1);
-        assertThat(translations.get(0).language).isEqualTo("de");
+        assertThat(translations.get(0).language).isEqualTo(LANGUAGE_DE);
     }
 
     @Test
     public void test_comments() throws IOException {
-        List<Comment> comments = executeCall(getTrakt().shows().comments(TestData.SHOW_SLUG, 1, null,
-                null));
-        assertThat(comments).isNotNull();
-        assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+        Response<List<Comment>> response = executeCallWithoutReadingBody(
+                getTrakt().shows().comments(TestData.SHOW_SLUG, CommentsSortBy.NEWEST, PAGE_ONE, LIMIT_MAX,
+                        LANGUAGE_EN, null, null));
+        assertCommentsNewestFirst(response, LANGUAGE_EN);
     }
 
     @Test

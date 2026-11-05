@@ -94,7 +94,7 @@ public class CommentsTest extends BaseTestCase {
             }
         }
 
-        // delete the comment and replies (does this work?)
+        // delete the comment and replies
         Response<Void> deleteResponse = getTrakt().comments().delete(response.id).execute();
         assertSuccessfulResponse(deleteResponse);
         assertThat(deleteResponse.code()).isEqualTo(HttpURLConnection.HTTP_NO_CONTENT);
@@ -108,7 +108,7 @@ public class CommentsTest extends BaseTestCase {
 
     private static Episode buildTestEpisode() {
         Episode episode = new Episode();
-        episode.ids = EpisodeIds.tvdb(TestData.EPISODE_TVDB_ID);
+        episode.ids = EpisodeIds.trakt(TestData.EPISODE_TRAKT_ID);
         return episode;
     }
 }

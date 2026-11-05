@@ -26,9 +26,11 @@ import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingMovie;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -101,19 +103,19 @@ public class MoviesTest extends BaseTestCase {
     @Test
     public void test_translation() throws IOException {
         List<MovieTranslation> translations = executeCall(getTrakt().movies().translation("batman-begins-2005",
-                "de"));
+                LANGUAGE_DE));
         assertThat(translations).isNotNull();
         // we know that Batman Begins has a German translation, otherwise this test would fail
         assertThat(translations).isNotEmpty();
-        assertThat(translations.get(0).language).isEqualTo("de");
+        assertThat(translations.get(0).language).isEqualTo(LANGUAGE_DE);
     }
 
     @Test
     public void test_comments() throws IOException {
-        List<Comment> comments = executeCall(getTrakt().movies().comments(TestData.MOVIE_SLUG, 1, null,
-                null));
-        assertThat(comments).isNotNull();
-        assertThat(comments.size()).isLessThanOrEqualTo(DEFAULT_PAGE_SIZE);
+        Response<List<Comment>> response = executeCallWithoutReadingBody(
+                getTrakt().movies().comments(TestData.MOVIE_SLUG, CommentsSortBy.NEWEST, PAGE_ONE, LIMIT_MAX,
+                        LANGUAGE_EN, null, null));
+        assertCommentsNewestFirst(response, LANGUAGE_EN);
     }
 
     @Test

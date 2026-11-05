@@ -83,12 +83,14 @@ public class TraktV2 {
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
+    public static final String HEADER_CACHE_CONTROL = "Cache-Control";
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
 
     public static final String QUERY_PARAM_PAGE = "page";
     public static final String QUERY_PARAM_LIMIT = "limit";
+    public static final String QUERY_PARAM_LANGUAGE = "language";
     public static final String QUERY_PARAM_EXTENDED = "extended";
     public static final String QUERY_PARAM_EXTENDED_MIN = QUERY_PARAM_EXTENDED + "=min";
     public static final String QUERY_PARAM_SPECIALS = "specials";

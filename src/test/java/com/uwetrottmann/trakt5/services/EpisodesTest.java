@@ -18,13 +18,17 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
+import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
+import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,8 +52,10 @@ public class EpisodesTest extends BaseTestCase {
 
     @Test
     public void test_comments() throws IOException {
-        executeCall(getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON,
-                TestData.EPISODE_NUMBER, 1, DEFAULT_PAGE_SIZE, null));
+        Response<List<Comment>> response = executeCallWithoutReadingBody(
+                getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER,
+                        CommentsSortBy.NEWEST, PAGE_ONE, LIMIT_MAX, LANGUAGE_EN, null, null));
+        assertCommentsNewestFirst(response, LANGUAGE_EN);
     }
 
     @Test

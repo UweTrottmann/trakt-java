@@ -20,8 +20,13 @@ import org.threeten.bp.OffsetDateTime;
 
 public class Comment {
 
-    public Integer id;
-    public Integer parent_id;
+    // Comment IDs are globally unique and as Trakt uses JavaScript it's possible this will
+    // exceed 32-bit integers, so just use 64-bit ones.
+    public Long id;
+    /**
+     * ID of the parent comment if this is a reply to a comment.
+     */
+    public Long parent_id;
     public OffsetDateTime created_at;
     public OffsetDateTime updated_at;
     public String comment;
@@ -29,6 +34,7 @@ public class Comment {
     public Boolean review;
     public Integer replies;
     public Integer likes;
+    public String language;
     public Integer user_rating;
     public User user;
 
