@@ -18,12 +18,15 @@ package com.uwetrottmann.trakt5.services;
 
 import com.uwetrottmann.trakt5.BaseTestCase;
 import com.uwetrottmann.trakt5.TestData;
+import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Season;
 import com.uwetrottmann.trakt5.entities.Stats;
+import com.uwetrottmann.trakt5.enums.CommentSort;
 import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
@@ -85,7 +88,18 @@ public class SeasonsTest extends BaseTestCase {
 
     @Test
     public void test_comments() throws IOException {
-        executeCall(getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON));
+        Response<List<Comment>> response = executeCallWithoutReadingBody(
+                getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, CommentSort.NEWEST,
+                        PAGE_ONE, LIMIT_MAX, LANGUAGE_EN, null, null));
+
+        assertListPaginationHeaders(response);
+
+        List<Comment> comments = response.body();
+        assertThat(comments).isNotEmpty();
+        assertThat(comments).allMatch(c -> LANGUAGE_EN.equals(c.language));
+        // As of 2026-11-05 doesn't return an x-applied-sort-by header like other modernized methods,
+        // so manually verify sort order is applied.
+        assertThat(comments.get(0).created_at).isGreaterThan(comments.get(comments.size() - 1).created_at);
     }
 
     @Test

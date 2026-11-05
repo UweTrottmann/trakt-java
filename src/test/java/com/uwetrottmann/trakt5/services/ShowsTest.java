@@ -121,13 +121,12 @@ public class ShowsTest extends BaseTestCase {
 
         assertListPaginationHeaders(response);
 
-        // As of 2026-09-17 doesn't return a x-applied-sort-by header like other modernized methods,
-        // so manually verify sort order is applied.
         List<Comment> comments = response.body();
         assertThat(comments).isNotEmpty();
-        assertThat(comments.get(0).created_at).isGreaterThan(comments.get(comments.size() - 1).created_at);
-
         assertThat(comments).allMatch(c -> LANGUAGE_EN.equals(c.language));
+        // As of 2026-11-05 doesn't return an x-applied-sort-by header like other modernized methods,
+        // so manually verify sort order is applied.
+        assertThat(comments.get(0).created_at).isGreaterThan(comments.get(comments.size() - 1).created_at);
     }
 
     @Test
