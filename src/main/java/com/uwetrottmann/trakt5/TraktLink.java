@@ -92,7 +92,7 @@ public class TraktLink {
     /**
      * Creates a direct link to this comment.
      */
-    public static String comment(int id) {
+    public static String comment(long id) {
         return URL_COMMENTS + id;
     }
 

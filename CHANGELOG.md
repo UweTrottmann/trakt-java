@@ -4,7 +4,7 @@
 
 * Add new comments methods that accept a language and sort order parameter. The original methods are deprecated.
 * Add `Comment` `language` property.
-* Make list IDs 64-bit (`Long` instead of `Integer`) as they are globally unique.
+* Make comment and list IDs 64-bit (`Long` instead of `Integer`) as they are globally unique. This is a **breaking change in Kotlin**.
 
 ## 6.21.0 - 2026-08-21
 

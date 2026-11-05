@@ -54,7 +54,7 @@ public interface Comments {
      */
     @GET("comments/{id}")
     Call<Comment> get(
-            @Path("id") int id
+            @Path("id") long id
     );
 
     /**
@@ -68,7 +68,7 @@ public interface Comments {
      */
     @PUT("comments/{id}")
     Call<Comment> update(
-            @Path("id") int id,
+            @Path("id") long id,
             @Body Comment comment
     );
 
@@ -82,7 +82,7 @@ public interface Comments {
      */
     @DELETE("comments/{id}")
     Call<Void> delete(
-            @Path("id") int id
+            @Path("id") long id
     );
 
     /**
@@ -95,7 +95,7 @@ public interface Comments {
      */
     @GET("comments/{id}/replies")
     Call<List<Comment>> replies(
-            @Path("id") int id
+            @Path("id") long id
     );
 
     /**
@@ -109,7 +109,7 @@ public interface Comments {
      */
     @POST("comments/{id}/replies")
     Call<Comment> postReply(
-            @Path("id") int id,
+            @Path("id") long id,
             @Body Comment comment
     );
 
