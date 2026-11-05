@@ -77,13 +77,12 @@ public class AuthTest extends BaseTestCase {
     @Test
     public void test_refreshAccessToken() throws IOException {
         Properties secrets = tryToloadSecrets();
-        String clientSecret = getClientSecretFromEnvOrPropertiesOrIgnoreTest(secrets);
         String refreshToken = getVarFromEnvOrProperties(secrets, "TEST_REFRESH_TOKEN");
         boolean hasRefreshToken = refreshToken != null && !refreshToken.isEmpty();
         assumeTrue("TEST_REFRESH_TOKEN must be set via environment variable or secrets.properties file",
                 hasRefreshToken);
 
-        TestTraktV2 trakt = new TestTraktV2(getClientId(), clientSecret, TEST_REDIRECT_URI);
+        TestTraktV2 trakt = new TestTraktV2(getClientId());
 
         Response<AccessToken> response = trakt.refreshAccessToken(refreshToken);
         assertAccessTokenResponse(response);

@@ -352,20 +352,8 @@ public class TraktV2 {
      * On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl}).
      */
     public Response<AccessToken> refreshAccessToken(String refreshToken) throws IOException {
-        if (clientSecret == null) {
-            throw new IllegalStateException("clientSecret not provided");
-        }
-        if (redirectUri == null) {
-            throw new IllegalStateException("redirectUri not provided");
-        }
-
         return authentication().refreshAccessToken(
-                new AccessTokenRefreshRequest(
-                        refreshToken,
-                        apiKey(),
-                        clientSecret,
-                        redirectUri
-                )
+                new AccessTokenRefreshRequest(refreshToken, apiKey())
         ).execute();
     }
 
