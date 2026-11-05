@@ -1,6 +1,6 @@
 # Changelog
 
-## Next release
+## 6.22.0 - 2026-11-05
 
 * Add new comments methods that accept a language and sort order parameter. The original methods are deprecated.
 * Add `Comment` `language` property.
