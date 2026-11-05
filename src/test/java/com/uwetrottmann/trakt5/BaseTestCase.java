@@ -80,6 +80,8 @@ public class BaseTestCase {
      * Previously, it was 1000.
      */
     protected static final int LIMIT_MAX = 250;
+    
+    protected static final String LANGUAGE_DE = "de";
 
     private static TraktV2 trakt;
     private static TraktV2 traktNoAuth;

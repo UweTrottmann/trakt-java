@@ -101,11 +101,11 @@ public class MoviesTest extends BaseTestCase {
     @Test
     public void test_translation() throws IOException {
         List<MovieTranslation> translations = executeCall(getTrakt().movies().translation("batman-begins-2005",
-                "de"));
+                LANGUAGE_DE));
         assertThat(translations).isNotNull();
         // we know that Batman Begins has a German translation, otherwise this test would fail
         assertThat(translations).isNotEmpty();
-        assertThat(translations.get(0).language).isEqualTo("de");
+        assertThat(translations.get(0).language).isEqualTo(LANGUAGE_DE);
     }
 
     @Test

@@ -104,11 +104,11 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_translation() throws IOException {
-        List<Translation> translations = executeCall(getTrakt().shows().translation("breaking-bad", "de"));
+        List<Translation> translations = executeCall(getTrakt().shows().translation("breaking-bad", LANGUAGE_DE));
         // we know that Breaking Bad has a German translation, otherwise this test would fail
         assertThat(translations).isNotNull();
         assertThat(translations).hasSize(1);
-        assertThat(translations.get(0).language).isEqualTo("de");
+        assertThat(translations.get(0).language).isEqualTo(LANGUAGE_DE);
     }
 
     @Test
