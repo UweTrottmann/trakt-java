@@ -55,15 +55,7 @@ public class EpisodesTest extends BaseTestCase {
         Response<List<Comment>> response = executeCallWithoutReadingBody(
                 getTrakt().episodes().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, TestData.EPISODE_NUMBER,
                         CommentSort.NEWEST, PAGE_ONE, LIMIT_MAX, LANGUAGE_EN, null, null));
-
-        assertListPaginationHeaders(response);
-
-        List<Comment> comments = response.body();
-        assertThat(comments).isNotEmpty();
-        assertThat(comments).allMatch(c -> LANGUAGE_EN.equals(c.language));
-        // As of 2026-11-05 doesn't return an x-applied-sort-by header like other modernized methods,
-        // so manually verify sort order is applied.
-        assertThat(comments.get(0).created_at).isGreaterThan(comments.get(comments.size() - 1).created_at);
+        assertCommentsNewestFirst(response, LANGUAGE_EN);
     }
 
     @Test

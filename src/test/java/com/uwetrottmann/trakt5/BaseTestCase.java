@@ -27,6 +27,7 @@ import com.uwetrottmann.trakt5.entities.BaseRatedEntity;
 import com.uwetrottmann.trakt5.entities.BaseSeason;
 import com.uwetrottmann.trakt5.entities.BaseShow;
 import com.uwetrottmann.trakt5.entities.CastMember;
+import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Credits;
 import com.uwetrottmann.trakt5.entities.CrewMember;
 import com.uwetrottmann.trakt5.entities.Ratings;
@@ -454,6 +455,17 @@ public class BaseTestCase {
             String expectedSortHow) {
         assertThat(response.headers().get("x-sort-by")).isEqualTo(expectedSortBy);
         assertThat(response.headers().get("x-sort-how")).isEqualTo(expectedSortHow);
+    }
+
+    public static void assertCommentsNewestFirst(Response<List<Comment>> response, String expectedLanguage) {
+        assertListPaginationHeaders(response);
+
+        List<Comment> comments = response.body();
+        assertThat(comments).isNotEmpty();
+        assertThat(comments).allMatch(c -> expectedLanguage.equals(c.language));
+        // As of 2026-11-05 doesn't return an x-applied-sort-by header like other modernized methods,
+        // so manually verify sort order is applied.
+        assertThat(comments.get(0).created_at).isGreaterThan(comments.get(comments.size() - 1).created_at);
     }
 
     protected void assertAccessTokenResponse(Response<AccessToken> response) {
