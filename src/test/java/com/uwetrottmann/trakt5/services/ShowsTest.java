@@ -28,6 +28,7 @@ import com.uwetrottmann.trakt5.entities.Show;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingShow;
+import com.uwetrottmann.trakt5.enums.CommentSort;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
@@ -115,7 +116,7 @@ public class ShowsTest extends BaseTestCase {
     @Test
     public void test_comments() throws IOException {
         Response<List<Comment>> response = executeCallWithoutReadingBody(
-                getTrakt().shows().comments(TestData.SHOW_SLUG, "newest", PAGE_ONE, LIMIT_MAX,
+                getTrakt().shows().comments(TestData.SHOW_SLUG, CommentSort.NEWEST, PAGE_ONE, LIMIT_MAX,
                         LANGUAGE_EN, null, null));
 
         assertListPaginationHeaders(response);
