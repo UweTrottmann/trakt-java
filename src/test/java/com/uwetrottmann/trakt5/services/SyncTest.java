@@ -276,7 +276,7 @@ public class SyncTest extends BaseTestCase {
 
         // show
         SyncShow show = new SyncShow();
-        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
+        show.ids = ShowIds.trakt(TestData.SHOW_TRAKT_ID);
         show.seasons = new ArrayList<>();
         show.seasons.add(season);
 
@@ -327,7 +327,7 @@ public class SyncTest extends BaseTestCase {
         season.episodes.add(episode2);
 
         SyncShow show = new SyncShow();
-        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
+        show.ids = ShowIds.trakt(TestData.SHOW_TRAKT_ID);
         show.seasons = new ArrayList<>();
         show.seasons.add(season);
 
@@ -453,7 +453,7 @@ public class SyncTest extends BaseTestCase {
         season.episodes.add(episode2);
         // show
         SyncShow show = new SyncShow();
-        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
+        show.ids = ShowIds.trakt(TestData.SHOW_TRAKT_ID);
         show.seasons = new ArrayList<>();
         show.seasons.add(season);
 
@@ -745,7 +745,7 @@ public class SyncTest extends BaseTestCase {
         season.episodes.add(episode2);
         // show
         SyncShow show = new SyncShow();
-        show.ids = ShowIds.tvdb(TestData.SHOW_TVDB_ID);
+        show.ids = ShowIds.trakt(TestData.SHOW_TRAKT_ID);
         show.seasons = new ArrayList<>();
         show.seasons.add(season);
 

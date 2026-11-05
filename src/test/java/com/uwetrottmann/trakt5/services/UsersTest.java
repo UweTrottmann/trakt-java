@@ -289,7 +289,7 @@ public class UsersTest extends BaseTestCase {
 
     @Test
     public void test_addListItems() throws IOException {
-        SyncShow show = new SyncShow().id(ShowIds.tvdb(256227));
+        SyncShow show = new SyncShow().id(ShowIds.tmdb(15621)); /* The Newsroom */
         SyncMovie movie = new SyncMovie().id(MovieIds.tmdb(TestData.MOVIE_TMDB_ID));
         SyncPerson person = new SyncPerson().id(PersonIds.tmdb(TestData.PERSON_TMDB_ID));
 

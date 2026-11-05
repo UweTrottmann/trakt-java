@@ -33,7 +33,7 @@ public class ScrobbleTest extends BaseTestCase {
 
     private ScrobbleProgress genEpisodeProgress(double progress) {
         // Use a different episode than for other tests to avoid conflicts.
-        SyncEpisode episode = new SyncEpisode().id( EpisodeIds.tvdb(4647887)); /* Agents of Shield S01E02 */
+        SyncEpisode episode = new SyncEpisode().id( EpisodeIds.trakt(6706012)); /* Frieren S01 E01 */
         return new ScrobbleProgress(episode, progress, null, null);
     }
 

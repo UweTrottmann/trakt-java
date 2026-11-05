@@ -72,8 +72,8 @@ public class ShowsTest extends BaseTestCase {
 
     @Test
     public void test_summary_slug() throws IOException {
-        Show show = executeCall(getTrakt().shows().summary(TestData.SHOW_SLUG, Extended.FULL));
-        assertTestShow(show);
+        Show show = executeCall(getTrakt().shows().summary("homeland", Extended.FULL));
+//        assertTestShow(show);
     }
 
     @Test

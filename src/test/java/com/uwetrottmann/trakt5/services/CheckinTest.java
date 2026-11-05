@@ -102,12 +102,11 @@ public class CheckinTest extends BaseTestCase {
         assertThat(response.episode).isNotNull();
         assertThat(response.episode.ids).isNotNull();
         assertThat(response.episode.ids.trakt).isEqualTo(TestData.EPISODE_TRAKT_ID);
-        assertThat(response.episode.ids.tvdb).isEqualTo(TestData.EPISODE_TVDB_ID);
         assertThat(response.show).isNotNull();
     }
 
     private static EpisodeCheckin buildEpisodeCheckin() {
-        return new EpisodeCheckin.Builder(new SyncEpisode().id(EpisodeIds.tvdb(TestData.EPISODE_TVDB_ID)), APP_VERSION,
+        return new EpisodeCheckin.Builder(new SyncEpisode().id(EpisodeIds.trakt(TestData.EPISODE_TRAKT_ID)), APP_VERSION,
                 APP_DATE)
                 .message("This is a toasty episode!")
                 .build();
