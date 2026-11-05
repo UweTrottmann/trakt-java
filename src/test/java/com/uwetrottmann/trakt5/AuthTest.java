@@ -30,11 +30,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assume.assumeTrue;
 
 /**
- * The access and refresh token tests require {@code TEST_CLIENT_SECRET} and either {@code TEST_AUTH_CODE} or
- * {@code TEST_REFRESH_TOKEN} to be set as environment variables or in secrets.properties. See the tests for details.
+ * The access and refresh token tests require a {@code TEST_AUTH_CODE} with either {@code TEST_CLIENT_SECRET} or
+ * {@code TEST_CODE_VERIFIER} (for PKCE) to be set as environment variables or in secrets.properties. Alternatively, a
+ * {@code TEST_REFRESH_TOKEN}. See the tests for details.
  * <p>
- * It can also be used to build an authorization URL ({@link #test_getAuthorizationRequest()}) to obtain an auth code to
- * then obtain an access token ({@link #test_getAccessToken()}) to use as {@code TEST_ACCESS_TOKEN}.
+ * This can also be used to build an authorization URL ({@link #test_getAuthorizationRequest()} using a client secret,
+ * or {@link #test_getAuthorizationRequestPkce()} using PKCE) to obtain an auth code to then obtain an access token
+ * ({@link #test_getAccessToken()} or {@link #test_getAccessTokenPkce()}) to use as {@code TEST_ACCESS_TOKEN}.
  */
 public class AuthTest extends BaseTestCase {
 
@@ -42,7 +44,7 @@ public class AuthTest extends BaseTestCase {
 
     @Test
     public void test_getAuthorizationRequest() {
-        // client secret not required for this test
+        // client secret not required to build URL
         TestTraktV2 trakt = new TestTraktV2(getClientId(), null, TEST_REDIRECT_URI);
         String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
 
@@ -61,6 +63,42 @@ public class AuthTest extends BaseTestCase {
     }
 
     @Test
+    public void test_getAuthorizationRequestPkce() {
+        // client secret not required for PKCE
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), null, TEST_REDIRECT_URI);
+        String sampleState = new BigInteger(130, new SecureRandom()).toString(32);
+        String codeVerifier = TraktV2.generateCodeVerifier();
+
+        String authUrl = trakt.buildAuthorizationUrl(sampleState, codeVerifier);
+
+        assertThat(authUrl).isEqualTo(
+                TraktV2.OAUTH2_AUTHORIZATION_URL + "?response_type=code" +
+                        "&client_id=" + getClientId() +
+                        "&redirect_uri=http%3A%2F%2Flocalhost" +
+                        "&state=" + sampleState +
+                        "&code_challenge=" + TraktV2.codeChallengeS256(codeVerifier) +
+                        "&code_challenge_method=S256");
+
+        System.out.println("Code verifier: " + codeVerifier);
+        System.out.println("Get an auth code using PKCE at the following URI: " + authUrl);
+    }
+
+    @Test
+    public void test_generateCodeVerifier() {
+        String codeVerifier = TraktV2.generateCodeVerifier();
+        // 43-128 characters of [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
+        assertThat(codeVerifier).matches("[A-Za-z0-9\\-._~]{43,128}");
+        assertThat(TraktV2.generateCodeVerifier()).isNotEqualTo(codeVerifier);
+    }
+
+    @Test
+    public void test_codeChallengeS256() {
+        // Example from RFC 7636 Appendix B
+        assertThat(TraktV2.codeChallengeS256("dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"))
+                .isEqualTo("E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM");
+    }
+
+    @Test
     public void test_getAccessToken() throws IOException {
         Properties secrets = tryToloadSecrets();
         String clientSecret = getClientSecretFromEnvOrPropertiesOrIgnoreTest(secrets);
@@ -71,6 +109,24 @@ public class AuthTest extends BaseTestCase {
         TestTraktV2 trakt = new TestTraktV2(getClientId(), clientSecret, TEST_REDIRECT_URI);
 
         Response<AccessToken> response = trakt.exchangeCodeForAccessToken(authCode);
+        assertAccessTokenResponse(response);
+    }
+
+    @Test
+    public void test_getAccessTokenPkce() throws IOException {
+        Properties secrets = tryToloadSecrets();
+        String authCode = getVarFromEnvOrProperties(secrets, "TEST_AUTH_CODE");
+        String codeVerifier = getVarFromEnvOrProperties(secrets, "TEST_CODE_VERIFIER");
+        boolean hasAuthCode = authCode != null && !authCode.isEmpty()
+                && codeVerifier != null && !codeVerifier.isEmpty();
+        assumeTrue(
+                "TEST_AUTH_CODE and TEST_CODE_VERIFIER must be set via environment variable or secrets.properties file",
+                hasAuthCode);
+
+        // client secret not required for PKCE
+        TestTraktV2 trakt = new TestTraktV2(getClientId(), null, TEST_REDIRECT_URI);
+
+        Response<AccessToken> response = trakt.exchangeCodeForAccessToken(authCode, codeVerifier);
         assertAccessTokenResponse(response);
     }
 

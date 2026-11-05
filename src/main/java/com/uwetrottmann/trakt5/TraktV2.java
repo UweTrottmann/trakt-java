@@ -47,6 +47,7 @@ import com.uwetrottmann.trakt5.services.Users;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import okio.ByteString;
 import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -57,6 +58,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
 
 /**
  * Helper class for easy usage of the Trakt v2 API using retrofit.
@@ -73,8 +75,8 @@ public class TraktV2 {
     public static final String API_VERSION = "2";
 
     /**
-     * As recommended by the <a href="https://docs.trakt.tv/reference/getoauthauthorize">"Authorize Application" docs</a>
-     * use a different host for authentication requests.
+     * As recommended by the <a href="https://docs.trakt.tv/reference/getoauthauthorize">"Authorize Application"
+     * docs</a> use a different host for authentication requests.
      */
     public static final String AUTH_URL = "https://auth.trakt.tv/";
     public static final String OAUTH2_AUTHORIZATION_URL = AUTH_URL + "oauth/authorize";
@@ -111,29 +113,28 @@ public class TraktV2 {
      * Get a new API manager instance.
      *
      * @param apiKey The API key obtained from Trakt, currently equal to the OAuth client id.
-     * @see #TraktV2(java.lang.String, boolean)
      */
     public TraktV2(String apiKey) {
         this(apiKey, false);
     }
 
     /**
-     * Get a new API manager instance capable of calling OAuth2 protected endpoints.
+     * Like {@link #TraktV2(String)}, but capable of calling OAuth2 protected endpoints.
      *
      * @param apiKey       The API key obtained from Trakt, currently equal to the OAuth client id.
-     * @param clientSecret The client secret obtained from Trakt.
+     * @param clientSecret The client secret obtained from Trakt. May be {@code null} when using PKCE (see
+     *                     {@link #buildAuthorizationUrl(String, String)}).
      * @param redirectUri  The redirect URI to use for OAuth2 token requests.
-     * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String, boolean)
      */
-    public TraktV2(String apiKey, String clientSecret, String redirectUri) {
+    public TraktV2(String apiKey, @Nullable String clientSecret, @Nullable String redirectUri) {
         this(apiKey, clientSecret, redirectUri, false);
     }
 
     /**
-     * Get a new API manager instance.
+     * Like {@link #TraktV2(String)}, but allows switching to the staging API.
      *
      * @param apiKey  The API key obtained from Trakt, currently equal to the OAuth client id.
-     * @param staging Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
+     * @param staging Use {@link TraktV2#API_STAGING_URL} if {@code true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String)
      */
     public TraktV2(String apiKey, boolean staging) {
@@ -142,15 +143,17 @@ public class TraktV2 {
     }
 
     /**
-     * Get a new API manager instance capable of calling OAuth2 protected endpoints.
+     * Like {@link TraktV2(String, String, String)}, but capable of calling OAuth2 protected endpoints and allows
+     * switching to the staging API.
      *
      * @param apiKey       The API key obtained from Trakt, currently equal to the OAuth client id.
-     * @param clientSecret The client secret obtained from Trakt.
+     * @param clientSecret The client secret obtained from Trakt. May be {@code null} when using PKCE (see
+     *                     {@link #buildAuthorizationUrl(String, String)}).
      * @param redirectUri  The redirect URI to use for OAuth2 token requests.
-     * @param staging      Use {@link TraktV2#API_STAGING_URL} if {true} or {@link TraktV2#API_URL} otherwise.
+     * @param staging      Use {@link TraktV2#API_STAGING_URL} if {@code true} or {@link TraktV2#API_URL} otherwise.
      * @see #TraktV2(java.lang.String, java.lang.String, java.lang.String)
      */
-    public TraktV2(String apiKey, String clientSecret, String redirectUri, boolean staging) {
+    public TraktV2(String apiKey, @Nullable String clientSecret, @Nullable String redirectUri, boolean staging) {
         this(apiKey, staging);
         this.clientSecret = clientSecret;
         this.redirectUri = redirectUri;
@@ -272,6 +275,52 @@ public class TraktV2 {
         return authUrl.toString();
     }
 
+    /**
+     * Like {@link #buildAuthorizationUrl(String)}, but uses
+     * <a href="https://developer.trakt.tv/docs/pkce">PKCE</a>: adds a code challenge derived from the given code
+     * verifier using the {@code S256} method.
+     * <p>
+     * Store the code verifier (like together with the state) until the user is redirected back, then supply it with the
+     * authorization code to {@link #exchangeCodeForAccessToken(String, String)}.
+     *
+     * @param state        State variable to prevent request forgery attacks.
+     * @param codeVerifier A new code verifier for this request, see {@link #generateCodeVerifier()}.
+     */
+    public String buildAuthorizationUrl(String state, String codeVerifier) {
+        return buildAuthorizationUrl(state)
+                + "&code_challenge=" + codeChallengeS256(codeVerifier)
+                + "&code_challenge_method=S256";
+    }
+
+    /**
+     * Generates a new random PKCE code verifier (43 characters). Use a new one for every authorization request. The
+     * returned value is encoded as URL-safe Base64 (without padding).
+     *
+     * @see #buildAuthorizationUrl(String, String)
+     */
+    public static String generateCodeVerifier() {
+        byte[] bytes = new byte[32];
+        new SecureRandom().nextBytes(bytes);
+        return base64UrlNoPadding(ByteString.of(bytes));
+    }
+
+    /**
+     * Returns the {@code S256} code challenge for the given code verifier: the URL-safe Base64 encoded (without
+     * padding) SHA-256 hash of the code verifier.
+     */
+    static String codeChallengeS256(String codeVerifier) {
+        return base64UrlNoPadding(ByteString.encodeUtf8(codeVerifier).sha256());
+    }
+
+    private static String base64UrlNoPadding(ByteString bytes) {
+        String encoded = bytes.base64Url();
+        int end = encoded.length();
+        while (end > 0 && encoded.charAt(end - 1) == '=') {
+            end--;
+        }
+        return encoded.substring(0, end);
+    }
+
     private String urlEncode(String content) {
         try {
             // can not use java.nio.charset.StandardCharsets as on Android only available since API 19
@@ -316,7 +365,7 @@ public class TraktV2 {
     }
 
     /**
-     * Request an access token from Trakt.
+     * Requests an access token from Trakt.
      * <p>
      * Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh the
      * access token once it has expired.
@@ -338,6 +387,33 @@ public class TraktV2 {
                         authCode,
                         apiKey(),
                         clientSecret,
+                        redirectUri)
+        ).execute();
+    }
+
+    /**
+     * Requests an access token from Trakt using <a href="https://developer.trakt.tv/docs/pkce">PKCE</a>. Does not
+     * require or send the client secret.
+     * <p>
+     * Supply the received access token to {@link #accessToken(String)} and store the refresh token to later refresh the
+     * access token once it has expired.
+     * <p>
+     * On failure re-authorization of your app is required (see {@link #buildAuthorizationUrl(String, String)}).
+     *
+     * @param authCode     A valid authorization code (see {@link #buildAuthorizationUrl(String, String)}).
+     * @param codeVerifier The code verifier used to build the authorization URL.
+     */
+    public Response<AccessToken> exchangeCodeForAccessToken(String authCode, String codeVerifier)
+            throws IOException {
+        if (redirectUri == null) {
+            throw new IllegalStateException("redirectUri not provided");
+        }
+
+        return authentication().exchangeCodeForAccessToken(
+                AccessTokenRequest.withCodeVerifier(
+                        authCode,
+                        apiKey(),
+                        codeVerifier,
                         redirectUri)
         ).execute();
     }

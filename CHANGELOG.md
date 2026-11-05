@@ -5,7 +5,7 @@
 * Add new comments methods that accept a language and sort order parameter. The original methods are deprecated.
 * Add `Comment` `language` property.
 * Make comment and list IDs 64-bit (`Long` instead of `Integer`) as they are globally unique. This is a **breaking change in Kotlin**.
-* Refreshing an access token no longer requires to set a client secret or redirect URI. [#182](https://github.com/UweTrottmann/trakt-java/issues/182) 
+* Support obtaining an access token using [PKCE](https://developer.trakt.tv/docs/pkce), refreshing the access token no longer requires to set a client secret or redirect URI. [#182](https://github.com/UweTrottmann/trakt-java/issues/182) 
 
 ## 6.21.0 - 2026-08-21
 

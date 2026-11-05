@@ -94,7 +94,7 @@ public class BaseTestCase {
             super(apiKey);
         }
 
-        public TestTraktV2(String apiKey, String clientSecret, String redirectUri) {
+        public TestTraktV2(String apiKey, @Nullable String clientSecret, String redirectUri) {
             super(apiKey, clientSecret, redirectUri);
         }
 
@@ -493,6 +493,7 @@ public class BaseTestCase {
         return properties;
     }
 
+    @Nullable
     protected static String getVarFromEnvOrProperties(Properties properties, String key) {
         String value = System.getenv(key);
         if (value != null && !value.isEmpty()) {

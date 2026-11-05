@@ -22,13 +22,35 @@ public class AccessTokenRequest {
     public String code;
     public String client_id;
     public String client_secret;
+    public String code_verifier;
     public String redirect_uri;
 
-    public AccessTokenRequest(String code, String client_id, String client_secret, String redirect_uri) {
+    private AccessTokenRequest(String code, String clientId, String clientSecret, String codeVerifier,
+            String redirectUri) {
         this.grant_type = "authorization_code";
         this.code = code;
-        this.client_id = client_id;
-        this.client_secret = client_secret;
-        this.redirect_uri = redirect_uri;
+        this.client_id = clientId;
+        this.client_secret = clientSecret;
+        this.code_verifier = codeVerifier;
+        this.redirect_uri = redirectUri;
+    }
+
+    /**
+     * Request to exchange an authorization code for an access token, authenticating with the client secret.
+     *
+     * @see #withCodeVerifier(String, String, String, String)
+     */
+    public AccessTokenRequest(String code, String client_id, String client_secret, String redirect_uri) {
+        this(code, client_id, client_secret, null, redirect_uri);
+    }
+
+    /**
+     * Request to exchange an authorization code for an access token using PKCE. Does not send a client secret.
+     *
+     * @param codeVerifier The code verifier the code challenge of the authorization request was derived from.
+     */
+    public static AccessTokenRequest withCodeVerifier(String code, String clientId, String codeVerifier,
+            String redirectUri) {
+        return new AccessTokenRequest(code, clientId, null, codeVerifier, redirectUri);
     }
 }

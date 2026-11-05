@@ -39,15 +39,14 @@ If both are set, environment variables take precedence over the properties file.
 
 To obtain Trakt API credentials:
 
-1. Create a Trakt account at https://trakt.tv (⚠️ Tests do modify data of the Trakt account, don't use your personal account!)
-2. Register an application at https://trakt.tv/oauth/applications
-3. Copy the Client ID and set it as `TEST_CLIENT_ID`
-4. Copy the Client Secret and set it as `TEST_CLIENT_SECRET`
-5. Add `http://localhost` to the Redirect URIs
-6. Click the "Authorize" button next to the localhost redirect URI and authorize access (alternatively, run `test_getAuthorizationRequest()` in [AuthTest][] and visit the URL it prints)
-7. Extract the value of `code` from the redirect URI and set it as `TEST_AUTH_CODE`
-8. Run `test_getAccessToken()` in [AuthTest][]
-9. Copy the printed access and refresh token and set them as `TEST_ACCESS_TOKEN` and `TEST_REFRESH_TOKEN`
+1. Create a Trakt account at https://trakt.tv (⚠️ Tests do modify data of the Trakt account, don't use your personal account!).
+2. Register an application at https://developer.trakt.tv/apps.
+3. Copy the Client ID and set it as `TEST_CLIENT_ID`.
+4. Add `http://localhost` to the Redirect URIs.
+5. Run `test_getAuthorizationRequestPkce()` in [AuthTest][], set the code verifier as `TEST_CODE_VERIFIER` and visit the URL it prints.
+6. Extract the value of `code` from the redirect URI and set it as `TEST_AUTH_CODE`.
+7. Run `test_getAccessTokenPkce()` in [AuthTest][].
+8. Copy the printed access and refresh token and set them as `TEST_ACCESS_TOKEN` and `TEST_REFRESH_TOKEN`.
 
 ### Refreshing the Access Token
 
@@ -56,7 +55,7 @@ If `TEST_ACCESS_TOKEN` is expired, but `TEST_REFRESH_TOKEN` isn't:
 1. Run `test_refreshAccessToken()` in [AuthTest][]
 2. Copy the printed access and refresh token and set them as `TEST_ACCESS_TOKEN` and `TEST_REFRESH_TOKEN`
 
-Otherwise, repeat steps 6 and following from above.
+Otherwise, repeat steps 5 and following from above.
 
 ## No code!
 
