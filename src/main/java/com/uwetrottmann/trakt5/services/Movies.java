@@ -24,7 +24,7 @@ import com.uwetrottmann.trakt5.entities.MovieTranslation;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.TrendingMovie;
-import com.uwetrottmann.trakt5.enums.CommentSort;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -110,8 +110,7 @@ public interface Movies {
      * @param movieId trakt ID, trakt slug, or IMDB ID. Example: "tron-legacy-2010".
      * @param page    Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit   Number of results to return per page. If {@code null} defaults to 10.
-     *
-     * @deprecated Use {@link #comments(String, CommentSort, Integer, Integer, String, Extended, String)} instead.
+     * @deprecated Use {@link #comments(String, CommentsSortBy, Integer, Integer, String, Extended, String)} instead.
      */
     @Deprecated
     @GET("movies/{id}/comments")
@@ -125,7 +124,7 @@ public interface Movies {
     /**
      * Variant that allows changing the Cache-Control header.
      *
-     * @deprecated Use {@link #comments(String, CommentSort, Integer, Integer, String, Extended, String)} instead.
+     * @deprecated Use {@link #comments(String, CommentsSortBy, Integer, Integer, String, Extended, String)} instead.
      */
     @Deprecated
     @GET("movies/{id}/comments")
@@ -145,8 +144,8 @@ public interface Movies {
      * If you send OAuth, comments from blocked users will be automatically filtered out.
      *
      * @param movieId      The id/slug of the movie.
-     * @param sortBy       How to sort, for example {@link CommentSort#NEWEST}. Use {@link CommentSort#of(String)} for
-     *                     values without a constant.
+     * @param sortBy       How to sort, for example {@link CommentsSortBy#NEWEST}. Use {@link CommentsSortBy#of(String)}
+     *                     for values without a constant.
      * @param page         Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit        Number of results to return per page. If {@code null} defaults to 10.
      * @param language     Filter comments to a 2-letter language code (ISO 639-1).
@@ -156,7 +155,7 @@ public interface Movies {
     @GET("movies/{id}/comments/{" + PATH_SORT_BY + "}")
     Call<List<Comment>> comments(
             @Path("id") String movieId,
-            @Nonnull @Path(PATH_SORT_BY) CommentSort sortBy,
+            @Nonnull @Path(PATH_SORT_BY) CommentsSortBy sortBy,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(QUERY_PARAM_LANGUAGE) String language,

@@ -23,7 +23,7 @@ import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Season;
 import com.uwetrottmann.trakt5.entities.Stats;
-import com.uwetrottmann.trakt5.enums.CommentSort;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import org.junit.Test;
 import retrofit2.Response;
@@ -89,7 +89,7 @@ public class SeasonsTest extends BaseTestCase {
     @Test
     public void test_comments() throws IOException {
         Response<List<Comment>> response = executeCallWithoutReadingBody(
-                getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, CommentSort.NEWEST,
+                getTrakt().seasons().comments(TestData.SHOW_SLUG, TestData.EPISODE_SEASON, CommentsSortBy.NEWEST,
                         PAGE_ONE, LIMIT_MAX, LANGUAGE_EN, null, null));
         assertCommentsNewestFirst(response, LANGUAGE_EN);
     }

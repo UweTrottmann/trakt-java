@@ -24,19 +24,19 @@ import javax.annotation.Nonnull;
  * Use the constants for values supported by this library, or {@link #of(String)} to pass a value that is not (yet)
  * supported.
  */
-public final class CommentSort implements TraktEnum {
+public final class CommentsSortBy implements TraktEnum {
 
-    public static final CommentSort NEWEST = new CommentSort("newest");
-    public static final CommentSort OLDEST = new CommentSort("oldest");
-    public static final CommentSort LIKES = new CommentSort("likes");
-    public static final CommentSort REPLIES = new CommentSort("replies");
-    public static final CommentSort HIGHEST = new CommentSort("highest");
-    public static final CommentSort LOWEST = new CommentSort("lowest");
-    public static final CommentSort PLAYS = new CommentSort("plays");
+    public static final CommentsSortBy NEWEST = new CommentsSortBy("newest");
+    public static final CommentsSortBy OLDEST = new CommentsSortBy("oldest");
+    public static final CommentsSortBy LIKES = new CommentsSortBy("likes");
+    public static final CommentsSortBy REPLIES = new CommentsSortBy("replies");
+    public static final CommentsSortBy HIGHEST = new CommentsSortBy("highest");
+    public static final CommentsSortBy LOWEST = new CommentsSortBy("lowest");
+    public static final CommentsSortBy PLAYS = new CommentsSortBy("plays");
 
     private final String value;
 
-    private CommentSort(String value) {
+    private CommentsSortBy(String value) {
         this.value = value;
     }
 
@@ -47,7 +47,7 @@ public final class CommentSort implements TraktEnum {
      * @throws IllegalArgumentException If the value is null or empty.
      */
     @Nonnull
-    public static CommentSort of(String value) {
+    public static CommentsSortBy of(String value) {
         if (value == null) {
             throw new IllegalArgumentException("Comment sort value can not be null.");
         }
@@ -55,14 +55,14 @@ public final class CommentSort implements TraktEnum {
         if (value.isEmpty()) {
             throw new IllegalArgumentException("Comment sort value can not be empty.");
         }
-        return new CommentSort(value);
+        return new CommentsSortBy(value);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CommentSort)) return false;
-        return value.equals(((CommentSort) o).value);
+        if (!(o instanceof CommentsSortBy)) return false;
+        return value.equals(((CommentsSortBy) o).value);
     }
 
     @Override

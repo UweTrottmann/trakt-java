@@ -21,7 +21,7 @@ import com.uwetrottmann.trakt5.entities.Comment;
 import com.uwetrottmann.trakt5.entities.Episode;
 import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
-import com.uwetrottmann.trakt5.enums.CommentSort;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -63,9 +63,8 @@ public interface Episodes {
      * @param showId  Trakt ID, Trakt slug, or IMDB ID. Example: "game-of-thrones".
      * @param season  Season number.
      * @param episode Episode number.
-     *
-     * @deprecated Use
-     * {@link #comments(String, int, int, CommentSort, Integer, Integer, String, Extended, String)} instead.
+     * @deprecated Use {@link #comments(String, int, int, CommentsSortBy, Integer, Integer, String, Extended, String)}
+     * instead.
      */
     @Deprecated
     @GET("shows/{id}/seasons/{season}/episodes/{episode}/comments")
@@ -81,8 +80,8 @@ public interface Episodes {
     /**
      * Variant that allows changing the Cache-Control header.
      *
-     * @deprecated Use
-     * {@link #comments(String, int, int, CommentSort, Integer, Integer, String, Extended, String)} instead.
+     * @deprecated Use {@link #comments(String, int, int, CommentsSortBy, Integer, Integer, String, Extended, String)}
+     * instead.
      */
     @Deprecated
     @GET("shows/{id}/seasons/{season}/episodes/{episode}/comments")
@@ -106,8 +105,8 @@ public interface Episodes {
      * @param showId       The id/slug of the show.
      * @param season       Season number.
      * @param episode      Episode number.
-     * @param sortBy       How to sort, for example {@link CommentSort#NEWEST}. Use {@link CommentSort#of(String)} for
-     *                     values without a constant.
+     * @param sortBy       How to sort, for example {@link CommentsSortBy#NEWEST}. Use {@link CommentsSortBy#of(String)}
+     *                     for values without a constant.
      * @param page         Number of page of results to be returned. If {@code null} defaults to 1.
      * @param limit        Number of results to return per page. If {@code null} defaults to 10.
      * @param language     Filter comments to a 2-letter language code (ISO 639-1).
@@ -119,7 +118,7 @@ public interface Episodes {
             @Path("id") String showId,
             @Path("season") int season,
             @Path("episode") int episode,
-            @Nonnull @Path(PATH_SORT_BY) CommentSort sortBy,
+            @Nonnull @Path(PATH_SORT_BY) CommentsSortBy sortBy,
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(QUERY_PARAM_LANGUAGE) String language,

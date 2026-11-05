@@ -26,7 +26,7 @@ import com.uwetrottmann.trakt5.entities.Ratings;
 import com.uwetrottmann.trakt5.entities.Stats;
 import com.uwetrottmann.trakt5.entities.Translation;
 import com.uwetrottmann.trakt5.entities.TrendingMovie;
-import com.uwetrottmann.trakt5.enums.CommentSort;
+import com.uwetrottmann.trakt5.enums.CommentsSortBy;
 import com.uwetrottmann.trakt5.enums.Extended;
 import com.uwetrottmann.trakt5.enums.Type;
 import org.junit.Test;
@@ -113,7 +113,7 @@ public class MoviesTest extends BaseTestCase {
     @Test
     public void test_comments() throws IOException {
         Response<List<Comment>> response = executeCallWithoutReadingBody(
-                getTrakt().movies().comments(TestData.MOVIE_SLUG, CommentSort.NEWEST, PAGE_ONE, LIMIT_MAX,
+                getTrakt().movies().comments(TestData.MOVIE_SLUG, CommentsSortBy.NEWEST, PAGE_ONE, LIMIT_MAX,
                         LANGUAGE_EN, null, null));
         assertCommentsNewestFirst(response, LANGUAGE_EN);
     }
