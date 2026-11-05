@@ -37,6 +37,7 @@ import retrofit2.http.Query;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+import static com.uwetrottmann.trakt5.TraktV2.HEADER_CACHE_CONTROL;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_EXTENDED;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LANGUAGE;
 import static com.uwetrottmann.trakt5.TraktV2.QUERY_PARAM_LIMIT;
@@ -135,7 +136,7 @@ public interface Shows {
             @Query(QUERY_PARAM_PAGE) Integer page,
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
-            @Header("Cache-Control") String cacheControl
+            @Header(HEADER_CACHE_CONTROL) String cacheControl
     );
 
     /**
@@ -162,7 +163,7 @@ public interface Shows {
             @Query(QUERY_PARAM_LIMIT) Integer limit,
             @Query(QUERY_PARAM_LANGUAGE) String language,
             @Query(value = QUERY_PARAM_EXTENDED, encoded = true) Extended extended,
-            @Header("Cache-Control") String cacheControl
+            @Header(HEADER_CACHE_CONTROL) String cacheControl
     );
 
     /**

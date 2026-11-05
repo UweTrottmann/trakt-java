@@ -83,6 +83,7 @@ public class TraktV2 {
 
     public static final String HEADER_AUTHORIZATION = "Authorization";
     public static final String HEADER_CONTENT_TYPE = "Content-Type";
+    public static final String HEADER_CACHE_CONTROL = "Cache-Control";
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
