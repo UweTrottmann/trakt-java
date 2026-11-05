@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * Adds API key and version headers and if available an authorization header. As it may retry requests (on HTTP 429
  * responses), ensure this is added as an application interceptor (never a network interceptor), otherwise caching will
- * be broken and requests will fail. See {@link #handleIntercept(Chain, String, String)}.
+ * be broken and requests will fail. See {@link #handleIntercept(Chain, String, String, String)}.
  */
 public class TraktV2Interceptor implements Interceptor {
 
@@ -39,19 +39,31 @@ public class TraktV2Interceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return handleIntercept(chain, trakt.apiKey(), trakt.accessToken());
+        return handleIntercept(chain, trakt.apiKey(), trakt.accessToken(), trakt.userAgent());
+    }
+
+    /**
+     * Like {@link #handleIntercept(Chain, String, String, String)}, but does not set a user agent.
+     *
+     * @deprecated Use {@link #handleIntercept(Chain, String, String, String)} instead.
+     */
+    @Deprecated
+    public static Response handleIntercept(Chain chain, String apiKey,
+            @Nullable String accessToken) throws IOException {
+        return handleIntercept(chain, apiKey, accessToken, null);
     }
 
     /**
      * If the host matches {@link TraktV2#API_HOST} or {@link TraktV2#API_STAGING_HOST} adds a header for the current
      * {@link TraktV2#API_VERSION}, {@link TraktV2#HEADER_TRAKT_API_KEY} with the given api key,
-     * {@link TraktV2#HEADER_CONTENT_TYPE} and if not present an Authorization header using the given access token.
+     * {@link TraktV2#HEADER_CONTENT_TYPE}, if not empty a {@link TraktV2#HEADER_USER_AGENT} header with the given user
+     * agent and if not present an Authorization header using the given access token.
      * <p>
      * If a request fails due to HTTP 429 Too Many Requests, will retry the request after the time in seconds given by
      * the Retry-After response header.
      */
     public static Response handleIntercept(Chain chain, String apiKey,
-            @Nullable String accessToken) throws IOException {
+            @Nullable String accessToken, @Nullable String userAgent) throws IOException {
         Request request = chain.request();
         if (!(TraktV2.API_HOST.equals(request.url().host()) || TraktV2.API_STAGING_HOST.equals(request.url().host()))) {
             // do not intercept requests for other hosts
@@ -66,8 +78,13 @@ public class TraktV2Interceptor implements Interceptor {
         builder.header(TraktV2.HEADER_TRAKT_API_KEY, apiKey);
         builder.header(TraktV2.HEADER_TRAKT_API_VERSION, TraktV2.API_VERSION);
 
+        // set user agent
+        if (isNotEmpty(userAgent)) {
+            builder.header(TraktV2.HEADER_USER_AGENT, userAgent);
+        }
+
         // add authorization header
-        if (hasNoAuthorizationHeader(request) && accessTokenIsNotEmpty(accessToken)) {
+        if (hasNoAuthorizationHeader(request) && isNotEmpty(accessToken)) {
             builder.header(TraktV2.HEADER_AUTHORIZATION, "Bearer" + " " + accessToken);
         }
 
@@ -91,7 +108,7 @@ public class TraktV2Interceptor implements Interceptor {
 
                     // Try again.
                     // Is fine, because unlike a network interceptor, an application interceptor can re-try requests.
-                    return handleIntercept(chain, apiKey, accessToken);
+                    return handleIntercept(chain, apiKey, accessToken, userAgent);
                 } catch (NumberFormatException | InterruptedException ignored) {
                     // No valid Retry-After header or timed out, return failed response.
                 }
@@ -105,7 +122,7 @@ public class TraktV2Interceptor implements Interceptor {
         return request.header(TraktV2.HEADER_AUTHORIZATION) == null;
     }
 
-    private static boolean accessTokenIsNotEmpty(@Nullable String accessToken) {
-        return accessToken != null && accessToken.length() != 0;
+    private static boolean isNotEmpty(@Nullable String value) {
+        return value != null && value.length() != 0;
     }
 }

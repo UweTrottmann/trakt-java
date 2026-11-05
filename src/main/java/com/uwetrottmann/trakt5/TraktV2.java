@@ -89,6 +89,7 @@ public class TraktV2 {
     public static final String CONTENT_TYPE_JSON = "application/json";
     public static final String HEADER_TRAKT_API_VERSION = "trakt-api-version";
     public static final String HEADER_TRAKT_API_KEY = "trakt-api-key";
+    public static final String HEADER_USER_AGENT = "User-Agent";
 
     public static final String QUERY_PARAM_PAGE = "page";
     public static final String QUERY_PARAM_LIMIT = "limit";
@@ -107,6 +108,7 @@ public class TraktV2 {
     @Nullable private String redirectUri;
     @Nullable private String accessToken;
     @Nullable private String refreshToken;
+    @Nullable private String userAgent;
     private final HttpUrl apiBaseUrl;
 
     /**
@@ -200,6 +202,20 @@ public class TraktV2 {
      */
     public TraktV2 refreshToken(@Nullable String refreshToken) {
         this.refreshToken = refreshToken;
+        return this;
+    }
+
+    @Nullable
+    public String userAgent() {
+        return userAgent;
+    }
+
+    /**
+     * Sets the value of the {@link #HEADER_USER_AGENT} header to be added to requests, for example
+     * {@code "ExampleApp/1.0.0"}, as required by Trakt.
+     */
+    public TraktV2 userAgent(String userAgent) {
+        this.userAgent = userAgent;
         return this;
     }
 

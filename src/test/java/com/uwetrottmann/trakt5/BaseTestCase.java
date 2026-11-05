@@ -90,12 +90,16 @@ public class BaseTestCase {
 
     static class TestTraktV2 extends TraktV2 {
 
+        private static final String TEST_USER_AGENT = "trakt-java-tests";
+
         public TestTraktV2(String apiKey) {
             super(apiKey);
+            userAgent(TEST_USER_AGENT);
         }
 
         public TestTraktV2(String apiKey, @Nullable String clientSecret, String redirectUri) {
             super(apiKey, clientSecret, redirectUri);
+            userAgent(TEST_USER_AGENT);
         }
 
         @Override
