@@ -40,7 +40,7 @@ public class NotesTest extends BaseTestCase {
         Note note = executeCall(notes.addNote(new AddNoteRequest(show, "A very good show! ❤")));
         assertThat(note.id).isPositive();
         // Note: Trakt replaces emoji with shortcodes :(
-        // https://trakt.docs.apiary.io/#introduction/emojis
+        // https://developer.trakt.tv/docs/emojis
         assertThat(note.notes).isEqualTo("A very good show! :heart:");
 
         Thread.sleep(500); // Give server time to update state

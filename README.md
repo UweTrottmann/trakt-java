@@ -2,7 +2,7 @@
 
 **[Pull requests](CONTRIBUTING.md) (e.g. support for more API endpoints, bug fixes) are welcome!**
 
-An (unofficial) Java library to use the [Trakt API](https://trakt.docs.apiary.io/) built with [retrofit 2](https://square.github.io/retrofit/).
+An (unofficial) Java library to use the [Trakt API](https://developer.trakt.tv/) built with [retrofit 2](https://square.github.io/retrofit/).
 
 Trakt API methods are grouped into [service objects](src/main/java/com/uwetrottmann/trakt5/services) 
 which can be centrally managed by a [TraktV2](src/main/java/com/uwetrottmann/trakt5/TraktV2.java) instance.

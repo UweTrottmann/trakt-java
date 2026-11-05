@@ -458,8 +458,8 @@ public class TraktV2 {
     }
 
     /**
-     * Checks if the response code is 420, which indicates an account limit would be exceeded. These limits <a
-     * href="https://trakt.docs.apiary.io/#introduction/vip-methods">can be higher for VIP users</a>.
+     * Checks if the response code is 420, which indicates an account limit would be exceeded. <a
+     * href="https://developer.trakt.tv/docs/user-account-limits">These limits</a> can be higher for VIP users.
      */
     public static boolean isAccountLimitExceeded(Response<?> response) {
         return response.code() == 420;
@@ -467,7 +467,7 @@ public class TraktV2 {
 
     /**
      * Checks if the response code is 423, which indicates the
-     * <a href="https://trakt.docs.apiary.io/#introduction/locked-user-account">Trakt account is locked</a>.
+     * <a href="https://developer.trakt.tv/docs/locked-user-account">Trakt account is locked</a>.
      */
     public static boolean isAccountLocked(Response<?> response) {
         return response.code() == 423;
@@ -475,7 +475,7 @@ public class TraktV2 {
 
     /**
      * Checks if the response code is 426, which indicates the
-     * <a href="https://trakt.docs.apiary.io/#introduction/vip-methods">Trakt account is not a VIP</a>.
+     * <a href="https://developer.trakt.tv/docs/vip-methods">Trakt account is not a VIP</a>.
      */
     public static boolean isNotVip(Response<?> response) {
         return response.code() == 426;
@@ -483,7 +483,7 @@ public class TraktV2 {
 
     /**
      * Checks if the response code is 429, which indicates the rate limit was exceeded.
-     * <a href="https://trakt.docs.apiary.io/#introduction/rate-limiting">Trakt rate limiting info</a>
+     * <a href="https://developer.trakt.tv/docs/rate-limiting">Trakt rate limiting info</a>
      */
     public static boolean isRateLimitExceeded(Response<?> response) {
         return response.code() == 429;

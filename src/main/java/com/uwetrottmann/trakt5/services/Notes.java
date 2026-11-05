@@ -34,8 +34,6 @@ public interface Notes {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Add a note (maximum 500 characters). Note: this also replaces an existing note.
-     * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/notes/notes/add-notes">Online documentation</a>
      */
     @POST("notes")
     Call<Note> addNote(
@@ -46,8 +44,6 @@ public interface Notes {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Get a note.
-     * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/notes/note/get-a-note">Online documentation</a>
      */
     @GET("notes/{id}")
     Call<Note> getNote(
@@ -58,8 +54,6 @@ public interface Notes {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Update a note (maximum 500 characters).
-     * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/notes/note/update-a-note">Online documentation</a>
      */
     @PUT("notes/{id}")
     Call<Note> updateNote(
@@ -71,8 +65,6 @@ public interface Notes {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Delete a note.
-     * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/notes/note/delete-a-note">Online documentation</a>
      */
     @DELETE("notes/{id}")
     Call<Void> deleteNote(

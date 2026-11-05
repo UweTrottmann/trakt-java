@@ -287,9 +287,6 @@ public interface Sync {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} required</b>
      * <p>
      * Remove a playback item from a user's playback progress list. A 404 will be returned if the id is invalid.
-     * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/sync/remove-playback/remove-a-playback-item">Online
-     * documentation</a>
      */
     @DELETE("sync/playback/{" + PATH_ID + "}")
     Call<Void> removePlayback(

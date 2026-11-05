@@ -91,7 +91,7 @@ public class TraktV2Interceptor implements Interceptor {
         // Try the request.
         Response response = chain.proceed(builder.build());
 
-        // Handle Trakt rate limit errors https://trakt.docs.apiary.io/#introduction/rate-limiting
+        // Handle Trakt rate limit errors https://developer.trakt.tv/docs/rate-limiting
         if (response.code() == 429 /* Too Many Requests */) {
             // Re-try if the server indicates we should.
             String retryHeader = response.header("Retry-After");

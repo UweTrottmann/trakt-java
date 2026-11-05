@@ -170,8 +170,6 @@ public interface Users {
      * <b>OAuth {@link TraktV2#accessToken(String) access token} optional</b>
      * <p>
      * Returns the most recently added notes for the user.
-     * <p>
-     * <a href="https://trakt.docs.apiary.io/#reference/users/notes/get-notes">Online documentation</a>
      */
     @GET("users/{" + PATH_USERNAME + "}/notes/{" + PATH_TYPE + "}")
     Call<List<NoteResponse>> notes(
